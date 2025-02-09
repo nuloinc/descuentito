@@ -8,6 +8,7 @@
 	"devDependencies": {
 		"@trigger.dev/build": "^3.3.13",
 		"@types/node": "^22.13.1",
+		"tsx": "^4.19.2",
 		"typescript": "^5.7.3"
 	}
 }
