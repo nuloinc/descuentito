@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import PQueue from "p-queue";
+import { FetchCacher } from "../fetch-cacher";
 
 interface Promotion {
   id: number;
@@ -162,6 +163,9 @@ const OFFICIAL_CATEGORIES: OfficialCategory[] = [
   },
 ];
 
+// Initialize FetchCacher at the top level
+const fetchCacher = FetchCacher.fromEnv();
+
 function generatePromotionUrl(id: number, title: string): string {
   // Convert title to URL-safe format
   const urlSafeTitle = encodeURIComponent(title.toLowerCase().trim());
@@ -187,7 +191,7 @@ function getRestrictions(promo: any): string[] {
 async function fetchPromotionDetails(id: number): Promise<{
   maxDiscount: number | null;
 }> {
-  const response = await fetch(
+  const response = await fetchCacher.fetch(
     `https://loyalty.bff.bancogalicia.com.ar/api/portal/catalogo/v1/promociones/idPromocion/${id}`,
     {
       headers: {
@@ -231,7 +235,7 @@ async function fetchCategoryPage(
   pageSize: number = 15
 ): Promise<{ promotions: Promotion[]; totalSize: number }> {
   try {
-    const response = await fetch(
+    const response = await fetchCacher.fetch(
       `https://loyalty.bff.bancogalicia.com.ar/api/portal/personalizacion/v1/promociones/catalogo?page=${page}&pageSize=${pageSize}&IdCategoria=${categoryId}`,
       {
         headers: {
@@ -393,6 +397,8 @@ function getCategories(): Category[] {
 }
 
 export async function extractPromotions() {
+  const res = await fetchCacher.fetch("https://api.ipify.org?format=json");
+  console.log(await res.json());
   try {
     // Get official categories
     const categories = getCategories();
@@ -439,6 +445,9 @@ export async function extractPromotions() {
   } catch (error) {
     console.error("Error extracting promotions", { error });
     throw error;
+  } finally {
+    // Wait for all pending uploads to complete before finishing
+    await fetchCacher.waitForPendingUploads();
   }
 }
 

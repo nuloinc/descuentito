@@ -1,2 +1,8 @@
 .trigger
 node_modules
+
+.env
+
+galicia-categories.json
+galicia-promotions.json
+
