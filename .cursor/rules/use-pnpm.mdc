@@ -1,0 +1,5 @@
+---
+description: When running npm commands or accessing npm-related files, use pnpm instead.
+globs: 
+---
+Use pnpm for all npm-related operations. Instead of npx, use pnpx.
