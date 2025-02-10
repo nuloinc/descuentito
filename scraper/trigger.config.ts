@@ -22,7 +22,14 @@ export default defineConfig({
   },
   dirs: ["trigger"],
   build: {
-    extensions: [puppeteer()],
-    external: ["@libsql/client", "@libsql/darwin-arm64"],
+    extensions: [
+      puppeteer(),
+      additionalPackages({ packages: ["@libsql/linux-x64-gnu"] }),
+    ],
+    external: [
+      "@libsql/client",
+      "@libsql/darwin-arm64",
+      "@libsql/linux-x64-gnu",
+    ],
   },
 });
