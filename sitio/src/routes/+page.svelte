@@ -12,13 +12,13 @@
 </script>
 
 <div class="container mx-auto px-4 py-8">
-	<h1 class="mb-8 text-3xl font-bold">Promociones Disponibles</h1>
+	<h1 class="mb-8 text-3xl font-bold">Promociones Disponibles (Banco Galicia)</h1>
 
 	<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 		{#each data.promotions as promo}
 			{#if promo.json}
 				{@const promotion = promo.json as import('promos-db/schema').GaliciaPromotion}
-				<Card.Root>
+				<Card.Root class="flex flex-col">
 					<Card.Header>
 						<Card.Title>{promotion.title}</Card.Title>
 					</Card.Header>
@@ -49,7 +49,7 @@
 							{/if}
 						</div>
 					</Card.Content>
-					<Card.Footer>
+					<Card.Footer class="mt-auto">
 						<Button>
 							<a href={promotion.url} target="_blank" rel="noopener noreferrer" class="w-full">
 								Ver más
