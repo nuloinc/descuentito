@@ -4,11 +4,8 @@ import { ProxyAgent, fetch, RequestInit, Response } from "undici";
 import JSZip from "jszip";
 
 interface FetchCacherOptions {
-  region: string;
-  accessKeyId: string;
-  secretAccessKey: string;
+  s3Client?: S3Client;
   bucketName: string;
-  endpoint?: string; // Optional endpoint for B2 S3-compatible API
   proxyUri?: string; // Optional HTTP proxy URI
   maxRetries?: number; // Optional max retries for 408 errors
 }
@@ -48,18 +45,7 @@ export class FetchCacher {
       });
     }
 
-    this.s3 = new S3Client({
-      region: options.region,
-      credentials: {
-        accessKeyId: options.accessKeyId,
-        secretAccessKey: options.secretAccessKey,
-      },
-      ...(options.endpoint && {
-        endpoint: options.endpoint,
-        forcePathStyle: true, // Required for B2
-      }),
-    });
-
+    this.s3 = options.s3Client || createS3ClientFromEnv();
     this.bucketName = options.bucketName;
     this.maxRetries = options.maxRetries || DEFAULT_MAX_RETRIES;
     this.zip = new JSZip();
@@ -78,8 +64,6 @@ export class FetchCacher {
       config[key.toLowerCase()] = envVar;
     }
 
-    // Optional endpoint for B2
-    const endpoint = process.env[`${ENV_PREFIX}ENDPOINT`];
     // Optional proxy URI
     const proxyUri = process.env.PROXY_URI;
     // Optional max retries
@@ -88,12 +72,8 @@ export class FetchCacher {
       : DEFAULT_MAX_RETRIES;
 
     return new FetchCacher({
-      region: config.region,
-      accessKeyId: config.access_key_id,
-      secretAccessKey: config.secret_access_key,
       bucketName: config.bucket_name,
       maxRetries,
-      ...(endpoint && { endpoint }),
       ...(proxyUri && { proxyUri }),
     });
   }
@@ -117,13 +97,10 @@ export class FetchCacher {
         })
       );
     } catch (error: any) {
-      // Check if it's a 408 error or if error.code is RequestTimeout
-      if (
-        (error.statusCode === 408 || error.code === "RequestTimeout") &&
-        retryCount < this.maxRetries
-      ) {
+      if (retryCount < this.maxRetries) {
         console.warn(
-          `S3 upload timeout, retrying (${retryCount + 1}/${this.maxRetries})`
+          `S3 upload error, retrying (${retryCount + 1}/${this.maxRetries})`,
+          error
         );
         await new Promise((resolve) =>
           setTimeout(resolve, RETRY_DELAY_MS * Math.pow(2, retryCount))
@@ -211,3 +188,29 @@ export class FetchCacher {
     }
   }
 }
+
+export function createS3ClientFromEnv(): S3Client {
+  const region = process.env[`${ENV_PREFIX}REGION`];
+  const accessKeyId = process.env[`${ENV_PREFIX}ACCESS_KEY_ID`];
+  const secretAccessKey = process.env[`${ENV_PREFIX}SECRET_ACCESS_KEY`];
+  const endpoint = process.env[`${ENV_PREFIX}ENDPOINT`];
+
+  if (!region || !accessKeyId || !secretAccessKey) {
+    throw new Error("Missing required S3 environment variables");
+  }
+
+  return new S3Client({
+    region,
+    credentials: {
+      accessKeyId,
+      secretAccessKey,
+    },
+    ...(endpoint && {
+      endpoint,
+      forcePathStyle: true, // Required for B2
+    }),
+  });
+}
+
+export const s3 = createS3ClientFromEnv();
+export const BUCKET_NAME = process.env[`${ENV_PREFIX}BUCKET_NAME`];

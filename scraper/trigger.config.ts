@@ -1,7 +1,7 @@
 import { defineConfig } from "@trigger.dev/sdk/v3";
 
 import { puppeteer } from "@trigger.dev/build/extensions/puppeteer";
-
+import { additionalPackages } from "@trigger.dev/build/extensions/core";
 export default defineConfig({
   project: "proj_wghcrdvyxvmsbgsmfufc",
   runtime: "node",
@@ -23,6 +23,6 @@ export default defineConfig({
   dirs: ["trigger"],
   build: {
     extensions: [puppeteer()],
-    external: ["typescript"],
+    external: ["@libsql/client", "@libsql/darwin-arm64"],
   },
 });

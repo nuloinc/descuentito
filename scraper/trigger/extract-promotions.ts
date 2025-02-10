@@ -1,28 +1,7 @@
-import * as fs from "fs";
-import * as path from "path";
 import PQueue from "p-queue";
 import { FetchCacher } from "../fetch-cacher";
 import { RequestInit } from "undici";
-
-interface Promotion {
-  id: number;
-  title: string;
-  description: string;
-  category?: string;
-  discount: {
-    type: string;
-    value: string;
-  };
-  validFrom: string;
-  validUntil: string;
-  url: string;
-  paymentMethods?: string[];
-  restrictions?: string[];
-  additionalInfo?: string;
-  limits?: {
-    maxDiscount?: number;
-  };
-}
+import { GaliciaPromotion } from "promos-db/schema";
 
 interface OfficialCategory {
   id: number;
@@ -36,7 +15,7 @@ interface Category extends Omit<OfficialCategory, "descripcion" | "imagen"> {
   description: string;
   image?: string | null;
   count: number;
-  promotions: Promotion[];
+  promotions: GaliciaPromotion[];
 }
 
 interface ApiResponse<T> {
@@ -284,7 +263,7 @@ async function fetchPromotionDetails(
 function mapPromotion(
   promo: any,
   details: { maxDiscount: number | null } | null
-): Promotion {
+): GaliciaPromotion {
   return {
     id: promo.id,
     title: promo.titulo || "",
@@ -310,7 +289,7 @@ async function fetchCategoryPage(
   categoryId: number,
   page: number,
   pageSize: number = 15
-): Promise<{ promotions: Promotion[]; totalSize: number }> {
+): Promise<{ promotions: GaliciaPromotion[]; totalSize: number }> {
   try {
     const data = await fetchApi<any>(
       `/personalizacion/v1/promociones/catalogo?page=${page}&pageSize=${pageSize}&IdCategoria=${categoryId}`
@@ -355,7 +334,7 @@ async function fetchCategoryPage(
 
 async function fetchCategoryPromotions(
   categoryId: number
-): Promise<Promotion[]> {
+): Promise<GaliciaPromotion[]> {
   const pageSize = 15;
   const firstPage = await fetchCategoryPage(categoryId, 1, pageSize);
   let totalPromotions = firstPage.promotions;
@@ -441,7 +420,7 @@ export async function extractPromotions() {
 }
 
 // Run the extraction if this file is executed directly
-if (require.main === module) {
+if (import.meta.url === new URL(import.meta.url).href) {
   extractPromotions().catch((error) => {
     console.error("Failed to extract promotions:", error);
     process.exit(1);
