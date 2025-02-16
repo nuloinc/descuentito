@@ -56,6 +56,12 @@
 									</Card.Header>
 									<Card.Content>
 										<div class="space-y-2 text-sm text-gray-500">
+											{#if promotion.limits?.maxDiscount}
+												<p>Tope de descuento: ${promotion.limits.maxDiscount}</p>
+											{/if}
+											{#if promotion.restrictions && promotion.restrictions.length > 0}
+												<p>Restricciones: {promotion.restrictions.join(', ')}</p>
+											{/if}
 											{#if promotion.paymentMethods && promotion.paymentMethods.length > 0}
 												<div class="mt-3">
 													<span class="font-medium">Medios de pago:</span>
