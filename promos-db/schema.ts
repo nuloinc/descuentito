@@ -10,14 +10,13 @@ export const promotionsTable = sqliteTable("promotions", {
 });
 
 export const SOURCES = ["galicia"] as const;
-export interface GaliciaPromotion {
-  id: number;
+export interface GenericPromotion {
   title: string;
   description: string;
   category?: string;
   discount: {
     type: string;
-    value: string;
+    value: number;
   };
   validFrom: string;
   validUntil: string;
@@ -28,4 +27,13 @@ export interface GaliciaPromotion {
   limits?: {
     maxDiscount?: number;
   };
+}
+
+export interface GaliciaPromotion extends GenericPromotion {
+  id: number;
+  source: "galicia";
+}
+
+export interface CarrefourPromotion extends GenericPromotion {
+  source: "carrefour";
 }

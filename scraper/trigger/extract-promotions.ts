@@ -1,7 +1,7 @@
 import PQueue from "p-queue";
 import { FetchCacher } from "../fetch-cacher";
 import { RequestInit } from "undici";
-import { GaliciaPromotion } from "promos-db/schema";
+import { GaliciaPromotion, GenericPromotion } from "promos-db/schema";
 
 interface OfficialCategory {
   id: number;
@@ -15,7 +15,7 @@ interface Category extends Omit<OfficialCategory, "descripcion" | "imagen"> {
   description: string;
   image?: string | null;
   count: number;
-  promotions: GaliciaPromotion[];
+  promotions: GenericPromotion[];
 }
 
 interface ApiResponse<T> {
@@ -266,12 +266,13 @@ function mapPromotion(
 ): GaliciaPromotion {
   return {
     id: promo.id,
+    source: "galicia",
     title: promo.titulo || "",
     description: promo.promocion || "",
     category: promo.subtitulo || "",
     discount: {
       type: promo.tipoDescuento || "discount",
-      value: promo.promocion || "",
+      value: promo.promocion ? parseFloat(promo.promocion) : 0,
     },
     validFrom: promo.fechaInicioVigencia || new Date().toISOString(),
     validUntil: promo.fechaFinVigencia || "",

@@ -1,9 +1,13 @@
 {
+  "type": "module",
   "dependencies": {
+    "@ai-sdk/google": "^1.1.14",
     "@aws-sdk/client-s3": "3.712.0",
     "@aws-sdk/s3-request-presigner": "3.712.0",
     "@libsql/client": "^0.14.0",
-    "@trigger.dev/sdk": "^3.3.13",
+    "@openrouter/ai-sdk-provider": "^0.2.1",
+    "@trigger.dev/sdk": "3.3.16",
+    "ai": "^4.1.38",
     "date-fns": "^3.3.1",
     "drizzle-orm": "^0.39.2",
     "https-proxy-agent": "^7.0.2",
@@ -12,13 +16,17 @@
     "promos-db": "workspace:^",
     "proxy-chain": "^2.5.6",
     "puppeteer": "^24.2.0",
-    "undici": "^7.3.0"
+    "undici": "^7.3.0",
+    "zod": "^3.24.2"
   },
   "packageManager": "pnpm@9.15.5+sha256.8472168c3e1fd0bff287e694b053fccbbf20579a3ff9526b6333beab8df65a8d",
   "devDependencies": {
-    "@trigger.dev/build": "^3.3.13",
+    "@trigger.dev/build": "3.3.16",
     "@types/node": "^22.13.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3"
+  },
+  "optionalDependencies": {
+    "@libsql/darwin-arm64": "^0.14.0"
   }
 }
