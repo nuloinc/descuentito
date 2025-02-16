@@ -3,6 +3,7 @@ import { createClient } from '@libsql/client';
 
 import { drizzle } from 'drizzle-orm/libsql';
 import * as schema from 'promos-db/schema';
+export * as schema from 'promos-db/schema';
 
 const turso = createClient({
 	url: TURSO_PROMOS_DATABASE_URL,
