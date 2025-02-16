@@ -10,6 +10,14 @@ export const promotionsTable = sqliteTable("promotions", {
 });
 
 export const SOURCES = ["galicia"] as const;
+export type Weekday =
+  | "Lunes"
+  | "Martes"
+  | "Miercoles"
+  | "Jueves"
+  | "Viernes"
+  | "Sabado"
+  | "Domingo";
 export interface GenericPromotion {
   title: string;
   description: string;
@@ -20,8 +28,9 @@ export interface GenericPromotion {
   };
   validFrom: string;
   validUntil: string;
+  weekdays?: Weekday[];
   url: string;
-  paymentMethods?: string[];
+  paymentMethods?: (string | string[])[];
   restrictions?: string[];
   additionalInfo?: string;
   limits?: {

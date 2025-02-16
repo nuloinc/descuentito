@@ -1,5 +1,8 @@
 import puppeteer from "puppeteer";
 import ProxyChain from "proxy-chain";
+import { s3, BUCKET_NAME } from "./fetch-cacher";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { format } from "date-fns";
 
 export async function createBrowserSession() {
   const server = new ProxyChain.Server({
@@ -40,4 +43,21 @@ export async function createBrowserSession() {
     browser,
     page,
   };
+}
+
+export async function storeCacheData(
+  key: string,
+  suffix: string,
+  data: string | Buffer | Uint8Array
+) {
+  await s3.send(
+    new PutObjectCommand({
+      Bucket: BUCKET_NAME,
+      Key: `${format(
+        new Date(),
+        "yyyy-MM-dd"
+      )}/${key}/${new Date().toISOString()}${suffix}`,
+      Body: data,
+    })
+  );
 }
