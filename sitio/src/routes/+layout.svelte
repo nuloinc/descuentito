@@ -1,7 +1,17 @@
 <script lang="ts">
 	import '../app.css';
 	import NuloInc from '$lib/Nulo_Science_Inc.svg';
+	import { onMount } from 'svelte';
+	import posthog from 'posthog-js';
+
 	let { children } = $props();
+
+	onMount(() => {
+		posthog.init('phc_QShHtLe5KRFWoNa5m6GgYTbvIhdqDPMJQgoym5MkCKr', {
+			api_host: 'https://us.i.posthog.com',
+			person_profiles: 'identified_only' // or 'always' to create profiles for anonymous users as well
+		});
+	});
 </script>
 
 <svelte:head>
