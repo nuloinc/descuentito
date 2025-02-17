@@ -4,6 +4,23 @@
 	let { children } = $props();
 </script>
 
+<svelte:head>
+	<title>descuentito.ar - Descuentos en supermercados</title>
+	<meta
+		name="description"
+		content="Encuentra y compara descuentos en supermercados de Argentina. Carrefour, Coto, Día y Jumbo."
+	/>
+	<meta name="author" content="Nulo Science Inc." />
+	<meta property="og:title" content="descuentito.ar - Descuentos en supermercados" />
+	<meta
+		property="og:description"
+		content="Encuentra y compara descuentos en supermercados de Argentina. Carrefour, Coto, Día y Jumbo."
+	/>
+	<meta property="og:image" content="/og.png" />
+	<meta property="og:url" content="https://descuentito.ar" />
+	<meta property="og:type" content="website" />
+</svelte:head>
+
 {@render children()}
 
 <footer
