@@ -1,13 +1,21 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import * as Card from '$lib/components/ui/card';
-	import { Button } from '$lib/components/ui/button';
+	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import { Badge } from '$lib/components/ui/badge';
-	import { ExternalLinkIcon } from 'lucide-svelte';
+	import {
+		ChevronDown,
+		ChevronsUpDown,
+		ExternalLinkIcon,
+		StarIcon,
+		StarsIcon
+	} from 'lucide-svelte';
 	import { logos } from '@/logos';
 	import { getPaymentMethod } from '@/index';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import type { schema } from '@/db';
+	import { promotionsTable } from 'promos-db/schema';
+	import * as Accordion from '$lib/components/ui/accordion';
 
 	export let data: PageData;
 
@@ -24,7 +32,7 @@
 	const todayWeekdayIndex = today.getDay() - 1; // Adjust to start from Monday (0)
 	const defaultWeekday = weekdays[todayWeekdayIndex >= 0 ? todayWeekdayIndex : weekdays.length - 1];
 
-	let selectedWeekday: string = defaultWeekday;
+	let selectedWeekday: schema.Weekday = defaultWeekday;
 
 	function formatDate(dateStr: string) {
 		return new Date(dateStr).toLocaleDateString('es-AR');
@@ -34,7 +42,10 @@
 <div class="container mx-auto px-4 py-8">
 	<h1 class="mb-8 text-3xl font-bold">Promociones Disponibles (Carrefour)</h1>
 
-	<Tabs value={selectedWeekday} onValueChange={(value) => (selectedWeekday = value)}>
+	<Tabs
+		value={selectedWeekday}
+		onValueChange={(value) => (selectedWeekday = value as schema.Weekday)}
+	>
 		<TabsList>
 			{#each weekdays as weekday}
 				<TabsTrigger value={weekday}>
@@ -56,16 +67,29 @@
 									</Card.Header>
 									<Card.Content>
 										<div class="space-y-2 text-sm text-gray-500">
+											{#if promotion.where?.length > 0}
+												<p>
+													Comprando:
+													{#each promotion.where as where}
+														<span class="font-bold">{where}</span
+														>{#if where !== promotion.where[promotion.where.length - 1]},{' '}
+														{/if}
+													{/each}
+												</p>
+											{/if}
 											{#if promotion.limits?.maxDiscount}
 												<p>Tope de descuento: ${promotion.limits.maxDiscount}</p>
 											{/if}
-											{#if promotion.restrictions && promotion.restrictions.length > 0}
-												<p>Restricciones: {promotion.restrictions.join(', ')}</p>
+											{#if promotion.limits?.explicitlyHasNoLimit}
+												<p class="flex items-center gap-1">
+													<StarsIcon class="h-4 w-4 text-yellow-500" />
+													<span class="font-bold text-yellow-500">Sin tope</span>
+												</p>
 											{/if}
 											{#if promotion.paymentMethods && promotion.paymentMethods.length > 0}
 												<div class="mt-3">
 													<span class="font-medium">Medios de pago:</span>
-													<div class="mt-1 flex flex-wrap gap-2">
+													<div class="mt-1 flex flex-col flex-wrap gap-2">
 														{#each promotion.paymentMethods as methods}
 															{#if Array.isArray(methods)}
 																<div class="flex flex-wrap gap-2">
@@ -93,6 +117,27 @@
 														{/each}
 													</div>
 												</div>
+											{/if}
+											{#if promotion.restrictions && promotion.restrictions.length > 0}
+												<Accordion.Root type="single" class="w-full space-y-2">
+													<Accordion.Item
+														value="restrictions"
+														class="rounded-md border border-gray-100 px-2"
+													>
+														<Accordion.Trigger
+															class="flex flex-1 items-center justify-between  py-2 font-medium transition-all [&[data-state=open]>svg]:rotate-180"
+														>
+															<h4 class="text-sm font-semibold">Restricciones</h4>
+														</Accordion.Trigger>
+														<Accordion.Content class="pb-4 pt-0">
+															<ul class="list-disc pl-5 text-xs">
+																{#each promotion.restrictions as restriction}
+																	<li>{restriction}</li>
+																{/each}
+															</ul>
+														</Accordion.Content>
+													</Accordion.Item>
+												</Accordion.Root>
 											{/if}
 										</div>
 									</Card.Content>

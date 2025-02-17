@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer";
+import puppeteer, { Page } from "puppeteer";
 import ProxyChain from "proxy-chain";
 import { s3, BUCKET_NAME } from "./fetch-cacher";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
@@ -60,4 +60,76 @@ export async function storeCacheData(
       Body: data,
     })
   );
+}
+
+/**
+ * Generates a simplified text description of an element's DOM tree,
+ * prioritizing text content and alt attributes from images.
+ * Reduces nested divs to a single div representation.
+ */
+export async function generateElementDescription(
+  page: Page,
+  selector: string
+): Promise<string> {
+  return await page.evaluate((selector: string) => {
+    function generateElementDescriptionInner(element: Element): string {
+      let description = "";
+
+      // Handle current element
+      const tagName = element.tagName.toLowerCase();
+
+      // Handle text nodes directly within the element
+      const textNodes = Array.from(element.childNodes)
+        .filter((node) => node.nodeType === Node.TEXT_NODE)
+        .map((node) => node.textContent?.trim())
+        .filter((text) => text && text.length > 0);
+
+      if (
+        tagName === "div" &&
+        element.children.length === 1 &&
+        element.children[0].tagName === "div" &&
+        typeof element.className === "string" &&
+        !element.className.includes("logo")
+      ) {
+        return generateElementDescriptionInner(element.children[0]);
+      } else {
+        // For non-div elements, build the description as before
+        description += `<${tagName}`;
+
+        // Add alt attribute for images
+        if (tagName === "img") {
+          const alt = element.getAttribute("alt");
+          if (alt) {
+            description += ` alt="${alt}"`;
+          }
+        }
+
+        if (
+          typeof element.className === "string" &&
+          element.className.includes("logo")
+        ) {
+          description += ` class="${element.className}"`;
+        }
+
+        description += ">";
+
+        if (textNodes.length > 0) {
+          description += ` "${textNodes.join(" ")}"`;
+        }
+
+        // Recursively process child elements
+        for (const child of Array.from(element.children)) {
+          description += generateElementDescriptionInner(child);
+        }
+      }
+
+      return description;
+    }
+
+    const element = document.querySelector(selector);
+    if (!element) {
+      return "";
+    }
+    return generateElementDescriptionInner(element);
+  }, selector);
 }

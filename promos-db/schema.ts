@@ -35,6 +35,7 @@ export interface GenericPromotion {
   additionalInfo?: string;
   limits?: {
     maxDiscount?: number;
+    explicitlyHasNoLimit?: boolean;
   };
 }
 
@@ -45,4 +46,5 @@ export interface GaliciaPromotion extends GenericPromotion {
 
 export interface CarrefourPromotion extends GenericPromotion {
   source: "carrefour";
+  where: ("Carrefour" | "Maxi" | "Market" | "Express" | "Online")[];
 }

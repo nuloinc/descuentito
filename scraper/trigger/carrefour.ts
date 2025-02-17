@@ -5,7 +5,11 @@ import { format } from "date-fns";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { db, schema } from "promos-db/db";
 import { eq, sql } from "drizzle-orm";
-import { createBrowserSession, storeCacheData } from "../lib";
+import {
+  createBrowserSession,
+  generateElementDescription,
+  storeCacheData,
+} from "../lib";
 import { google } from "@ai-sdk/google";
 
 import { z } from "zod";
@@ -25,6 +29,7 @@ export const carrefourTask = schedules.task({
     let screenshot: Uint8Array;
     let html: string;
     let text: string;
+    let domDescription: string;
     {
       await using session = await createBrowserSession();
       const { page } = session;
@@ -42,10 +47,25 @@ export const carrefourTask = schedules.task({
         return document.querySelector(".vtex-tabs__content")?.innerHTML || "";
       });
       await storeCacheData("carrefour", ".html", html);
+
+      await page.exposeFunction(
+        "generateElementDescription",
+        generateElementDescription
+      );
+
+      domDescription = await generateElementDescription(
+        page,
+        ".vtex-tabs__content"
+      );
+      await storeCacheData("carrefour", "-dom.txt", domDescription);
+
       text = await page.evaluate(() => {
         return document.querySelector(".vtex-tabs__content")?.textContent || "";
       });
+      await storeCacheData("carrefour", ".txt", text);
     }
+
+    logger.info("DOM Description", { domDescription });
 
     // const openrouter = createOpenRouter({
     //   apiKey: process.env.OPENROUTER_API_KEY,
@@ -63,29 +83,30 @@ export const carrefourTask = schedules.task({
           description: z.string(),
           category: z.string().optional(),
           discount: z.object({
-            type: z.string(),
-            value: z.number(),
+            type: z.enum(["porcentaje", "cuotas sin intereses"]),
+            value: z
+              .number()
+              .describe("0 to 100 for percentage, 0 to 12 for cuotas"),
           }),
           validFrom: z.string().describe("YYYY-MM-DD"),
           validUntil: z.string().describe("YYYY-MM-DD"),
           weekdays: z
             .array(
-              z
-                .enum([
-                  "Lunes",
-                  "Martes",
-                  "Miercoles",
-                  "Jueves",
-                  "Viernes",
-                  "Sabado",
-                  "Domingo",
-                ])
-                .describe(
-                  "Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo"
-                )
+              z.enum([
+                "Lunes",
+                "Martes",
+                "Miercoles",
+                "Jueves",
+                "Viernes",
+                "Sabado",
+                "Domingo",
+              ])
             )
             .optional(),
-          restrictions: z.array(z.string()).optional(),
+          restrictions: z.array(z.string()),
+          where: z.array(
+            z.enum(["Carrefour", "Maxi", "Market", "Express", "Online"])
+          ),
           paymentMethods: z
             .array(
               z.array(
@@ -97,6 +118,7 @@ export const carrefourTask = schedules.task({
                   "Banco Macro",
                   "Banco Santander",
                   "Mercado Pago",
+                  "Dinero en cuenta",
                   "MODO",
                   "Tarjeta Carrefour Prepaga",
                   "Tarjeta Carrefour Crédito",
@@ -104,33 +126,58 @@ export const carrefourTask = schedules.task({
                   "Tarjeta de débito VISA",
                   "Tarjeta de crédito Mastercard",
                   "Tarjeta de débito Mastercard",
-                  "Visa",
-                  "Mastercard",
                 ])
                 // .describe(
                 //   `possibly: 'Tarjeta Carrefour Prepaga', 'Tarjeta Carrefour Crédito', 'Banco Patagonia', 'Banco Nación', 'MODO', 'MercadoPago', 'Mastercard', 'VISA'`
                 // )
               )
             )
-            .describe(
-              `Payment methods for the promotion. Represent each payment method as a string. Represent different combinations of payment methods as separate arrays of strings. If a promotion has conditions that apply to a single payment method (e.g., specific bank and specific card), represent each condition as a nested array of strings. If no payment methods are specified, return an empty array.`
-            )
             .optional(),
-          additionalInfo: z.string().optional(),
-          limits: z
-            .object({
-              maxDiscount: z.number().optional(),
-            })
-            .optional(),
+          limits: z.object({
+            maxDiscount: z.number().optional(),
+            explicitlyHasNoLimit: z.boolean().optional(),
+          }),
         }),
-        system: `You are a helpful assistant that converts promotions into structured JSON data.`,
+        system: `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users.
+
+PAYMENT METHODS
+
+Represent different combinations of payment methods as separate arrays of strings.
+
+If there are multiple combinations possible, represent each and every one of them individually.
+
+Example: Banco Galicia with either VISA or Mastercard credit cards: [["Banco Galicia", "Tarjeta de crédito VISA"], ["Banco Galicia", "Tarjeta de crédito Mastercard"]], NOT merging them like this: [["Banco Galicia", "Tarjeta de crédito VISA", "Tarjeta de crédito Mastercard"]]
+
+Tarjeta Carrefour Prepaga/Crédito are DISTINCT from "Mi Carrefour" which is a membership program.
+
+RESTRICTIONS
+
+Do not include irrelevant restrictions that are obvious, such as restrictions related to foreign credit cards, purchase cards, Carrefour-specific payment methods, payments in foreign currencies, or social aid programs, or restrictions that specify "Solo para consumo familiar.".
+
+Do not include redundant information that is mentioned elsewhere in the object, such as validity dates, days of the week, payment methods, where the promotion is valid or limits.
+
+Order by relevance, starting with the most relevant restrictions.
+
+WHERE
+
+"Comprando en:" describes WHERE the promotion is valid. "logo$TYPE" is for Carrefour $TYPE.
+
+LIMITS
+
+\`maxDiscount\` is the maximum discount amount in pesos that can be applied to the promotion.
+
+\`explicitlyHasNoLimit\` is true if the promotion explicitly states that there is no limit ("sin tope").
+`,
         messages: [
           {
             role: "user",
             content: [
               {
                 type: "text",
-                text: "Extract the promotions from the following text: " + text,
+                text:
+                  "Extract the promotions from the following text: " +
+                  domDescription,
+                // text: "Extract the promotions from the following screenshot: ",
               },
               // { type: "image", image: screenshot },
             ],
