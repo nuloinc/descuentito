@@ -37,10 +37,23 @@
 	function formatDate(dateStr: string) {
 		return new Date(dateStr).toLocaleDateString('es-AR');
 	}
+
+	function formatCurrency(amount: number) {
+		return new Intl.NumberFormat('es-AR', {
+			style: 'currency',
+			currency: 'ARS',
+			minimumFractionDigits: 0
+		}).format(amount);
+	}
 </script>
 
-<div class="container mx-auto px-4 py-8">
-	<h1 class="mb-8 text-3xl font-bold">Promociones Disponibles (Carrefour)</h1>
+<div class="container mx-auto px-4 py-4">
+	<h1 class="flex items-center gap-2 text-3xl font-bold">
+		descuentito.ar
+
+		<Badge variant="destructive">beta :)</Badge>
+	</h1>
+	<h2 class="mb-2 text-lg font-medium">Descuentos en Carrefour</h2>
 
 	<Tabs
 		value={selectedWeekday}
@@ -78,7 +91,11 @@
 												</p>
 											{/if}
 											{#if promotion.limits?.maxDiscount}
-												<p>Tope de descuento: ${promotion.limits.maxDiscount}</p>
+												<p>
+													Tope de descuento: <strong
+														>{formatCurrency(promotion.limits.maxDiscount)}</strong
+													>
+												</p>
 											{/if}
 											{#if promotion.limits?.explicitlyHasNoLimit}
 												<p class="flex items-center gap-1">
@@ -87,7 +104,10 @@
 												</p>
 											{/if}
 											{#if promotion.paymentMethods && promotion.paymentMethods.length > 0}
-												<div class="mt-3">
+												<div
+													class="mt-3 flex items-center gap-2 data-[multiple-methods]:flex-col data-[multiple-methods]:items-start"
+													data-multiple-methods={promotion.paymentMethods.length > 1}
+												>
 													<span class="font-medium">Medios de pago:</span>
 													<div class="mt-1 flex flex-col flex-wrap gap-2">
 														{#each promotion.paymentMethods as methods}
@@ -129,7 +149,7 @@
 														>
 															<h4 class="text-sm font-semibold">Restricciones</h4>
 														</Accordion.Trigger>
-														<Accordion.Content class="pb-4 pt-0">
+														<Accordion.Content class="pb-2 pt-0">
 															<ul class="list-disc pl-5 text-xs">
 																{#each promotion.restrictions as restriction}
 																	<li>{restriction}</li>
