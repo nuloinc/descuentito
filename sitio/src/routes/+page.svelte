@@ -11,11 +11,12 @@
 		StarsIcon
 	} from 'lucide-svelte';
 	import { logos } from '@/logos';
-	import { getPaymentMethod } from '@/index';
+	import { type PaymentMethod } from '@/index';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import type { schema } from '@/db';
-	import { promotionsTable } from 'promos-db/schema';
+	import { BANKS_OR_WALLETS, promotionsTable } from 'promos-db/schema';
 	import * as Accordion from '$lib/components/ui/accordion';
+	import * as Dialog from '$lib/components/ui/dialog';
 
 	export let data: PageData;
 
@@ -32,11 +33,12 @@
 	const todayWeekdayIndex = today.getDay() - 1; // Adjust to start from Monday (0)
 	const defaultWeekday = weekdays[todayWeekdayIndex >= 0 ? todayWeekdayIndex : weekdays.length - 1];
 
-	let selectedWeekday: schema.Weekday = defaultWeekday;
+	$: promotions = [
+		...data.promotions.carrefour.map((promotion) => promotion.json as schema.CarrefourPromotion),
+		...data.promotions.coto.map((promotion) => promotion.json as schema.CotoPromotion)
+	];
 
-	function formatDate(dateStr: string) {
-		return new Date(dateStr).toLocaleDateString('es-AR');
-	}
+	let selectedWeekday: schema.Weekday = defaultWeekday;
 
 	function formatCurrency(amount: number) {
 		return new Intl.NumberFormat('es-AR', {
@@ -45,12 +47,60 @@
 			minimumFractionDigits: 0
 		}).format(amount);
 	}
+
+	function isPaymentMethod(method: string): method is PaymentMethod {
+		return method in logos;
+	}
+	function groupPromotionsByPaymentMethod(
+		promotions: (schema.CarrefourPromotion | schema.CotoPromotion)[]
+	) {
+		const grouped = new Map<
+			(typeof BANKS_OR_WALLETS)[number] | 'other',
+			(typeof promotions)[number][]
+		>();
+
+		for (const wallet of BANKS_OR_WALLETS) {
+			grouped.set(wallet, []);
+		}
+
+		grouped.set('other', []);
+
+		for (const promotion of promotions) {
+			let found = false;
+			for (const wallet of BANKS_OR_WALLETS) {
+				if (
+					promotion.paymentMethods?.some((method) =>
+						typeof method === 'string' ? method === wallet : method.some((m) => m === wallet)
+					)
+				) {
+					grouped.set(wallet, [...(grouped.get(wallet) || []), promotion]);
+					found = true;
+				}
+			}
+			if (!found) {
+				grouped.set('other', [...(grouped.get('other') || []), promotion]);
+			}
+		}
+
+		// Filter out empty arrays
+		for (const [key, value] of Array.from(grouped.entries())) {
+			if (Array.isArray(value) && value.length === 0) {
+				grouped.delete(key);
+			}
+		}
+
+		return grouped;
+	}
+	$: groupedPromotionsForToday = Object.fromEntries(
+		groupPromotionsByPaymentMethod(
+			promotions.filter((promotion) => promotion.weekdays?.includes(selectedWeekday))
+		)
+	);
 </script>
 
 <div class="container mx-auto px-4 py-4">
 	<h1 class="flex items-center gap-2 text-3xl font-bold">
 		descuentito.ar
-
 		<Badge variant="destructive">beta :)</Badge>
 	</h1>
 	<h2 class="mb-2 text-lg font-medium">Descuentos en Carrefour</h2>
@@ -70,123 +120,165 @@
 		{#each weekdays as weekday}
 			<TabsContent value={weekday} class="mt-6">
 				<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-					{#each [...data.promotions.carrefour, ...data.promotions.coto] as promo}
-						{#if promo.json}
-							{@const promotion = promo.json as
-								| import('promos-db/schema').CarrefourPromotion
-								| import('promos-db/schema').CotoPromotion}
-							{#if !promotion.weekdays || promotion.weekdays.length === 0 || promotion.weekdays.includes(weekday as any)}
-								<Card.Root class="flex flex-col">
-									<Card.Header>
-										<Card.Title>{promotion.title}</Card.Title>
-									</Card.Header>
-									<Card.Content>
-										<div class="space-y-2 text-sm text-gray-500">
-											{#if promotion.where?.length > 0}
-												<p>
-													Comprando:
-													{#each promotion.where as where}
-														<span class="font-bold">{where}</span
-														>{#if where !== promotion.where[promotion.where.length - 1]},{' '}
-														{/if}
-													{/each}
-												</p>
-											{/if}
-											{#if promotion.limits?.maxDiscount}
-												<p>
-													Tope de descuento: <strong
-														>{formatCurrency(promotion.limits.maxDiscount)}</strong
+					{#each Object.entries(groupedPromotionsForToday) as [paymentMethod, promotions]}
+						{#if promotions.length > 0}
+							<div class="bg-card text-card-foreground rounded-lg border shadow-sm">
+								<div class="space-between flex items-center p-6 pb-0">
+									<div class="flex items-center gap-2">
+										{#if isPaymentMethod(paymentMethod)}
+											<enhanced:img
+												src={logos[paymentMethod]}
+												alt={paymentMethod}
+												class="h-8 w-auto"
+											/>
+										{/if}
+										<h3 class="text-lg font-semibold leading-none tracking-tight">
+											{paymentMethod}
+										</h3>
+									</div>
+								</div>
+								<div class="p-6 pt-2">
+									<div class="space-y-2">
+										{#each promotions as promotion}
+											<Dialog.Root>
+												<Dialog.Trigger class="w-full">
+													<div
+														class="hover:bg-accent flex items-center justify-between rounded-lg border p-2"
 													>
-												</p>
-											{/if}
-											{#if promotion.limits?.explicitlyHasNoLimit}
-												<p class="flex items-center gap-1">
-													<StarsIcon class="h-4 w-4 text-yellow-500" />
-													<span class="font-bold text-yellow-500">Sin tope</span>
-												</p>
-											{/if}
-											{#if promotion.membership && promotion.membership.length > 0}
-												<p>
-													Beneficio exclusivo para:
-													{#each promotion.membership as membership}
-														<span class="font-bold">{membership}</span
-														>{#if membership !== promotion.membership[promotion.membership.length - 1]},{' '}
-														{/if}
-													{/each}
-												</p>
-											{/if}
-											{#if promotion.paymentMethods && promotion.paymentMethods.length > 0}
-												<div
-													class="mt-3 flex items-center gap-2 data-[multiple-methods]:flex-col data-[multiple-methods]:items-start"
-													data-multiple-methods={promotion.paymentMethods.length > 1}
-												>
-													<span class="font-medium">Medios de pago:</span>
-													<div class="mt-1 flex flex-col flex-wrap gap-2">
-														{#each promotion.paymentMethods as methods}
-															{#if Array.isArray(methods)}
-																<div class="flex flex-wrap gap-2">
-																	{#each methods as methodItem}
-																		{@const method = getPaymentMethod(methodItem)}
-																		{#if method}
-																			<enhanced:img
-																				src={logos[method]}
-																				alt={methodItem}
-																				class="h-6 w-auto"
-																			/>
-																		{:else}
-																			{methodItem}
+														<div class="flex flex-col items-start gap-1 text-left">
+															<span class="font-medium">{promotion.title}</span>
+															<div class="flex flex-row gap-1">
+																<Badge variant="default">
+																	{promotion.source}
+																</Badge>
+
+																<Badge variant="secondary">
+																	{#each promotion.where as where}
+																		{where}{#if where !== promotion.where[promotion.where.length - 1]}{', '}
 																		{/if}
-																		{#if methodItem !== methods[methods.length - 1]}
-																			+{' '}
+																	{/each}
+																</Badge>
+
+																{#if promotion.limits?.maxDiscount}
+																	<Badge variant="outline">
+																		Tope: {formatCurrency(promotion.limits.maxDiscount)}
+																	</Badge>
+																{:else if promotion.limits?.explicitlyHasNoLimit}
+																	<Badge variant="yellow" class="gap-1">
+																		<StarsIcon class="h-4 w-4" />
+																		Sin tope
+																	</Badge>
+																{/if}
+															</div>
+														</div>
+														<ChevronDown class="h-4 w-4" />
+													</div>
+												</Dialog.Trigger>
+												<Dialog.Content>
+													<Dialog.Header>
+														<Dialog.Title>{promotion.title}</Dialog.Title>
+													</Dialog.Header>
+													<div class="space-y-4">
+														{#if promotion.where?.length > 0}
+															<div>
+																<h4 class="font-medium">Comprando en:</h4>
+																<p>
+																	{#each promotion.where as where}
+																		<span class="font-medium">{where}</span
+																		>{#if where !== promotion.where[promotion.where.length - 1]},{' '}
+																		{/if}
+																	{/each}
+																</p>
+															</div>
+														{/if}
+														{#if promotion.limits?.maxDiscount}
+															<div>
+																<h4 class="font-medium">Tope de descuento:</h4>
+																<p class="font-medium">
+																	{formatCurrency(promotion.limits.maxDiscount)}
+																</p>
+															</div>
+														{/if}
+														{#if promotion.limits?.explicitlyHasNoLimit}
+															<p class="flex items-center gap-1">
+																<StarsIcon class="h-4 w-4 text-yellow-500" />
+																<span class="font-bold text-yellow-500">Sin tope</span>
+															</p>
+														{/if}
+														{#if promotion.membership && promotion.membership.length > 0}
+															<div>
+																<h4 class="font-medium">Beneficio exclusivo para:</h4>
+																<p>
+																	{#each promotion.membership as membership}
+																		<span class="font-medium">{membership}</span
+																		>{#if membership !== promotion.membership[promotion.membership.length - 1]},{' '}
+																		{/if}
+																	{/each}
+																</p>
+															</div>
+														{/if}
+														{#if promotion.paymentMethods && promotion.paymentMethods.length > 0}
+															<div>
+																<h4 class="font-medium">Medios de pago:</h4>
+																<div class="mt-1 flex flex-col gap-2">
+																	{#each promotion.paymentMethods as methods}
+																		{#if Array.isArray(methods)}
+																			<div class="flex flex-wrap items-center gap-2">
+																				{#each methods as methodItem}
+																					{#if isPaymentMethod(methodItem)}
+																						<enhanced:img
+																							src={logos[methodItem]}
+																							alt={methodItem}
+																							class="h-6 w-auto"
+																						/>
+																					{:else}
+																						<Badge variant="secondary">
+																							{methodItem}
+																						</Badge>
+																					{/if}
+																					{#if methodItem !== methods[methods.length - 1]}
+																						<span>+</span>
+																					{/if}
+																				{/each}
+																			</div>
+																		{:else}
+																			<Badge variant="secondary">
+																				{methods}
+																			</Badge>
 																		{/if}
 																	{/each}
 																</div>
-															{:else}
-																<Badge variant="secondary">
-																	{methods}
-																</Badge>
-															{/if}
-														{/each}
+															</div>
+														{/if}
+														{#if promotion.restrictions && promotion.restrictions.length > 0}
+															<div>
+																<h4 class="font-medium">Restricciones:</h4>
+																<ul class="list-disc pl-5 text-sm">
+																	{#each promotion.restrictions as restriction}
+																		<li>{restriction}</li>
+																	{/each}
+																</ul>
+															</div>
+														{/if}
 													</div>
-												</div>
-											{/if}
-											{#if promotion.restrictions && promotion.restrictions.length > 0}
-												<Accordion.Root type="single" class="w-full space-y-2">
-													<Accordion.Item
-														value="restrictions"
-														class="rounded-md border border-gray-100 px-2"
-													>
-														<Accordion.Trigger
-															class="flex flex-1 items-center justify-between  py-2 font-medium transition-all [&[data-state=open]>svg]:rotate-180"
+													<div class="mt-4">
+														<Button
+															variant="outline"
+															href={promotion.url}
+															target="_blank"
+															rel="noopener noreferrer"
+															class="w-full"
 														>
-															<h4 class="text-sm font-semibold">Restricciones</h4>
-														</Accordion.Trigger>
-														<Accordion.Content class="pb-2 pt-0">
-															<ul class="list-disc pl-5 text-xs">
-																{#each promotion.restrictions as restriction}
-																	<li>{restriction}</li>
-																{/each}
-															</ul>
-														</Accordion.Content>
-													</Accordion.Item>
-												</Accordion.Root>
-											{/if}
-										</div>
-									</Card.Content>
-									<Card.Footer class="mt-auto">
-										<Button
-											variant="outline"
-											size="sm"
-											href={promotion.url}
-											target="_blank"
-											rel="noopener noreferrer"
-										>
-											<ExternalLinkIcon class="h-4 w-4" />
-											Fuente
-										</Button>
-									</Card.Footer>
-								</Card.Root>
-							{/if}
+															<ExternalLinkIcon class="h-4 w-4" />
+															Ver más detalles
+														</Button>
+													</div>
+												</Dialog.Content>
+											</Dialog.Root>
+										{/each}
+									</div>
+								</div>
+							</div>
 						{/if}
 					{/each}
 				</div>

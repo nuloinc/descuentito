@@ -28,7 +28,7 @@ export const logos: Record<
 	MODO: MODO,
 	Mastercard: Mastercard,
 	VISA: VISA,
-	MercadoPago: MercadoPago,
+	'Mercado Pago': MercadoPago,
 	'Tarjeta Carrefour Prepaga': TarjetaCarrefourPrepaga,
 	'Tarjeta Carrefour Crédito': TarjetaCarrefourCredito,
 	'Banco Macro': BancoMacro,
