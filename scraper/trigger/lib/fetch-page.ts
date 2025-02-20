@@ -1,12 +1,13 @@
+import { logger } from "@trigger.dev/sdk/v3";
 import {
   createBrowserSession,
   generateElementDescription,
   storeCacheData,
-} from "../../lib";
+} from "../../lib.js";
+import { Page } from "puppeteer";
 
 export interface PageData {
   screenshot: Uint8Array;
-  html: string;
   text: string;
   domDescription: string;
 }
@@ -14,15 +15,35 @@ export interface PageData {
 export async function fetchPageData(
   source: string,
   url: string,
-  selector?: string
+  {
+    selector,
+    waitForSelector,
+  }: {
+    selector?: string;
+    waitForSelector?: string;
+  } = {}
 ): Promise<PageData> {
   await using session = await createBrowserSession();
   const { page } = session;
 
   await page.goto(url, { waitUntil: "domcontentloaded" });
 
-  if (selector) {
-    await page.waitForSelector(selector);
+  if (waitForSelector) {
+    try {
+      await page.waitForSelector(waitForSelector, {});
+    } catch (error) {
+      logger.error("Error waiting for selector", {
+        waitForSelector,
+        error,
+      });
+      await storeCacheData(
+        source,
+        "-failed.png",
+        await page.screenshot({ fullPage: true })
+      );
+      await storeCacheData(source, "-failed.html", (await getHtml(page)) || "");
+      throw error;
+    }
   }
 
   const screenshot = await page.screenshot({ fullPage: true });
@@ -30,10 +51,11 @@ export async function fetchPageData(
 
   const elementToQuery = selector || "body";
 
-  const html = await page.evaluate((selector) => {
-    return document.querySelector(selector)?.innerHTML || "";
-  }, elementToQuery);
-  await storeCacheData(source, ".html", html);
+  await storeCacheData(
+    source,
+    ".html",
+    (await getHtml(page, elementToQuery)) || ""
+  );
 
   await page.exposeFunction(
     "generateElementDescription",
@@ -48,5 +70,13 @@ export async function fetchPageData(
   }, elementToQuery);
   await storeCacheData(source, ".txt", text);
 
-  return { screenshot, html, text, domDescription };
+  return { screenshot, text, domDescription };
+}
+
+export async function getHtml(page: Page, selector?: string) {
+  return await page.evaluate((selector) => {
+    return (
+      selector ? document.querySelector(selector) : document.documentElement
+    )?.innerHTML;
+  }, selector);
 }

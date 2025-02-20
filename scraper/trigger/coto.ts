@@ -17,7 +17,10 @@ export const cotoTask = schedules.task({
     const { domDescription } = await fetchPageData(
       "coto",
       "https://www.cotodigital.com.ar/sitios/cdigi/terminos-descuentos",
-      ".atg_store_company_content"
+      {
+        selector: ".atg_store_company_content",
+        waitForSelector: ".atg_store_company_content",
+      }
     );
 
     logger.info("DOM Description", { domDescription });

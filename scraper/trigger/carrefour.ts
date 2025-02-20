@@ -20,7 +20,11 @@ export const carrefourTask = schedules.task({
     const { domDescription } = await fetchPageData(
       "carrefour",
       "https://www.carrefour.com.ar/descuentos-bancarios",
-      ".vtex-tabs__content"
+      {
+        selector: ".vtex-tabs__content",
+        waitForSelector:
+          ".valtech-carrefourar-bank-promotions-0-x-ColRightTittle",
+      }
     );
 
     logger.info("DOM Description", { domDescription });
