@@ -103,7 +103,7 @@
 		descuentito.ar
 		<Badge variant="destructive">beta :)</Badge>
 	</h1>
-	<h2 class="mb-2 text-lg font-medium">Descuentos en Carrefour</h2>
+	<h2 class="mb-2 text-lg font-medium">Descuentos en Carrefour y Coto</h2>
 
 	<Tabs
 		value={selectedWeekday}
