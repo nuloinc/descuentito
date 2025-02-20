@@ -23,7 +23,7 @@ export async function createBrowserSession() {
 
   const browser = await puppeteer.launch({
     args: [`--proxy-server=localhost:8000`],
-    headless: false,
+    headless: process.env.NODE_ENV === "development" ? false : true,
   });
 
   const page = await browser.newPage();
