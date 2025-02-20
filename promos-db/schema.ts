@@ -23,7 +23,7 @@ export interface GenericPromotion {
   description: string;
   category?: string;
   discount: {
-    type: string;
+    type: "porcentaje" | "cuotas sin intereses" | {};
     value: number;
   };
   validFrom: string;
@@ -31,6 +31,7 @@ export interface GenericPromotion {
   weekdays?: Weekday[];
   url: string;
   paymentMethods?: (string | string[])[];
+  membership?: string[];
   restrictions?: string[];
   additionalInfo?: string;
   limits?: {
@@ -47,4 +48,9 @@ export interface GaliciaPromotion extends GenericPromotion {
 export interface CarrefourPromotion extends GenericPromotion {
   source: "carrefour";
   where: ("Carrefour" | "Maxi" | "Market" | "Express" | "Online")[];
+}
+
+export interface CotoPromotion extends GenericPromotion {
+  source: "coto";
+  where: ("Coto" | "Online")[];
 }

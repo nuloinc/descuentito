@@ -1,5 +1,4 @@
 import { logger, schedules } from "@trigger.dev/sdk/v3";
-import { extractPromotions } from "./extract-promotions";
 import { BUCKET_NAME, s3 } from "../fetch-cacher";
 import { format } from "date-fns";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
@@ -11,16 +10,13 @@ import {
   storeCacheData,
 } from "../lib";
 import { google } from "@ai-sdk/google";
-
 import { z } from "zod";
-
-import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { generateObject, NoObjectGeneratedError, streamObject } from "ai";
-import { CarrefourPromotion, GenericPromotion } from "promos-db/schema";
+import { CotoPromotion } from "promos-db/schema";
 import { fetchPageData } from "./lib/fetch-page";
 
-export const carrefourTask = schedules.task({
-  id: "carrefour-extractor",
+export const cotoTask = schedules.task({
+  id: "coto-extractor",
   cron: "0 0 * * *",
   maxDuration: 300,
   retry: {
@@ -28,14 +24,14 @@ export const carrefourTask = schedules.task({
   },
   run: async (payload, { ctx }) => {
     const { domDescription } = await fetchPageData(
-      "carrefour",
-      "https://www.carrefour.com.ar/descuentos-bancarios",
-      ".vtex-tabs__content"
+      "coto",
+      "https://www.cotodigital.com.ar/sitios/cdigi/terminos-descuentos",
+      ".atg_store_company_content"
     );
 
     logger.info("DOM Description", { domDescription });
 
-    let promotions: CarrefourPromotion[] = [];
+    let promotions: CotoPromotion[] = [];
     try {
       const { elementStream } = await streamObject({
         model: google("gemini-2.0-flash"),
@@ -66,9 +62,7 @@ export const carrefourTask = schedules.task({
             )
             .optional(),
           restrictions: z.array(z.string()),
-          where: z.array(
-            z.enum(["Carrefour", "Maxi", "Market", "Express", "Online"])
-          ),
+          where: z.array(z.enum(["Coto", "Online"])),
           paymentMethods: z
             .array(
               z.array(
@@ -76,24 +70,45 @@ export const carrefourTask = schedules.task({
                   "Banco Patagonia",
                   "Banco BBVA",
                   "Banco Nación",
+                  "Banco Ciudad",
                   "Banco Galicia",
+                  "Banco Galicia - Eminent",
                   "Banco Macro",
                   "Banco Santander",
+                  "Banco ICBC",
+                  "Banco ICBC – Cliente Payroll",
+                  "Banco Credicoop",
+                  "Banco Credicoop - Plan Sueldo",
+                  "Banco Santander",
+                  "Banco Comafi",
+                  "Banco Galicia Más",
+                  "Banco Supervielle",
+                  "Banco Columbia",
+                  "Banco del Sol",
+                  "Reba",
                   "Mercado Pago",
                   "Dinero en cuenta",
                   "MODO",
+                  "Ualá",
+                  "Uilo",
+                  "NaranjaX",
+                  "Cuenta DNI",
                   "Tarjeta Carrefour Prepaga",
                   "Tarjeta Carrefour Crédito",
                   "Tarjeta de crédito VISA",
                   "Tarjeta de débito VISA",
                   "Tarjeta de crédito Mastercard",
                   "Tarjeta de débito Mastercard",
-                  "Cuenta DNI",
+                  "Tarjeta American Express",
+                  "Tarjeta Prepaga Mastercard",
+                  "Tarjeta de Crédito Coto TCI",
                 ])
               )
             )
             .optional(),
-          membership: z.array(z.enum(["Mi Carrefour"])).optional(),
+          membership: z
+            .array(z.enum(["Club La Nacion", "Comunidad Coto"]))
+            .optional(),
           limits: z.object({
             maxDiscount: z.number().optional(),
             explicitlyHasNoLimit: z.boolean().optional(),
@@ -109,11 +124,11 @@ If there are multiple combinations possible, represent each and every one of the
 
 Example: Banco Galicia with either VISA or Mastercard credit cards: [["Banco Galicia", "Tarjeta de crédito VISA"], ["Banco Galicia", "Tarjeta de crédito Mastercard"]], NOT merging them like this: [["Banco Galicia", "Tarjeta de crédito VISA", "Tarjeta de crédito Mastercard"]]
 
-Tarjeta Carrefour Prepaga/Crédito are DISTINCT from "Mi Carrefour" which is a membership program.
+"Banco Galicia Más" is a different payment method from "Banco Galicia".
 
 RESTRICTIONS
 
-Do not include irrelevant restrictions that are obvious, such as restrictions related to foreign credit cards, purchase cards, Carrefour-specific payment methods, payments in foreign currencies, or social aid programs, or restrictions that specify "Solo para consumo familiar.".
+Do not include irrelevant restrictions that are obvious, such as restrictions related to foreign credit cards, purchase cards, payments in foreign currencies, or social aid programs, or restrictions that specify "Solo para consumo familiar.".
 
 Do not include redundant information that is mentioned elsewhere in the object, such as validity dates, days of the week, payment methods, where the promotion is valid or limits.
 
@@ -121,7 +136,7 @@ Order by relevance, starting with the most relevant restrictions.
 
 WHERE
 
-"Comprando en:" describes WHERE the promotion is valid. "logo$TYPE" is for Carrefour $TYPE.
+"Coto" means the promotion is valid in physical stores, "Online" means it's valid in cotodigital.com.ar.
 
 LIMITS
 
@@ -138,9 +153,7 @@ LIMITS
                 text:
                   "Extract the promotions from the following text: " +
                   domDescription,
-                // text: "Extract the promotions from the following screenshot: ",
               },
-              // { type: "image", image: screenshot },
             ],
           },
         ],
@@ -150,8 +163,8 @@ LIMITS
         logger.info("Element", { element });
         promotions.push({
           ...element,
-          url: "https://www.carrefour.com.ar/descuentos-bancarios",
-          source: "carrefour",
+          url: "https://www.cotodigital.com.ar/sitios/cdigi/terminos-descuentos",
+          source: "coto",
         });
       }
     } catch (error) {
@@ -159,7 +172,6 @@ LIMITS
         logger.error("No object generated", {
           error,
           text: error.text,
-
           cause: error.cause,
           usage: error.usage,
           response: error.response,
@@ -168,15 +180,15 @@ LIMITS
       throw error;
     }
 
-    await storeCacheData("carrefour", ".json", JSON.stringify(promotions));
+    await storeCacheData("coto", ".json", JSON.stringify(promotions));
 
     await db.transaction(async (tx) => {
       await tx
         .delete(schema.promotionsTable)
-        .where(sql`${schema.promotionsTable.source} = 'carrefour'`);
+        .where(sql`${schema.promotionsTable.source} = 'coto'`);
       await tx.insert(schema.promotionsTable).values(
         promotions.map((promo) => ({
-          source: "carrefour",
+          source: "coto",
           json: promo,
         }))
       );

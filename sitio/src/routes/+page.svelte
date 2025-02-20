@@ -70,9 +70,11 @@
 		{#each weekdays as weekday}
 			<TabsContent value={weekday} class="mt-6">
 				<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-					{#each data.promotions.carrefour as promo}
+					{#each [...data.promotions.carrefour, ...data.promotions.coto] as promo}
 						{#if promo.json}
-							{@const promotion = promo.json as import('promos-db/schema').CarrefourPromotion}
+							{@const promotion = promo.json as
+								| import('promos-db/schema').CarrefourPromotion
+								| import('promos-db/schema').CotoPromotion}
 							{#if !promotion.weekdays || promotion.weekdays.length === 0 || promotion.weekdays.includes(weekday as any)}
 								<Card.Root class="flex flex-col">
 									<Card.Header>
@@ -101,6 +103,16 @@
 												<p class="flex items-center gap-1">
 													<StarsIcon class="h-4 w-4 text-yellow-500" />
 													<span class="font-bold text-yellow-500">Sin tope</span>
+												</p>
+											{/if}
+											{#if promotion.membership && promotion.membership.length > 0}
+												<p>
+													Beneficio exclusivo para:
+													{#each promotion.membership as membership}
+														<span class="font-bold">{membership}</span
+														>{#if membership !== promotion.membership[promotion.membership.length - 1]},{' '}
+														{/if}
+													{/each}
 												</p>
 											{/if}
 											{#if promotion.paymentMethods && promotion.paymentMethods.length > 0}

@@ -10,10 +10,14 @@ export const load: PageServerLoad = async () => {
 	const carrefourPromotions = await db.query.promotionsTable.findMany({
 		where: eq(schema.promotionsTable.source, 'carrefour')
 	});
+	const cotoPromotions = await db.query.promotionsTable.findMany({
+		where: eq(schema.promotionsTable.source, 'coto')
+	});
 	return {
 		promotions: {
 			galicia: galiciaPromotions,
-			carrefour: carrefourPromotions
+			carrefour: carrefourPromotions,
+			coto: cotoPromotions
 		}
 	};
 };
