@@ -9,6 +9,7 @@ import {
   generateElementDescription,
   storeCacheData,
 } from "../lib";
+import { savePromotions } from "./lib/db";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import { generateObject, NoObjectGeneratedError, streamObject } from "ai";
@@ -180,23 +181,6 @@ LIMITS
       throw error;
     }
 
-    await storeCacheData("coto", ".json", JSON.stringify(promotions));
-
-    await db.transaction(async (tx) => {
-      await tx
-        .delete(schema.promotionsTable)
-        .where(sql`${schema.promotionsTable.source} = 'coto'`);
-      await tx.insert(schema.promotionsTable).values(
-        promotions.map((promo) => ({
-          source: "coto",
-          json: promo,
-        }))
-      );
-    });
-
-    logger.info("Saved promotions", {
-      count: promotions.length,
-      promotions,
-    });
+    await savePromotions("coto", promotions);
   },
 });

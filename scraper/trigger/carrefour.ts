@@ -10,6 +10,7 @@ import {
   generateElementDescription,
   storeCacheData,
 } from "../lib";
+import { savePromotions } from "./lib/db";
 import { google } from "@ai-sdk/google";
 
 import { z } from "zod";
@@ -159,7 +160,6 @@ LIMITS
         logger.error("No object generated", {
           error,
           text: error.text,
-
           cause: error.cause,
           usage: error.usage,
           response: error.response,
@@ -168,23 +168,6 @@ LIMITS
       throw error;
     }
 
-    await storeCacheData("carrefour", ".json", JSON.stringify(promotions));
-
-    await db.transaction(async (tx) => {
-      await tx
-        .delete(schema.promotionsTable)
-        .where(sql`${schema.promotionsTable.source} = 'carrefour'`);
-      await tx.insert(schema.promotionsTable).values(
-        promotions.map((promo) => ({
-          source: "carrefour",
-          json: promo,
-        }))
-      );
-    });
-
-    logger.info("Saved promotions", {
-      count: promotions.length,
-      promotions,
-    });
+    await savePromotions("carrefour", promotions);
   },
 });
