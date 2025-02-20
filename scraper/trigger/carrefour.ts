@@ -1,15 +1,4 @@
 import { logger, schedules } from "@trigger.dev/sdk/v3";
-import { extractPromotions } from "./extract-promotions";
-import { BUCKET_NAME, s3 } from "../fetch-cacher";
-import { format } from "date-fns";
-import { PutObjectCommand } from "@aws-sdk/client-s3";
-import { db, schema } from "promos-db/db";
-import { eq, sql } from "drizzle-orm";
-import {
-  createBrowserSession,
-  generateElementDescription,
-  storeCacheData,
-} from "../lib";
 import { savePromotions } from "./lib/db";
 import { google } from "@ai-sdk/google";
 
