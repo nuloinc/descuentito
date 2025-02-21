@@ -34,7 +34,6 @@ export const carrefourTask = schedules.task({
         output: "array",
         schema: z.object({
           title: z.string(),
-          description: z.string(),
           category: z.string().optional(),
           discount: z.object({
             type: z.enum(["porcentaje", "cuotas sin intereses"]),

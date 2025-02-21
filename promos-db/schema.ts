@@ -20,7 +20,7 @@ export type Weekday =
   | "Domingo";
 export interface GenericPromotion {
   title: string;
-  description: string;
+  description?: string;
   category?: string;
   discount: {
     type: "porcentaje" | "cuotas sin intereses" | {};
