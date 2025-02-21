@@ -4,7 +4,8 @@ import fs from "fs";
 import { rm } from "fs/promises";
 import { Octokit } from "@octokit/rest";
 import { format } from "date-fns";
-import {execa} from "execa";
+import { execa } from "execa";
+import { logger } from "@trigger.dev/sdk/v3";
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN!;
 const GITHUB_OWNER = process.env.GITHUB_OWNER!;
@@ -45,7 +46,7 @@ export async function initGitRepo() {
   return {
     dir: REPO_DIR,
     [Symbol.asyncDispose]: async () => {
-    //   await rm(REPO_DIR, { recursive: true, force: true });
+      //   await rm(REPO_DIR, { recursive: true, force: true });
     },
   };
 }
@@ -76,10 +77,17 @@ export async function savePromotions(source: string, promotions: any[]) {
   });
 
   const filepath = `${source}.json`;
-  fs.writeFileSync(
-    `${dir}/${filepath}`,
-    JSON.stringify(promotions, null, 2)
+  fs.writeFileSync(`${dir}/${filepath}`, JSON.stringify(promotions, null, 2));
+
+  const status = await git.statusMatrix({ fs, dir, filepaths: [filepath] });
+  const hasChanges = status.some(
+    ([_file, _head, workdir, _stage]) => workdir !== 1
   );
+  if (!hasChanges) {
+    logger.warn("No changes detected, skipping commit");
+    return;
+  }
+
   await git.add({ fs, dir, filepath });
 
   await git.commit({
@@ -92,10 +100,9 @@ export async function savePromotions(source: string, promotions: any[]) {
     },
   });
 
-
   const remote = `https://catdevnull-bot:${GITHUB_TOKEN}@github.com/${GITHUB_OWNER}/${GITHUB_REPO}.git`;
-  await execa('git', ['push', remote, branchName], {
-    cwd: dir
+  await execa("git", ["push", remote, branchName], {
+    cwd: dir,
   });
 
   await octokit.pulls.create({
