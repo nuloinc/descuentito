@@ -2,8 +2,8 @@
   "type": "module",
   "scripts": {
     "check": "tsc",
-    "dev": "pnpx trigger.dev@latest dev",
-    "deploy": "pnpx trigger.dev@latest deploy"
+    "dev": "pnpx trigger.dev@3.3.16 dev",
+    "deploy": "pnpx trigger.dev@3.3.16 deploy"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.1.14",
