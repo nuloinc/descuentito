@@ -20,9 +20,11 @@ jobs:
           npm install -g corepack@latest
           corepack enable
       - name: Install dependencies
+        working-directory: scraper
         run: pnpm install
       - name: 🚀 Deploy Trigger.dev
+        working-directory: scraper
         env:
           TRIGGER_ACCESS_TOKEN: ${{ secrets.TRIGGER_ACCESS_TOKEN }}
         run: |
-          pnpm deploy
+          pnpm run deploy
