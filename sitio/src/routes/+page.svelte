@@ -33,10 +33,7 @@
 	const todayWeekdayIndex = today.getDay() - 1; // Adjust to start from Monday (0)
 	const defaultWeekday = weekdays[todayWeekdayIndex >= 0 ? todayWeekdayIndex : weekdays.length - 1];
 
-	$: promotions = [
-		...data.promotions.carrefour.map((promotion) => promotion.json as schema.CarrefourPromotion),
-		...data.promotions.coto.map((promotion) => promotion.json as schema.CotoPromotion)
-	];
+	$: promotions = [...data.promotions.carrefour, ...data.promotions.coto];
 
 	let selectedWeekday: schema.Weekday = defaultWeekday;
 
@@ -51,9 +48,7 @@
 	function isPaymentMethod(method: string): method is PaymentMethod {
 		return method in logos;
 	}
-	function groupPromotionsByPaymentMethod(
-		promotions: (schema.CarrefourPromotion | schema.CotoPromotion)[]
-	) {
+	function groupPromotionsByPaymentMethod(promotions: schema.Promotion[]) {
 		const grouped = new Map<
 			(typeof BANKS_OR_WALLETS)[number] | 'other',
 			(typeof promotions)[number][]

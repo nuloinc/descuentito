@@ -1,23 +1,25 @@
 import type { PageServerLoad } from './$types';
-import { db, schema } from '$lib/db';
-import { eq } from 'drizzle-orm';
+import type { GenericPromotion, Promotion } from 'promos-db/schema';
 
-export const load: PageServerLoad = async () => {
-	const galiciaPromotions = await db.query.promotionsTable.findMany({
-		where: eq(schema.promotionsTable.source, 'galicia'),
-		limit: 50
-	});
-	const carrefourPromotions = await db.query.promotionsTable.findMany({
-		where: eq(schema.promotionsTable.source, 'carrefour')
-	});
-	const cotoPromotions = await db.query.promotionsTable.findMany({
-		where: eq(schema.promotionsTable.source, 'coto')
-	});
+const sources = ['carrefour', 'coto'] as const;
+
+export const load: PageServerLoad = async ({ platform }) => {
+	const data = Object.fromEntries(
+		await Promise.all(
+			sources.map(async (source) => {
+				let kv = await platform?.env?.DESCUENTITO_DATA.get(source);
+				if (!kv) {
+					console.warn(`Fetching ${source} from GitHub`);
+					kv = await fetch(
+						`https://raw.githubusercontent.com/nuloinc/descuentito-data/refs/heads/main/${source}.json`
+					).then((res) => res.text());
+				}
+				if (!kv) return [source, []];
+				return [source, JSON.parse(kv) as Promotion[]];
+			})
+		)
+	) as { [key in (typeof sources)[number]]: Promotion[] };
 	return {
-		promotions: {
-			galicia: galiciaPromotions,
-			carrefour: carrefourPromotions,
-			coto: cotoPromotions
-		}
+		promotions: data
 	};
 };

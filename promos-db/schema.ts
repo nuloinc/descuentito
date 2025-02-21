@@ -55,6 +55,8 @@ export interface CotoPromotion extends GenericPromotion {
   where: ("Coto" | "Online")[];
 }
 
+export type Promotion = CarrefourPromotion | CotoPromotion;
+
 export const BANKS_OR_WALLETS = [
   "Mercado Pago",
   "Banco Galicia",
