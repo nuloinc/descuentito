@@ -6,3 +6,5 @@ node_modules
 galicia-categories.json
 galicia-promotions.json
 
+.git-data/
+.git-data-*/

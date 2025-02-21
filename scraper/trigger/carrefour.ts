@@ -1,13 +1,11 @@
 import { logger, schedules } from "@trigger.dev/sdk/v3";
-import { savePromotions } from "./lib/db";
 import { google } from "@ai-sdk/google";
-
 import { z } from "zod";
-
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { generateObject, NoObjectGeneratedError, streamObject } from "ai";
 import { CarrefourPromotion, GenericPromotion } from "promos-db/schema";
 import { fetchPageData } from "./lib/fetch-page";
+import { savePromotions } from "../lib/git";
 
 export const carrefourTask = schedules.task({
   id: "carrefour-extractor",

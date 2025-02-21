@@ -1,10 +1,10 @@
 import { logger, schedules } from "@trigger.dev/sdk/v3";
-import { savePromotions } from "./lib/db";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import { NoObjectGeneratedError, streamObject } from "ai";
 import { CotoPromotion } from "promos-db/schema";
 import { fetchPageData } from "./lib/fetch-page";
+import { savePromotions } from "../lib/git";
 
 export const cotoTask = schedules.task({
   id: "coto-extractor",
