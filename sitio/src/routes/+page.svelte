@@ -33,7 +33,7 @@
 	const todayWeekdayIndex = today.getDay() - 1; // Adjust to start from Monday (0)
 	const defaultWeekday = weekdays[todayWeekdayIndex >= 0 ? todayWeekdayIndex : weekdays.length - 1];
 
-	$: promotions = [...data.promotions.carrefour, ...data.promotions.coto];
+	$: promotions = [...data.promotions.carrefour, ...data.promotions.coto, ...data.promotions.dia];
 
 	let selectedWeekday: schema.Weekday = defaultWeekday;
 
@@ -98,7 +98,7 @@
 		descuentito.ar
 		<Badge variant="destructive">beta :)</Badge>
 	</h1>
-	<h2 class="mb-2 text-lg font-medium">Descuentos en Carrefour y Coto</h2>
+	<h2 class="mb-2 text-lg font-medium">Descuentos en Carrefour, Coto y Dia</h2>
 
 	<Tabs
 		value={selectedWeekday}

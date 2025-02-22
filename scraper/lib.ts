@@ -3,6 +3,7 @@ import ProxyChain from "proxy-chain";
 import { s3, BUCKET_NAME } from "./fetch-cacher";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { format } from "date-fns";
+import { logger } from "@trigger.dev/sdk/v3";
 
 export async function createBrowserSession() {
   const server = new ProxyChain.Server({
@@ -53,6 +54,7 @@ export async function storeCacheData(
   suffix: string,
   data: string | Buffer | Uint8Array
 ) {
+  logger.debug("Storing cache data", { key, suffix });
   await s3.send(
     new PutObjectCommand({
       Bucket: BUCKET_NAME,
