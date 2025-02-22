@@ -46,7 +46,7 @@ export async function initGitRepo() {
   return {
     dir: REPO_DIR,
     [Symbol.asyncDispose]: async () => {
-      //   await rm(REPO_DIR, { recursive: true, force: true });
+        await rm(REPO_DIR, { recursive: true, force: true });
     },
   };
 }
