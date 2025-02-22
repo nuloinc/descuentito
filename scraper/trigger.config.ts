@@ -26,11 +26,30 @@ export default defineConfig({
     extensions: [
       puppeteer(),
       additionalPackages({ packages: ["@libsql/linux-x64-gnu"] }),
+      {
+        name: "PlaywrightExtension",
+        onBuildComplete: async (context, manifest) => {
+          if (context.target === "dev") {
+            return;
+          }
+
+          const instructions = [`RUN npm exec playwright install`];
+
+          context.addLayer({
+            id: "puppeteer",
+            image: {
+              instructions,
+            },
+          });
+        },
+      },
     ],
     external: [
       "@libsql/client",
       "@libsql/darwin-arm64",
       "@libsql/linux-x64-gnu",
+      "fsevents",
+      "playwright",
     ],
   },
 });

@@ -4,8 +4,12 @@ import { s3, BUCKET_NAME } from "./fetch-cacher";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { format } from "date-fns";
 import { logger } from "@trigger.dev/sdk/v3";
+import { Stagehand } from "@browserbasehq/stagehand";
+import StagehandConfig from "./trigger/stagehand.config";
+import { AISdkClient } from "./trigger/lib/aisdk_client";
+import { google } from "@ai-sdk/google";
 
-export async function createBrowserSession() {
+async function createProxyServer() {
   const server = new ProxyChain.Server({
     port: 8000,
     host: "localhost",
@@ -15,13 +19,16 @@ export async function createBrowserSession() {
       };
     },
   });
-
   await new Promise((resolve) =>
     server.listen(() => {
       resolve(true);
     })
   );
+  return server;
+}
 
+export async function createBrowserSession() {
+  const server = await createProxyServer();
   const browser = await puppeteer.launch({
     args: [`--proxy-server=localhost:8000`],
     headless: process.env.NODE_ENV === "development" ? false : true,
@@ -46,6 +53,28 @@ export async function createBrowserSession() {
     },
     browser,
     page,
+  };
+}
+
+export async function createStagehandSession() {
+  const server = await createProxyServer();
+  const stagehand = new Stagehand({
+    ...StagehandConfig,
+    localBrowserLaunchOptions: {
+      args: [`--proxy-server=localhost:8000`],
+    },
+    llmClient: new AISdkClient({
+      model: google("gemini-2.0-pro-exp-02-05"),
+    }),
+  });
+  await stagehand.init();
+
+  return {
+    [Symbol.asyncDispose]: async () => {
+      await stagehand.close();
+      await server.close(true);
+    },
+    stagehand,
   };
 }
 

@@ -10,13 +10,8 @@ import {
   PAYMENT_METHODS_PROMPT,
   RESTRICTIONS_PROMPT,
 } from "promos-db/schema";
-import {
-  fetchPageData,
-  fetchPageDataFromPage,
-  waitForSelectorOrFail,
-} from "./lib/fetch-page";
 import { savePromotions } from "../lib/git";
-import { createBrowserSession, storeCacheData } from "../lib";
+import { createBrowserSession, createStagehandSession, storeCacheData } from "../lib";
 
 export const diaTask = schedules.task({
   id: "dia-extractor",
@@ -26,44 +21,49 @@ export const diaTask = schedules.task({
     maxAttempts: 1,
   },
   run: async (payload, { ctx }) => {
-    await using session = await createBrowserSession();
-    const { page } = session;
-    await fetchPageDataFromPage(
-      page,
-      "https://diaonline.supermercadosdia.com.ar/medios-de-pago-y-promociones",
-      {
-        selector: ".diaio-custom-bank-promotions-0-x-list-by-days__item",
-        source: "dia",
-      }
-    );
+    await using sessions = await createStagehandSession();
+    const {stagehand} = sessions;
 
-    const elements = await page.$$(
+    // desactivar popup de club dia
+    await stagehand.context.addCookies([{
+      name: "clubdiapopup",
+      value: "true",
+      domain: "diaonline.supermercadosdia.com.ar",
+      path: "/",
+      secure: false,
+      httpOnly: false,
+      sameSite: "Lax"
+    }]);
+
+    await stagehand.page.goto("https://diaonline.supermercadosdia.com.ar/medios-de-pago-y-promociones");
+
+    const elements = await stagehand.page.$$(
       ".diaio-custom-bank-promotions-0-x-list-by-days__item"
     );
 
     let promotions: DiaPromotion[] = [];
 
-    // close legal modal OR close annoying promo modal
-    const close = async (wait: boolean = false) => {
+    const closeModal = async () => {
       await (
-        await page[wait ? "waitForSelector" : "$"](".vtex-modal__close-icon")
+        await stagehand.page.$(".vtex-modal__close-icon")
       )?.click();
     };
 
     let i = 0;
     for (const element of elements) {
-      await close();
+      await closeModal();
       const screenshot = await element.screenshot();
       await storeCacheData("dia", `-element${i}.png`, screenshot);
 
-      await close();
-      await page.click(".diaio-custom-bank-promotions-0-x-bank-modal__button");
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      const legalesScreenshot = await page.screenshot();
-      await storeCacheData("dia", `-legales${i}.png`, legalesScreenshot);
+      const legalBtn = await element.$('.diaio-custom-bank-promotions-0-x-bank-modal__button')
+      if (!legalBtn) throw new Error("No legal button found");
+      await legalBtn.click()
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-      await close();
+      const legalesText=(await stagehand.page.$('.diaio-custom-bank-promotions-0-x-bank-modal__text'))?.textContent || ''
+      if (!legalesText) throw new Error("No legal text found");
 
+      await closeModal()
       /////////////////
 
       const { object } = await generateObject({
@@ -89,10 +89,10 @@ ${LIMITS_PROMPT}
             content: [
               {
                 type: "text",
-                text: "Extract the promotions from the following screenshot, and the following legal text: ",
+                text: "Extract the promotions from the following screenshot, and the following legal text: \n\n" + legalesText,
               },
               { type: "image", image: screenshot },
-              { type: "image", image: legalesScreenshot },
+              // { type: "image", image: legalesScreenshot },
             ],
           },
         ],
