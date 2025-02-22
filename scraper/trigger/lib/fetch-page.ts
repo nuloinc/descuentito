@@ -10,6 +10,7 @@ export interface PageData {
   screenshot: Uint8Array;
   text: string;
   domDescription: string;
+  page: Page;
 }
 
 export async function waitForSelectorOrFail(
@@ -77,7 +78,7 @@ export async function fetchPageDataFromPage(
   }, elementToQuery);
   await storeCacheData(source, ".txt", text);
 
-  return { screenshot, text, domDescription };
+  return { screenshot, text, domDescription,page };
 }
 
 export async function fetchPageData(
