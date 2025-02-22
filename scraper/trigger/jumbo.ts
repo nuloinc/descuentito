@@ -4,7 +4,6 @@ import { z } from "zod";
 import { generateObject } from "ai";
 import {
   BasicPromotionSchema,
-  DiaPromotion,
   JumboPromotion,
   LIMITS_PROMPT,
   PAYMENT_METHODS_PROMPT,
@@ -122,6 +121,6 @@ ${LIMITS_PROMPT}
       }
     }
 
-    await savePromotions("dia", promotions);
+    await savePromotions("jumbo", promotions);
   },
 });
