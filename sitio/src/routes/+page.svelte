@@ -17,6 +17,7 @@
 	import { BANKS_OR_WALLETS, promotionsTable } from 'promos-db/schema';
 	import * as Accordion from '$lib/components/ui/accordion';
 	import * as Dialog from '$lib/components/ui/dialog';
+	import * as Alert from '$lib/components/ui/alert';
 
 	export let data: PageData;
 
@@ -261,6 +262,13 @@
 															</div>
 														{/if}
 													</div>
+													<Alert.Root variant="warning">
+														<Alert.Title>Verifica los detalles</Alert.Title>
+														<Alert.Description
+															>Te recomendamos verificar los detalles de la promoción en el sitio de
+															la tienda.</Alert.Description
+														>
+													</Alert.Root>
 													<div class="mt-4">
 														<Button
 															variant="outline"
