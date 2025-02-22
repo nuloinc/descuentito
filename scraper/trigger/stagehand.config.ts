@@ -4,9 +4,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const StagehandConfig: ConstructorParams = {
-  env: "LOCAL",
-  // apiKey: process.env.BROWSERBASE_API_KEY /* API key for authentication */,
-  // projectId: process.env.BROWSERBASE_PROJECT_ID /* Project identifier */,
+  // env: "LOCAL",
+  env: "BROWSERBASE",
+  apiKey: process.env.BROWSERBASE_API_KEY /* API key for authentication */,
+  projectId: process.env.BROWSERBASE_PROJECT_ID /* Project identifier */,
   debugDom: undefined /* Enable DOM debugging features */,
   headless:
     process.env.NODE_ENV === "development"

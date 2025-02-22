@@ -29,10 +29,13 @@ async function createProxyServer() {
 
 export async function createBrowserSession() {
   const server = await createProxyServer();
-  const browser = await puppeteer.launch({
-    args: [`--proxy-server=localhost:8000`],
-    headless: process.env.NODE_ENV === "development" ? false : true,
+  const browser = await puppeteer.connect({
+    browserURL: `wss://connect.browserbase.com?apiKey=${process.env.BROWSERBASE_API_KEY}`
   });
+  // const browser = await puppeteer.launch({
+  //   // args: [`--proxy-server=localhost:8000`],
+  //   headless: process.env.NODE_ENV === "development" ? false : true,
+  // });
 
   const page = await browser.newPage();
   await page.setUserAgent(
@@ -60,9 +63,9 @@ export async function createStagehandSession() {
   const server = await createProxyServer();
   const stagehand = new Stagehand({
     ...StagehandConfig,
-    localBrowserLaunchOptions: {
-      args: [`--proxy-server=localhost:8000`],
-    },
+    // localBrowserLaunchOptions: {
+    //   args: [`--proxy-server=localhost:8000`],
+    // },
     llmClient: new AISdkClient({
       model: google("gemini-2.0-pro-exp-02-05"),
     }),

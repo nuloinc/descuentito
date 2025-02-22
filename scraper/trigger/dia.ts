@@ -15,7 +15,7 @@ import { createStagehandSession, storeCacheData } from "../lib";
 export const diaTask = schedules.task({
   id: "dia-extractor",
   cron: "0 0 * * *",
-  maxDuration: 300,
+  maxDuration: 600,
   retry: {
     maxAttempts: 1,
   },
@@ -34,7 +34,9 @@ export const diaTask = schedules.task({
       sameSite: "Lax"
     }]);
 
-    await stagehand.page.goto("https://diaonline.supermercadosdia.com.ar/medios-de-pago-y-promociones");
+    await stagehand.page.goto("https://diaonline.supermercadosdia.com.ar/medios-de-pago-y-promociones", {
+      waitUntil: "networkidle"
+    });
 
     const elements = await stagehand.page.$$(
       ".diaio-custom-bank-promotions-0-x-list-by-days__item"
