@@ -6,7 +6,7 @@ import { Octokit } from "@octokit/rest";
 import { format } from "date-fns";
 import { execa } from "execa";
 import { logger } from "@trigger.dev/sdk/v3";
-
+import { nanoid } from "nanoid";
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN!;
 const GITHUB_OWNER = process.env.GITHUB_OWNER!;
 const GITHUB_REPO = process.env.GITHUB_REPO!;
@@ -56,7 +56,7 @@ export async function savePromotions(source: string, promotions: any[]) {
   const { dir } = repo;
 
   const date = format(new Date(), "yyyy-MM-dd");
-  const branchName = `promotions/${date}/${source}`;
+  const branchName = `promotions/${date}/${nanoid()}/${source}`;
 
   try {
     await git.checkout({

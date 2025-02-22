@@ -23,6 +23,7 @@
     "https-proxy-agent": "^7.0.2",
     "isomorphic-git": "^1.29.0",
     "jszip": "^3.10.1",
+    "nanoid": "^5.1.0",
     "openai": "^4.85.3",
     "p-queue": "^8.1.0",
     "playwright": "^1.50.1",
@@ -37,6 +38,7 @@
   "devDependencies": {
     "@trigger.dev/build": "3.3.16",
     "@types/node": "^22.13.1",
+    "prettier": "^3.4.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3"
   }
