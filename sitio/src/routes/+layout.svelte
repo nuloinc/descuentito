@@ -3,8 +3,18 @@
 	import NuloInc from '$lib/Nulo_Science_Inc.svg';
 	import { onMount } from 'svelte';
 	import posthog from 'posthog-js';
+	import { MediaQuery } from 'svelte/reactivity';
 
 	let { children } = $props();
+	const dark = new MediaQuery('prefers-color-scheme: dark');
+
+	$effect(() => {
+		if (dark.current) {
+			document.documentElement.classList.add('dark');
+		} else {
+			document.documentElement.classList.remove('dark');
+		}
+	});
 
 	onMount(() => {
 		posthog.init('phc_QShHtLe5KRFWoNa5m6GgYTbvIhdqDPMJQgoym5MkCKr', {
