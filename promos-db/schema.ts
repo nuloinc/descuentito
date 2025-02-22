@@ -50,15 +50,17 @@ export interface CarrefourPromotion extends GenericPromotion {
   source: "carrefour";
   where: ("Carrefour" | "Maxi" | "Market" | "Express" | "Online")[];
 }
-
 export interface CotoPromotion extends GenericPromotion {
   source: "coto";
   where: ("Coto" | "Online")[];
 }
-
 export interface DiaPromotion extends GenericPromotion {
   source: "dia";
   where: ("Dia" | "Online")[];
+}
+export interface JumboPromotion extends GenericPromotion {
+  source: "jumbo";
+  where: ("Jumbo" | "Online")[];
 }
 
 export type Promotion = CarrefourPromotion | CotoPromotion;

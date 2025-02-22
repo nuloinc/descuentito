@@ -61,10 +61,17 @@ export async function createBrowserSession() {
 }
 
 export async function createPlaywrightSession() {
-  const bcatUrl = 'wss://api.browsercat.com/connect';
-  const browser = await pw.chromium.connect(bcatUrl, {
-    headers: {'Api-Key': process.env.BROWSERCAT_API_KEY!},
-  });
+  let browser: pw.Browser;
+  if (process.env.NODE_ENV === "development") {
+    browser = await pw.chromium.launch({
+      headless: false,
+    });
+  } else {
+    const bcatUrl = 'wss://api.browsercat.com/connect';
+    browser = await pw.chromium.connect(bcatUrl, {
+      headers: { "Api-Key": process.env.BROWSERCAT_API_KEY! },
+    });
+  }
 
   const page = await browser.newPage();
 
@@ -124,10 +131,10 @@ export async function storeCacheData(
  * Reduces nested divs to a single div representation.
  */
 export async function generateElementDescription(
-  page: Page,
+  page: Page | pw.Page,
   selector: string
 ): Promise<string> {
-  return await page.evaluate((selector: string) => {
+  const evalFn=(selector: string) => {
     function generateElementDescriptionInner(element: Element): string {
       let description = "";
 
@@ -187,5 +194,10 @@ export async function generateElementDescription(
       return "";
     }
     return generateElementDescriptionInner(element);
-  }, selector);
+  }
+
+  if (page instanceof Page) {
+    return await page.evaluate(evalFn, selector);
+  }
+  return await page.evaluate(evalFn, selector);
 }
