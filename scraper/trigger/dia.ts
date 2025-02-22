@@ -4,14 +4,13 @@ import { z } from "zod";
 import { generateObject } from "ai";
 import {
   BasicPromotionSchema,
-  CotoPromotion,
   DiaPromotion,
   LIMITS_PROMPT,
   PAYMENT_METHODS_PROMPT,
   RESTRICTIONS_PROMPT,
 } from "promos-db/schema";
 import { savePromotions } from "../lib/git";
-import { createBrowserSession, createStagehandSession, storeCacheData } from "../lib";
+import { createStagehandSession, storeCacheData } from "../lib";
 
 export const diaTask = schedules.task({
   id: "dia-extractor",
