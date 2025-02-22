@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import type { GenericPromotion, Promotion } from 'promos-db/schema';
 
-const sources = ['carrefour', 'coto', 'dia'] as const;
+const sources = ['carrefour', 'coto', 'dia', 'jumbo'] as const;
 
 export const load: PageServerLoad = async ({ platform }) => {
 	const data = Object.fromEntries(
