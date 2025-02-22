@@ -60,8 +60,9 @@ export const diaTask = schedules.task({
       await legalBtn.click()
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      const legalesText=(await stagehand.page.$('.diaio-custom-bank-promotions-0-x-bank-modal__text'))?.textContent || ''
+      const legalesText:string =await(await stagehand.page.$('.diaio-custom-bank-promotions-0-x-bank-modal__text'))?.textContent() || ''
       if (!legalesText) throw new Error("No legal text found");
+      logger.info("Legal text", { legalesText });
 
       await closeModal()
       /////////////////
