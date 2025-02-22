@@ -8,6 +8,7 @@ import { Stagehand } from "@browserbasehq/stagehand";
 import StagehandConfig from "./trigger/stagehand.config";
 import { AISdkClient } from "./trigger/lib/aisdk_client";
 import { google } from "@ai-sdk/google";
+import * as pw from 'playwright-core';
 
 async function createProxyServer() {
   const server = new ProxyChain.Server({
@@ -59,8 +60,26 @@ export async function createBrowserSession() {
   };
 }
 
+export async function createPlaywrightSession() {
+  const bcatUrl = 'wss://api.browsercat.com/connect';
+  const browser = await pw.chromium.connect(bcatUrl, {
+    headers: {'Api-Key': process.env.BROWSERCAT_API_KEY!},
+  });
+
+  const page = await browser.newPage();
+
+  return {
+    [Symbol.asyncDispose]: async () => {
+        await browser.close();
+    },
+    browser,
+    page,
+  };
+}
+
+
 export async function createStagehandSession() {
-  const server = await createProxyServer();
+  // const server = await createProxyServer();
   const stagehand = new Stagehand({
     ...StagehandConfig,
     // localBrowserLaunchOptions: {
@@ -75,7 +94,7 @@ export async function createStagehandSession() {
   return {
     [Symbol.asyncDispose]: async () => {
       await stagehand.close();
-      await server.close(true);
+      // await server.close(true);
     },
     stagehand,
   };

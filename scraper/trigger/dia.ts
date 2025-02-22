@@ -10,7 +10,7 @@ import {
   RESTRICTIONS_PROMPT,
 } from "promos-db/schema";
 import { savePromotions } from "../lib/git";
-import { createStagehandSession, storeCacheData } from "../lib";
+import { createPlaywrightSession, createStagehandSession, storeCacheData } from "../lib";
 
 export const diaTask = schedules.task({
   id: "dia-extractor",
@@ -20,11 +20,11 @@ export const diaTask = schedules.task({
     maxAttempts: 1,
   },
   run: async (payload, { ctx }) => {
-    await using sessions = await createStagehandSession();
-    const {stagehand} = sessions;
+    await using sessions = await createPlaywrightSession();
+    const {browser, page} = sessions;
 
     // desactivar popup de club dia
-    await stagehand.context.addCookies([{
+    await page.context().addCookies([{
       name: "clubdiapopup",
       value: "true",
       domain: "diaonline.supermercadosdia.com.ar",
@@ -34,11 +34,11 @@ export const diaTask = schedules.task({
       sameSite: "Lax"
     }]);
 
-    await stagehand.page.goto("https://diaonline.supermercadosdia.com.ar/medios-de-pago-y-promociones", {
+    await page.goto("https://diaonline.supermercadosdia.com.ar/medios-de-pago-y-promociones", {
       waitUntil: "networkidle"
     });
 
-    const elements = await stagehand.page.$$(
+    const elements = await page.$$(
       ".diaio-custom-bank-promotions-0-x-list-by-days__item"
     );
 
@@ -46,7 +46,7 @@ export const diaTask = schedules.task({
 
     const closeModal = async () => {
       await (
-        await stagehand.page.$(".vtex-modal__close-icon")
+        await page.$(".vtex-modal__close-icon")
       )?.click();
     };
 
@@ -61,7 +61,7 @@ export const diaTask = schedules.task({
       await legalBtn.click()
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      const legalesText:string =await(await stagehand.page.$('.diaio-custom-bank-promotions-0-x-bank-modal__text'))?.textContent() || ''
+      const legalesText:string =await(await page.$('.diaio-custom-bank-promotions-0-x-bank-modal__text'))?.textContent() || ''
       if (!legalesText) throw new Error("No legal text found");
       logger.info("Legal text", { legalesText });
 
