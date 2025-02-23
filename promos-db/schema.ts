@@ -194,7 +194,7 @@ Example: Banco Galicia with either VISA or Mastercard credit cards: [["Banco Gal
 
 export const RESTRICTIONS_PROMPT = `RESTRICTIONS
 
-Do not include irrelevant restrictions that are obvious, such as restrictions related to foreign credit cards, purchase cards, payments in foreign currencies, or social aid programs, or restrictions that specify "Solo para consumo familiar.".
+Do not include irrelevant restrictions that are obvious, such as restrictions related to foreign credit cards, purchase cards, payments in foreign currencies, or social aid programs, or restrictions that specify "Solo para consumo familiar.", Ley provincial N° 5547 (Mendoza), etc.
 
 Do not include redundant information that is mentioned elsewhere in the object, such as validity dates, days of the week, payment methods, where the discount is valid or limits.
 
