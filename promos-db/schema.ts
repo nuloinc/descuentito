@@ -137,46 +137,7 @@ export const BasicDiscountSchema = z.object({
     .string()
     .optional()
     .describe("e.g. 'Alimentos', 'Electrodomesticos', 'Bebidas', etc."),
-  paymentMethods: z
-    .array(
-      z.array(
-        z.enum([
-          "Banco Patagonia",
-          "Banco BBVA",
-          "Banco Nación",
-          "Banco Ciudad",
-          "Banco Galicia",
-          "Banco Galicia - Eminent",
-          "Banco Macro",
-          "Banco Santander",
-          "Banco ICBC",
-          "Banco ICBC – Cliente Payroll",
-          "Banco Credicoop",
-          "Banco Credicoop - Plan Sueldo",
-          "Banco Santander",
-          "Banco Comafi",
-          "Banco Galicia Más",
-          "Banco Supervielle",
-          "Banco Columbia",
-          "Banco del Sol",
-          ".Reba",
-          "Mercado Pago",
-          "Dinero en cuenta",
-          "MODO",
-          "Ualá",
-          "Uilo",
-          "NaranjaX",
-          "Cuenta DNI",
-          "Tarjeta de crédito VISA",
-          "Tarjeta de débito VISA",
-          "Tarjeta de crédito Mastercard",
-          "Tarjeta de débito Mastercard",
-          "Tarjeta American Express",
-          "Tarjeta Prepaga Mastercard",
-        ])
-      )
-    )
-    .optional(),
+  paymentMethods: z.array(z.array(z.enum(PAYMENT_METHODS))).optional(),
   limits: z.object({
     maxDiscount: z.number().optional(),
     explicitlyHasNoLimit: z.boolean(),
