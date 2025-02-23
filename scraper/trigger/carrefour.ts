@@ -1,9 +1,8 @@
 import { logger, schedules } from "@trigger.dev/sdk/v3";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
-import { createOpenRouter } from "@openrouter/ai-sdk-provider";
-import { generateObject, NoObjectGeneratedError, streamObject } from "ai";
-import { CarrefourPromotion, GenericPromotion } from "promos-db/schema";
+import { NoObjectGeneratedError, streamObject } from "ai";
+import { CarrefourDiscount } from "promos-db/schema";
 import { fetchPageData } from "./lib/fetch-page";
 import { savePromotions } from "../lib/git";
 
@@ -27,7 +26,7 @@ export const carrefourTask = schedules.task({
 
     logger.info("DOM Description", { domDescription });
 
-    let promotions: CarrefourPromotion[] = [];
+    let promotions: CarrefourDiscount[] = [];
     try {
       const { elementStream } = await streamObject({
         model: google("gemini-2.0-flash"),

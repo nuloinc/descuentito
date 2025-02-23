@@ -3,8 +3,8 @@ import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import { NoObjectGeneratedError, streamObject } from "ai";
 import {
-  BasicPromotionSchema,
-  CotoPromotion,
+  BasicDiscountSchema,
+  CotoDiscount,
   LIMITS_PROMPT,
   PAYMENT_METHODS_PROMPT,
   RESTRICTIONS_PROMPT,
@@ -12,7 +12,7 @@ import {
 import { savePromotions } from "../lib/git";
 import { createPlaywrightSession } from "../lib";
 
-const promotionSchema = BasicPromotionSchema.extend({
+const promotionSchema = BasicDiscountSchema.extend({
   where: z.array(z.enum(["Coto", "Online"])),
   membership: z.array(z.enum(["Club La Nacion", "Comunidad Coto"])).optional(),
 });
@@ -66,7 +66,7 @@ export const cotoTask = schedules.task({
       .then((res) => res.json())
       .catch(() => []);
 
-    let promotions: CotoPromotion[] = [];
+    let promotions: CotoDiscount[] = [];
     const { elementStream } = streamObject({
       model: google("gemini-2.0-pro-exp-02-05"),
       output: "array",

@@ -3,8 +3,8 @@ import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import { generateObject } from "ai";
 import {
-  BasicPromotionSchema,
-  JumboPromotion,
+  BasicDiscountSchema,
+  JumboDiscount,
   LIMITS_PROMPT,
   PAYMENT_METHODS_PROMPT,
   RESTRICTIONS_PROMPT,
@@ -41,7 +41,7 @@ export const jumboTask = schedules.task({
     const buttons = await container.$$("button");
     logger.info("Found weekday buttons", { count: buttons.length });
 
-    const promotions: JumboPromotion[] = [];
+    const promotions: JumboDiscount[] = [];
 
     let i = 0;
     for (const button of buttons) {
@@ -80,7 +80,7 @@ export const jumboTask = schedules.task({
 
         const { object } = await generateObject({
           model: google("gemini-2.0-flash"),
-          schema: BasicPromotionSchema.extend({
+          schema: BasicDiscountSchema.extend({
             where: z.array(z.enum(["Jumbo", "Online"])),
           }),
           system: `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users.

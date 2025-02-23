@@ -1,7 +1,7 @@
 import PQueue from "p-queue";
 import { FetchCacher } from "../fetch-cacher";
 import { RequestInit } from "undici";
-import { GaliciaPromotion, GenericPromotion } from "promos-db/schema";
+import { GaliciaDiscount, GenericDiscount } from "promos-db/schema";
 
 interface OfficialCategory {
   id: number;
@@ -15,7 +15,7 @@ interface Category extends Omit<OfficialCategory, "descripcion" | "imagen"> {
   description: string;
   image?: string | null;
   count: number;
-  promotions: GenericPromotion[];
+  promotions: GenericDiscount[];
 }
 
 interface ApiResponse<T> {
@@ -263,7 +263,7 @@ async function fetchPromotionDetails(
 function mapPromotion(
   promo: any,
   details: { maxDiscount: number | null } | null
-): GaliciaPromotion {
+): GaliciaDiscount {
   return {
     id: promo.id,
     source: "galicia",
@@ -290,7 +290,7 @@ async function fetchCategoryPage(
   categoryId: number,
   page: number,
   pageSize: number = 15
-): Promise<{ promotions: GaliciaPromotion[]; totalSize: number }> {
+): Promise<{ promotions: GaliciaDiscount[]; totalSize: number }> {
   try {
     const data = await fetchApi<any>(
       `/personalizacion/v1/promociones/catalogo?page=${page}&pageSize=${pageSize}&IdCategoria=${categoryId}`
@@ -335,7 +335,7 @@ async function fetchCategoryPage(
 
 async function fetchCategoryPromotions(
   categoryId: number
-): Promise<GaliciaPromotion[]> {
+): Promise<GaliciaDiscount[]> {
   const pageSize = 15;
   const firstPage = await fetchCategoryPage(categoryId, 1, pageSize);
   let totalPromotions = firstPage.promotions;

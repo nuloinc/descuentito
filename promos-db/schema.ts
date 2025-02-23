@@ -19,8 +19,8 @@ export type Weekday =
   | "Viernes"
   | "Sabado"
   | "Domingo";
-export interface GenericPromotion {
-  title: string;
+export interface GenericDiscount {
+  title?: string;
   description?: string;
   category?: string;
   discount: {
@@ -41,29 +41,33 @@ export interface GenericPromotion {
   };
 }
 
-export interface GaliciaPromotion extends GenericPromotion {
+export interface GaliciaDiscount extends GenericDiscount {
   id: number;
   source: "galicia";
 }
 
-export interface CarrefourPromotion extends GenericPromotion {
+export interface CarrefourDiscount extends GenericDiscount {
   source: "carrefour";
   where: ("Carrefour" | "Maxi" | "Market" | "Express" | "Online")[];
 }
-export interface CotoPromotion extends GenericPromotion {
+export interface CotoDiscount extends GenericDiscount {
   source: "coto";
   where: ("Coto" | "Online")[];
 }
-export interface DiaPromotion extends GenericPromotion {
+export interface DiaDiscount extends GenericDiscount {
   source: "dia";
   where: ("Dia" | "Online")[];
 }
-export interface JumboPromotion extends GenericPromotion {
+export interface JumboDiscount extends GenericDiscount {
   source: "jumbo";
   where: ("Jumbo" | "Online")[];
 }
 
-export type Promotion = CarrefourPromotion | CotoPromotion;
+export type Discount =
+  | CarrefourDiscount
+  | CotoDiscount
+  | DiaDiscount
+  | JumboDiscount;
 
 export const BANKS_OR_WALLETS = [
   "Mercado Pago",
@@ -108,9 +112,7 @@ export const PAYMENT_METHODS = [
   "Tarjeta Carrefour Crédito",
 ] as const;
 
-export const BasicPromotionSchema = z.object({
-  title: z.string(),
-  category: z.string().optional(),
+export const BasicDiscountSchema = z.object({
   discount: z.object({
     type: z.enum(["porcentaje", "cuotas sin intereses"]),
     value: z.number().describe("0 to 100 for percentage, 0 to 12 for cuotas"),
@@ -194,12 +196,14 @@ export const RESTRICTIONS_PROMPT = `RESTRICTIONS
 
 Do not include irrelevant restrictions that are obvious, such as restrictions related to foreign credit cards, purchase cards, payments in foreign currencies, or social aid programs, or restrictions that specify "Solo para consumo familiar.".
 
-Do not include redundant information that is mentioned elsewhere in the object, such as validity dates, days of the week, payment methods, where the promotion is valid or limits.
+Do not include redundant information that is mentioned elsewhere in the object, such as validity dates, days of the week, payment methods, where the discount is valid or limits.
+
+DO include restrictions like categories of products included or excluded in the discount.
 
 Order by relevance, starting with the most relevant restrictions.`;
 
 export const LIMITS_PROMPT = `LIMITS
 
-\`maxDiscount\` is the maximum discount amount in pesos that can be applied to the promotion.
+\`maxDiscount\` is the maximum discount amount in pesos that can be applied to the discount.
 
-\`explicitlyHasNoLimit\` is true if the promotion explicitly states that there is no limit ("sin tope").`;
+\`explicitlyHasNoLimit\` is true if the discount explicitly states that there is no limit ("sin tope").`;

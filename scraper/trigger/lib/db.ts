@@ -1,12 +1,12 @@
 import { db, schema } from "promos-db/db";
 import { sql } from "drizzle-orm";
-import { GenericPromotion } from "promos-db/schema";
+import { GenericDiscount } from "promos-db/schema";
 import { logger } from "@trigger.dev/sdk/v3";
 import { storeCacheData } from "../../lib";
 
 export async function savePromotions(
   source: string,
-  promotions: GenericPromotion[]
+  promotions: GenericDiscount[]
 ) {
   await storeCacheData(source, ".json", JSON.stringify(promotions));
 
