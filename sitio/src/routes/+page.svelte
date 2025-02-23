@@ -54,10 +54,10 @@
 	function isPaymentMethod(method: string): method is PaymentMethod {
 		return method in logos;
 	}
-	function groupPromotionsByPaymentMethod(promotions: schema.Promotion[]) {
+	function groupPromotionsByPaymentMethod(discounts: schema.Discount[]) {
 		const grouped = new Map<
 			(typeof BANKS_OR_WALLETS)[number] | 'other',
-			(typeof promotions)[number][]
+			(typeof discounts)[number][]
 		>();
 
 		for (const wallet of BANKS_OR_WALLETS) {
@@ -66,20 +66,20 @@
 
 		grouped.set('other', []);
 
-		for (const promotion of promotions) {
+		for (const discount of discounts) {
 			let found = false;
 			for (const wallet of BANKS_OR_WALLETS) {
 				if (
-					promotion.paymentMethods?.some((method) =>
+					discount.paymentMethods?.some((method) =>
 						typeof method === 'string' ? method === wallet : method.some((m) => m === wallet)
 					)
 				) {
-					grouped.set(wallet, [...(grouped.get(wallet) || []), promotion]);
+					grouped.set(wallet, [...(grouped.get(wallet) || []), discount]);
 					found = true;
 				}
 			}
 			if (!found) {
-				grouped.set('other', [...(grouped.get('other') || []), promotion]);
+				grouped.set('other', [...(grouped.get('other') || []), discount]);
 			}
 		}
 
@@ -132,39 +132,68 @@
 												alt={paymentMethod}
 												class="h-8 w-auto"
 											/>
+										{:else}
+											<h3 class="text-lg font-semibold leading-none tracking-tight">
+												{paymentMethod}
+											</h3>
 										{/if}
-										<h3 class="text-lg font-semibold leading-none tracking-tight">
-											{paymentMethod}
-										</h3>
 									</div>
 								</div>
 								<div class="p-6 pt-2">
 									<div class="space-y-2">
-										{#each promotions as promotion}
+										{#each promotions as discount}
 											<Dialog.Root>
 												<Dialog.Trigger class="w-full">
 													<div
 														class="hover:bg-accent flex items-center justify-between rounded-lg border p-2"
 													>
 														<div class="flex flex-col items-start gap-1 text-left">
-															<span class="font-medium">{promotion.title}</span>
+															<div>
+																{#if discount.discount.type === 'porcentaje'}
+																	<strong>{discount.discount.value}%</strong> de descuento
+																{:else if discount.discount.type === 'cuotas sin intereses'}
+																	<strong>{discount.discount.value} cuotas sin intereses</strong>
+																{/if}
+															</div>
+															{#if discount.onlyForProducts}
+																<p class=" text-sm">
+																	⚠️ Solo para productos: {discount.onlyForProducts}
+																</p>
+															{/if}
+															<div>
+																{#if discount.paymentMethods && discount.paymentMethods.length > 0}
+																	<div class="text-muted-foreground text-sm">
+																		<ul>
+																			{#each discount.paymentMethods as methods}
+																				{#if Array.isArray(methods)}
+																					<li>
+																						{methods
+																							.filter((method) => method !== paymentMethod)
+																							.join(' + ')}
+																					</li>
+																				{/if}
+																			{/each}
+																		</ul>
+																	</div>
+																{/if}
+															</div>
 															<div class="flex flex-row gap-1">
 																<Badge variant="default">
-																	{promotion.source}
+																	{discount.source}
 																</Badge>
 
 																<Badge variant="secondary">
-																	{#each promotion.where as where}
-																		{where}{#if where !== promotion.where[promotion.where.length - 1]}{', '}
+																	{#each discount.where as where}
+																		{where}{#if where !== discount.where[discount.where.length - 1]}{', '}
 																		{/if}
 																	{/each}
 																</Badge>
 
-																{#if promotion.limits?.maxDiscount}
+																{#if discount.limits?.maxDiscount}
 																	<Badge variant="outline">
-																		Tope: {formatCurrency(promotion.limits.maxDiscount)}
+																		Tope: {formatCurrency(discount.limits.maxDiscount)}
 																	</Badge>
-																{:else if promotion.limits?.explicitlyHasNoLimit}
+																{:else if discount.limits?.explicitlyHasNoLimit}
 																	<Badge variant="yellow" class="gap-1">
 																		<StarsIcon class="h-4 w-4" />
 																		Sin tope
@@ -177,52 +206,52 @@
 												</Dialog.Trigger>
 												<Dialog.Content>
 													<Dialog.Header>
-														<Dialog.Title>{promotion.title}</Dialog.Title>
+														<Dialog.Title>{discount.title}</Dialog.Title>
 													</Dialog.Header>
 													<div class="space-y-4">
-														{#if promotion.where?.length > 0}
+														{#if discount.where?.length > 0}
 															<div>
 																<h4 class="font-medium">Comprando en:</h4>
 																<p>
-																	{#each promotion.where as where}
+																	{#each discount.where as where}
 																		<span class="font-medium">{where}</span
-																		>{#if where !== promotion.where[promotion.where.length - 1]},{' '}
+																		>{#if where !== discount.where[discount.where.length - 1]},{' '}
 																		{/if}
 																	{/each}
 																</p>
 															</div>
 														{/if}
-														{#if promotion.limits?.maxDiscount}
+														{#if discount.limits?.maxDiscount}
 															<div>
 																<h4 class="font-medium">Tope de descuento:</h4>
 																<p class="font-medium">
-																	{formatCurrency(promotion.limits.maxDiscount)}
+																	{formatCurrency(discount.limits.maxDiscount)}
 																</p>
 															</div>
 														{/if}
-														{#if promotion.limits?.explicitlyHasNoLimit}
+														{#if discount.limits?.explicitlyHasNoLimit}
 															<p class="flex items-center gap-1">
 																<StarsIcon class="h-4 w-4 text-yellow-500" />
 																<span class="font-bold text-yellow-500">Sin tope</span>
 															</p>
 														{/if}
-														{#if promotion.membership && promotion.membership.length > 0}
+														{#if discount.membership && discount.membership.length > 0}
 															<div>
 																<h4 class="font-medium">Beneficio exclusivo para:</h4>
 																<p>
-																	{#each promotion.membership as membership}
+																	{#each discount.membership as membership}
 																		<span class="font-medium">{membership}</span
-																		>{#if membership !== promotion.membership[promotion.membership.length - 1]},{' '}
+																		>{#if membership !== discount.membership[discount.membership.length - 1]},{' '}
 																		{/if}
 																	{/each}
 																</p>
 															</div>
 														{/if}
-														{#if promotion.paymentMethods && promotion.paymentMethods.length > 0}
+														{#if discount.paymentMethods && discount.paymentMethods.length > 0}
 															<div>
 																<h4 class="font-medium">Medios de pago:</h4>
 																<div class="mt-1 flex flex-col gap-2">
-																	{#each promotion.paymentMethods as methods}
+																	{#each discount.paymentMethods as methods}
 																		{#if Array.isArray(methods)}
 																			<div class="flex flex-wrap items-center gap-2">
 																				{#each methods as methodItem}
@@ -251,11 +280,11 @@
 																</div>
 															</div>
 														{/if}
-														{#if promotion.restrictions && promotion.restrictions.length > 0}
+														{#if discount.restrictions && discount.restrictions.length > 0}
 															<div>
 																<h4 class="font-medium">Restricciones:</h4>
 																<ul class="list-disc pl-5 text-sm">
-																	{#each promotion.restrictions as restriction}
+																	{#each discount.restrictions as restriction}
 																		<li>{restriction}</li>
 																	{/each}
 																</ul>
@@ -272,7 +301,7 @@
 													<div class="mt-4">
 														<Button
 															variant="outline"
-															href={promotion.url}
+															href={discount.url}
 															target="_blank"
 															rel="noopener noreferrer"
 															class="w-full"

@@ -92,25 +92,23 @@ export const BANKS_OR_WALLETS: [string, ...string[]] = [
   "Banco Columbia",
   "Banco del Sol",
   ".Reba",
-  "MODO",
   "Uilo",
   "NaranjaX",
   "Cuenta DNI",
   "Tarjeta Carrefour Prepaga",
   "Tarjeta Carrefour Crédito",
+  "Tarjeta de Crédito Coto TCI",
 ];
 
 export const PAYMENT_METHODS: [string, ...string[]] = [
   ...BANKS_OR_WALLETS,
+  "MODO",
   "Tarjeta de crédito VISA",
   "Tarjeta de débito VISA",
   "Tarjeta de crédito Mastercard",
   "Tarjeta de débito Mastercard",
   "Tarjeta American Express",
   "Tarjeta Prepaga Mastercard",
-  "Tarjeta de Crédito Coto TCI",
-  "Tarjeta Carrefour Prepaga",
-  "Tarjeta Carrefour Crédito",
 ] as const;
 
 export const BasicDiscountSchema = z.object({
