@@ -10,14 +10,14 @@ import {
   RESTRICTIONS_PROMPT,
 } from "promos-db/schema";
 import { savePromotions } from "../lib/git";
-import { createPlaywrightSession } from "../lib";
+import { cleanup, createPlaywrightSession } from "../lib";
 
 const promotionSchema = BasicPromotionSchema.extend({
   where: z.array(z.enum(["Coto", "Online"])),
   membership: z.array(z.enum(["Club La Nacion", "Comunidad Coto"])).optional(),
 });
 
-const SYSTEM_PROMPT = `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users. If the promotion is already in the previous array, copy the previous promotion unless there's a meaningful change.
+const SYSTEM_PROMPT = `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users.
 
 ${PAYMENT_METHODS_PROMPT}
 
@@ -60,12 +60,6 @@ export const cotoTask = schedules.task({
       }
     }
 
-    const oldPromotions = await fetch(
-      `https://raw.githubusercontent.com/nuloinc/descuentito-data/refs/heads/main/${source}.json`
-    )
-      .then((res) => res.json())
-      .catch(() => []);
-
     let promotions: CotoPromotion[] = [];
     const { elementStream } = streamObject({
       model: google("gemini-2.0-pro-exp-02-05"),
@@ -77,9 +71,7 @@ export const cotoTask = schedules.task({
           content: [
             {
               type: "text",
-              text: `Here's the previous promotion array: ${JSON.stringify(
-                oldPromotions
-              )}.\n\n Extract the promotions from the following text: ${content}`,
+              text: `Extract the promotions from the following text: ${content}`,
             },
           ],
         },
@@ -101,6 +93,15 @@ export const cotoTask = schedules.task({
       logger.error("Error processing content", { error });
     }
 
-    await savePromotions(source, promotions);
+    const cleanedPromotions = await cleanup(
+      source,
+      promotions,
+      promotionSchema.extend({
+        url: z.string(),
+        source: z.literal("coto"),
+      })
+    );
+
+    await savePromotions(source, cleanedPromotions);
   },
 });

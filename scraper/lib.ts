@@ -8,7 +8,10 @@ import { Stagehand } from "@browserbasehq/stagehand";
 import StagehandConfig from "./trigger/stagehand.config";
 import { AISdkClient } from "./trigger/lib/aisdk_client";
 import { google } from "@ai-sdk/google";
-import * as pw from 'playwright-core';
+import * as pw from "playwright-core";
+import { Promotion, Source } from "promos-db/schema";
+import { z, ZodSchema } from "zod";
+import { streamObject } from "ai";
 
 async function createProxyServer() {
   const server = new ProxyChain.Server({
@@ -31,7 +34,7 @@ async function createProxyServer() {
 export async function createBrowserSession() {
   const server = await createProxyServer();
   const browser = await puppeteer.connect({
-    browserURL: `wss://connect.browserbase.com?apiKey=${process.env.BROWSERBASE_API_KEY}`
+    browserURL: `wss://connect.browserbase.com?apiKey=${process.env.BROWSERBASE_API_KEY}`,
   });
   // const browser = await puppeteer.launch({
   //   // args: [`--proxy-server=localhost:8000`],
@@ -67,7 +70,7 @@ export async function createPlaywrightSession() {
       headless: false,
     });
   } else {
-    const bcatUrl = 'wss://api.browsercat.com/connect';
+    const bcatUrl = "wss://api.browsercat.com/connect";
     browser = await pw.chromium.connect(bcatUrl, {
       headers: { "Api-Key": process.env.BROWSERCAT_API_KEY! },
     });
@@ -77,13 +80,12 @@ export async function createPlaywrightSession() {
 
   return {
     [Symbol.asyncDispose]: async () => {
-        await browser.close();
+      await browser.close();
     },
     browser,
     page,
   };
 }
-
 
 export async function createStagehandSession() {
   // const server = await createProxyServer();
@@ -134,7 +136,7 @@ export async function generateElementDescription(
   page: Page | pw.Page,
   selector: string
 ): Promise<string> {
-  const evalFn=(selector: string) => {
+  const evalFn = (selector: string) => {
     function generateElementDescriptionInner(element: Element): string {
       let description = "";
 
@@ -194,10 +196,56 @@ export async function generateElementDescription(
       return "";
     }
     return generateElementDescriptionInner(element);
-  }
+  };
 
   if (page instanceof Page) {
     return await page.evaluate(evalFn, selector);
   }
   return await page.evaluate(evalFn, selector);
+}
+
+export async function cleanup<T extends Promotion>(
+  source: Source,
+  promotions: T[],
+  zodSchema: ZodSchema<T>
+) {
+  logger.info("Cleaning up promotions", { source, promotions });
+  const oldPromotions = await fetch(
+    `https://raw.githubusercontent.com/nuloinc/descuentito-data/refs/heads/main/${source}.json`
+  )
+    .then((res) => res.json())
+    .catch(() => []);
+
+  logger.info("Old promotions", {
+    oldPromotions,
+    length: oldPromotions.length,
+  });
+
+  let newPromotions: T[] = [];
+
+  const { elementStream } = streamObject({
+    model: google("gemini-2.0-pro-exp-02-05"),
+    output: "array",
+    schema: zodSchema,
+    messages: [
+      {
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text: `Here's the previous promotion array: ${JSON.stringify(
+              oldPromotions
+            )}.\n\n Extract the promotions from the following JSON: ${promotions.map((p) => JSON.stringify(p)).join("\n")}.`,
+          },
+        ],
+      },
+    ],
+    system: `You are a helpful assistant that cleans up promotions from existing structured JSON data. If the promotion is already in the previous array, copy the previous promotion without any changes unless there's a meaningful change.`,
+  });
+
+  for await (const element of elementStream) {
+    newPromotions.push(element);
+  }
+
+  return newPromotions;
 }
