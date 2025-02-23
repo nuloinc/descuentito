@@ -183,7 +183,7 @@ export const BasicDiscountSchema = z.object({
     .optional(),
   limits: z.object({
     maxDiscount: z.number().optional(),
-    explicitlyHasNoLimit: z.literal(true).optional(),
+    explicitlyHasNoLimit: z.boolean(),
   }),
 });
 

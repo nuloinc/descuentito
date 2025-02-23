@@ -11,6 +11,7 @@ import {
 } from "promos-db/schema";
 import { savePromotions } from "../lib/git";
 import { createPlaywrightSession } from "../lib";
+import assert from "assert";
 
 const promotionSchema = BasicDiscountSchema.extend({
   where: z.array(z.enum(["Coto", "Online"])),
@@ -68,7 +69,7 @@ export const cotoTask = schedules.task({
 
     let promotions: CotoDiscount[] = [];
     const { elementStream } = streamObject({
-      model: google("gemini-2.0-pro-exp-02-05"),
+      model: google("gemini-2.0-flash"),
       output: "array",
       schema: promotionSchema,
       messages: [
@@ -100,6 +101,8 @@ export const cotoTask = schedules.task({
     } catch (error) {
       logger.error("Error processing content", { error });
     }
+
+    assert(promotions.length > 0, "No promotions found");
 
     await savePromotions(source, promotions);
   },

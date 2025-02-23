@@ -10,6 +10,7 @@ import {
 } from "promos-db/schema";
 import { fetchPageData } from "./lib/fetch-page";
 import { savePromotions } from "../lib/git";
+import assert from "assert";
 
 const DiscountSchema = BasicDiscountSchema.extend({
   where: z.array(z.enum(["Carrefour", "Maxi", "Market", "Express", "Online"])),
@@ -86,6 +87,8 @@ ${LIMITS_PROMPT}
         source: "carrefour",
       });
     }
+
+    assert(promotions.length > 0, "No promotions found");
 
     await savePromotions("carrefour", promotions);
   },
