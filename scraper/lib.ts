@@ -240,7 +240,11 @@ export async function cleanup<T extends Promotion>(
         ],
       },
     ],
-    system: `You are a helpful assistant that cleans up promotions from existing structured JSON data. If the promotion is already in the previous array, copy the previous promotion without any changes unless there's a meaningful change.`,
+    system: `You are a helpful assistant that cleans up promotions from existing structured JSON data.
+    
+If the promotion is already in the previous array, copy the previous promotion without any changes unless there's a meaningful change.
+
+If there's a promotion with the exact same conditions (except for weekdays) that can be merged, merge them into a single promotion.`,
   });
 
   for await (const element of elementStream) {
