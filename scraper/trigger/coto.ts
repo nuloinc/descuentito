@@ -6,6 +6,7 @@ import {
   BasicDiscountSchema,
   CotoDiscount,
   LIMITS_PROMPT,
+  PAYMENT_METHODS,
   PAYMENT_METHODS_PROMPT,
   RESTRICTIONS_PROMPT,
 } from "promos-db/schema";
@@ -16,6 +17,7 @@ import assert from "assert";
 const promotionSchema = BasicDiscountSchema.extend({
   where: z.array(z.enum(["Coto", "Online"])),
   membership: z.array(z.enum(["Club La Nacion", "Comunidad Coto"])).optional(),
+  paymentMethods: z.array(z.enum([...PAYMENT_METHODS])).optional(),
 });
 
 const SYSTEM_PROMPT = `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users. If the promotion is already in the previous array, copy the previous promotion unless there's a meaningful change.

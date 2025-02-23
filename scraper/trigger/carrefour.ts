@@ -6,6 +6,7 @@ import {
   BasicDiscountSchema,
   CarrefourDiscount,
   LIMITS_PROMPT,
+  PAYMENT_METHODS,
   PAYMENT_METHODS_PROMPT,
 } from "promos-db/schema";
 import { fetchPageData } from "./lib/fetch-page";
@@ -15,6 +16,7 @@ import assert from "assert";
 const DiscountSchema = BasicDiscountSchema.extend({
   where: z.array(z.enum(["Carrefour", "Maxi", "Market", "Express", "Online"])),
   membership: z.array(z.enum(["Mi Carrefour"])).optional(),
+  paymentMethods: z.array(z.enum([...PAYMENT_METHODS])).optional(),
 });
 
 export const carrefourTask = schedules.task({

@@ -70,7 +70,7 @@ export type Discount =
   | DiaDiscount
   | JumboDiscount;
 
-export const BANKS_OR_WALLETS = [
+export const BANKS_OR_WALLETS: [string, ...string[]] = [
   "Mercado Pago",
   "Banco Galicia",
   "Ualá",
@@ -100,7 +100,7 @@ export const BANKS_OR_WALLETS = [
   "Tarjeta Carrefour Crédito",
 ];
 
-export const PAYMENT_METHODS = [
+export const PAYMENT_METHODS: [string, ...string[]] = [
   ...BANKS_OR_WALLETS,
   "Tarjeta de crédito VISA",
   "Tarjeta de débito VISA",
@@ -168,15 +168,12 @@ export const BasicDiscountSchema = z.object({
           "Uilo",
           "NaranjaX",
           "Cuenta DNI",
-          "Tarjeta Carrefour Prepaga",
-          "Tarjeta Carrefour Crédito",
           "Tarjeta de crédito VISA",
           "Tarjeta de débito VISA",
           "Tarjeta de crédito Mastercard",
           "Tarjeta de débito Mastercard",
           "Tarjeta American Express",
           "Tarjeta Prepaga Mastercard",
-          "Tarjeta de Crédito Coto TCI",
         ])
       )
     )

@@ -82,6 +82,7 @@ export const jumboTask = schedules.task({
           model: google("gemini-2.0-flash"),
           schema: BasicDiscountSchema.extend({
             where: z.array(z.enum(["Jumbo", "Online"])),
+            membership: z.array(z.enum(["Clarin 365"])).optional(),
           }),
           system: `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users.
 
