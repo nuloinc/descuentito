@@ -1,16 +1,11 @@
 import { logger, schedules } from "@trigger.dev/sdk/v3";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
-import { NoObjectGeneratedError, streamObject } from "ai";
-import { BasicPromotionSchema, CarrefourPromotion } from "promos-db/schema";
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import { generateObject, NoObjectGeneratedError, streamObject } from "ai";
+import { CarrefourPromotion, GenericPromotion } from "promos-db/schema";
 import { fetchPageData } from "./lib/fetch-page";
 import { savePromotions } from "../lib/git";
-import { cleanup } from "../lib";
-
-const PromotionSchema = BasicPromotionSchema.extend({
-  where: z.array(z.enum(["Carrefour", "Maxi", "Market", "Express", "Online"])),
-  membership: z.array(z.enum(["Mi Carrefour"])).optional(),
-});
 
 export const carrefourTask = schedules.task({
   id: "carrefour-extractor",
@@ -34,10 +29,67 @@ export const carrefourTask = schedules.task({
 
     let promotions: CarrefourPromotion[] = [];
     try {
-      const { elementStream } = streamObject({
+      const { elementStream } = await streamObject({
         model: google("gemini-2.0-flash"),
         output: "array",
-        schema: PromotionSchema,
+        schema: z.object({
+          title: z.string(),
+          category: z.string().optional(),
+          discount: z.object({
+            type: z.enum(["porcentaje", "cuotas sin intereses"]),
+            value: z
+              .number()
+              .describe("0 to 100 for percentage, 0 to 12 for cuotas"),
+          }),
+          validFrom: z.string().describe("YYYY-MM-DD"),
+          validUntil: z.string().describe("YYYY-MM-DD"),
+          weekdays: z
+            .array(
+              z.enum([
+                "Lunes",
+                "Martes",
+                "Miercoles",
+                "Jueves",
+                "Viernes",
+                "Sabado",
+                "Domingo",
+              ])
+            )
+            .optional(),
+          restrictions: z.array(z.string()),
+          where: z.array(
+            z.enum(["Carrefour", "Maxi", "Market", "Express", "Online"])
+          ),
+          paymentMethods: z
+            .array(
+              z.array(
+                z.enum([
+                  "Banco Patagonia",
+                  "Banco BBVA",
+                  "Banco Nación",
+                  "Banco Galicia",
+                  "Banco Macro",
+                  "Banco Santander",
+                  "Mercado Pago",
+                  "Dinero en cuenta",
+                  "MODO",
+                  "Tarjeta Carrefour Prepaga",
+                  "Tarjeta Carrefour Crédito",
+                  "Tarjeta de crédito VISA",
+                  "Tarjeta de débito VISA",
+                  "Tarjeta de crédito Mastercard",
+                  "Tarjeta de débito Mastercard",
+                  "Cuenta DNI",
+                ])
+              )
+            )
+            .optional(),
+          membership: z.array(z.enum(["Mi Carrefour"])).optional(),
+          limits: z.object({
+            maxDiscount: z.number().optional(),
+            explicitlyHasNoLimit: z.boolean().optional(),
+          }),
+        }),
         system: `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users.
 
 PAYMENT METHODS
@@ -106,15 +158,6 @@ LIMITS
       throw error;
     }
 
-    const cleanedPromotions = await cleanup(
-      "carrefour",
-      promotions,
-      PromotionSchema.extend({
-        url: z.string(),
-        source: z.literal("carrefour"),
-      })
-    );
-
-    await savePromotions("carrefour", cleanedPromotions);
+    await savePromotions("carrefour", promotions);
   },
 });

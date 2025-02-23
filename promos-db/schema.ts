@@ -10,14 +10,7 @@ export const promotionsTable = sqliteTable("promotions", {
     .default(sql`CURRENT_TIMESTAMP`),
 });
 
-export const SOURCES = [
-  "galicia",
-  "carrefour",
-  "coto",
-  "dia",
-  "jumbo",
-] as const;
-export type Source = (typeof SOURCES)[number];
+export const SOURCES = ["galicia"] as const;
 export type Weekday =
   | "Lunes"
   | "Martes"
@@ -70,11 +63,7 @@ export interface JumboPromotion extends GenericPromotion {
   where: ("Jumbo" | "Online")[];
 }
 
-export type Promotion =
-  | CarrefourPromotion
-  | CotoPromotion
-  | DiaPromotion
-  | JumboPromotion;
+export type Promotion = CarrefourPromotion | CotoPromotion;
 
 export const BANKS_OR_WALLETS = [
   "Mercado Pago",

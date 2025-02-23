@@ -11,16 +11,11 @@ import {
 } from "promos-db/schema";
 import { savePromotions } from "../lib/git";
 import {
-  cleanup,
   createPlaywrightSession,
   createStagehandSession,
   generateElementDescription,
   storeCacheData,
 } from "../lib";
-
-const PromotionSchema = BasicPromotionSchema.extend({
-  where: z.array(z.enum(["Jumbo", "Online"])),
-});
 
 export const jumboTask = schedules.task({
   id: "jumbo-extractor",
@@ -85,7 +80,9 @@ export const jumboTask = schedules.task({
 
         const { object } = await generateObject({
           model: google("gemini-2.0-flash"),
-          schema: PromotionSchema,
+          schema: BasicPromotionSchema.extend({
+            where: z.array(z.enum(["Jumbo", "Online"])),
+          }),
           system: `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users.
 
 ${PAYMENT_METHODS_PROMPT}
@@ -124,15 +121,6 @@ ${LIMITS_PROMPT}
       }
     }
 
-    const cleanedPromotions = await cleanup(
-      "jumbo",
-      promotions,
-      PromotionSchema.extend({
-        url: z.string(),
-        source: z.literal("jumbo"),
-      })
-    );
-
-    await savePromotions("jumbo", cleanedPromotions);
+    await savePromotions("jumbo", promotions);
   },
 });
