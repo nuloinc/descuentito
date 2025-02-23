@@ -20,7 +20,6 @@ import {
 
 export const jumboTask = schedules.task({
   id: "jumbo-extractor",
-  cron: "0 0 * * *",
   maxDuration: 600,
   retry: {
     maxAttempts: 1,

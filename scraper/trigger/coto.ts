@@ -34,7 +34,6 @@ ${LIMITS_PROMPT}
 
 export const cotoTask = schedules.task({
   id: "coto-extractor",
-  cron: "0 0 * * *",
   maxDuration: 1800,
   retry: {
     maxAttempts: 3,

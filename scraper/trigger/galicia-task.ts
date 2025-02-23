@@ -8,7 +8,6 @@ import { eq, sql } from "drizzle-orm";
 
 export const galiciaPromotionsTask = schedules.task({
   id: "galicia-promotions-extractor",
-  cron: "0 0 * * *",
   maxDuration: 300,
   run: async (payload, { ctx }) => {
     const promotions = await extractPromotions();

@@ -18,7 +18,6 @@ import {
 
 export const diaTask = schedules.task({
   id: "dia-extractor",
-  cron: "0 0 * * *",
   maxDuration: 600,
   retry: {
     maxAttempts: 1,

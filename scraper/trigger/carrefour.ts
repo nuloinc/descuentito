@@ -20,7 +20,6 @@ const DiscountSchema = BasicDiscountSchema.extend({
 
 export const carrefourTask = schedules.task({
   id: "carrefour-extractor",
-  cron: "0 0 * * *",
   maxDuration: 300,
   retry: {
     maxAttempts: 3,
