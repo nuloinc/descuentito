@@ -103,6 +103,7 @@ export const BANKS_OR_WALLETS = [
   "Tarjeta Carrefour Crédito",
   "Tarjeta de crédito Coto TCI",
   "Tarjeta de crédito Cencosud Mastercard",
+  "Cencopay",
   "Sidecreer",
 ] as const;
 
@@ -158,6 +159,8 @@ Represent different combinations of payment methods as separate arrays of string
 If there are multiple combinations possible, represent each and every one of them individually.
 
 If there are no payment methods specify (for example, if the discount only applies for a membership program), just return null.
+
+Specific cards like "Tarjeta de crédito Coto TCI" or "Tarjeta Carrefour Crédito" are different from the general "Tarjeta de crédito VISA" or "Tarjeta de crédito Mastercard" payment methods. If the discount applies to the general payment method, only specify the general payment method.
 
 Example: Banco Galicia with either VISA or Mastercard credit cards: [["Banco Galicia", "Tarjeta de crédito VISA"], ["Banco Galicia", "Tarjeta de crédito Mastercard"]], NOT merging them like this: [["Banco Galicia", "Tarjeta de crédito VISA", "Tarjeta de crédito Mastercard"]]
 

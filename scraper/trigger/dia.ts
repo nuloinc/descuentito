@@ -84,7 +84,7 @@ export const diaTask = schedules.task({
         schema: BasicDiscountSchema.extend({
           where: z.array(z.enum(["Dia", "Online"])),
         }),
-        system: `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users.
+        system: `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users. You're extracting promotions from Dia's website.
 
 ${PAYMENT_METHODS_PROMPT}
 

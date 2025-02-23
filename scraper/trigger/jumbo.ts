@@ -1,7 +1,7 @@
 import { logger, schedules } from "@trigger.dev/sdk/v3";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
-import { generateObject } from "ai";
+import { generateObject, streamObject } from "ai";
 import {
   BANKS_OR_WALLETS,
   BasicDiscountSchema,
@@ -39,7 +39,6 @@ export const jumboTask = schedules.task({
 
     const discounts: JumboDiscount[] = [];
 
-    let i = 0;
     for (const button of buttons) {
       const previousDaysDiscounts = [...discounts];
       logger.info("Button text", { text: await button.textContent() });
@@ -75,13 +74,16 @@ export const jumboTask = schedules.task({
         );
         logger.info("Text", { text });
 
-        const { object: generatedDiscount } = await generateObject({
+        const { elementStream } = streamObject({
           model: google("gemini-2.0-flash"),
+          output: "array",
           schema: BasicDiscountSchema.extend({
             where: z.array(z.enum(["Jumbo", "Online"])),
             membership: z.array(z.enum(["Clarin 365"])).optional(),
           }),
-          system: `You are a helpful assistant that extracts discounts from text and converts them into structured JSON data with relevant information for argentinian users.
+          system: `You are a helpful assistant that extracts discounts from text and converts them into structured JSON data with relevant information for argentinian users. You're extracting discounts from Jumbo's website. Jumbo is part of the Cencosud group.
+
+You are given a screenshot of a promotion and a text that describes the promotion from Jumbo's website.
 
 ${PAYMENT_METHODS_PROMPT}
 
@@ -108,39 +110,40 @@ ${LIMITS_PROMPT}
             },
           ],
         });
-        logger.info("Object", { object: generatedDiscount });
-        // hack porque iteramos por cada dia de semana, entonces los descuentos que estan en varios dias de semana se repiten
-        // lo hacemos sobre un array de los descuentos de los dias anteriores para no tener falsos positivos sobre descuentos del mismo banco pero de distinto tipo
-        const existingDiscount = previousDaysDiscounts.find(
-          (p) =>
-            p.weekdays?.every((day) =>
-              generatedDiscount.weekdays?.includes(day)
-            ) &&
-            p.where?.every((where) =>
-              generatedDiscount.where?.includes(where)
-            ) &&
-            p.limits?.maxDiscount === generatedDiscount.limits?.maxDiscount &&
-            p.discount.value === generatedDiscount.discount.value &&
-            p.paymentMethods &&
-            generatedDiscount.paymentMethods &&
-            getBankOrWallet(p.paymentMethods) ===
-              getBankOrWallet(generatedDiscount.paymentMethods)
-        );
 
-        if (existingDiscount) {
-          logger.info("Discount already exists, skipping", {
-            existingDiscount,
+        for await (const generatedDiscount of elementStream) {
+          logger.info("Object", { object: generatedDiscount });
+          // hack porque iteramos por cada dia de semana, entonces los descuentos que estan en varios dias de semana se repiten
+          // lo hacemos sobre un array de los descuentos de los dias anteriores para no tener falsos positivos sobre descuentos del mismo banco pero de distinto tipo
+          const existingDiscount = previousDaysDiscounts.find(
+            (p) =>
+              p.weekdays?.every((day) =>
+                generatedDiscount.weekdays?.includes(day)
+              ) &&
+              p.where?.every((where) =>
+                generatedDiscount.where?.includes(where)
+              ) &&
+              p.limits?.maxDiscount === generatedDiscount.limits?.maxDiscount &&
+              p.discount.value === generatedDiscount.discount.value &&
+              p.paymentMethods &&
+              generatedDiscount.paymentMethods &&
+              getBankOrWallet(p.paymentMethods) ===
+                getBankOrWallet(generatedDiscount.paymentMethods)
+          );
+
+          if (existingDiscount) {
+            logger.info("Discount already exists, skipping", {
+              existingDiscount,
+            });
+            continue;
+          }
+
+          discounts.push({
+            ...generatedDiscount,
+            source: "jumbo",
+            url,
           });
-          continue;
         }
-
-        discounts.push({
-          ...generatedDiscount,
-          source: "jumbo",
-          url,
-        });
-
-        i++;
       }
     }
 

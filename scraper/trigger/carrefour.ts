@@ -42,7 +42,7 @@ export const carrefourTask = schedules.task({
       model: google("gemini-2.0-flash"),
       output: "array",
       schema: DiscountSchema,
-      system: `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users.
+      system: `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users. You're extracting promotions from Carrefour's website.
 
 ${PAYMENT_METHODS_PROMPT}
 
