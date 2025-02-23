@@ -6,6 +6,7 @@ import {
   BasicDiscountSchema,
   JumboDiscount,
   LIMITS_PROMPT,
+  PAYMENT_METHODS,
   PAYMENT_METHODS_PROMPT,
   RESTRICTIONS_PROMPT,
 } from "promos-db/schema";
@@ -83,6 +84,7 @@ export const jumboTask = schedules.task({
           schema: BasicDiscountSchema.extend({
             where: z.array(z.enum(["Jumbo", "Online"])),
             membership: z.array(z.enum(["Clarin 365"])).optional(),
+            paymentMethods: z.array(z.enum([...PAYMENT_METHODS])).optional(),
           }),
           system: `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users.
 

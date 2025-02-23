@@ -70,7 +70,7 @@ export type Discount =
   | DiaDiscount
   | JumboDiscount;
 
-export const BANKS_OR_WALLETS: [string, ...string[]] = [
+export const BANKS_OR_WALLETS = [
   "Mercado Pago",
   "Banco Galicia",
   "Ualá",
@@ -97,10 +97,11 @@ export const BANKS_OR_WALLETS: [string, ...string[]] = [
   "Cuenta DNI",
   "Tarjeta Carrefour Prepaga",
   "Tarjeta Carrefour Crédito",
-  "Tarjeta de Crédito Coto TCI",
-];
+  "Tarjeta de crédito Coto TCI",
+  "Tarjeta de crédito Cencosud Mastercard",
+] as const;
 
-export const PAYMENT_METHODS: [string, ...string[]] = [
+export const PAYMENT_METHODS = [
   ...BANKS_OR_WALLETS,
   "MODO",
   "Tarjeta de crédito VISA",
@@ -196,7 +197,7 @@ Inside each combination, sort by bank/wallet, then by payment method (if applica
 
 export const RESTRICTIONS_PROMPT = `RESTRICTIONS
 
-Do not include irrelevant restrictions that are obvious, such as restrictions related to foreign credit cards, purchase cards, payments in foreign currencies, or social aid programs, or restrictions that specify "Solo para consumo familiar.", Ley provincial N° 5547 (Mendoza), etc.
+Do NOT include irrelevant restrictions that are obvious, such as restrictions related to foreign credit cards, purchase cards, payments in foreign currencies, or social aid programs. Do NOT include restrictions that specify "Solo para consumo familiar.", Ley provincial N° 5547 (Mendoza), etc.
 
 Do not include redundant information that is mentioned elsewhere in the object, such as validity dates, days of the week, payment methods, where the discount is valid (online or in-store) or limits.
 
