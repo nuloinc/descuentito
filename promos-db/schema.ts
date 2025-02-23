@@ -95,6 +95,7 @@ export const BANKS_OR_WALLETS = [
   "Banco Entre Ríos",
   "Banco Santa Fe",
   ".Reba",
+  ".Reba - Black",
   "Uilo",
   "NaranjaX",
   "Cuenta DNI",
@@ -155,6 +156,8 @@ export const PAYMENT_METHODS_PROMPT = `## PAYMENT METHODS
 Represent different combinations of payment methods as separate arrays of strings.
 
 If there are multiple combinations possible, represent each and every one of them individually.
+
+If there are no payment methods specify (for example, if the discount only applies for a membership program), just return null.
 
 Example: Banco Galicia with either VISA or Mastercard credit cards: [["Banco Galicia", "Tarjeta de crédito VISA"], ["Banco Galicia", "Tarjeta de crédito Mastercard"]], NOT merging them like this: [["Banco Galicia", "Tarjeta de crédito VISA", "Tarjeta de crédito Mastercard"]]
 
