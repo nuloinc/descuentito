@@ -78,7 +78,7 @@ export async function fetchPageDataFromPage(
   }, elementToQuery);
   await storeCacheData(source, ".txt", text);
 
-  return { screenshot, text, domDescription,page };
+  return { screenshot, text, domDescription, page };
 }
 
 export async function fetchPageData(
@@ -94,7 +94,7 @@ export async function fetchPageData(
 ): Promise<PageData> {
   await using session = await createBrowserSession();
   const { page } = session;
-  return fetchPageDataFromPage(page, url, {
+  return await fetchPageDataFromPage(page, url, {
     selector,
     waitForSelector,
     source,

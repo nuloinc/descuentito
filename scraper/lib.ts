@@ -52,8 +52,17 @@ export async function createBrowserSession() {
 
   return {
     [Symbol.asyncDispose]: async () => {
-      await browser.close();
-      await server.close(true);
+      try {
+        await browser.close();
+      } catch (error) {
+        logger.error("Error closing browser", { error });
+        throw error;
+      }
+      try {
+        await server.close(true);
+      } catch (error) {
+        logger.warn("Error closing server", { error });
+      }
     },
     browser,
     page,

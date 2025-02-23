@@ -34,7 +34,7 @@ export interface GenericDiscount {
   paymentMethods?: (string | string[])[];
   membership?: string[];
   restrictions?: string[];
-  onlyForProducts?: string[];
+  onlyForProducts?: string;
   additionalInfo?: string;
   limits?: {
     maxDiscount?: number;
