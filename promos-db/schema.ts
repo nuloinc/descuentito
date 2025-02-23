@@ -34,6 +34,7 @@ export interface GenericDiscount {
   paymentMethods?: (string | string[])[];
   membership?: string[];
   restrictions?: string[];
+  onlyForProducts?: string[];
   additionalInfo?: string;
   limits?: {
     maxDiscount?: number;
@@ -133,6 +134,10 @@ export const BasicDiscountSchema = z.object({
     )
     .optional(),
   restrictions: z.array(z.string()),
+  onlyForProducts: z
+    .string()
+    .optional()
+    .describe("e.g. 'Alimentos', 'Electrodomesticos', 'Bebidas', etc."),
   paymentMethods: z
     .array(
       z.array(
@@ -197,8 +202,6 @@ export const RESTRICTIONS_PROMPT = `RESTRICTIONS
 Do not include irrelevant restrictions that are obvious, such as restrictions related to foreign credit cards, purchase cards, payments in foreign currencies, or social aid programs, or restrictions that specify "Solo para consumo familiar.", Ley provincial N° 5547 (Mendoza), etc.
 
 Do not include redundant information that is mentioned elsewhere in the object, such as validity dates, days of the week, payment methods, where the discount is valid or limits.
-
-DO include restrictions like categories of products included or excluded in the discount.
 
 Order by relevance, starting with the most relevant restrictions.`;
 
