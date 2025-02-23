@@ -183,7 +183,7 @@ export const BasicDiscountSchema = z.object({
     .optional(),
   limits: z.object({
     maxDiscount: z.number().optional(),
-    explicitlyHasNoLimit: z.boolean().optional(),
+    explicitlyHasNoLimit: z.literal(true).optional(),
   }),
 });
 
@@ -195,13 +195,15 @@ If there are multiple combinations possible, represent each and every one of the
 
 Example: Banco Galicia with either VISA or Mastercard credit cards: [["Banco Galicia", "Tarjeta de crédito VISA"], ["Banco Galicia", "Tarjeta de crédito Mastercard"]], NOT merging them like this: [["Banco Galicia", "Tarjeta de crédito VISA", "Tarjeta de crédito Mastercard"]]
 
+Inside each combination, sort by bank/wallet, then by payment method (if applicable), then by card type (if applicable). Example: [["Banco Santander", "MODO", "Tarjeta de crédito VISA"]].
+
 "Banco Galicia Más" is a different payment method from "Banco Galicia".`;
 
 export const RESTRICTIONS_PROMPT = `RESTRICTIONS
 
 Do not include irrelevant restrictions that are obvious, such as restrictions related to foreign credit cards, purchase cards, payments in foreign currencies, or social aid programs, or restrictions that specify "Solo para consumo familiar.", Ley provincial N° 5547 (Mendoza), etc.
 
-Do not include redundant information that is mentioned elsewhere in the object, such as validity dates, days of the week, payment methods, where the discount is valid or limits.
+Do not include redundant information that is mentioned elsewhere in the object, such as validity dates, days of the week, payment methods, where the discount is valid (online or in-store) or limits.
 
 Order by relevance, starting with the most relevant restrictions.`;
 
