@@ -17,7 +17,7 @@ export const carrefourTask = schedules.task({
   cron: "0 0 * * *",
   maxDuration: 300,
   retry: {
-    maxAttempts: 1,
+    maxAttempts: 3,
   },
   run: async (payload, { ctx }) => {
     const { domDescription } = await fetchPageData(

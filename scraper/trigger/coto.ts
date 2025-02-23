@@ -35,7 +35,7 @@ export const cotoTask = schedules.task({
   cron: "0 0 * * *",
   maxDuration: 1800,
   retry: {
-    maxAttempts: 1,
+    maxAttempts: 3,
   },
   run: async (payload, { ctx }) => {
     let content: string;
