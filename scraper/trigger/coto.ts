@@ -19,7 +19,7 @@ const promotionSchema = BasicDiscountSchema.extend({
   membership: z.array(z.enum(["Club La Nacion", "Comunidad Coto"])).optional(),
 });
 
-const SYSTEM_PROMPT = `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users. If the promotion is already in the previous array, copy the previous promotion unless there's a meaningful change. You're extracting promotions from Coto's website.
+const SYSTEM_PROMPT = `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users. If the promotion is already in the previous array, copy the previous promotion unless there's a **meaningful** change. You're extracting promotions from Coto's website.
 
 ${PAYMENT_METHODS_PROMPT}
 
@@ -78,9 +78,13 @@ export const cotoTask = schedules.task({
           content: [
             {
               type: "text",
-              text: `Here's the previous promotion array: ${JSON.stringify(
-                oldPromotions
-              )}.\n\n Extract the promotions from the following text: ${content}`,
+              text:
+                oldPromotions.length > 0
+                  ? `Here's the previous promotion array: ${JSON.stringify(
+                      oldPromotions
+                    )}.\n\n`
+                  : "" +
+                    `Extract the promotions from the following text: ${content}`,
             },
           ],
         },

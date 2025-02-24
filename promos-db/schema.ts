@@ -166,11 +166,11 @@ Example: Banco Galicia with either VISA or Mastercard credit cards: [["Banco Gal
 
 Inside each combination, sort by bank/wallet, then by payment method (if applicable), then by card type (if applicable). Example: [["Banco Santander", "MODO", "Tarjeta de crédito VISA"]].
 
-"Banco Galicia Más" is a different payment method from "Banco Galicia".`;
+"Banco Galicia Más" is a different payment method from "Banco Galicia". Galicia Más used to be HSBC.`;
 
 export const RESTRICTIONS_PROMPT = `## RESTRICTIONS
 
-Do NOT include irrelevant restrictions that are obvious, such as restrictions related to foreign credit cards, purchase cards, payments in foreign currencies, or social aid programs. Do NOT include restrictions that specify "Solo para consumo familiar.", Ley provincial N° 5547 (Mendoza), etc. Do NOT include restrictions that specify "Descuentos, precios y promociones para consumo familiar".
+Do NOT include irrelevant restrictions that are obvious, such as restrictions related to foreign credit cards, purchase cards, payments in foreign currencies, or social aid programs. Do NOT include restrictions that specify "Solo para consumo familiar.", etc. Do NOT include restrictions that specify "Descuentos, precios y promociones para consumo familiar.". Do NOT include restrictions related to Mendoza.
 
 Do not include redundant information that is mentioned elsewhere in the object, such as validity dates, days of the week, payment methods, where the discount is valid (online or in-store) or limits.
 
