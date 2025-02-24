@@ -24,7 +24,7 @@ export interface GenericDiscount {
   description?: string;
   category?: string;
   discount: {
-    type: "porcentaje" | "cuotas sin intereses" | {};
+    type: "porcentaje" | "cuotas sin intereses";
     value: number;
   };
   validFrom: string;

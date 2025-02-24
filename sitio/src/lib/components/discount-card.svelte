@@ -26,6 +26,58 @@
 	function isPaymentMethod(method: string): method is PaymentMethod {
 		return PAYMENT_METHODS.includes(method as PaymentMethod);
 	}
+
+	type MergedInstallmentsDiscount = {
+		discount: {
+			type: 'merged cuotas sin intereses';
+			installmentOptions: number[];
+		};
+	} & Omit<schema.Discount, 'discount'>;
+
+	type RenderedDiscount = schema.Discount | MergedInstallmentsDiscount;
+
+	function mergeInstallmentDiscounts(discounts: readonly schema.Discount[]): RenderedDiscount[] {
+		const originalDiscounts = [...discounts];
+		let mergedDiscounts: RenderedDiscount[] = [];
+
+		while (originalDiscounts.length > 0) {
+			const discount = originalDiscounts.shift()!;
+			if (discount?.discount.type === 'cuotas sin intereses') {
+				const existingDiscountIndex = mergedDiscounts.findIndex(
+					(
+						d
+					): d is
+						| MergedInstallmentsDiscount
+						| (schema.Discount & { discount: { type: 'cuotas sin intereses' } }) =>
+						(d.discount.type === 'cuotas sin intereses' ||
+							d.discount.type === 'merged cuotas sin intereses') &&
+						d.restrictions
+							? d.restrictions.every((r) => discount.restrictions?.includes(r))
+							: true
+				);
+				if (existingDiscountIndex !== -1) {
+					const existingDiscount = mergedDiscounts[existingDiscountIndex];
+					if (existingDiscount.discount.type === 'merged cuotas sin intereses') {
+						existingDiscount.discount.installmentOptions.push(discount.discount.value);
+						continue;
+					} else {
+						mergedDiscounts.push({
+							...discount,
+							discount: {
+								type: 'merged cuotas sin intereses',
+								installmentOptions: [existingDiscount.discount.value, discount.discount.value]
+							}
+						});
+						mergedDiscounts.splice(existingDiscountIndex, 1);
+						continue;
+					}
+				}
+			}
+			mergedDiscounts.push(discount);
+		}
+
+		return mergedDiscounts;
+	}
 </script>
 
 <div class="bg-card text-card-foreground rounded-lg border shadow-sm">
@@ -38,7 +90,7 @@
 			{/if}
 		</div>
 	</div>
-	{#each Object.entries(paymentMethods) as [paymentMethod, promotions]}
+	{#each Object.entries(paymentMethods) as [paymentMethod, discounts]}
 		{#if paymentMethod !== mainPaymentMethod}
 			<h3 class="border-t px-3 pb-1 pt-3 text-lg font-semibold leading-none tracking-tight">
 				{#if isPaymentMethod(paymentMethod)}
@@ -49,7 +101,7 @@
 			</h3>
 		{/if}
 		<div class="space-y-2 p-3">
-			{#each promotions as discount}
+			{#each mergeInstallmentDiscounts(discounts) as discount}
 				<Dialog.Root>
 					<Dialog.Trigger class="w-full">
 						<div class="hover:bg-accent flex items-center justify-between rounded-lg border p-2">
@@ -59,6 +111,11 @@
 										<strong>{discount.discount.value}%</strong> de descuento
 									{:else if discount.discount.type === 'cuotas sin intereses'}
 										<strong>{discount.discount.value} cuotas sin intereses</strong>
+									{:else if discount.discount.type === 'merged cuotas sin intereses'}
+										<strong>
+											{discount.discount.installmentOptions.sort((a, b) => a - b).join(', ')} cuotas
+											sin intereses
+										</strong>
 									{/if}
 								</div>
 								{#if discount.onlyForProducts}
