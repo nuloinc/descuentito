@@ -11,10 +11,11 @@
 	import { PAYMENT_METHODS } from 'promos-db/schema';
 	import type { PaymentMethod } from 'promos-db/schema';
 	import { logos } from '@/logos';
-	import BrandLogo from './brand-logo.svelte';
+	import BrandLogo from './brand-logos.svelte';
 
 	export let mainPaymentMethod: (typeof BANKS_OR_WALLETS)[number] | 'other';
 	export let paymentMethods: Record<(typeof PAYMENT_METHODS)[number] | 'other', schema.Discount[]>;
+	export let selectedType: 'Presencial' | 'Online';
 
 	function formatCurrency(amount: number) {
 		return new Intl.NumberFormat('es-AR', {
@@ -107,6 +108,8 @@
 					<Dialog.Trigger class="w-full">
 						<div class="hover:bg-accent flex items-center justify-between rounded-lg border p-2">
 							<div class="flex flex-col items-start gap-1 text-left">
+								<BrandLogo source={discount.source} types={discount.where} {selectedType} />
+
 								<div>
 									{#if discount.discount.type === 'porcentaje'}
 										<strong>{discount.discount.value}%</strong> de descuento
@@ -139,17 +142,8 @@
 										</div>
 									{/if}
 								</div>
-								<div class="flex flex-row gap-1">
-									<div class="grid h-12 grid-flow-col auto-rows-auto">
-										{#each discount.where as where, index}
-											<BrandLogo
-												source={discount.source}
-												type={where}
-												class={`${index === 0 ? 'row-span-2 h-12 w-auto' : ''}`}
-											/>
-										{/each}
-									</div>
 
+								<div class="flex flex-row gap-1">
 									{#if discount.limits?.maxDiscount}
 										<Badge variant="outline">
 											Tope: {formatCurrency(discount.limits.maxDiscount)}

@@ -46,6 +46,7 @@
 		...data.promotions.jumbo
 	];
 
+	let selectedType: 'Presencial' | 'Online' = 'Presencial';
 	let selectedWeekday: schema.Weekday = defaultWeekday;
 
 	function formatCurrency(amount: number) {
@@ -122,7 +123,13 @@
 		return joinedGrouped;
 	}
 	$: groupedPromotionsForToday = groupPromotionsByPaymentMethod(
-		promotions.filter((promotion) => promotion.weekdays?.includes(selectedWeekday))
+		promotions.filter(
+			(promotion) =>
+				promotion.weekdays?.includes(selectedWeekday) &&
+				(selectedType === 'Online'
+					? promotion.where.includes('Online')
+					: !(promotion.where.length === 1 && promotion.where[0] === 'Online'))
+		)
 	);
 
 	$: console.log(groupedPromotionsForToday);
@@ -134,6 +141,20 @@
 		<Badge variant="destructive">beta :)</Badge>
 	</h1>
 	<h2 class="mb-2 text-lg font-medium">Descuentos en Carrefour, Coto, Dia y Jumbo</h2>
+
+	<Tabs
+		value={selectedType}
+		onValueChange={(value) => (selectedType = value as 'Presencial' | 'Online')}
+		class="mb-2"
+	>
+		<TabsList class="gap-2 rounded-full py-6">
+			{#each ['Presencial', 'Online'] as type}
+				<TabsTrigger value={type} class="rounded-full px-4 text-lg">
+					<span class="">{type}</span>
+				</TabsTrigger>
+			{/each}
+		</TabsList>
+	</Tabs>
 
 	<Tabs
 		value={selectedWeekday}
@@ -154,6 +175,7 @@
 						<DiscountCard
 							mainPaymentMethod={mainPaymentMethod as (typeof BANKS_OR_WALLETS)[number] | 'other'}
 							{paymentMethods}
+							{selectedType}
 						/>
 					{/each}
 				</div>
