@@ -37,7 +37,10 @@
 	const defaultWeekday = weekdays[todayWeekdayIndex >= 0 ? todayWeekdayIndex : weekdays.length - 1];
 
 	$: promotions = [
-		...data.promotions.carrefour,
+		...data.promotions.carrefour.filter(
+			// ignorar Maxi: por ahora solo estamos trackeando minorista en CABA
+			(promotion) => !(promotion.where.length === 1 && promotion.where[0] === 'Maxi')
+		),
 		...data.promotions.coto,
 		...data.promotions.dia,
 		...data.promotions.jumbo

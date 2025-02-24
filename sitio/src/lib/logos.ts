@@ -12,6 +12,17 @@ import { default as BancoMacro } from './logos/Banco Macro.png?enhanced';
 import { default as BancoGalicia } from './logos/Banco Galicia.png?enhanced';
 import { default as BancoSantander } from './logos/Banco Santander.png?enhanced';
 
+import { default as CarrefourMarket } from './logos/supermercados/carrefour_market.webp?enhanced';
+import { default as CarrefourComAr } from './logos/supermercados/carrefour_com_ar.webp?enhanced';
+import { default as CarrefourMaxi } from './logos/supermercados/carrefour_maxi.svg';
+import { default as CarrefourSinTexto } from './logos/supermercados/carrefour_sin_texto.svg';
+import { default as CarrefourExpressHorizontal } from './logos/supermercados/carrefour_express_horizontal.webp?enhanced';
+import { default as Jumbo } from './logos/supermercados/jumbo.png?enhanced';
+import { default as DiaOnline } from './logos/supermercados/dia_online.png?enhanced';
+import { default as Dia } from './logos/supermercados/dia.svg';
+import { default as Coto } from './logos/supermercados/coto.svg';
+import { default as CotoDigital } from './logos/supermercados/coto_digital.png?enhanced';
+
 export const logos: Record<
 	PaymentMethod,
 	{
@@ -34,4 +45,25 @@ export const logos: Record<
 	'Banco Macro': BancoMacro,
 	'Banco Galicia': BancoGalicia,
 	'Banco Santander': BancoSantander
+};
+
+export const BRAND_LOGOS = {
+	carrefour: {
+		Market: CarrefourMarket,
+		Online: CarrefourComAr,
+		Maxi: CarrefourMaxi,
+		Carrefour: CarrefourSinTexto,
+		Express: CarrefourExpressHorizontal
+	},
+	jumbo: {
+		Jumbo: Jumbo
+	},
+	dia: {
+		Dia: Dia,
+		Online: DiaOnline
+	},
+	coto: {
+		Coto: Coto,
+		Online: CotoDigital
+	}
 };

@@ -11,6 +11,7 @@
 	import { PAYMENT_METHODS } from 'promos-db/schema';
 	import type { PaymentMethod } from 'promos-db/schema';
 	import { logos } from '@/logos';
+	import BrandLogo from './brand-logo.svelte';
 
 	export let mainPaymentMethod: (typeof BANKS_OR_WALLETS)[number] | 'other';
 	export let paymentMethods: Record<(typeof PAYMENT_METHODS)[number] | 'other', schema.Discount[]>;
@@ -139,16 +140,15 @@
 									{/if}
 								</div>
 								<div class="flex flex-row gap-1">
-									<Badge variant="default">
-										{discount.source}
-									</Badge>
-
-									<Badge variant="secondary">
-										{#each discount.where as where}
-											{where}{#if where !== discount.where[discount.where.length - 1]}{', '}
-											{/if}
+									<div class="grid h-12 grid-flow-col auto-rows-auto">
+										{#each discount.where as where, index}
+											<BrandLogo
+												source={discount.source}
+												type={where}
+												class={`${index === 0 ? 'row-span-2 h-12 w-auto' : ''}`}
+											/>
 										{/each}
-									</Badge>
+									</div>
 
 									{#if discount.limits?.maxDiscount}
 										<Badge variant="outline">
