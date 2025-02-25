@@ -31,6 +31,7 @@ import { default as CarrefourSinTexto } from './logos/supermercados/carrefour_si
 import { default as CarrefourExpressHorizontal } from './logos/supermercados/carrefour_express_horizontal.png?enhanced';
 import { default as Jumbo } from './logos/supermercados/jumbo_cropped.png?enhanced';
 import { default as DiaOnline } from './logos/supermercados/dia_online.png?enhanced';
+import { default as BancoSantaFe } from './logos/Banco Santa Fe.png?enhanced';
 import { default as Dia } from './logos/supermercados/dia.svg';
 import { default as Coto } from './logos/supermercados/coto.svg';
 import { default as CotoDigital } from './logos/supermercados/coto_digital.png?enhanced';
@@ -61,6 +62,7 @@ export const logos: {
 	'Banco Galicia': BancoGalicia,
 	'Banco Santander': BancoSantander,
 	'Banco Entre Ríos': BancoEntreRios,
+	'Banco Santa Fe': BancoSantaFe,
 	'Banco del Sol': BancoDelSol,
 	'Banco Columbia': BancoColumbia,
 	Uilo: Uilo,
@@ -73,6 +75,17 @@ export const logos: {
 	'Banco Comafi': BancoComafi,
 	'Tarjeta de crédito Coto TCI': TarjetaCreditoCotoTCI
 };
+
+export const LOGOS_NEED_LIGHT_BACKGROUND: readonly PaymentMethod[] = [
+	'Banco Galicia Más',
+	'Banco Entre Ríos',
+	'Banco Santa Fe',
+	'Banco Supervielle',
+	'Mercado Pago',
+	'Cuenta DNI',
+	'Banco BBVA',
+	'Banco Patagonia'
+];
 
 export const BRAND_LOGOS = {
 	carrefour: {
