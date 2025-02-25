@@ -79,6 +79,7 @@ export const BANKS_OR_WALLETS = [
   "Banco BBVA",
   "Banco Nación",
   "Banco Ciudad",
+  "Banco Ciudad - Plan Sueldo y Jubilados",
   "Banco Galicia - Eminent",
   "Banco Macro",
   "Banco Santander",

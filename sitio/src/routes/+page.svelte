@@ -100,7 +100,8 @@
 			['Banco ICBC', 'Banco ICBC – Cliente Payroll'],
 			['Banco Galicia', 'Banco Galicia - Eminent'],
 			['Tarjeta Carrefour Crédito', 'Tarjeta Carrefour Prepaga'],
-			['.Reba', '.Reba - Black']
+			['.Reba', '.Reba - Black'],
+			['Banco Ciudad', 'Banco Ciudad - Plan Sueldo y Jubilados']
 		];
 		let joinedGrouped: Record<
 			PaymentMethodGroup,
