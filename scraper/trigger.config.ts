@@ -33,7 +33,7 @@ export default defineConfig({
             return;
           }
 
-          const instructions = [`RUN npm exec playwright install`];
+          const instructions = [`RUN npx playwright install --with-deps`];
 
           context.addLayer({
             id: "puppeteer",
