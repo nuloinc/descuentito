@@ -81,7 +81,7 @@ export const jumboTask = schedules.task({
             where: z.array(z.enum(["Jumbo", "Online"])),
             membership: z.array(z.enum(["Clarin 365"])).optional(),
           }),
-          system: `You are a helpful assistant that extracts discounts from text and converts them into structured JSON data with relevant information for argentinian users. You're extracting discounts from Jumbo's website. Jumbo is part of the Cencosud group.
+          system: `You are a helpful assistant that extracts discounts from text and converts them into structured JSON data with relevant information for argentinian users. You're extracting discounts from Jumbo's website. Jumbo is part of the Cencosud group. Today is ${new Date().toLocaleDateString("es-AR", { weekday: "long" })}.
 
 You are given a screenshot of a promotion and a text that describes the promotion from Jumbo's website.
 
