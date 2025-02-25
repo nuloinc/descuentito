@@ -111,7 +111,7 @@
 			const joinedKey = JOIN_GROUPS.find((group) => group.includes(key as any))?.[0];
 			if (joinedKey) {
 				joinedGrouped[joinedKey] = joinedGrouped[joinedKey] || {};
-				joinedGrouped[joinedKey][joinedKey] = [];
+				joinedGrouped[joinedKey][joinedKey] = joinedGrouped[joinedKey][joinedKey] || [];
 				joinedGrouped[joinedKey][key as PaymentMethodGroup] = value;
 			} else {
 				joinedGrouped[key as PaymentMethodGroup] = { [key as PaymentMethodGroup]: value } as Record<
