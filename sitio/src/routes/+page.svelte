@@ -131,8 +131,6 @@
 					: !(promotion.where.length === 1 && promotion.where[0] === 'Online'))
 		)
 	);
-
-	$: console.log(groupedPromotionsForToday);
 </script>
 
 <div class="container mx-auto px-4 py-4">
