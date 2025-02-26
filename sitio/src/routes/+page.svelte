@@ -20,6 +20,7 @@
 	import * as Alert from '$lib/components/ui/alert';
 	import PaymentMethodLogo from '@/components/payment-method-logo.svelte';
 	import DiscountCard from '$lib/components/discount-card.svelte';
+	import { dev } from '$app/environment';
 
 	export let data: PageData;
 
@@ -132,6 +133,12 @@
 					: !(promotion.where.length === 1 && promotion.where[0] === 'Online'))
 		)
 	);
+
+	$: {
+		if (dev) {
+			console.log(groupedPromotionsForToday);
+		}
+	}
 </script>
 
 <div class="container mx-auto px-4 py-4">
