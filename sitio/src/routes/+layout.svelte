@@ -54,7 +54,7 @@
 	<div>
 		Un experimento de
 		<a href="https://nulo.lol" target="_blank">
-			<img src={NuloInc} alt="Nulo Science Inc." class="h-12" />
+			<img src={NuloInc} alt="Nulo Science Inc." class="h-12 dark:invert" />
 		</a>
 	</div>
 </footer>
