@@ -3,7 +3,7 @@
 	import * as Card from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
 	import { Badge } from '$lib/components/ui/badge';
-	import { ChevronDown, ExternalLinkIcon, StarsIcon } from 'lucide-svelte';
+	import { ChevronDown, ExternalLinkIcon, StarsIcon, WalletCards } from 'lucide-svelte';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import * as Alert from '$lib/components/ui/alert';
 	import PaymentMethodLogo from '@/components/payment-method-logo.svelte';
@@ -152,6 +152,12 @@
 										<Badge variant="yellow" class="gap-1">
 											<StarsIcon class="h-4 w-4" />
 											Sin tope
+										</Badge>
+									{/if}
+									{#if discount.membership && discount.membership.length > 0}
+										<Badge variant="default" class="gap-1">
+											<WalletCards class="h-4 w-4" />
+											Solo con {discount.membership.join(' y ')}
 										</Badge>
 									{/if}
 								</div>
