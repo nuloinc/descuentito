@@ -21,6 +21,7 @@
 	import PaymentMethodLogo from '@/components/payment-method-logo.svelte';
 	import DiscountCard from '$lib/components/discount-card.svelte';
 	import { dev } from '$app/environment';
+	import { TZDate } from '@date-fns/tz';
 
 	export let data: PageData;
 
@@ -33,8 +34,8 @@
 		'Sabado',
 		'Domingo'
 	];
-	const today = new Date();
-	const todayWeekdayIndex = today.getDay() - 1; // Adjust to start from Monday (0)
+
+	const todayWeekdayIndex = new TZDate(new Date(), 'America/Argentina/Buenos_Aires').getDay() - 1; // Adjust to start from Monday (0)
 	const defaultWeekday = weekdays[todayWeekdayIndex >= 0 ? todayWeekdayIndex : weekdays.length - 1];
 
 	$: promotions = [
