@@ -102,7 +102,14 @@
 			['Banco Galicia', 'Banco Galicia - Eminent'],
 			['Tarjeta Carrefour Crédito', 'Tarjeta Carrefour Prepaga'],
 			['.Reba', '.Reba - Black'],
-			['Banco Ciudad', 'Banco Ciudad - Plan Sueldo y Jubilados']
+			['Banco Ciudad', 'Banco Ciudad - Plan Sueldo y Jubilados'],
+			[
+				'Banco Supervielle',
+				'Banco Supervielle - Plan Sueldo',
+				'Banco Supervielle - Identité',
+				'Banco Supervielle - Jubilados'
+			],
+			['Banco Nación', 'Banco Nación - Tarjeta Nativa']
 		];
 		let joinedGrouped: Record<
 			PaymentMethodGroup,

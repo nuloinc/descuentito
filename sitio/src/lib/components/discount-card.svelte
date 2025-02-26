@@ -134,10 +134,10 @@
 									{#if discount.paymentMethods && discount.paymentMethods.length > 0}
 										<div class="text-muted-foreground text-sm">
 											<ul>
-												{#each discount.paymentMethods as methods}
+												{#each discount.paymentMethods.filter( (methods) => (paymentMethod !== 'other' ? methods.includes(paymentMethod) : true) ) as methods}
 													{#if Array.isArray(methods)}
 														<li>
-															{methods.filter((method) => method !== mainPaymentMethod).join(' + ')}
+															{methods.filter((method) => method !== paymentMethod).join(' + ')}
 														</li>
 													{/if}
 												{/each}
