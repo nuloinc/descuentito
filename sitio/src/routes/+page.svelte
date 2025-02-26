@@ -127,7 +127,7 @@
 	$: groupedPromotionsForToday = groupPromotionsByPaymentMethod(
 		promotions.filter(
 			(promotion) =>
-				promotion.weekdays?.includes(selectedWeekday) &&
+				(promotion.weekdays ? promotion.weekdays.includes(selectedWeekday) : true) &&
 				(selectedType === 'Online'
 					? promotion.where.includes('Online')
 					: !(promotion.where.length === 1 && promotion.where[0] === 'Online'))

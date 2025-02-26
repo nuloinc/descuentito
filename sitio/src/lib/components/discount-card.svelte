@@ -51,11 +51,13 @@
 					): d is
 						| MergedInstallmentsDiscount
 						| (schema.Discount & { discount: { type: 'cuotas sin intereses' } }) =>
+						d.source === discount.source &&
 						(d.discount.type === 'cuotas sin intereses' ||
 							d.discount.type === 'merged cuotas sin intereses') &&
-						d.restrictions
+						(d.restrictions
 							? d.restrictions.every((r) => discount.restrictions?.includes(r))
-							: true
+							: true) &&
+						(d.onlyForProducts ? d.onlyForProducts === discount.onlyForProducts : true)
 				);
 				if (existingDiscountIndex !== -1) {
 					const existingDiscount = mergedDiscounts[existingDiscountIndex];
@@ -122,6 +124,7 @@
 										</strong>
 									{/if}
 								</div>
+
 								{#if discount.onlyForProducts}
 									<p class=" text-sm">
 										⚠️ Solo para productos: {discount.onlyForProducts}
