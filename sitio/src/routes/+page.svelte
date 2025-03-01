@@ -1,28 +1,13 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import * as Card from '$lib/components/ui/card';
-	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import { Badge } from '$lib/components/ui/badge';
-	import {
-		ChevronDown,
-		ChevronsUpDown,
-		ExternalLinkIcon,
-		StarIcon,
-		StarsIcon
-	} from 'lucide-svelte';
-	import { logos } from '@/logos';
-	import { type PaymentMethod } from '@/index';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import type { schema } from '@/db';
-	import { BANKS_OR_WALLETS, PAYMENT_METHODS, promotionsTable } from 'promos-db/schema';
-	import * as Accordion from '$lib/components/ui/accordion';
-	import * as Dialog from '$lib/components/ui/dialog';
-	import * as Alert from '$lib/components/ui/alert';
-	import PaymentMethodLogo from '@/components/payment-method-logo.svelte';
-	import DiscountCard from '$lib/components/discount-card.svelte';
+	import { BANKS_OR_WALLETS, PAYMENT_METHODS } from 'promos-db/schema';
 	import { dev } from '$app/environment';
 	import { TZDate } from '@date-fns/tz';
 	import { page } from '$app/stores';
+	import DiscountCard from '@/components/discount-card.svelte';
 	export let data: PageData;
 
 	const weekdays: schema.Weekday[] = [
@@ -54,14 +39,6 @@
 
 	let selectedType: 'Presencial' | 'Online' = 'Presencial';
 	let selectedWeekday: schema.Weekday = defaultWeekday;
-
-	function formatCurrency(amount: number) {
-		return new Intl.NumberFormat('es-AR', {
-			style: 'currency',
-			currency: 'ARS',
-			minimumFractionDigits: 0
-		}).format(amount);
-	}
 
 	function groupPromotionsByPaymentMethod(discounts: schema.Discount[]) {
 		const grouped = new Map<
