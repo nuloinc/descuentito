@@ -1,10 +1,11 @@
 import { logger, schedules } from "@trigger.dev/sdk/v3";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
-import { generateObject } from "ai";
+import { generateObject, streamObject } from "ai";
 import {
   BasicDiscountSchema,
   DiaDiscount,
+  genStartPrompt,
   LIMITS_PROMPT,
   PAYMENT_METHODS_PROMPT,
   RESTRICTIONS_PROMPT,
@@ -79,12 +80,13 @@ export const diaTask = schedules.task({
       await closeModal();
       /////////////////
 
-      const { object } = await generateObject({
+      const { elementStream } = streamObject({
         model: google("gemini-2.0-flash"),
         schema: BasicDiscountSchema.extend({
           where: z.array(z.enum(["Dia", "Online"])),
         }),
-        system: `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users. You're extracting promotions from Dia's website.
+        output: "array",
+        system: `${genStartPrompt("dia")}
 
 ${PAYMENT_METHODS_PROMPT}
 
@@ -112,12 +114,14 @@ ${LIMITS_PROMPT}
           },
         ],
       });
-      logger.info("Object", { object });
-      promotions.push({
-        ...object,
-        source: "dia",
-        url: "https://diaonline.supermercadosdia.com.ar/medios-de-pago-y-promociones",
-      });
+      for await (const object of elementStream) {
+        logger.info("Object", { object });
+        promotions.push({
+          ...object,
+          source: "dia",
+          url: "https://diaonline.supermercadosdia.com.ar/medios-de-pago-y-promociones",
+        });
+      }
 
       /////////////////
 

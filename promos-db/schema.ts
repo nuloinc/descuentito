@@ -104,6 +104,8 @@ export const BANKS_OR_WALLETS = [
   "NaranjaX",
   "Cuenta DNI",
   "Banco Santa Fe",
+  "Personal Pay",
+  "Prex",
   "Tarjeta Carrefour Prepaga",
   "Tarjeta Carrefour Crédito",
   "Tarjeta de crédito Coto TCI",
@@ -118,7 +120,8 @@ export const PAYMENT_METHODS = [
   "Tarjeta de crédito VISA",
   "Tarjeta de débito VISA",
   "Tarjeta de crédito Mastercard",
-  "Tarjeta de débito Mastercard",
+  "Tarjeta de crédito Mastercard",
+  "Tarjeta de débito Cabal",
   "Tarjeta American Express",
   "Tarjeta American Express - The Platinum Card ® y Centurion ®",
   "Tarjeta Prepaga Mastercard",
@@ -152,11 +155,15 @@ export const BasicDiscountSchema = z.object({
     .optional()
     .describe("e.g. 'Alimentos', 'Electrodomesticos', 'Bebidas', etc."),
   paymentMethods: z.array(z.array(z.enum(PAYMENT_METHODS))).optional(),
+  unknownPaymentMethods: z.array(z.string()).optional(),
   limits: z.object({
     maxDiscount: z.number().optional(),
     explicitlyHasNoLimit: z.boolean(),
   }),
 });
+
+export const genStartPrompt = (source: string) =>
+  `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users. You're extracting promotions from ${source.toUpperCase()}'s website. Today is ${new Date().toLocaleDateString()}.`;
 
 export const PAYMENT_METHODS_PROMPT = `## PAYMENT METHODS
 
@@ -164,7 +171,9 @@ Represent different combinations of payment methods as separate arrays of string
 
 If there are multiple combinations possible, represent each and every one of them individually.
 
-If there are no payment methods specify (for example, if the discount only applies for a membership program), just return null.
+If there are no payment methods specified (for example, if the discount only applies for a membership program), just return null.
+
+If there are payment methods that are not in the list of payment methods, return them in the "unknownPaymentMethods" array.
 
 Specific cards like "Tarjeta de crédito Coto TCI" or "Tarjeta Carrefour Crédito" are different from the general "Tarjeta de crédito VISA" or "Tarjeta de crédito Mastercard" payment methods. If the discount applies to the general payment method, only specify the general payment method.
 
@@ -172,7 +181,9 @@ Example: Banco Galicia with either VISA or Mastercard credit cards: [["Banco Gal
 
 Inside each combination, sort by bank/wallet, then by payment method (if applicable), then by card type (if applicable). Example: [["Banco Santander", "MODO", "Tarjeta de crédito VISA"]].
 
-"Banco Galicia Más" is a different payment method from "Banco Galicia". Galicia Más used to be HSBC.`;
+"Banco Galicia Más" is a different payment method from "Banco Galicia". Galicia Más used to be HSBC.
+
+If there's extra discounts on top by using a specific payment method, return multiple discounts, stacking them.`;
 
 export const RESTRICTIONS_PROMPT = `## RESTRICTIONS
 
