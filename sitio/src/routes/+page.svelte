@@ -8,6 +8,8 @@
 	import { TZDate } from '@date-fns/tz';
 	import { page } from '$app/stores';
 	import DiscountCard from '@/components/discount-card.svelte';
+	import SupermarketFilter from '$lib/components/supermarket-filter.svelte';
+	import { SOURCES } from '$lib';
 	export let data: PageData;
 
 	const weekdays: schema.Weekday[] = [
@@ -23,6 +25,18 @@
 	const todayWeekdayIndex = new TZDate(new Date(), 'America/Argentina/Buenos_Aires').getDay() - 1; // Adjust to start from Monday (0)
 	const defaultWeekday = weekdays[todayWeekdayIndex >= 0 ? todayWeekdayIndex : weekdays.length - 1];
 
+	$: selectedSupermarket = new URL($page.url).searchParams.get('supermarket');
+	function updateSupermarketFilter(supermarket: string | null) {
+		const url = new URL($page.url);
+		if (supermarket) {
+			url.searchParams.set('supermarket', supermarket);
+		} else {
+			url.searchParams.delete('supermarket');
+		}
+		history.pushState({}, '', url.toString());
+		selectedSupermarket = supermarket;
+	}
+
 	$: promotions = [
 		...data.promotions.carrefour.filter(
 			// ignorar Maxi: por ahora solo estamos trackeando minorista en CABA
@@ -31,11 +45,7 @@
 		...data.promotions.coto,
 		...data.promotions.dia,
 		...data.promotions.jumbo
-	].filter((promotion) =>
-		new URL($page.url).searchParams.get('supermarket')
-			? new URL($page.url).searchParams.get('supermarket') === promotion.source
-			: true
-	);
+	].filter((promotion) => (selectedSupermarket ? selectedSupermarket === promotion.source : true));
 
 	let selectedType: 'Presencial' | 'Online' = 'Presencial';
 	let selectedWeekday: schema.Weekday = defaultWeekday;
@@ -137,19 +147,28 @@
 	</h1>
 	<h2 class="mb-2 text-lg font-medium">Descuentos en Carrefour, Coto, Dia y Jumbo</h2>
 
-	<Tabs
-		value={selectedType}
-		onValueChange={(value) => (selectedType = value as 'Presencial' | 'Online')}
-		class="mb-2"
-	>
-		<TabsList class="gap-2 rounded-full py-6">
-			{#each ['Presencial', 'Online'] as type}
-				<TabsTrigger value={type} class="rounded-full px-4 text-lg">
-					<span class="">{type}</span>
-				</TabsTrigger>
-			{/each}
-		</TabsList>
-	</Tabs>
+	<div class="mb-4 flex flex-col gap-2 md:flex-row md:items-center">
+		<Tabs
+			value={selectedType}
+			onValueChange={(value) => (selectedType = value as 'Presencial' | 'Online')}
+			class="mb-0"
+		>
+			<TabsList class="gap-2 rounded-full py-6">
+				{#each ['Presencial', 'Online'] as type}
+					<TabsTrigger value={type} class="rounded-full px-4 text-lg">
+						<span class="">{type}</span>
+					</TabsTrigger>
+				{/each}
+			</TabsList>
+		</Tabs>
+
+		<div class="flex-1">
+			<SupermarketFilter
+				{selectedSupermarket}
+				on:select={(e) => updateSupermarketFilter(e.detail)}
+			/>
+		</div>
+	</div>
 
 	<Tabs
 		value={selectedWeekday}
