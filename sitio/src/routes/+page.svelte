@@ -22,7 +22,7 @@
 	import DiscountCard from '$lib/components/discount-card.svelte';
 	import { dev } from '$app/environment';
 	import { TZDate } from '@date-fns/tz';
-
+	import { page } from '$app/stores';
 	export let data: PageData;
 
 	const weekdays: schema.Weekday[] = [
@@ -46,7 +46,11 @@
 		...data.promotions.coto,
 		...data.promotions.dia,
 		...data.promotions.jumbo
-	];
+	].filter((promotion) =>
+		new URL($page.url).searchParams.get('supermarket')
+			? new URL($page.url).searchParams.get('supermarket') === promotion.source
+			: true
+	);
 
 	let selectedType: 'Presencial' | 'Online' = 'Presencial';
 	let selectedWeekday: schema.Weekday = defaultWeekday;
