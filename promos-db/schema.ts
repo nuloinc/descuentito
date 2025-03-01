@@ -121,6 +121,7 @@ export const PAYMENT_METHODS = [
   "Tarjeta de débito VISA",
   "Tarjeta de crédito Mastercard",
   "Tarjeta de crédito Mastercard",
+  "Tarjeta de crédito Cabal",
   "Tarjeta de débito Cabal",
   "Tarjeta American Express",
   "Tarjeta American Express - The Platinum Card ® y Centurion ®",
@@ -183,7 +184,9 @@ Inside each combination, sort by bank/wallet, then by payment method (if applica
 
 "Banco Galicia Más" is a different payment method from "Banco Galicia". Galicia Más used to be HSBC.
 
-If there's extra discounts on top by using a specific payment method, return multiple discounts, stacking them.`;
+If there's extra discounts on top by using a specific payment method, return multiple discounts, stacking them.
+
+Apple Pay and Google Pay are not payment methods, they are platforms that allow you to pay with your credit or debit card.`;
 
 export const RESTRICTIONS_PROMPT = `## RESTRICTIONS
 
