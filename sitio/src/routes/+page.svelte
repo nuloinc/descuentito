@@ -10,20 +10,33 @@
 	import DiscountCard from '@/components/discount-card.svelte';
 	import SupermarketFilter from '$lib/components/supermarket-filter.svelte';
 	import { SOURCES } from '$lib';
+	import { format, isWithinInterval, parseISO, addDays, startOfWeek, getDay } from 'date-fns';
+	import { es } from 'date-fns/locale';
 	export let data: PageData;
 
-	const weekdays: schema.Weekday[] = [
-		'Lunes',
-		'Martes',
-		'Miercoles',
-		'Jueves',
-		'Viernes',
-		'Sabado',
-		'Domingo'
-	];
+	const today = new TZDate(new Date(), 'America/Argentina/Buenos_Aires');
 
-	const todayWeekdayIndex = new TZDate(new Date(), 'America/Argentina/Buenos_Aires').getDay() - 1; // Adjust to start from Monday (0)
-	const defaultWeekday = weekdays[todayWeekdayIndex >= 0 ? todayWeekdayIndex : weekdays.length - 1];
+	// Generate dates for current week
+	const weekStartDate = startOfWeek(today, { weekStartsOn: 1 }); // Start from Monday
+	const weekDates = Array.from({ length: 7 }, (_, i) => addDays(weekStartDate, i));
+
+	// Format each date as "Weekday Day" (e.g. "Lunes 15")
+	const formattedWeekDates = weekDates.map((date) => ({
+		id: format(date, 'yyyy-MM-dd'), // Use as ID for tabs
+		date: format(date, 'yyyy-MM-dd'),
+		display: format(date, 'EEEE d', { locale: es }),
+		shortDisplay: format(date, 'EEE d', { locale: es }) // Short weekday name with day
+	}));
+
+	// Find today's index in the week dates
+	const todayIndex = weekDates.findIndex(
+		(date) => format(date, 'yyyy-MM-dd') === format(today, 'yyyy-MM-dd')
+	);
+
+	// Default to today, or first day of week if today not in range
+	let selectedDateInfo = formattedWeekDates[todayIndex !== -1 ? todayIndex : 0];
+	let selectedDate = selectedDateInfo.date;
+	let selectedTabId = selectedDateInfo.id;
 
 	$: selectedSupermarket = new URL($page.url).searchParams.get('supermarket');
 	function updateSupermarketFilter(supermarket: string | null) {
@@ -45,10 +58,23 @@
 		...data.promotions.coto,
 		...data.promotions.dia,
 		...data.promotions.jumbo
-	].filter((promotion) => (selectedSupermarket ? selectedSupermarket === promotion.source : true));
+	].filter((promotion) => {
+		if (selectedSupermarket && selectedSupermarket !== promotion.source) return false;
+
+		const selectedDateObj = parseISO(selectedDate);
+		const validFrom = parseISO(promotion.validFrom);
+		const validUntil = parseISO(promotion.validUntil);
+
+		const dayIndex = getDay(selectedDateObj);
+		const selectedWeekday = (
+			['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'] as const
+		)[dayIndex];
+		if (promotion.weekdays && !promotion.weekdays.includes(selectedWeekday)) return false;
+
+		return isWithinInterval(selectedDateObj, { start: validFrom, end: validUntil });
+	});
 
 	let selectedType: 'Presencial' | 'Online' = 'Presencial';
-	let selectedWeekday: schema.Weekday = defaultWeekday;
 
 	function groupPromotionsByPaymentMethod(discounts: schema.Discount[]) {
 		const grouped = new Map<
@@ -124,12 +150,10 @@
 		return joinedGrouped;
 	}
 	$: groupedPromotionsForToday = groupPromotionsByPaymentMethod(
-		promotions.filter(
-			(promotion) =>
-				(promotion.weekdays ? promotion.weekdays.includes(selectedWeekday) : true) &&
-				(selectedType === 'Online'
-					? promotion.where.includes('Online')
-					: !(promotion.where.length === 1 && promotion.where[0] === 'Online'))
+		promotions.filter((promotion) =>
+			selectedType === 'Online'
+				? promotion.where.includes('Online')
+				: !(promotion.where.length === 1 && promotion.where[0] === 'Online')
 		)
 	);
 
@@ -171,19 +195,22 @@
 	</div>
 
 	<Tabs
-		value={selectedWeekday}
-		onValueChange={(value) => (selectedWeekday = value as schema.Weekday)}
+		value={selectedTabId}
+		onValueChange={(value) => {
+			selectedTabId = value;
+			selectedDate = formattedWeekDates.find((d) => d.id === value)?.date || selectedDate;
+		}}
 	>
 		<TabsList>
-			{#each weekdays as weekday}
-				<TabsTrigger value={weekday}>
-					<span class="hidden md:block">{weekday}</span>
-					<span class="block md:hidden">{weekday.substring(0, 3)}</span>
+			{#each formattedWeekDates as weekDateInfo}
+				<TabsTrigger value={weekDateInfo.id}>
+					<span class="hidden md:block">{weekDateInfo.display}</span>
+					<span class="block md:hidden">{weekDateInfo.shortDisplay}</span>
 				</TabsTrigger>
 			{/each}
 		</TabsList>
-		{#each weekdays as weekday}
-			<TabsContent value={weekday} class="mt-6">
+		{#each formattedWeekDates as weekDateInfo}
+			<TabsContent value={weekDateInfo.id} class="mt-6">
 				<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 					{#each Object.entries(groupedPromotionsForToday) as [mainPaymentMethod, paymentMethods]}
 						<DiscountCard
