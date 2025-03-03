@@ -110,6 +110,19 @@
 					<Dialog.Trigger class="w-full">
 						<div class="hover:bg-accent flex items-center justify-between rounded-lg border p-2">
 							<div class="flex flex-col items-start gap-1 text-left">
+								{#if discount.appliesOnlyTo?.anses}
+									<Badge variant="default" class="gap-1">
+										<WalletCards class="h-4 w-4" />
+										Solo para ANSES
+									</Badge>
+								{/if}
+								{#if discount.appliesOnlyTo?.jubilados}
+									<Badge variant="default" class="gap-1">
+										<WalletCards class="h-4 w-4" />
+										Solo para Jubilados
+									</Badge>
+								{/if}
+
 								<BrandLogo source={discount.source} types={discount.where} {selectedType} />
 
 								<div>

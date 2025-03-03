@@ -2,7 +2,7 @@ import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { format } from "date-fns";
 import { ProxyAgent, fetch, RequestInit, Response } from "undici";
 import JSZip from "jszip";
-
+import ProxyChain from "proxy-chain";
 interface FetchCacherOptions {
   s3Client?: S3Client;
   bucketName: string;
@@ -40,8 +40,17 @@ export class FetchCacher {
   constructor(options: FetchCacherOptions) {
     // Setup proxy agent if proxy URI is provided
     if (options.proxyUri) {
+      const server = new ProxyChain.Server({
+        port: 8069,
+        host: "localhost",
+        prepareRequestFunction: ({}) => {
+          return {
+            upstreamProxyUrl: `${options.proxyUri}`,
+          };
+        },
+      });
       this.proxyAgent = new ProxyAgent({
-        uri: options.proxyUri,
+        uri: `http://localhost:8069`,
       });
     }
 

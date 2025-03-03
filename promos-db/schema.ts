@@ -36,6 +36,10 @@ export interface GenericDiscount {
   restrictions?: string[];
   onlyForProducts?: string;
   additionalInfo?: string;
+  appliesOnlyTo?: {
+    anses: boolean;
+    jubilados: boolean;
+  };
   limits?: {
     maxDiscount?: number;
     explicitlyHasNoLimit?: boolean;
@@ -84,6 +88,8 @@ export const BANKS_OR_WALLETS = [
   "Banco Galicia - Eminent",
   "Banco Macro",
   "Banco Santander",
+  "Banco Santander - Jubilados",
+  "Banco Santander - Women",
   "Banco ICBC",
   "Banco ICBC – Cliente Payroll",
   "Banco Credicoop",
@@ -120,12 +126,12 @@ export const PAYMENT_METHODS = [
   "Tarjeta de crédito VISA",
   "Tarjeta de débito VISA",
   "Tarjeta de crédito Mastercard",
-  "Tarjeta de crédito Mastercard",
+  "Tarjeta de débito Mastercard",
+  "Tarjeta Prepaga Mastercard",
   "Tarjeta de crédito Cabal",
   "Tarjeta de débito Cabal",
   "Tarjeta American Express",
   "Tarjeta American Express - The Platinum Card ® y Centurion ®",
-  "Tarjeta Prepaga Mastercard",
 ] as const;
 
 export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
@@ -157,6 +163,10 @@ export const BasicDiscountSchema = z.object({
     .describe("e.g. 'Alimentos', 'Electrodomesticos', 'Bebidas', etc."),
   paymentMethods: z.array(z.array(z.enum(PAYMENT_METHODS))).optional(),
   unknownPaymentMethods: z.array(z.string()).optional(),
+  appliesOnlyTo: z.object({
+    anses: z.boolean(),
+    jubilados: z.boolean(),
+  }).optional(),
   limits: z.object({
     maxDiscount: z.number().optional(),
     explicitlyHasNoLimit: z.boolean(),
@@ -168,31 +178,66 @@ export const genStartPrompt = (source: string) =>
 
 export const PAYMENT_METHODS_PROMPT = `## PAYMENT METHODS
 
-Represent different combinations of payment methods as separate arrays of strings.
+Group payment methods into valid combinations that work together for a discount. Follow these rules:
 
-If there are multiple combinations possible, represent each and every one of them individually.
+1. **Grouping Logic**
+   - Each valid combination must be a unique, separate array
+   - Remove duplicate combinations - identical groups should only appear once
+   - Include ALL possible valid combinations explicitly mentioned
+   - Maintain original grouping logic from the text (don't merge separate groups)
+   - Split combinations by card network (VISA/Mastercard) even when from same institution
 
-If there are no payment methods specified (for example, if the discount only applies for a membership program), just return null.
+2. **Special Cases**
+   - Return null ONLY if no payment methods are mentioned
+   - For generic VISA/Mastercard: use "Tarjeta de crédito VISA"/"Tarjeta de crédito Mastercard"
+   - Handle bank-specific variations carefully (e.g. "Banco Galicia Más" ≠ "Banco Galicia")
 
-If there are payment methods that are not in the list of payment methods, return them in the "unknownPaymentMethods" array.
+3. **Structure & Ordering**
+   Within each combination array, sort elements by:
+   1. Financial institution (bank/wallet)
+   2. Platform (e.g. MODO)
+   3. Card type (credit/debit)
+   4. Network (VISA/Mastercard)
+   
+   Example: [["Banco Galicia", "Tarjeta de crédito VISA"],["Banco Galicia", "Tarjeta de crédito Mastercard"]]
 
-Specific cards like "Tarjeta de crédito Coto TCI" or "Tarjeta Carrefour Crédito" are different from the general "Tarjeta de crédito VISA" or "Tarjeta de crédito Mastercard" payment methods. If the discount applies to the general payment method, only specify the general payment method.
+4. **Handling Unknowns**
+   - Put unrecognized payment methods in "unknownPaymentMethods"
+   - Never mix known/unknown in same array
 
-Example: Banco Galicia with either VISA or Mastercard credit cards: [["Banco Galicia", "Tarjeta de crédito VISA"], ["Banco Galicia", "Tarjeta de crédito Mastercard"]], NOT merging them like this: [["Banco Galicia", "Tarjeta de crédito VISA", "Tarjeta de crédito Mastercard"]]
+5. **Discount Stacking**
+   If multiple tiers exist (e.g. base discount + payment method bonus):
+   - Create separate entries for each discount tier
+   - Specify exact percentage for each combination
+   - Example: 15% for X combo vs 10% general discount
 
-Inside each combination, sort by bank/wallet, then by payment method (if applicable), then by card type (if applicable). Example: [["Banco Santander", "MODO", "Tarjeta de crédito VISA"]].
+6. **Platform Clarifications**
+   - Apple Pay/Google Pay/NFC are NOT payment methods
+   - "MODO" should always be included when mentioned
+   - Prefer generic network names over specific card variants
 
-"Banco Galicia Más" is a different payment method from "Banco Galicia". Galicia Más used to be HSBC.
+7. **Deduplication**
+   - Before finalizing, check for and remove any duplicate payment method arrays
+   - Ensure identical combinations don't appear more than once
+   - Order groups consistently to help identify duplicates
 
-If there's extra discounts on top by using a specific payment method, return multiple discounts, stacking them.
-
-Apple Pay and Google Pay are not payment methods, they are platforms that allow you to pay with your credit or debit card.`;
+Important Notes:
+- Galicia Más = former HSBC accounts
+- "Cuenta DNI" and similar wallets go in first position`;
 
 export const RESTRICTIONS_PROMPT = `## RESTRICTIONS
 
-Do NOT include irrelevant restrictions that are obvious, such as restrictions related to foreign credit cards, purchase cards, payments in foreign currencies, or social aid programs. Do NOT include restrictions that specify "Solo para consumo familiar.", etc. Do NOT include restrictions that specify "Descuentos, precios y promociones para consumo familiar.". Do NOT include restrictions related to Mendoza.
+Exclude these categories of restrictions:
+- Geographic: Any mentioning Mendoza or other regional limitations
+- Payment methods: Foreign-issued cards, purchase cards, payments in foreign currencies
+- Generic disclaimers: Phrases like "Solo para consumo familiar" or "Descuentos, precios y promociones para consumo familiar"
 
-Do not include redundant information that is mentioned elsewhere in the object, such as validity dates, days of the week, payment methods, where the discount is valid (online or in-store) or limits.
+Only include restrictions that:
+1. Specifically limit eligibility beyond basic requirements
+2. Affect actual discount applicability
+3. Introduce non-obvious limitations
+
+Ignore redundant restrictions that appear in most promotions unless they add new constraints.
 
 Order by relevance, starting with the most relevant restrictions.`;
 

@@ -9,6 +9,7 @@ import StagehandConfig from "./trigger/stagehand.config";
 import { AISdkClient } from "./trigger/lib/aisdk_client";
 import { google } from "@ai-sdk/google";
 import * as pw from "playwright-core";
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 
 async function createProxyServer() {
   const server = new ProxyChain.Server({
@@ -209,3 +210,7 @@ export async function generateElementDescription(
   }
   return await page.evaluate(evalFn, selector);
 }
+
+export const openrouter = createOpenRouter({
+  apiKey: process.env.OPENROUTER_API_KEY!,
+});

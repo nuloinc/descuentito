@@ -43,6 +43,7 @@
 		"@date-fns/tz": "^1.2.0",
 		"@libsql/client": "^0.14.0",
 		"date-fns": "^4.1.0",
+		"dayjs": "^1.11.13",
 		"drizzle-orm": "^0.39.2",
 		"posthog-js": "^1.218.2",
 		"promos-db": "workspace:^"

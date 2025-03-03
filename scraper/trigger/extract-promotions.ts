@@ -421,9 +421,9 @@ export async function extractPromotions() {
 }
 
 // Run the extraction if this file is executed directly
-if (import.meta.url === new URL(import.meta.url).href) {
-  extractPromotions().catch((error) => {
-    console.error("Failed to extract promotions:", error);
-    process.exit(1);
-  });
-}
+// if (import.meta.url === new URL(import.meta.url).href) {
+//   extractPromotions().catch((error) => {
+//     console.error("Failed to extract promotions:", error);
+//     process.exit(1);
+//   });
+// }

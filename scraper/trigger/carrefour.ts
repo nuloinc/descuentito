@@ -5,13 +5,16 @@ import { NoObjectGeneratedError, streamObject } from "ai";
 import {
   BasicDiscountSchema,
   CarrefourDiscount,
+  genStartPrompt,
   LIMITS_PROMPT,
   PAYMENT_METHODS,
   PAYMENT_METHODS_PROMPT,
+  RESTRICTIONS_PROMPT,
 } from "promos-db/schema";
 import { fetchPageData } from "./lib/fetch-page";
 import { savePromotions } from "../lib/git";
 import assert from "assert";
+import { writeFile } from "fs/promises";
 
 const DiscountSchema = BasicDiscountSchema.extend({
   where: z.array(z.enum(["Carrefour", "Maxi", "Market", "Express", "Online"])),
@@ -42,23 +45,18 @@ export const carrefourTask = schedules.task({
       model: google("gemini-2.0-flash"),
       output: "array",
       schema: DiscountSchema,
-      system: `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users. You're extracting promotions from Carrefour's website.
+      temperature: 0,
+      system: `${genStartPrompt("Carrefour")}
 
 ${PAYMENT_METHODS_PROMPT}
 
 Tarjeta Carrefour Prepaga/Crédito are DISTINCT from "Mi Carrefour" which is a membership program.
 
-RESTRICTIONS
-
-Do not include irrelevant restrictions that are obvious, such as restrictions related to foreign credit cards, purchase cards, Carrefour-specific payment methods, payments in foreign currencies, or social aid programs, or restrictions that specify "Solo para consumo familiar.".
-
-Do not include redundant information that is mentioned elsewhere in the object, such as validity dates, days of the week, payment methods, where the promotion is valid or limits.
-
-Order by relevance, starting with the most relevant restrictions.
+${RESTRICTIONS_PROMPT}
 
 WHERE
 
-"Comprando en:" describes WHERE the promotion is valid. "logo$TYPE" is for Carrefour $TYPE.
+"Comprando en:" describes WHERE the discount is valid. "logo$TYPE" is for Carrefour $TYPE. If the same discount is valid in different places, return all of them.
 
 ${LIMITS_PROMPT}
 `,
@@ -69,7 +67,7 @@ ${LIMITS_PROMPT}
             {
               type: "text",
               text:
-                "Extract the promotions from the following text: " +
+                "Extract the promotions from the following pseudo-html: \n\n" +
                 domDescription,
               // text: "Extract the promotions from the following screenshot: ",
             },

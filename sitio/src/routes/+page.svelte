@@ -5,38 +5,45 @@
 	import type { schema } from '@/db';
 	import { BANKS_OR_WALLETS, PAYMENT_METHODS } from 'promos-db/schema';
 	import { dev } from '$app/environment';
-	import { TZDate } from '@date-fns/tz';
 	import { page } from '$app/stores';
 	import DiscountCard from '@/components/discount-card.svelte';
 	import SupermarketFilter from '$lib/components/supermarket-filter.svelte';
 	import { SOURCES } from '$lib';
-	import { format, isWithinInterval, parseISO, addDays, startOfWeek, getDay } from 'date-fns';
-	import { es } from 'date-fns/locale';
+	import dayjs from 'dayjs';
+	import utc from 'dayjs/plugin/utc';
+	import timezone from 'dayjs/plugin/timezone';
+	import weekday from 'dayjs/plugin/weekday';
+	import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+	import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+	dayjs.extend(utc);
+	dayjs.extend(timezone);
+	dayjs.extend(weekday);
+	dayjs.extend(isSameOrAfter);
+	dayjs.extend(isSameOrBefore);
 	export let data: PageData;
 
-	const today = new TZDate(new Date(), 'America/Argentina/Buenos_Aires');
+	const weekStartDate = dayjs(undefined, 'America/Argentina/Buenos_Aires')
+		.startOf('day')
+		.weekday(-6);
+	const weekDates = Array.from({ length: 7 }, (_, i) => weekStartDate.add(i, 'day'));
 
-	// Generate dates for current week
-	const weekStartDate = startOfWeek(today, { weekStartsOn: 1 }); // Start from Monday
-	const weekDates = Array.from({ length: 7 }, (_, i) => addDays(weekStartDate, i));
+	const weekdayFormatter = Intl.DateTimeFormat('es', { weekday: 'long', day: 'numeric' });
+	const shortWeekdayFormatter = Intl.DateTimeFormat('es', { weekday: 'short', day: 'numeric' });
 
-	// Format each date as "Weekday Day" (e.g. "Lunes 15")
 	const formattedWeekDates = weekDates.map((date) => ({
-		id: format(date, 'yyyy-MM-dd'), // Use as ID for tabs
-		date: format(date, 'yyyy-MM-dd'),
-		display: format(date, 'EEEE d', { locale: es }),
-		shortDisplay: format(date, 'EEE d', { locale: es }) // Short weekday name with day
+		id: date.format('YYYY-MM-DD'),
+		date: date.format('YYYY-MM-DD'),
+		dayjs: date,
+		display: weekdayFormatter.format(date.toDate()),
+		shortDisplay: shortWeekdayFormatter.format(date.toDate())
 	}));
 
-	// Find today's index in the week dates
-	const todayIndex = weekDates.findIndex(
-		(date) => format(date, 'yyyy-MM-dd') === format(today, 'yyyy-MM-dd')
+	const todayIndex = weekDates.findIndex((date) =>
+		date.isSame(dayjs(undefined, 'America/Argentina/Buenos_Aires'), 'day')
 	);
 
-	// Default to today, or first day of week if today not in range
-	let selectedDateInfo = formattedWeekDates[todayIndex !== -1 ? todayIndex : 0];
-	let selectedDate = selectedDateInfo.date;
-	let selectedTabId = selectedDateInfo.id;
+	let selectedTabId = formattedWeekDates[todayIndex].id;
+	$: selectedDateInfo = formattedWeekDates.find((d) => d.id === selectedTabId)!;
 
 	$: selectedSupermarket = new URL($page.url).searchParams.get('supermarket');
 	function updateSupermarketFilter(supermarket: string | null) {
@@ -59,19 +66,27 @@
 		...data.promotions.dia,
 		...data.promotions.jumbo
 	].filter((promotion) => {
+		if (selectedType === 'Online') {
+			if (!promotion.where.includes('Online')) return false;
+		} else {
+			if (promotion.where.length === 1 && promotion.where[0] === 'Online') return false;
+		}
+
 		if (selectedSupermarket && selectedSupermarket !== promotion.source) return false;
 
-		const selectedDateObj = parseISO(selectedDate);
-		const validFrom = parseISO(promotion.validFrom);
-		const validUntil = parseISO(promotion.validUntil);
-
-		const dayIndex = getDay(selectedDateObj);
 		const selectedWeekday = (
-			['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'] as const
-		)[dayIndex];
+			['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'] as const
+		)[selectedDateInfo.dayjs.day()];
 		if (promotion.weekdays && !promotion.weekdays.includes(selectedWeekday)) return false;
 
-		return isWithinInterval(selectedDateObj, { start: validFrom, end: validUntil });
+		const selectedDateObj = selectedDateInfo.dayjs;
+		const validFrom = dayjs(promotion.validFrom, 'America/Argentina/Buenos_Aires');
+		const validUntil = dayjs(promotion.validUntil, 'America/Argentina/Buenos_Aires');
+
+		return (
+			validFrom.isSameOrBefore(selectedDateObj, 'day') &&
+			validUntil.isSameOrAfter(selectedDateObj, 'day')
+		);
 	});
 
 	let selectedType: 'Presencial' | 'Online' = 'Presencial';
@@ -149,13 +164,7 @@
 		}
 		return joinedGrouped;
 	}
-	$: groupedPromotionsForToday = groupPromotionsByPaymentMethod(
-		promotions.filter((promotion) =>
-			selectedType === 'Online'
-				? promotion.where.includes('Online')
-				: !(promotion.where.length === 1 && promotion.where[0] === 'Online')
-		)
-	);
+	$: groupedPromotionsForToday = groupPromotionsByPaymentMethod(promotions);
 
 	$: {
 		if (dev) {
@@ -198,7 +207,6 @@
 		value={selectedTabId}
 		onValueChange={(value) => {
 			selectedTabId = value;
-			selectedDate = formattedWeekDates.find((d) => d.id === value)?.date || selectedDate;
 		}}
 	>
 		<TabsList>

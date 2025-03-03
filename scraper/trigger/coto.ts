@@ -77,7 +77,7 @@ export const cotoTask = schedules.task({
       .slice(1)
       .filter(
         (c) =>
-          !c.includes("DESCUENTOS SÁBADO Y DOMINGO **") &&
+          // !c.includes("DESCUENTOS SÁBADO Y DOMINGO **") &&
           !c.includes("MIX ALIMENTOS **") &&
           !c.includes("SALÓN") &&
           !c.includes("ELECTRO (MOTIVO") &&
@@ -92,6 +92,7 @@ export const cotoTask = schedules.task({
           !c.includes("COMUNIDAD MENSUAL **") &&
           !c.includes("PARANÁ – SANTA FE **") &&
           !c.includes("DEVOLUCION O CAMBIO DE PRODUCTOS") &&
+          !c.includes("ANSES **") &&
           !c.includes(
             "PARA TODAS LAS PROMOCIONES BANCARIAS Y/O ENTIDADES. VER EXCLUSIONES ESPECÍFICAS DE CADA PROMOCIÓN BUSCANDO POR SECCIÓN,"
           )
