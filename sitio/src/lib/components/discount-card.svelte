@@ -122,6 +122,12 @@
 										Solo para Jubilados
 									</Badge>
 								{/if}
+								{#if discount.appliesOnlyTo?.programaCiudadaniaPorteña}
+									<Badge variant="default" class="gap-1">
+										<WalletCards class="h-4 w-4" />
+										Solo para Programa Ciudadanía Porteña
+									</Badge>
+								{/if}
 
 								<BrandLogo source={discount.source} types={discount.where} {selectedType} />
 
@@ -142,6 +148,9 @@
 									<p class=" text-sm">
 										⚠️ Solo para productos: {discount.onlyForProducts}
 									</p>
+								{/if}
+								{#if discount.excludesProducts}
+									<p class="text-sm font-medium text-red-600">! product restrictions apply</p>
 								{/if}
 								<div>
 									{#if discount.paymentMethods && discount.paymentMethods.length > 0}
@@ -259,6 +268,12 @@
 											<li>{restriction}</li>
 										{/each}
 									</ul>
+								</div>
+							{/if}
+							{#if discount.excludesProducts}
+								<div>
+									<h4 class="font-medium">No aplica para:</h4>
+									<p class="text-sm text-red-600">{discount.excludesProducts}</p>
 								</div>
 							{/if}
 						</div>

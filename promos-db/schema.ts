@@ -35,10 +35,12 @@ export interface GenericDiscount {
   membership?: string[];
   restrictions?: string[];
   onlyForProducts?: string;
+  excludesProducts?: string;
   additionalInfo?: string;
   appliesOnlyTo?: {
     anses: boolean;
     jubilados: boolean;
+    programaCiudadaniaPorteña: boolean;
   };
   limits?: {
     maxDiscount?: number;
@@ -78,7 +80,7 @@ export type Discount =
 export const BANKS_OR_WALLETS = [
   "Mercado Pago",
   "Banco Galicia",
-  "Ualá",
+  "Uala",
   "Banco Patagonia",
   "Banco BBVA",
   "Banco Nación",
@@ -97,8 +99,7 @@ export const BANKS_OR_WALLETS = [
   "Banco Comafi",
   "Banco Galicia Más",
   "Banco Supervielle",
-  "Banco Supervielle - Plan Sueldo",
-  "Banco Supervielle - Identité",
+  "Banco Supervielle - Identité y Plan Sueldo",
   "Banco Supervielle - Jubilados",
   "Banco Columbia",
   "Banco del Sol",
@@ -161,12 +162,19 @@ export const BasicDiscountSchema = z.object({
     .string()
     .optional()
     .describe("e.g. 'Alimentos', 'Electrodomesticos', 'Bebidas', etc."),
+  excludesProducts: z
+    .string()
+    .describe("e.g. 'Vinos, Harina', 'Marca Coca Cola, Alcohol', etc.")
+    .optional(),
   paymentMethods: z.array(z.array(z.enum(PAYMENT_METHODS))).optional(),
-  unknownPaymentMethods: z.array(z.string()).optional(),
-  appliesOnlyTo: z.object({
-    anses: z.boolean(),
-    jubilados: z.boolean(),
-  }).optional(),
+  unknownPaymentMethods: z.array(z.string()),
+  appliesOnlyTo: z
+    .object({
+      anses: z.boolean(),
+      jubilados: z.boolean(),
+      programaCiudadaniaPorteña: z.boolean(),
+    })
+    .optional(),
   limits: z.object({
     maxDiscount: z.number().optional(),
     explicitlyHasNoLimit: z.boolean(),
@@ -175,7 +183,6 @@ export const BasicDiscountSchema = z.object({
 
 export const genStartPrompt = (source: string) =>
   `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users. You're extracting promotions from ${source.toUpperCase()}'s website. Today is ${new Date().toLocaleDateString()}.`;
-
 export const PAYMENT_METHODS_PROMPT = `## PAYMENT METHODS
 
 Group payment methods into valid combinations that work together for a discount. Follow these rules:
@@ -188,7 +195,8 @@ Group payment methods into valid combinations that work together for a discount.
    - Split combinations by card network (VISA/Mastercard) even when from same institution
 
 2. **Special Cases**
-   - Return null ONLY if no payment methods are mentioned
+   - If "todos los medios de pago" or similar is mentioned, return null to indicate all payment methods are accepted.
+   - Return null ONLY if no payment methods are mentioned or "todos los medios de pago" is present.
    - For generic VISA/Mastercard: use "Tarjeta de crédito VISA"/"Tarjeta de crédito Mastercard"
    - Handle bank-specific variations carefully (e.g. "Banco Galicia Más" ≠ "Banco Galicia")
 
@@ -223,6 +231,8 @@ Group payment methods into valid combinations that work together for a discount.
 
 Important Notes:
 - Galicia Más = former HSBC accounts
+- Plan Z = Naranja X VISA Crédito
+- Caja de ahorro App Ualá = "Uala"
 - "Cuenta DNI" and similar wallets go in first position`;
 
 export const RESTRICTIONS_PROMPT = `## RESTRICTIONS
@@ -240,6 +250,14 @@ Only include restrictions that:
 Ignore redundant restrictions that appear in most promotions unless they add new constraints.
 
 Order by relevance, starting with the most relevant restrictions.`;
+
+export const PRODUCTS_PROMPT = `## PRODUCTS COVERAGE
+
+There are two fields that define product coverage for a promotion:
+
+\`onlyForProducts\`: If the promotion is limited to specific product categories, list them here (e.g., 'Alimentos', 'Electrodomesticos', 'Bebidas'). Leave empty if promotion applies to all products.
+
+\`excludesProducts\`: List any products or product categories explicitly excluded from the promotion (e.g., 'Vinos, Harina', 'Marca Coca Cola, Alcohol'). This field is critical for accurately representing promotion limitations.`;
 
 export const LIMITS_PROMPT = `## LIMITS
 

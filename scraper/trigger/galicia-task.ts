@@ -3,7 +3,7 @@ import { extractPromotions } from "./extract-promotions";
 import { BUCKET_NAME, s3 } from "../fetch-cacher";
 import { format } from "date-fns";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
-import { db, schema } from "promos-db/db";
+// import { db, schema } from "promos-db/db";
 import { eq, sql } from "drizzle-orm";
 
 export const galiciaPromotionsTask = schedules.task({
@@ -22,16 +22,16 @@ export const galiciaPromotionsTask = schedules.task({
       })
     );
 
-    await db.transaction(async (tx) => {
-      await tx
-        .delete(schema.promotionsTable)
-        .where(sql`${schema.promotionsTable.source} = 'galicia'`);
-      await tx.insert(schema.promotionsTable).values(
-        promotions.map((promo) => ({
-          source: "galicia",
-          json: promo,
-        }))
-      );
-    });
+    // await db.transaction(async (tx) => {
+    //   await tx
+    //     .delete(schema.promotionsTable)
+    //     .where(sql`${schema.promotionsTable.source} = 'galicia'`);
+    //   await tx.insert(schema.promotionsTable).values(
+    //     promotions.map((promo) => ({
+    //       source: "galicia",
+    //       json: promo,
+    //     }))
+    //   );
+    // });
   },
 });
