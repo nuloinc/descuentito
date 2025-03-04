@@ -22,9 +22,7 @@
 	dayjs.extend(isSameOrBefore);
 	export let data: PageData;
 
-	const weekStartDate = dayjs(undefined, 'America/Argentina/Buenos_Aires')
-		.startOf('day')
-		.weekday(-6);
+	const weekStartDate = dayjs(undefined, 'America/Argentina/Buenos_Aires').startOf('day');
 	const weekDates = Array.from({ length: 7 }, (_, i) => weekStartDate.add(i, 'day'));
 
 	const weekdayFormatter = Intl.DateTimeFormat('es', { weekday: 'long', day: 'numeric' });
@@ -138,11 +136,11 @@
 			['Banco Ciudad', 'Banco Ciudad - Plan Sueldo y Jubilados'],
 			[
 				'Banco Supervielle',
-				'Banco Supervielle - Plan Sueldo',
-				'Banco Supervielle - Identité',
+				'Banco Supervielle - Identité y Plan Sueldo',
 				'Banco Supervielle - Jubilados'
 			],
-			['Banco Nación', 'Banco Nación - Tarjeta Nativa']
+			['Banco Nación', 'Banco Nación - Tarjeta Nativa'],
+			['Banco Santander', 'Banco Santander - Jubilados', 'Banco Santander - Women']
 		];
 		let joinedGrouped: Record<
 			PaymentMethodGroup,

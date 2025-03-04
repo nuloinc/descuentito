@@ -8,3 +8,5 @@ galicia-promotions.json
 
 .git-data/
 .git-data-*/
+
+.DS_Store
