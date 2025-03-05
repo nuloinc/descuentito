@@ -17,6 +17,7 @@
     "@trigger.dev/sdk": "3.3.16",
     "ai": "^4.1.47",
     "date-fns": "^3.3.1",
+    "dayjs": "^1.11.13",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.39.2",
     "execa": "^9.5.2",

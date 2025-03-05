@@ -5,10 +5,12 @@ import { generateObject, streamObject } from "ai";
 import {
   BANKS_OR_WALLETS,
   BasicDiscountSchema,
+  genStartPrompt,
   JumboDiscount,
   LIMITS_PROMPT,
   PAYMENT_METHODS_PROMPT,
   PaymentMethod,
+  PRODUCTS_PROMPT,
   RESTRICTIONS_PROMPT,
 } from "promos-db/schema";
 import { savePromotions } from "../lib/git";
@@ -81,13 +83,13 @@ export const jumboTask = schedules.task({
             where: z.array(z.enum(["Jumbo", "Online"])),
             membership: z.array(z.enum(["Clarin 365"])).optional(),
           }),
-          system: `You are a helpful assistant that extracts discounts from text and converts them into structured JSON data with relevant information for argentinian users. You're extracting discounts from Jumbo's website. Jumbo is part of the Cencosud group. Today is ${new Date().toLocaleDateString("es-AR", { weekday: "long" })}.
-
-You are given a screenshot of a promotion and a text that describes the promotion from Jumbo's website.
+          system: `${genStartPrompt("Jumbo")} Jumbo is part of the Cencosud group.
 
 ${PAYMENT_METHODS_PROMPT}
 
 ${RESTRICTIONS_PROMPT}
+
+${PRODUCTS_PROMPT}
 
 ## WHERE
 
@@ -117,9 +119,11 @@ ${LIMITS_PROMPT}
           // lo hacemos sobre un array de los descuentos de los dias anteriores para no tener falsos positivos sobre descuentos del mismo banco pero de distinto tipo
           const existingDiscount = previousDaysDiscounts.find(
             (p) =>
-              p.weekdays?.every((day) =>
-                generatedDiscount.weekdays?.includes(day)
-              ) &&
+              (p.weekdays
+                ? p.weekdays.every((day) =>
+                    generatedDiscount.weekdays?.includes(day)
+                  )
+                : !generatedDiscount.weekdays) &&
               p.where?.every((where) =>
                 generatedDiscount.where?.includes(where)
               ) &&

@@ -1,6 +1,11 @@
 import { sql } from "drizzle-orm";
 import { text, sqliteTable } from "drizzle-orm/sqlite-core";
 import { z } from "zod";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export const promotionsTable = sqliteTable("promotions", {
   source: text("source").notNull(),
@@ -105,6 +110,7 @@ export const BANKS_OR_WALLETS = [
   "Banco del Sol",
   "Banco Entre Ríos",
   "Banco Hipotecario",
+  "Banco San Juan",
   ".Reba",
   ".Reba - Black",
   "Uilo",
@@ -182,7 +188,10 @@ export const BasicDiscountSchema = z.object({
 });
 
 export const genStartPrompt = (source: string) =>
-  `You are a helpful assistant that extracts promotions from a text and converts them into structured JSON data with relevant information for argentinian users. You're extracting promotions from ${source.toUpperCase()}'s website. Today is ${new Date().toLocaleDateString()}.`;
+  `You are a helpful assistant that extracts promotions from text and/or screenshots and converts them into structured JSON data with relevant information for argentinian users. You're extracting promotions from ${source.toUpperCase()}'s website. Today is ${dayjs(
+    undefined,
+    "America/Argentina/Buenos_Aires"
+  ).format("dddd, DD MMMM YYYY")}.`;
 export const PAYMENT_METHODS_PROMPT = `## PAYMENT METHODS
 
 Group payment methods into valid combinations that work together for a discount. Follow these rules:
@@ -216,8 +225,8 @@ Group payment methods into valid combinations that work together for a discount.
 5. **Discount Stacking**
    If multiple tiers exist (e.g. base discount + payment method bonus):
    - Create separate entries for each discount tier
-   - Specify exact percentage for each combination
-   - Example: 15% for X combo vs 10% general discount
+   - Specify exact percentage for each combination including COMBINED totals
+   - Example: 10% base discount + 15% total (10% base + 5% payment method/membership bonus)
 
 6. **Platform Clarifications**
    - Apple Pay/Google Pay/NFC are NOT payment methods
@@ -263,4 +272,6 @@ export const LIMITS_PROMPT = `## LIMITS
 
 \`maxDiscount\` is the maximum discount amount in pesos that can be applied to the discount.
 
-\`explicitlyHasNoLimit\` is true if the discount explicitly states that there is no limit ("sin tope").`;
+\`explicitlyHasNoLimit\` is true if the discount explicitly states that there is no limit ("sin tope").
+
+\`validFrom\` and \`validUntil\` are the dates when the discount is valid. If there's no mention of a valid from date, assume it's valid this month.`;
