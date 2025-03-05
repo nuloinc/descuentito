@@ -76,11 +76,17 @@ export interface JumboDiscount extends GenericDiscount {
   paymentMethods?: PaymentMethod[][];
 }
 
+export interface ChangoMasDiscount extends GenericDiscount {
+  source: "changomas";
+  where: ("ChangoMas" | "MasOnline")[];
+}
+
 export type Discount =
   | CarrefourDiscount
   | CotoDiscount
   | DiaDiscount
-  | JumboDiscount;
+  | JumboDiscount
+  | ChangoMasDiscount;
 
 export const BANKS_OR_WALLETS = [
   "Mercado Pago",
@@ -111,6 +117,7 @@ export const BANKS_OR_WALLETS = [
   "Banco Entre Ríos",
   "Banco Hipotecario",
   "Banco San Juan",
+  "Banco Santa Cruz",
   ".Reba",
   ".Reba - Black",
   "Uilo",
@@ -119,12 +126,16 @@ export const BANKS_OR_WALLETS = [
   "Banco Santa Fe",
   "Personal Pay",
   "Prex",
+  "Yoy",
   "Tarjeta Carrefour Prepaga",
   "Tarjeta Carrefour Crédito",
   "Tarjeta de crédito Coto TCI",
   "Tarjeta de crédito Cencosud Mastercard",
   "Cencopay",
   "Sidecreer",
+  "Tarjeta de Crédito Patagonia 365",
+  "Tarjeta de Crédito Sol",
+  "BanCo (Banco de Corrientes)",
 ] as const;
 
 export const PAYMENT_METHODS = [
