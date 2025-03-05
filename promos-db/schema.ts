@@ -78,7 +78,7 @@ export interface JumboDiscount extends GenericDiscount {
 
 export interface ChangoMasDiscount extends GenericDiscount {
   source: "changomas";
-  where: ("ChangoMas" | "MasOnline")[];
+  where: ("ChangoMas" | "Online")[];
 }
 
 export type Discount =

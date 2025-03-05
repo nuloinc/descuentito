@@ -3,15 +3,19 @@
 	import { Filter } from 'lucide-svelte';
 	import { SOURCES } from '$lib';
 	import { createEventDispatcher } from 'svelte';
+	import { page } from '$app/stores';
 
 	const supermarketNames: Record<string, string> = {
 		carrefour: 'Carrefour',
 		coto: 'Coto',
 		dia: 'Dia',
-		jumbo: 'Jumbo'
+		jumbo: 'Jumbo',
+		changomas: 'ChangoMas'
 	};
 
 	export let selectedSupermarket: string | null = null;
+
+	const SHOW_CHANGOMAS = new URL($page.url).searchParams.get('showChangomas');
 
 	const dispatch = createEventDispatcher<{
 		select: string | null;
@@ -20,6 +24,11 @@
 	function updateSupermarket(supermarket: string | null) {
 		dispatch('select', supermarket);
 	}
+
+	$: sources = SOURCES.filter((source) => {
+		if (SHOW_CHANGOMAS) return true;
+		return source !== 'changomas';
+	});
 </script>
 
 <div class="flex w-full flex-wrap items-center justify-end gap-2">
@@ -35,7 +44,7 @@
 	>
 		Todos
 	</Button>
-	{#each SOURCES as source}
+	{#each sources as source}
 		<Button
 			variant={selectedSupermarket === source ? 'default' : 'outline'}
 			size="sm"

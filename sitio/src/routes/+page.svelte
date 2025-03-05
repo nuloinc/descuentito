@@ -8,7 +8,6 @@
 	import { page } from '$app/stores';
 	import DiscountCard from '@/components/discount-card.svelte';
 	import SupermarketFilter from '$lib/components/supermarket-filter.svelte';
-	import { SOURCES } from '$lib';
 	import dayjs from 'dayjs';
 	import utc from 'dayjs/plugin/utc';
 	import timezone from 'dayjs/plugin/timezone';
@@ -55,6 +54,8 @@
 		selectedSupermarket = supermarket;
 	}
 
+	const SHOW_CHANGOMAS = new URL($page.url).searchParams.get('showChangomas');
+
 	$: promotions = [
 		...data.promotions.carrefour.filter(
 			// ignorar Maxi: por ahora solo estamos trackeando minorista en CABA
@@ -62,7 +63,8 @@
 		),
 		...data.promotions.coto,
 		...data.promotions.dia,
-		...data.promotions.jumbo
+		...data.promotions.jumbo,
+		...(SHOW_CHANGOMAS ? data.promotions.changomas : [])
 	].filter((promotion) => {
 		if (selectedType === 'Online') {
 			if (!promotion.where.includes('Online')) return false;

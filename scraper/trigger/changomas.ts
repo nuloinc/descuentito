@@ -16,7 +16,7 @@ import assert from "assert";
 import { createPlaywrightSession } from "../lib";
 
 const DiscountSchema = BasicDiscountSchema.extend({
-  where: z.array(z.enum(["ChangoMas", "MasOnline"])),
+  where: z.array(z.enum(["ChangoMas", "Online"])),
   membership: z.array(z.enum(["MasClub"])).optional(),
 });
 
@@ -69,7 +69,7 @@ ${RESTRICTIONS_PROMPT}
 
 ## WHERE
 
-"Pagando:" describes WHERE the discount is valid. "Sucursal" is for ChangoMas, "MasOnline" is for MasOnline.
+"Pagando:" describes WHERE the discount is valid. "Sucursal" is for ChangoMas, "MasOnline" is for Online.
 
 ${PRODUCTS_PROMPT}
 

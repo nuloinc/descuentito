@@ -35,6 +35,8 @@ import { default as BancoSantaFe } from './logos/Banco Santa Fe.png?enhanced';
 import { default as Dia } from './logos/supermercados/dia.svg';
 import { default as Coto } from './logos/supermercados/coto.svg';
 import { default as CotoDigital } from './logos/supermercados/coto_digital.png?enhanced';
+import { default as ChangoMas } from './logos/supermercados/changomas.png?enhanced';
+import { default as ChangoMasOnline } from './logos/supermercados/changomas_online.png?enhanced';
 
 export const logos: {
 	[key in PaymentMethod]?:
@@ -106,5 +108,13 @@ export const BRAND_LOGOS = {
 	coto: {
 		Coto: Coto,
 		Online: CotoDigital
+	},
+	changomas: {
+		ChangoMas: ChangoMas,
+		Online: ChangoMasOnline
 	}
+};
+
+export const BRAND_LOGOS_NEED_LIGHT_BACKGROUND = {
+	changomas: ['Online']
 };
