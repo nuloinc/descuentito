@@ -25,7 +25,7 @@
 	const weekDates = Array.from({ length: 7 }, (_, i) => weekStartDate.add(i, 'day'));
 
 	const weekdayFormatter = Intl.DateTimeFormat('es', { weekday: 'long', day: 'numeric' });
-	const shortWeekdayFormatter = Intl.DateTimeFormat('es', { weekday: 'short', day: 'numeric' });
+	const shortWeekdayFormatter = Intl.DateTimeFormat('es', { weekday: 'short' });
 
 	const formattedWeekDates = weekDates.map((date) => ({
 		id: date.format('YYYY-MM-DD'),
@@ -209,7 +209,7 @@
 			selectedTabId = value;
 		}}
 	>
-		<TabsList>
+		<TabsList class="mx-auto flex w-fit">
 			{#each formattedWeekDates as weekDateInfo}
 				<TabsTrigger value={weekDateInfo.id}>
 					<span class="hidden md:block">{weekDateInfo.display}</span>
