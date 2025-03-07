@@ -11,7 +11,11 @@ export const load: PageServerLoad = async ({ platform }) => {
 				let kv = await platform?.env?.DESCUENTITO_DATA.get(source);
 
 				if (dev) {
-					kv = await readFile(`../../descuentito-data/${source}.json`, 'utf-8');
+					try {
+						kv = await readFile(`../../descuentito-data/${source}.json`, 'utf-8');
+					} catch (e) {
+						console.error('failed reading local file, fetching from github', e);
+					}
 				}
 
 				if (!kv) {
