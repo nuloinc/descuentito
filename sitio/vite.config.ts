@@ -1,7 +1,13 @@
+import { sentrySvelteKit } from "@sentry/sveltekit";
 import { sveltekit } from '@sveltejs/kit/vite';
 import { enhancedImages } from '@sveltejs/enhanced-img';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-	plugins: [enhancedImages(), sveltekit()]
+	plugins: [sentrySvelteKit({
+        sourceMapsUploadOptions: {
+            org: "nulo-inc",
+            project: "descuentito"
+        }
+    }), enhancedImages(), sveltekit()]
 });
