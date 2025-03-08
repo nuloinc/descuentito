@@ -54,12 +54,16 @@
 					{src}
 					alt={`${String(source)} ${type}`}
 					class="h-8 w-auto {needsLightBackground(type) ? 'rounded bg-white p-1' : ''}"
+					loading="lazy"
+					decoding="async"
 				/>
 			{:else}
 				<enhanced:img
 					{src}
 					alt={`${String(source)} ${type}`}
 					class="h-8 w-auto rounded {needsLightBackground(type) ? 'bg-white p-1' : ''}"
+					loading="lazy"
+					decoding="async"
 				/>
 			{/if}
 		{:else}

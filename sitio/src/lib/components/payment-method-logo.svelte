@@ -14,12 +14,16 @@
 			src={logo}
 			alt={method}
 			class={`h-8 w-auto ${lightBackground ? 'rounded bg-white p-1' : ''}`}
+			loading="lazy"
+			decoding="async"
 		/>
 	{:else}
 		<enhanced:img
 			src={logo}
 			alt={method}
 			class={`h-8 w-auto ${lightBackground ? 'rounded bg-white p-1' : ''}`}
+			loading="lazy"
+			decoding="async"
 		/>
 	{/if}
 {:else}
