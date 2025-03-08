@@ -54,7 +54,13 @@
 	<div>
 		Un experimento de
 		<a href="https://nulo.lol" target="_blank">
-			<img src={NuloInc} alt="Nulo Science Inc." class="h-12 dark:invert" />
+			<img
+				src={NuloInc}
+				alt="Nulo Science Inc."
+				class="h-12 dark:invert"
+				loading="lazy"
+				decoding="async"
+			/>
 		</a>
 	</div>
 </footer>
