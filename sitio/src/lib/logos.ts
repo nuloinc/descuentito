@@ -23,7 +23,13 @@ import { default as BancoCiudad } from './logos/Banco_Ciudad.svg';
 import { default as NaranjaX } from './logos/NaranjaX.svg';
 import { default as BancoComafi } from './logos/Banco Comafi.png?enhanced';
 import { default as TarjetaCreditoCotoTCI } from './logos/Tarjeta TCI.png?enhanced';
-
+import { default as Uala } from './logos/uala.png?enhanced';
+import { default as BancoCredicoop } from './logos/Banco_Credicoop.svg';
+import { default as PersonalPay } from './logos/personal-pay-color.svg';
+import { default as Prex } from './logos/prex.png?enhanced';
+import { default as TarjetaCencosud } from './logos/Tarjeta Cencosud.png?enhanced';
+import { default as BancoHipotecario } from './logos/Banco_Hipotecario.svg';
+import { default as BancoSanJuan } from './logos/Banco San Juan.png?enhanced';
 import { default as CarrefourMarket } from './logos/supermercados/carrefour_market.png?enhanced';
 import { default as CarrefourComAr } from './logos/supermercados/carrefour_com_ar.png?enhanced';
 import { default as CarrefourMaxi } from './logos/supermercados/carrefour_maxi.svg';
@@ -75,7 +81,14 @@ export const logos: {
 	'Banco Ciudad': BancoCiudad,
 	NaranjaX: NaranjaX,
 	'Banco Comafi': BancoComafi,
-	'Tarjeta de crédito Coto TCI': TarjetaCreditoCotoTCI
+	'Tarjeta de crédito Coto TCI': TarjetaCreditoCotoTCI,
+	Uala: Uala,
+	'Banco Credicoop': BancoCredicoop,
+	'Personal Pay': PersonalPay,
+	Prex: Prex,
+	'Tarjeta de crédito Cencosud Mastercard': TarjetaCencosud,
+	'Banco Hipotecario': BancoHipotecario,
+	'Banco San Juan': BancoSanJuan
 };
 
 export const LOGOS_NEED_LIGHT_BACKGROUND: readonly PaymentMethod[] = [
@@ -86,7 +99,11 @@ export const LOGOS_NEED_LIGHT_BACKGROUND: readonly PaymentMethod[] = [
 	'Mercado Pago',
 	'Cuenta DNI',
 	'Banco BBVA',
-	'Banco Patagonia'
+	'Banco Patagonia',
+	'Banco Hipotecario',
+	'Prex',
+	'Personal Pay',
+	'Banco San Juan'
 ];
 
 export const BRAND_LOGOS = {
