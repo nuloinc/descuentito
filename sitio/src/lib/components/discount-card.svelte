@@ -123,7 +123,9 @@
 				{@const appliesOnlyTo = processAppliesOnlyTo(discount.appliesOnlyTo)}
 				<Dialog.Root>
 					<Dialog.Trigger class="w-full">
-						<div class="hover:bg-accent flex items-center justify-between rounded-lg border p-2">
+						<div
+							class="hover:bg-accent flex items-center justify-between rounded-lg border bg-white p-2 transition-colors"
+						>
 							<div class="flex flex-col items-start gap-1 text-left">
 								{#if appliesOnlyTo.length > 0}
 									<Badge variant="default" class="mb-1 gap-1">
