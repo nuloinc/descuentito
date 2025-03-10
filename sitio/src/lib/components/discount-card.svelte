@@ -82,6 +82,20 @@
 
 		return mergedDiscounts;
 	}
+
+	const APPLIES_ONLY_STRINGS: Record<keyof schema.Discount['appliesOnlyTo'], string> = {
+		anses: 'ANSES',
+		jubilados: 'Jubilados',
+		programaCiudadaniaPorteña: 'Programa Ciudadanía Porteña'
+	};
+
+	function processAppliesOnlyTo(appliesOnlyTo: schema.Discount['appliesOnlyTo']): string[] {
+		if (!appliesOnlyTo) return [];
+		return Object.entries(appliesOnlyTo).flatMap(([key, value]) => {
+			if (value) return [APPLIES_ONLY_STRINGS[key as keyof schema.Discount['appliesOnlyTo']]];
+			return [];
+		});
+	}
 </script>
 
 <div class="bg-card text-card-foreground rounded-lg border shadow-sm">
@@ -106,26 +120,16 @@
 		{/if}
 		<div class="space-y-2 p-3">
 			{#each mergeInstallmentDiscounts(discounts) as discount}
+				{@const appliesOnlyTo = processAppliesOnlyTo(discount.appliesOnlyTo)}
 				<Dialog.Root>
 					<Dialog.Trigger class="w-full">
 						<div class="hover:bg-accent flex items-center justify-between rounded-lg border p-2">
 							<div class="flex flex-col items-start gap-1 text-left">
-								{#if discount.appliesOnlyTo?.anses}
-									<Badge variant="default" class="gap-1">
+								{#if appliesOnlyTo.length > 0}
+									<Badge variant="default" class="mb-1 gap-1">
 										<WalletCards class="h-4 w-4" />
-										Solo para ANSES
-									</Badge>
-								{/if}
-								{#if discount.appliesOnlyTo?.jubilados}
-									<Badge variant="default" class="gap-1">
-										<WalletCards class="h-4 w-4" />
-										Solo para Jubilados
-									</Badge>
-								{/if}
-								{#if discount.appliesOnlyTo?.programaCiudadaniaPorteña}
-									<Badge variant="default" class="gap-1">
-										<WalletCards class="h-4 w-4" />
-										Solo para Programa Ciudadanía Porteña
+										Solo para
+										{appliesOnlyTo.join(', ')}
 									</Badge>
 								{/if}
 
