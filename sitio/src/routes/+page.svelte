@@ -364,114 +364,127 @@
 	}
 </script>
 
-<div class="py-4">
-	<div class="container mx-auto px-4">
-		<h1 class="flex items-center gap-2 text-3xl font-bold">
-			descuentito.ar
-			<Badge variant="destructive">beta :)</Badge>
-		</h1>
-		<h2 class="mb-2 text-lg font-medium">Descuentos en supermercados de CABA</h2>
-	</div>
-
-	<div class="mx-2 mb-4 flex flex-col gap-2 md:flex-row md:items-center">
-		<div class="flex w-full flex-wrap items-center gap-2 pr-2">
-			<Drawer.Root>
-				<Drawer.Trigger class={buttonVariants({ variant: 'outline', size: 'sm' })}>
-					<Filter class="mr-2 h-4 w-4" />
-					Filtros
-				</Drawer.Trigger>
-				<Drawer.Content>
-					<div class="mx-auto w-full max-w-sm">
-						<Drawer.Header>
-							<Drawer.Title>Filtros</Drawer.Title>
-							<Drawer.Description>Personaliza tu búsqueda de promociones</Drawer.Description>
-						</Drawer.Header>
-						<div class="p-4">
-							<div class="mb-4">
-								<h3 class="mb-2 font-medium">Tipo de compra</h3>
-								<Tabs
-									value={selectedType}
-									onValueChange={(value) => (selectedType = value as 'Presencial' | 'Online')}
-									class="mb-4"
-								>
-									<TabsList class="w-full gap-2 rounded-full py-6">
-										{#each ['Presencial', 'Online'] as type}
-											<TabsTrigger value={type} class="w-1/2 rounded-full px-4 text-lg">
-												<span class="">{type}</span>
-											</TabsTrigger>
-										{/each}
-									</TabsList>
-								</Tabs>
-							</div>
-
-							<div class="mb-4">
-								<h3 class="mb-2 font-medium">Supermercado</h3>
-								<SupermarketFilter
-									{selectedSupermarket}
-									on:select={(e) => updateSupermarketFilter(e.detail)}
-								/>
-							</div>
-
-							<div class="mb-4">
-								<h3 class="mb-2 font-medium">Tipo de promoción</h3>
-								<Tabs
-									value={selectedPromotionType}
-									onValueChange={(value) => (selectedPromotionType = value as PromotionType)}
-									class="mb-4"
-								>
-									<TabsList class="w-full gap-2 rounded-full py-6">
-										{#each ['Todos', 'Descuentos', 'Cuotas'] as type}
-											<TabsTrigger value={type} class="flex-1 rounded-full px-4 text-lg">
-												<span class="">{type}</span>
-											</TabsTrigger>
-										{/each}
-									</TabsList>
-								</Tabs>
-							</div>
-						</div>
-						<Drawer.Footer>
-							<Drawer.Close class={buttonVariants({ variant: 'default' })}>
-								Aplicar filtros
-							</Drawer.Close>
-						</Drawer.Footer>
-					</div>
-				</Drawer.Content>
-			</Drawer.Root>
-
-			<Tabs
-				value={selectedTabId}
-				onValueChange={(value) => {
-					const index = formattedWeekDates.findIndex((date) => date.id === value);
-					selectedTabId = value;
-					currentContentIndex = index;
-					scrollToContent(index);
-				}}
-				class="order-3 mx-auto mb-0"
-			>
-				<TabsList class="flex md:gap-1">
-					{#each formattedWeekDates as weekDateInfo}
-						<TabsTrigger value={weekDateInfo.id} class="">
-							<span class="hidden lg:block">{weekDateInfo.display}</span>
-							<span class="block lg:hidden">{weekDateInfo.shortDisplay}</span>
-						</TabsTrigger>
-					{/each}
-				</TabsList>
-			</Tabs>
-
-			<div class="order-2 ml-auto md:order-last">
-				<div class="text-right text-sm">
-					<span class="font-medium">{selectedType}</span>
-					{#if selectedSupermarket && selectedSupermarket in data.promotions}
-						· <span class="font-medium">{SUPERMARKET_NAMES[selectedSupermarket]}</span>
-					{/if}
-					{#if selectedPromotionType !== 'Todos'}
-						· <span class="font-medium">{selectedPromotionType}</span>
-					{/if}
-					· <span class="font-medium">{selectedDateInfo.display}</span>
-				</div>
-			</div>
+<div class="site-container relative">
+	<div class="title-container pt-4">
+		<div class="container mx-auto px-4">
+			<h1 class="flex items-center gap-2 text-3xl font-bold">
+				descuentito.ar
+				<Badge variant="destructive">beta :)</Badge>
+			</h1>
+			<h2 class="mb-2 text-lg font-medium">Descuentos en supermercados de CABA</h2>
 		</div>
 	</div>
+
+	<header
+		class="sticky-header bg-background/70 sticky left-0 right-0 top-0 z-40 w-full py-2 shadow-md backdrop-blur transition-all duration-300 ease-in-out"
+	>
+		<div class="mx-auto w-full">
+			<div class="flex items-center justify-between gap-2 px-2">
+				<div class="none">
+					<Drawer.Root>
+						<Drawer.Trigger
+							class={`${buttonVariants({ variant: 'outline', size: 'icon' })} md:hidden`}
+						>
+							<Filter class="h-4 w-4" />
+						</Drawer.Trigger>
+						<Drawer.Trigger class={`${buttonVariants({ variant: 'outline' })} hidden md:flex`}>
+							<Filter class="h-4 w-4" />
+							<span class="">Filtros</span>
+						</Drawer.Trigger>
+						<Drawer.Content>
+							<div class="mx-auto w-full max-w-sm">
+								<Drawer.Header>
+									<Drawer.Title>Filtros</Drawer.Title>
+									<Drawer.Description>Personaliza tu búsqueda de promociones</Drawer.Description>
+								</Drawer.Header>
+								<div class="p-4">
+									<div class="mb-4">
+										<h3 class="mb-2 font-medium">Tipo de compra</h3>
+										<Tabs
+											value={selectedType}
+											onValueChange={(value) => (selectedType = value as 'Presencial' | 'Online')}
+											class="mb-4"
+										>
+											<TabsList class="w-full gap-2 rounded-full py-6">
+												{#each ['Presencial', 'Online'] as type}
+													<TabsTrigger value={type} class="w-1/2 rounded-full px-4 text-lg">
+														<span class="">{type}</span>
+													</TabsTrigger>
+												{/each}
+											</TabsList>
+										</Tabs>
+									</div>
+
+									<div class="mb-4">
+										<h3 class="mb-2 font-medium">Supermercado</h3>
+										<SupermarketFilter
+											{selectedSupermarket}
+											on:select={(e) => updateSupermarketFilter(e.detail)}
+										/>
+									</div>
+
+									<div class="mb-4">
+										<h3 class="mb-2 font-medium">Tipo de promoción</h3>
+										<Tabs
+											value={selectedPromotionType}
+											onValueChange={(value) => (selectedPromotionType = value as PromotionType)}
+											class="mb-4"
+										>
+											<TabsList class="w-full gap-2 rounded-full py-6">
+												{#each ['Todos', 'Descuentos', 'Cuotas'] as type}
+													<TabsTrigger value={type} class="flex-1 rounded-full px-4 text-lg">
+														<span class="">{type}</span>
+													</TabsTrigger>
+												{/each}
+											</TabsList>
+										</Tabs>
+									</div>
+								</div>
+								<Drawer.Footer>
+									<Drawer.Close class={buttonVariants({ variant: 'default' })}>
+										Aplicar filtros
+									</Drawer.Close>
+								</Drawer.Footer>
+							</div>
+						</Drawer.Content>
+					</Drawer.Root>
+				</div>
+
+				<Tabs
+					value={selectedTabId}
+					onValueChange={(value) => {
+						const index = formattedWeekDates.findIndex((date) => date.id === value);
+						selectedTabId = value;
+						currentContentIndex = index;
+						scrollToContent(index);
+					}}
+					class="mx-auto mb-0  md:mx-0"
+				>
+					<TabsList class="flex md:gap-1">
+						{#each formattedWeekDates as weekDateInfo}
+							<TabsTrigger value={weekDateInfo.id} class="">
+								<span class="hidden lg:block">{weekDateInfo.display}</span>
+								<span class="block lg:hidden">{weekDateInfo.shortDisplay}</span>
+							</TabsTrigger>
+						{/each}
+					</TabsList>
+				</Tabs>
+				<!-- 
+				<div class="ml-auto">
+					<div class="text-right text-sm">
+						<span class="font-medium">{selectedType}</span>
+						{#if selectedSupermarket && selectedSupermarket in data.promotions}
+							· <span class="font-medium">{SUPERMARKET_NAMES[selectedSupermarket]}</span>
+						{/if}
+						{#if selectedPromotionType !== 'Todos'}
+							· <span class="font-medium">{selectedPromotionType}</span>
+						{/if}
+						· <span class="font-medium">{selectedDateInfo.display}</span>
+					</div>
+				</div> -->
+			</div>
+		</div>
+	</header>
 
 	<!-- Content container with horizontal scrolling -->
 	<div
@@ -506,7 +519,6 @@
 </div>
 
 <style>
-	/* Hide scrollbar but keep functionality */
 	.scrollbar-hide {
 		-ms-overflow-style: none; /* IE and Edge */
 		scrollbar-width: none; /* Firefox */
