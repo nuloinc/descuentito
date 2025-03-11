@@ -1,19 +1,9 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { Filter } from 'lucide-svelte';
-	import { SOURCES } from '$lib';
+	import { SOURCES, SUPERMARKET_NAMES } from '$lib';
 	import { createEventDispatcher } from 'svelte';
 	import { page } from '$app/stores';
-
-	const supermarketNames: Record<string, string> = {
-		carrefour: 'Carrefour',
-		coto: 'Coto',
-		dia: 'Dia',
-		jumbo: 'Jumbo',
-		changomas: 'ChangoMas',
-		makro: 'Makro'
-	};
-
 	export let selectedSupermarket: string | null = null;
 
 	const SHOW_CHANGOMAS = new URL($page.url).searchParams.get('showChangomas');
@@ -50,7 +40,7 @@
 			class="rounded-full"
 			onclick={() => updateSupermarket(source)}
 		>
-			{supermarketNames[source]}
+			{SUPERMARKET_NAMES[source]}
 		</Button>
 	{/each}
 </div>

@@ -17,6 +17,8 @@
 	import weekday from 'dayjs/plugin/weekday';
 	import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 	import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+	import { onMount } from 'svelte';
+	import { SUPERMARKET_NAMES } from '@/index';
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 	dayjs.extend(weekday);
@@ -35,7 +37,10 @@
 		date: date.format('YYYY-MM-DD'),
 		dayjs: date,
 		display: weekdayFormatter.format(date.toDate()),
-		shortDisplay: shortWeekdayFormatter.format(date.toDate())
+		shortDisplay: shortWeekdayFormatter.format(date.toDate()),
+		weekday: (['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'] as const)[
+			date.day()
+		]
 	}));
 
 	const todayIndex = weekDates.findIndex((date) =>
@@ -43,7 +48,173 @@
 	);
 
 	let selectedTabId = formattedWeekDates[todayIndex].id;
+	let currentContentIndex = todayIndex;
 	$: selectedDateInfo = formattedWeekDates.find((d) => d.id === selectedTabId)!;
+
+	// References for scroll functionality
+	let contentContainer: HTMLElement;
+	let contentElements: HTMLElement[] = [];
+	let lastScrollTime = 0;
+	const SCROLL_THROTTLE = 100; // ms between scroll updates
+
+	// Function to update tab based on scroll position
+	function updateTabFromScroll() {
+		if (!contentContainer) return;
+
+		const now = Date.now();
+		if (now - lastScrollTime < SCROLL_THROTTLE) return;
+		lastScrollTime = now;
+
+		// Find the centered element
+		const containerWidth = contentContainer.clientWidth;
+		const scrollLeft = contentContainer.scrollLeft;
+		const centerPoint = scrollLeft + containerWidth / 2;
+
+		for (let i = 0; i < contentElements.length; i++) {
+			const el = contentElements[i];
+			if (!el) continue;
+
+			const elLeft = el.offsetLeft;
+			const elWidth = el.offsetWidth;
+			const elRight = elLeft + elWidth;
+
+			if (elLeft <= centerPoint && elRight >= centerPoint) {
+				if (currentContentIndex !== i) {
+					currentContentIndex = i;
+					selectedTabId = formattedWeekDates[i].id;
+				}
+				break;
+			}
+		}
+	}
+
+	// Scroll to the content on mount
+	onMount(() => {
+		if (contentContainer && contentElements[todayIndex]) {
+			scrollToContent(todayIndex);
+		}
+
+		// Set up content scroll observer
+		if (contentContainer) {
+			setupContentScrollObserver();
+		}
+	});
+
+	function setupContentScrollObserver() {
+		// Add scroll event listener for real-time updates
+		contentContainer.addEventListener('scroll', updateTabFromScroll, { passive: true });
+
+		// Enhanced snap behavior
+		let scrollEndTimer: ReturnType<typeof setTimeout>;
+		contentContainer.addEventListener(
+			'scroll',
+			() => {
+				// Update throttling for tab updates
+				const now = Date.now();
+				if (now - lastScrollTime < SCROLL_THROTTLE) return;
+				lastScrollTime = now;
+
+				// Clear any previous timeout
+				clearTimeout(scrollEndTimer);
+
+				// Set new timeout for when scrolling stops
+				scrollEndTimer = setTimeout(() => {
+					// Find the closest snap point
+					const containerWidth = contentContainer.clientWidth;
+					const scrollLeft = contentContainer.scrollLeft;
+					const centerPoint = scrollLeft + containerWidth / 2;
+
+					let closestIndex = 0;
+					let closestDistance = Infinity;
+
+					// Find element closest to center point
+					for (let i = 0; i < contentElements.length; i++) {
+						const el = contentElements[i];
+						if (!el) continue;
+
+						const elCenter = el.offsetLeft + el.offsetWidth / 2;
+						const distance = Math.abs(centerPoint - elCenter);
+
+						if (distance < closestDistance) {
+							closestDistance = distance;
+							closestIndex = i;
+						}
+					}
+
+					// Force snap to the closest element
+					if (closestIndex !== currentContentIndex) {
+						contentElements[closestIndex].scrollIntoView({
+							behavior: 'auto',
+							inline: 'center'
+						});
+						currentContentIndex = closestIndex;
+						selectedTabId = formattedWeekDates[closestIndex].id;
+					} else {
+						// Even if it's the same element, ensure perfect alignment
+						contentContainer.scrollTo({
+							left: contentElements[closestIndex].offsetLeft,
+							behavior: 'auto'
+						});
+					}
+				}, 150); // Short timeout for responsive feel
+			},
+			{ passive: true }
+		);
+
+		// Also use Intersection Observer as a backup for better browser support
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) {
+						const index = contentElements.findIndex((el) => el === entry.target);
+						if (index !== -1 && index !== currentContentIndex) {
+							currentContentIndex = index;
+							selectedTabId = formattedWeekDates[index].id;
+						}
+						break;
+					}
+				}
+			},
+			{
+				root: contentContainer,
+				threshold: 0.7,
+				rootMargin: '0px'
+			}
+		);
+
+		// Observe all content sections
+		contentElements.forEach((el) => {
+			if (el) observer.observe(el);
+		});
+
+		return () => {
+			contentContainer.removeEventListener('scroll', updateTabFromScroll);
+			clearTimeout(scrollEndTimer);
+			contentElements.forEach((el) => {
+				if (el) observer.unobserve(el);
+			});
+		};
+	}
+
+	// Function to scroll content to specific day
+	function scrollToContent(index: number) {
+		if (contentElements[index]) {
+			// First scroll with smooth behavior
+			contentElements[index].scrollIntoView({
+				behavior: 'smooth',
+				block: 'nearest',
+				inline: 'center'
+			});
+
+			// Ensure precise snap alignment after animation
+			setTimeout(() => {
+				contentContainer.scrollTo({
+					left: contentElements[index].offsetLeft,
+					behavior: 'auto'
+				});
+			}, 500);
+		}
+	}
 
 	$: selectedSupermarket = new URL($page.url).searchParams.get('supermarket');
 	function updateSupermarketFilter(supermarket: string | null) {
@@ -62,7 +233,7 @@
 	type PromotionType = 'Todos' | 'Descuentos' | 'Cuotas';
 	let selectedPromotionType: PromotionType = 'Todos';
 
-	$: promotions = [
+	$: basePromotions = [
 		...data.promotions.carrefour.filter(
 			// ignorar Maxi: por ahora solo estamos trackeando minorista en CABA
 			(promotion) => !(promotion.where.length === 1 && promotion.where[0] === 'Maxi')
@@ -86,19 +257,28 @@
 		if (selectedPromotionType === 'Cuotas' && promotion.discount.type !== 'cuotas sin intereses')
 			return false;
 
-		const selectedWeekday = (
-			['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'] as const
-		)[selectedDateInfo.dayjs.day()];
-		if (promotion.weekdays && !promotion.weekdays.includes(selectedWeekday)) return false;
+		return true;
+	});
 
-		const selectedDateObj = selectedDateInfo.dayjs;
-		const validFrom = dayjs(promotion.validFrom, 'America/Argentina/Buenos_Aires');
-		const validUntil = dayjs(promotion.validUntil, 'America/Argentina/Buenos_Aires');
+	// Pre-filter promotions for each weekday
+	$: promotionsByWeekday = formattedWeekDates.map((weekDateInfo) => {
+		// Filter promotions for this specific day
+		const dayPromotions = basePromotions.filter((promotion) => {
+			// Filter by weekday
+			if (promotion.weekdays && !promotion.weekdays.includes(weekDateInfo.weekday)) return false;
 
-		return (
-			validFrom.isSameOrBefore(selectedDateObj, 'day') &&
-			validUntil.isSameOrAfter(selectedDateObj, 'day')
-		);
+			// Filter by valid date range
+			const weekdayDate = weekDateInfo.dayjs;
+			const validFrom = dayjs(promotion.validFrom, 'America/Argentina/Buenos_Aires');
+			const validUntil = dayjs(promotion.validUntil, 'America/Argentina/Buenos_Aires');
+
+			return (
+				validFrom.isSameOrBefore(weekdayDate, 'day') && validUntil.isSameOrAfter(weekdayDate, 'day')
+			);
+		});
+
+		// Group the filtered promotions by payment method
+		return groupPromotionsByPaymentMethod(dayPromotions);
 	});
 
 	let selectedType: 'Presencial' | 'Online' = 'Presencial';
@@ -176,23 +356,24 @@
 		}
 		return joinedGrouped;
 	}
-	$: groupedPromotionsForToday = groupPromotionsByPaymentMethod(promotions);
 
 	$: {
 		if (dev) {
-			console.log(groupedPromotionsForToday);
+			console.log('Promotions by weekday:', promotionsByWeekday);
 		}
 	}
 </script>
 
-<div class="container mx-auto px-4 py-4">
-	<h1 class="flex items-center gap-2 text-3xl font-bold">
-		descuentito.ar
-		<Badge variant="destructive">beta :)</Badge>
-	</h1>
-	<h2 class="mb-2 text-lg font-medium">Descuentos en Carrefour, Coto, Dia y Jumbo</h2>
+<div class="py-4">
+	<div class="container mx-auto px-4">
+		<h1 class="flex items-center gap-2 text-3xl font-bold">
+			descuentito.ar
+			<Badge variant="destructive">beta :)</Badge>
+		</h1>
+		<h2 class="mb-2 text-lg font-medium">Descuentos en supermercados de CABA</h2>
+	</div>
 
-	<div class="mb-4 flex flex-col gap-2 md:flex-row md:items-center">
+	<div class="mx-2 mb-4 flex flex-col gap-2 md:flex-row md:items-center">
 		<div class="flex w-full flex-wrap items-center gap-2 pr-2">
 			<Drawer.Root>
 				<Drawer.Trigger class={buttonVariants({ variant: 'outline', size: 'sm' })}>
@@ -260,11 +441,14 @@
 			<Tabs
 				value={selectedTabId}
 				onValueChange={(value) => {
+					const index = formattedWeekDates.findIndex((date) => date.id === value);
 					selectedTabId = value;
+					currentContentIndex = index;
+					scrollToContent(index);
 				}}
-				class="order-3 mb-0"
+				class="order-3 mx-auto mb-0"
 			>
-				<TabsList class="flex gap-1">
+				<TabsList class="flex md:gap-1">
 					{#each formattedWeekDates as weekDateInfo}
 						<TabsTrigger value={weekDateInfo.id} class="">
 							<span class="hidden lg:block">{weekDateInfo.display}</span>
@@ -278,7 +462,7 @@
 				<div class="text-right text-sm">
 					<span class="font-medium">{selectedType}</span>
 					{#if selectedSupermarket && selectedSupermarket in data.promotions}
-						· <span class="font-medium">{selectedSupermarket}</span>
+						· <span class="font-medium">{SUPERMARKET_NAMES[selectedSupermarket]}</span>
 					{/if}
 					{#if selectedPromotionType !== 'Todos'}
 						· <span class="font-medium">{selectedPromotionType}</span>
@@ -289,17 +473,44 @@
 		</div>
 	</div>
 
-	{#each formattedWeekDates as weekDateInfo}
-		{#if weekDateInfo.id === selectedTabId}
-			<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-				{#each Object.entries(groupedPromotionsForToday) as [mainPaymentMethod, paymentMethods]}
-					<DiscountCard
-						mainPaymentMethod={mainPaymentMethod as (typeof BANKS_OR_WALLETS)[number] | 'other'}
-						{paymentMethods}
-						{selectedType}
-					/>
-				{/each}
+	<!-- Content container with horizontal scrolling -->
+	<div
+		bind:this={contentContainer}
+		class="scrollbar-hide flex w-full snap-x snap-mandatory overflow-x-auto"
+		style="scroll-behavior: smooth; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; will-change: scroll-position; scroll-snap-type: x mandatory; scroll-snap-stop: always;"
+	>
+		{#each formattedWeekDates as weekDateInfo, index}
+			<div
+				bind:this={contentElements[index]}
+				class="w-full min-w-full flex-shrink-0 flex-grow-0 snap-center px-1"
+				style="scroll-snap-align: center; scroll-snap-stop: always;"
+			>
+				<div class="grid grid-cols-1 gap-6 px-2 md:grid-cols-2 lg:grid-cols-3">
+					{#each Object.entries(promotionsByWeekday[index]) as [mainPaymentMethod, paymentMethods]}
+						<DiscountCard
+							mainPaymentMethod={mainPaymentMethod as (typeof BANKS_OR_WALLETS)[number] | 'other'}
+							{paymentMethods}
+							{selectedType}
+						/>
+					{/each}
+					{#if Object.values(promotionsByWeekday[index]).length === 0}
+						<div class="col-span-full">
+							<p class="text-center text-sm text-gray-500">No hay promociones para este día</p>
+						</div>
+					{/if}
+				</div>
 			</div>
-		{/if}
-	{/each}
+		{/each}
+	</div>
 </div>
+
+<style>
+	/* Hide scrollbar but keep functionality */
+	.scrollbar-hide {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+	}
+	.scrollbar-hide::-webkit-scrollbar {
+		display: none; /* Chrome, Safari and Opera */
+	}
+</style>
