@@ -2,12 +2,15 @@
 	import type { PageData } from './$types';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
+	import * as Drawer from '$lib/components/ui/drawer';
+	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import type { schema } from '@/db';
 	import { BANKS_OR_WALLETS, PAYMENT_METHODS } from 'promos-db/schema';
 	import { dev } from '$app/environment';
 	import { page } from '$app/stores';
 	import DiscountCard from '@/components/discount-card.svelte';
 	import SupermarketFilter from '$lib/components/supermarket-filter.svelte';
+	import { Filter } from 'lucide-svelte';
 	import dayjs from 'dayjs';
 	import utc from 'dayjs/plugin/utc';
 	import timezone from 'dayjs/plugin/timezone';
@@ -190,68 +193,113 @@
 	<h2 class="mb-2 text-lg font-medium">Descuentos en Carrefour, Coto, Dia y Jumbo</h2>
 
 	<div class="mb-4 flex flex-col gap-2 md:flex-row md:items-center">
-		<Tabs
-			value={selectedType}
-			onValueChange={(value) => (selectedType = value as 'Presencial' | 'Online')}
-			class="mb-0"
-		>
-			<TabsList class="gap-2 rounded-full py-6">
-				{#each ['Presencial', 'Online'] as type}
-					<TabsTrigger value={type} class="rounded-full px-4 text-lg">
-						<span class="">{type}</span>
-					</TabsTrigger>
-				{/each}
-			</TabsList>
-		</Tabs>
+		<div class="flex w-full flex-wrap items-center gap-2 pr-2">
+			<Drawer.Root>
+				<Drawer.Trigger class={buttonVariants({ variant: 'outline', size: 'sm' })}>
+					<Filter class="mr-2 h-4 w-4" />
+					Filtros
+				</Drawer.Trigger>
+				<Drawer.Content>
+					<div class="mx-auto w-full max-w-sm">
+						<Drawer.Header>
+							<Drawer.Title>Filtros</Drawer.Title>
+							<Drawer.Description>Personaliza tu búsqueda de promociones</Drawer.Description>
+						</Drawer.Header>
+						<div class="p-4">
+							<div class="mb-4">
+								<h3 class="mb-2 font-medium">Tipo de compra</h3>
+								<Tabs
+									value={selectedType}
+									onValueChange={(value) => (selectedType = value as 'Presencial' | 'Online')}
+									class="mb-4"
+								>
+									<TabsList class="w-full gap-2 rounded-full py-6">
+										{#each ['Presencial', 'Online'] as type}
+											<TabsTrigger value={type} class="w-1/2 rounded-full px-4 text-lg">
+												<span class="">{type}</span>
+											</TabsTrigger>
+										{/each}
+									</TabsList>
+								</Tabs>
+							</div>
 
-		<div class="flex flex-1 gap-2">
-			<SupermarketFilter
-				{selectedSupermarket}
-				on:select={(e) => updateSupermarketFilter(e.detail)}
-			/>
+							<div class="mb-4">
+								<h3 class="mb-2 font-medium">Supermercado</h3>
+								<SupermarketFilter
+									{selectedSupermarket}
+									on:select={(e) => updateSupermarketFilter(e.detail)}
+								/>
+							</div>
+
+							<div class="mb-4">
+								<h3 class="mb-2 font-medium">Tipo de promoción</h3>
+								<Tabs
+									value={selectedPromotionType}
+									onValueChange={(value) => (selectedPromotionType = value as PromotionType)}
+									class="mb-4"
+								>
+									<TabsList class="w-full gap-2 rounded-full py-6">
+										{#each ['Todos', 'Descuentos', 'Cuotas'] as type}
+											<TabsTrigger value={type} class="flex-1 rounded-full px-4 text-lg">
+												<span class="">{type}</span>
+											</TabsTrigger>
+										{/each}
+									</TabsList>
+								</Tabs>
+							</div>
+						</div>
+						<Drawer.Footer>
+							<Drawer.Close class={buttonVariants({ variant: 'default' })}>
+								Aplicar filtros
+							</Drawer.Close>
+						</Drawer.Footer>
+					</div>
+				</Drawer.Content>
+			</Drawer.Root>
 
 			<Tabs
-				value={selectedPromotionType}
-				onValueChange={(value) => (selectedPromotionType = value as PromotionType)}
-				class="mb-0"
+				value={selectedTabId}
+				onValueChange={(value) => {
+					selectedTabId = value;
+				}}
+				class="order-3 mb-0"
 			>
-				<TabsList class="gap-2 rounded-full py-6">
-					{#each ['Todos', 'Descuentos', 'Cuotas'] as type}
-						<TabsTrigger value={type} class="rounded-full px-4 text-lg">
-							<span class="">{type}</span>
+				<TabsList class="flex gap-1">
+					{#each formattedWeekDates as weekDateInfo}
+						<TabsTrigger value={weekDateInfo.id} class="">
+							<span class="hidden lg:block">{weekDateInfo.display}</span>
+							<span class="block lg:hidden">{weekDateInfo.shortDisplay}</span>
 						</TabsTrigger>
 					{/each}
 				</TabsList>
 			</Tabs>
+
+			<div class="order-2 ml-auto md:order-last">
+				<div class="text-right text-sm">
+					<span class="font-medium">{selectedType}</span>
+					{#if selectedSupermarket && selectedSupermarket in data.promotions}
+						· <span class="font-medium">{selectedSupermarket}</span>
+					{/if}
+					{#if selectedPromotionType !== 'Todos'}
+						· <span class="font-medium">{selectedPromotionType}</span>
+					{/if}
+					· <span class="font-medium">{selectedDateInfo.display}</span>
+				</div>
+			</div>
 		</div>
 	</div>
 
-	<Tabs
-		value={selectedTabId}
-		onValueChange={(value) => {
-			selectedTabId = value;
-		}}
-	>
-		<TabsList class="mx-auto flex w-fit">
-			{#each formattedWeekDates as weekDateInfo}
-				<TabsTrigger value={weekDateInfo.id}>
-					<span class="hidden md:block">{weekDateInfo.display}</span>
-					<span class="block md:hidden">{weekDateInfo.shortDisplay}</span>
-				</TabsTrigger>
-			{/each}
-		</TabsList>
-		{#each formattedWeekDates as weekDateInfo}
-			<TabsContent value={weekDateInfo.id} class="mt-6">
-				<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-					{#each Object.entries(groupedPromotionsForToday) as [mainPaymentMethod, paymentMethods]}
-						<DiscountCard
-							mainPaymentMethod={mainPaymentMethod as (typeof BANKS_OR_WALLETS)[number] | 'other'}
-							{paymentMethods}
-							{selectedType}
-						/>
-					{/each}
-				</div>
-			</TabsContent>
-		{/each}
-	</Tabs>
+	{#each formattedWeekDates as weekDateInfo}
+		{#if weekDateInfo.id === selectedTabId}
+			<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+				{#each Object.entries(groupedPromotionsForToday) as [mainPaymentMethod, paymentMethods]}
+					<DiscountCard
+						mainPaymentMethod={mainPaymentMethod as (typeof BANKS_OR_WALLETS)[number] | 'other'}
+						{paymentMethods}
+						{selectedType}
+					/>
+				{/each}
+			</div>
+		{/if}
+	{/each}
 </div>

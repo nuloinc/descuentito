@@ -218,6 +218,9 @@ importers:
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
+      vaul-svelte:
+        specifier: 1.0.0-next.6
+        version: 1.0.0-next.6(svelte@5.22.6)
       vite:
         specifier: ^6.2.1
         version: 6.2.1(@types/node@22.13.9)(jiti@2.4.2)(lightningcss@1.29.1)(tsx@4.19.2)(yaml@2.7.0)
@@ -4875,6 +4878,12 @@ packages:
   uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
     hasBin: true
+
+  vaul-svelte@1.0.0-next.6:
+    resolution: {integrity: sha512-leEKb9Qoj7JOrC0wLnqoczLhHZcwo7UHKBJ7SWBRhdFn0o+x9W1XioUK2OeiZHb5Bp7LyYKtUUjVWO3uJULUCw==}
+    engines: {node: '>=18', pnpm: '>=8.7.0'}
+    peerDependencies:
+      svelte: ^5.0.0
 
   vfile-message@2.0.4:
     resolution: {integrity: sha512-DjssxRGkMvifUOJre00juHoP9DPWuzjxKuMDrhNbk2TdaYYBNMStsNhEOt3idrtI12VQYM/1+iM0KOzXi4pxwQ==}
@@ -9950,6 +9959,12 @@ snapshots:
   util-deprecate@1.0.2: {}
 
   uuid@9.0.1: {}
+
+  vaul-svelte@1.0.0-next.6(svelte@5.22.6):
+    dependencies:
+      runed: 0.23.4(svelte@5.22.6)
+      svelte: 5.22.6
+      svelte-toolbelt: 0.7.1(svelte@5.22.6)
 
   vfile-message@2.0.4:
     dependencies:

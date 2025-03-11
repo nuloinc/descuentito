@@ -103,7 +103,9 @@ export const LOGOS_NEED_LIGHT_BACKGROUND: readonly PaymentMethod[] = [
 	'Banco Hipotecario',
 	'Prex',
 	'Personal Pay',
-	'Banco San Juan'
+	'Banco San Juan',
+	'Uala',
+	'Banco Ciudad'
 ];
 
 export const BRAND_LOGOS = {
