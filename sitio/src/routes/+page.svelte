@@ -477,7 +477,7 @@
 	<div
 		bind:this={contentContainer}
 		class="scrollbar-hide flex w-full snap-x snap-mandatory overflow-x-auto"
-		style="scroll-behavior: smooth; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; will-change: scroll-position; scroll-snap-type: x mandatory; scroll-snap-stop: always;"
+		style="scroll-behavior: smooth; -webkit-overflow-scrolling: auto; overscroll-behavior-x: contain; will-change: scroll-position; scroll-snap-type: x mandatory; scroll-snap-stop: always;"
 	>
 		{#each formattedWeekDates as weekDateInfo, index}
 			<div
