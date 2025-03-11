@@ -1,11 +1,10 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { Badge } from '$lib/components/ui/badge';
-	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
+	import { Tabs, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import * as Drawer from '$lib/components/ui/drawer';
-	import { Button, buttonVariants } from '$lib/components/ui/button';
-	import type { schema } from '@/db';
-	import { BANKS_OR_WALLETS, PAYMENT_METHODS } from 'promos-db/schema';
+	import { buttonVariants } from '$lib/components/ui/button';
+	import { BANKS_OR_WALLETS, PAYMENT_METHODS, type Discount } from 'promos-db/schema';
 	import { dev } from '$app/environment';
 	import { page } from '$app/stores';
 	import DiscountCard from '@/components/discount-card.svelte';
@@ -18,7 +17,6 @@
 	import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 	import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 	import { onMount } from 'svelte';
-	import { SUPERMARKET_NAMES } from '@/index';
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 	dayjs.extend(weekday);
@@ -36,7 +34,6 @@
 	});
 	const shortWeekdayFormatter = Intl.DateTimeFormat('es', {
 		weekday: 'short',
-		day: 'numeric',
 		timeZone: 'America/Argentina/Buenos_Aires'
 	});
 
@@ -291,7 +288,7 @@
 
 	let selectedType: 'Presencial' | 'Online' = 'Presencial';
 
-	function groupPromotionsByPaymentMethod(discounts: schema.Discount[]) {
+	function groupPromotionsByPaymentMethod(discounts: Discount[]) {
 		const grouped = new Map<
 			(typeof BANKS_OR_WALLETS)[number] | 'other',
 			(typeof discounts)[number][]
@@ -346,8 +343,8 @@
 		];
 		let joinedGrouped: Record<
 			PaymentMethodGroup,
-			Record<PaymentMethodGroup, schema.Discount[]>
-		> = {} as Record<PaymentMethodGroup, Record<PaymentMethodGroup, schema.Discount[]>>;
+			Record<PaymentMethodGroup, Discount[]>
+		> = {} as Record<PaymentMethodGroup, Record<PaymentMethodGroup, Discount[]>>;
 
 		for (const [key, value] of grouped.entries()) {
 			const joinedKey = JOIN_GROUPS.find((group) => group.includes(key as any))?.[0];
@@ -358,7 +355,7 @@
 			} else {
 				joinedGrouped[key as PaymentMethodGroup] = { [key as PaymentMethodGroup]: value } as Record<
 					PaymentMethodGroup,
-					schema.Discount[]
+					Discount[]
 				>;
 			}
 		}
