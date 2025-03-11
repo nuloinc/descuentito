@@ -56,6 +56,9 @@
 
 	const SHOW_CHANGOMAS = new URL($page.url).searchParams.get('showChangomas');
 
+	type PromotionType = 'Todos' | 'Descuentos' | 'Cuotas';
+	let selectedPromotionType: PromotionType = 'Todos';
+
 	$: promotions = [
 		...data.promotions.carrefour.filter(
 			// ignorar Maxi: por ahora solo estamos trackeando minorista en CABA
@@ -74,6 +77,11 @@
 		}
 
 		if (selectedSupermarket && selectedSupermarket !== promotion.source) return false;
+
+		if (selectedPromotionType === 'Descuentos' && promotion.discount.type !== 'porcentaje')
+			return false;
+		if (selectedPromotionType === 'Cuotas' && promotion.discount.type !== 'cuotas sin intereses')
+			return false;
 
 		const selectedWeekday = (
 			['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'] as const
@@ -196,11 +204,25 @@
 			</TabsList>
 		</Tabs>
 
-		<div class="flex-1">
+		<div class="flex flex-1 gap-2">
 			<SupermarketFilter
 				{selectedSupermarket}
 				on:select={(e) => updateSupermarketFilter(e.detail)}
 			/>
+
+			<Tabs
+				value={selectedPromotionType}
+				onValueChange={(value) => (selectedPromotionType = value as PromotionType)}
+				class="mb-0"
+			>
+				<TabsList class="gap-2 rounded-full py-6">
+					{#each ['Todos', 'Descuentos', 'Cuotas'] as type}
+						<TabsTrigger value={type} class="rounded-full px-4 text-lg">
+							<span class="">{type}</span>
+						</TabsTrigger>
+					{/each}
+				</TabsList>
+			</Tabs>
 		</div>
 	</div>
 
