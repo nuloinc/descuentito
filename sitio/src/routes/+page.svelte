@@ -26,11 +26,19 @@
 	dayjs.extend(isSameOrBefore);
 	export let data: PageData;
 
-	const weekStartDate = dayjs(undefined, 'America/Argentina/Buenos_Aires').startOf('day');
+	const weekStartDate = dayjs().tz('America/Argentina/Buenos_Aires').startOf('day');
 	const weekDates = Array.from({ length: 7 }, (_, i) => weekStartDate.add(i, 'day'));
 
-	const weekdayFormatter = Intl.DateTimeFormat('es', { weekday: 'long', day: 'numeric' });
-	const shortWeekdayFormatter = Intl.DateTimeFormat('es', { weekday: 'short' });
+	const weekdayFormatter = Intl.DateTimeFormat('es', {
+		weekday: 'long',
+		day: 'numeric',
+		timeZone: 'America/Argentina/Buenos_Aires'
+	});
+	const shortWeekdayFormatter = Intl.DateTimeFormat('es', {
+		weekday: 'short',
+		day: 'numeric',
+		timeZone: 'America/Argentina/Buenos_Aires'
+	});
 
 	const formattedWeekDates = weekDates.map((date) => ({
 		id: date.format('YYYY-MM-DD'),
@@ -44,7 +52,7 @@
 	}));
 
 	const todayIndex = weekDates.findIndex((date) =>
-		date.isSame(dayjs(undefined, 'America/Argentina/Buenos_Aires'), 'day')
+		date.isSame(dayjs().tz('America/Argentina/Buenos_Aires'), 'day')
 	);
 
 	let selectedTabId = formattedWeekDates[todayIndex].id;
