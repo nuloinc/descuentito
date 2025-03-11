@@ -64,10 +64,11 @@
 		...data.promotions.coto,
 		...data.promotions.dia,
 		...data.promotions.jumbo,
+		...data.promotions.makro,
 		...(SHOW_CHANGOMAS ? data.promotions.changomas : [])
 	].filter((promotion) => {
 		if (selectedType === 'Online') {
-			if (!promotion.where.includes('Online')) return false;
+			if (!(promotion.where as string[]).includes('Online')) return false;
 		} else {
 			if (promotion.where.length === 1 && promotion.where[0] === 'Online') return false;
 		}
@@ -96,11 +97,9 @@
 			(typeof BANKS_OR_WALLETS)[number] | 'other',
 			(typeof discounts)[number][]
 		>();
-
 		for (const wallet of BANKS_OR_WALLETS) {
 			grouped.set(wallet, []);
 		}
-
 		grouped.set('other', []);
 
 		for (const discount of discounts) {
@@ -142,7 +141,9 @@
 				'Banco Supervielle - Jubilados'
 			],
 			['Banco Nación', 'Banco Nación - Tarjeta Nativa'],
-			['Banco Santander', 'Banco Santander - Jubilados', 'Banco Santander - Women']
+			['Banco Santander', 'Banco Santander - Jubilados', 'Banco Santander - Women'],
+			['Banco Hipotecario', 'Banco Hipotecario - Búho/Plan Sueldo'],
+			['Banco Macro', 'Banco Macro - Tarjeta PLATINUM', 'Banco Macro - Tarjeta Selecta']
 		];
 		let joinedGrouped: Record<
 			PaymentMethodGroup,

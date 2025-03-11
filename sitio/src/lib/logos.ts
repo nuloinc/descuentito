@@ -43,7 +43,7 @@ import { default as Coto } from './logos/supermercados/coto.svg';
 import { default as CotoDigital } from './logos/supermercados/coto_digital.png?enhanced';
 import { default as ChangoMas } from './logos/supermercados/changomas.png?enhanced';
 import { default as ChangoMasOnline } from './logos/supermercados/changomas_online.png?enhanced';
-
+import { default as Makro } from './logos/supermercados/makro.svg';
 export const logos: {
 	[key in PaymentMethod]?:
 		| {
@@ -129,9 +129,13 @@ export const BRAND_LOGOS = {
 	changomas: {
 		ChangoMas: ChangoMas,
 		Online: ChangoMasOnline
+	},
+	makro: {
+		Makro: Makro
 	}
 };
 
 export const BRAND_LOGOS_NEED_LIGHT_BACKGROUND = {
-	changomas: ['Online']
+	changomas: ['Online'],
+	makro: ['Makro']
 };

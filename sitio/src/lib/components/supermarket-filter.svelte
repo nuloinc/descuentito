@@ -10,7 +10,8 @@
 		coto: 'Coto',
 		dia: 'Dia',
 		jumbo: 'Jumbo',
-		changomas: 'ChangoMas'
+		changomas: 'ChangoMas',
+		makro: 'Makro'
 	};
 
 	export let selectedSupermarket: string | null = null;

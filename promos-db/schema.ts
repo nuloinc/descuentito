@@ -80,13 +80,18 @@ export interface ChangoMasDiscount extends GenericDiscount {
   source: "changomas";
   where: ("ChangoMas" | "Online")[];
 }
+export interface MakroDiscount extends GenericDiscount {
+  source: "makro";
+  where: "Makro"[];
+}
 
 export type Discount =
   | CarrefourDiscount
   | CotoDiscount
   | DiaDiscount
   | JumboDiscount
-  | ChangoMasDiscount;
+  | ChangoMasDiscount
+  | MakroDiscount;
 
 export const BANKS_OR_WALLETS = [
   "Mercado Pago",
@@ -100,6 +105,8 @@ export const BANKS_OR_WALLETS = [
   "Banco Ciudad - Plan Sueldo y Jubilados",
   "Banco Galicia - Eminent",
   "Banco Macro",
+  "Banco Macro - Tarjeta PLATINUM",
+  "Banco Macro - Tarjeta Selecta",
   "Banco Santander",
   "Banco Santander - Jubilados",
   "Banco Santander - Women",
@@ -116,6 +123,7 @@ export const BANKS_OR_WALLETS = [
   "Banco del Sol",
   "Banco Entre Ríos",
   "Banco Hipotecario",
+  "Banco Hipotecario - Búho/Plan Sueldo",
   "Banco San Juan",
   "Banco Santa Cruz",
   ".Reba",
@@ -219,6 +227,8 @@ Group payment methods into valid combinations that work together for a discount.
    - Return null ONLY if no payment methods are mentioned or "todos los medios de pago" is present.
    - For generic VISA/Mastercard: use "Tarjeta de crédito VISA"/"Tarjeta de crédito Mastercard"
    - Handle bank-specific variations carefully (e.g. "Banco Galicia Más" ≠ "Banco Galicia")
+   - Account for special account types like "Plan Sueldo" when explicitly mentioned
+   - If multiple Niveles are specified for "Personal Pay", just use the first one
 
 3. **Structure & Ordering**
    Within each combination array, sort elements by:
@@ -253,7 +263,8 @@ Important Notes:
 - Galicia Más = former HSBC accounts
 - Plan Z = Naranja X VISA Crédito
 - Caja de ahorro App Ualá = "Uala"
-- "Cuenta DNI" and similar wallets go in first position`;
+- "Cuenta DNI" and similar wallets go in first position
+- "Plan Sueldo" accounts should be specified when mentioned as a requirement`;
 
 export const RESTRICTIONS_PROMPT = `## RESTRICTIONS
 
@@ -269,15 +280,18 @@ Only include restrictions that:
 
 Ignore redundant restrictions that appear in most promotions unless they add new constraints.
 
-Order by relevance, starting with the most relevant restrictions.`;
+Order by relevance, starting with the most relevant restrictions.
+
+"appliesOnlyTo" should ONLY be used for restrictions that EXCLUDE other categories of people.`;
 
 export const PRODUCTS_PROMPT = `## PRODUCTS COVERAGE
 
 There are two fields that define product coverage for a promotion:
 
-\`onlyForProducts\`: If the promotion is limited to specific product categories, list them here (e.g., 'Alimentos', 'Electrodomesticos', 'Bebidas'). Leave empty if promotion applies to all products.
+\`onlyForProducts\`: If the promotion is limited to specific product categories, list them here (e.g., 'Alimentos', 'Electrodomesticos', 'Bebidas'). Leave empty if promotion applies to all products (do NOT use "N/A" or similar).
 
-\`excludesProducts\`: List any products or product categories explicitly excluded from the promotion (e.g., 'Vinos, Harina', 'Marca Coca Cola, Alcohol'). This field is critical for accurately representing promotion limitations.`;
+\`excludesProducts\`: List any products or product categories explicitly excluded from the promotion (e.g., 'Vinos, Harina', 'Marca Coca Cola, Alcohol'). This field is critical for accurately representing promotion limitations.
+- Do not specify non-product restrictions -- instead, use \`restrictions\` for those.`;
 
 export const LIMITS_PROMPT = `## LIMITS
 

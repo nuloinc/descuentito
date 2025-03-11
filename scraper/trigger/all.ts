@@ -3,6 +3,8 @@ import { carrefourTask } from "./carrefour";
 import { cotoTask } from "./coto";
 import { diaTask } from "./dia";
 import { jumboTask } from "./jumbo";
+import { makroTask } from "./makro";
+import { changomasTask } from "./changomas";
 
 export const allScrapersTask = task({
   id: "all-scrapers",
@@ -25,10 +27,19 @@ export const allScrapersTask = task({
       { task: cotoTask, payload: p },
       { task: diaTask, payload: p },
       { task: jumboTask, payload: p },
+      { task: makroTask, payload: p },
+      { task: changomasTask, payload: p },
     ]);
 
     const summary = results.runs.map((run, index) => {
-      const stores = ["Carrefour", "Coto", "Dia", "Jumbo"];
+      const stores = [
+        "Carrefour",
+        "Coto",
+        "Dia",
+        "Jumbo",
+        "Makro",
+        "ChangoMas",
+      ];
       const store = stores[index];
 
       return `✅ ${store}: Task triggered with run ID ${run}`;
