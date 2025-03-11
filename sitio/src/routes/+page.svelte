@@ -482,7 +482,8 @@
 		{#each formattedWeekDates as weekDateInfo, index}
 			<div
 				bind:this={contentElements[index]}
-				class="w-full min-w-full flex-shrink-0 flex-grow-0 snap-center px-1"
+				class="w-full min-w-full flex-shrink-0 flex-grow-0 snap-center px-1 opacity-30 transition-opacity duration-300 ease-out"
+				class:!opacity-100={index === currentContentIndex}
 				style="scroll-snap-align: center; scroll-snap-stop: always;"
 			>
 				<div class="grid grid-cols-1 gap-6 px-2 md:grid-cols-2 lg:grid-cols-3">
