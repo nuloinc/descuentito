@@ -96,7 +96,7 @@
 	// Scroll to the content on mount
 	onMount(() => {
 		if (contentContainer && contentElements[todayIndex]) {
-			scrollToContent(todayIndex);
+			scrollToDay(todayIndex);
 		}
 
 		// Set up content scroll observer
@@ -201,23 +201,12 @@
 		};
 	}
 
-	// Function to scroll content to specific day
-	function scrollToContent(index: number) {
+	function scrollToDay(index: number) {
 		if (contentElements[index]) {
-			// First scroll with smooth behavior
-			contentElements[index].scrollIntoView({
-				behavior: 'smooth',
-				block: 'nearest',
-				inline: 'center'
+			contentContainer.scrollTo({
+				left: contentElements[index].offsetLeft,
+				behavior: 'smooth'
 			});
-
-			// Ensure precise snap alignment after animation
-			setTimeout(() => {
-				contentContainer.scrollTo({
-					left: contentElements[index].offsetLeft,
-					behavior: 'auto'
-				});
-			}, 500);
 		}
 	}
 
@@ -461,13 +450,13 @@
 						const index = formattedWeekDates.findIndex((date) => date.id === value);
 						selectedTabId = value;
 						currentContentIndex = index;
-						scrollToContent(index);
+						scrollToDay(index);
 					}}
 					class="mx-auto mb-0  md:mx-0"
 				>
 					<TabsList class="flex md:gap-1">
 						{#each formattedWeekDates as weekDateInfo}
-							<TabsTrigger value={weekDateInfo.id} class="">
+							<TabsTrigger value={weekDateInfo.id} class="xs:px-4 px-2.5">
 								<span class="hidden lg:block">{weekDateInfo.display}</span>
 								<span class="block lg:hidden">{weekDateInfo.shortDisplay}</span>
 							</TabsTrigger>
@@ -494,7 +483,7 @@
 	<!-- Content container with horizontal scrolling -->
 	<div
 		bind:this={contentContainer}
-		class="scrollbar-hide flex w-full snap-x snap-mandatory overflow-x-auto"
+		class="scrollbar-hide flex w-full snap-x snap-mandatory overflow-x-auto pt-4"
 		style="scroll-behavior: smooth; -webkit-overflow-scrolling: auto; overscroll-behavior-x: contain; will-change: scroll-position; scroll-snap-type: x mandatory; scroll-snap-stop: always;"
 	>
 		{#each formattedWeekDates as weekDateInfo, index}
