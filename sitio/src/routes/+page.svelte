@@ -359,18 +359,18 @@
 </script>
 
 <div class="site-container relative">
-	<div class="title-container pt-4">
+	<div class="title-container bg-sidebar pb-2 pt-4">
 		<div class="container mx-auto px-4">
 			<h1 class="flex items-center gap-2 text-3xl font-bold">
 				descuentito.ar
 				<Badge variant="destructive">beta :)</Badge>
 			</h1>
-			<h2 class="mb-2 text-lg font-medium">Descuentos en supermercados de CABA</h2>
+			<h2 class="text-lg font-medium">Descuentos en supermercados de CABA</h2>
 		</div>
 	</div>
 
 	<header
-		class="sticky-header bg-background/70 sticky left-0 right-0 top-0 z-40 w-full py-2 shadow-md backdrop-blur transition-all duration-300 ease-in-out"
+		class="sticky-header bg-sidebar/70 sticky left-0 right-0 top-0 z-40 w-full py-2 shadow-md backdrop-blur transition-all duration-300 ease-in-out"
 	>
 		<div class="mx-auto w-full">
 			<div class="flex items-center justify-between gap-2 px-2">
@@ -483,7 +483,7 @@
 	<!-- Content container with horizontal scrolling -->
 	<div
 		bind:this={contentContainer}
-		class="scrollbar-hide flex w-full snap-x snap-mandatory overflow-x-auto pt-4"
+		class="scrollbar-hide flex w-full snap-x snap-mandatory overflow-x-auto pt-3"
 		style="scroll-behavior: smooth; -webkit-overflow-scrolling: auto; overscroll-behavior-x: contain; will-change: scroll-position; scroll-snap-type: x mandatory; scroll-snap-stop: always;"
 	>
 		{#each formattedWeekDates as weekDateInfo, index}
