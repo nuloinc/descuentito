@@ -22,6 +22,11 @@
 		},
 		{ cacheKey: ([t]) => t.toLowerCase() }
 	);
+	const CURRENCY_FORMATTER = new Intl.NumberFormat('es-AR', {
+		style: 'currency',
+		currency: 'ARS',
+		minimumFractionDigits: 0
+	});
 </script>
 
 <script lang="ts">
@@ -48,11 +53,7 @@
 			return `$${amount / 1000}mil`;
 		}
 
-		return new Intl.NumberFormat('es-AR', {
-			style: 'currency',
-			currency: 'ARS',
-			minimumFractionDigits: 0
-		}).format(amount);
+		return CURRENCY_FORMATTER.format(amount);
 	}
 
 	function isPaymentMethod(method: string): method is PaymentMethod {
