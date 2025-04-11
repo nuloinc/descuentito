@@ -259,8 +259,6 @@
 							src={WALLET_ICONS[method as PaymentMethod]}
 							alt={`${String(discount.source)} ${method}`}
 							class="h-6 w-6 rounded-sm"
-							loading="lazy"
-							decoding="async"
 						/>
 					{/each}
 				</div>

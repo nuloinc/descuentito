@@ -3,6 +3,8 @@
 	import { onMount } from 'svelte';
 	import posthog from 'posthog-js';
 	import { MediaQuery } from 'svelte/reactivity';
+	import { navigating } from '$app/stores';
+	import { fade } from 'svelte/transition';
 
 	let { children } = $props();
 	const dark = new MediaQuery('prefers-color-scheme: dark');
@@ -41,6 +43,17 @@
 </svelte:head>
 
 {@render children()}
+
+{#if $navigating}
+	<div
+		class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+		transition:fade={{ duration: 100 }}
+	>
+		<div
+			class="border-t-primary h-12 w-12 animate-spin rounded-full border-4 border-gray-300 dark:border-gray-600"
+		></div>
+	</div>
+{/if}
 
 <footer
 	class="mb-24 mt-8 flex flex-col items-center justify-center gap-3 px-2 py-4 text-center text-gray-500"

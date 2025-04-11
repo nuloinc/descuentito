@@ -172,8 +172,6 @@
 								src={WALLET_ICONS[bank.id as PaymentMethod]}
 								alt={bank.name}
 								class="h-6 w-auto rounded-sm"
-								loading="lazy"
-								decoding="async"
 							/>
 						{/if}
 						<span class="flex-grow leading-relaxed">{bank.name}</span>
