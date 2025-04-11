@@ -37,6 +37,7 @@
 	<meta property="og:image" content="/og.png" />
 	<meta property="og:url" content="https://descuentito.ar" />
 	<meta property="og:type" content="website" />
+	<meta name="theme-color" content={dark.current ? '#000000' : '#ffffff'} />
 </svelte:head>
 
 {@render children()}
