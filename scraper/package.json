@@ -2,8 +2,8 @@
   "type": "module",
   "scripts": {
     "check": "tsc",
-    "dev": "pnpx trigger.dev@3.3.16 dev",
-    "deploy": "pnpx trigger.dev@3.3.16 deploy"
+    "dev": "pnpx trigger.dev@3.3.17 dev",
+    "deploy": "pnpx trigger.dev@3.3.17 deploy"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.1.17",
@@ -14,7 +14,7 @@
     "@octokit/rest": "^21.1.1",
     "@openrouter/ai-sdk-provider": "^0.4.2",
     "@playwright/test": "^1.50.1",
-    "@trigger.dev/sdk": "3.3.16",
+    "@trigger.dev/sdk": "3.3.17",
     "ai": "^4.1.47",
     "date-fns": "^3.3.1",
     "dayjs": "^1.11.13",
@@ -37,7 +37,7 @@
   },
   "packageManager": "pnpm@9.15.5+sha256.8472168c3e1fd0bff287e694b053fccbbf20579a3ff9526b6333beab8df65a8d",
   "devDependencies": {
-    "@trigger.dev/build": "3.3.16",
+    "@trigger.dev/build": "3.3.17",
     "@types/node": "^22.13.1",
     "prettier": "^3.4.2",
     "tsx": "^4.19.2",
