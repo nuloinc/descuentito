@@ -23,6 +23,8 @@
 	import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 	import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 	import { onMount } from 'svelte';
+	import FilterByPaymentMethodsButton from '@/components/filter-by-payment-methods-button.svelte';
+	import { savedPaymentMethods } from '@/index';
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 	dayjs.extend(weekday);
@@ -283,67 +285,6 @@
 
 	let selectedType: 'Presencial' | 'Online' = 'Presencial';
 
-	function groupPromotionsByPaymentMethod(discounts: Discount[]) {
-		const grouped = new Map<
-			(typeof BANKS_OR_WALLETS)[number] | 'other',
-			(typeof discounts)[number][]
-		>();
-		for (const wallet of BANKS_OR_WALLETS) {
-			grouped.set(wallet, []);
-		}
-		grouped.set('other', []);
-
-		for (const discount of discounts) {
-			let found = false;
-			for (const wallet of BANKS_OR_WALLETS) {
-				if (
-					discount.paymentMethods?.some((method) =>
-						typeof method === 'string' ? method === wallet : method.some((m) => m === wallet)
-					)
-				) {
-					grouped.set(wallet, [...(grouped.get(wallet) || []), discount]);
-					found = true;
-				}
-			}
-			if (!found) {
-				grouped.set('other', [...(grouped.get('other') || []), discount]);
-			}
-		}
-
-		// Filter out empty arrays
-		for (const [key, value] of Array.from(grouped.entries())) {
-			if (Array.isArray(value) && value.length === 0) {
-				grouped.delete(key);
-			}
-		}
-
-		let joinedGrouped: Record<
-			PaymentMethodGroup,
-			Record<PaymentMethodGroup, Discount[]>
-		> = {} as Record<PaymentMethodGroup, Record<PaymentMethodGroup, Discount[]>>;
-
-		for (const [key, value] of grouped.entries()) {
-			const joinedKey = JOIN_GROUPS.find((group) => group.includes(key as any))?.[0];
-			if (joinedKey) {
-				joinedGrouped[joinedKey] = joinedGrouped[joinedKey] || {};
-				joinedGrouped[joinedKey][joinedKey] = joinedGrouped[joinedKey][joinedKey] || [];
-				joinedGrouped[joinedKey][key as PaymentMethodGroup] = value;
-			} else {
-				joinedGrouped[key as PaymentMethodGroup] = { [key as PaymentMethodGroup]: value } as Record<
-					PaymentMethodGroup,
-					Discount[]
-				>;
-			}
-		}
-		return joinedGrouped;
-	}
-
-	$: {
-		if (dev) {
-			console.log('Promotions by weekday:', promotionsByWeekday);
-		}
-	}
-
 	let isOpen = false;
 </script>
 
@@ -355,6 +296,25 @@
 				<Badge variant="destructive">beta :)</Badge>
 			</h1>
 			<h2 class="text-lg font-medium">Descuentos en supermercados de CABA</h2>
+
+			{#if $savedPaymentMethods.size > 0}
+				<FilterByPaymentMethodsButton class="mt-2" />
+				<a
+					href="/configuracion/medios"
+					class="mt-2 flex w-full items-center space-x-2 rounded-md border p-3 text-sm ring-1 ring-gray-300 transition-all"
+				>
+					<span class="flex-grow font-medium">Configurar mis medios de pago guardados</span>
+					<span class="text-gray-500">→</span>
+				</a>
+			{:else}
+				<a
+					href="/configuracion/medios"
+					class="mb-6 flex w-full items-center space-x-2 rounded-md border border-gray-300 bg-gray-100/50 p-3 text-sm transition-all hover:bg-gray-200/50"
+				>
+					<span class="flex-grow font-medium">Configurar medios de pago</span>
+					<span class="text-gray-500">→</span>
+				</a>
+			{/if}
 		</div>
 	</div>
 

@@ -96,13 +96,14 @@ export type Discount =
 export const BANKS_OR_WALLETS = [
   "Mercado Pago",
   "Banco Galicia",
+  "Banco Ciudad",
+  "Banco Ciudad - Plan Sueldo y Jubilados",
+  "Personal Pay",
   "Uala",
   "Banco Patagonia",
   "Banco BBVA",
   "Banco Nación",
   "Banco Nación - Tarjeta Nativa",
-  "Banco Ciudad",
-  "Banco Ciudad - Plan Sueldo y Jubilados",
   "Banco Galicia - Eminent",
   "Banco Macro",
   "Banco Macro - Tarjeta PLATINUM",
@@ -132,7 +133,6 @@ export const BANKS_OR_WALLETS = [
   "NaranjaX",
   "Cuenta DNI",
   "Banco Santa Fe",
-  "Personal Pay",
   "Prex",
   "Yoy",
   "Tarjeta Carrefour Prepaga",
@@ -161,7 +161,7 @@ export const PAYMENT_METHODS = [
 ] as const;
 
 export type PaymentMethodGroup = (typeof PAYMENT_METHODS)[number] | "other";
-export const JOIN_GROUPS: PaymentMethodGroup[][] = [
+export const JOIN_GROUPS: (typeof PAYMENT_METHODS)[number][][] = [
   ["Banco Credicoop", "Banco Credicoop - Plan Sueldo"],
   ["Banco ICBC", "Banco ICBC - Cliente Payroll"],
   ["Banco Galicia", "Banco Galicia - Eminent"],
