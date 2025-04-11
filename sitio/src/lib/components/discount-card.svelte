@@ -1,16 +1,27 @@
 <script module lang="ts">
 	import pMemoize from 'p-memoize';
-	const getRestrictionSummary = pMemoize(async (text: string) => {
-		const res = await fetch('https://nulo-productsummaryapi.web.val.run', {
-			method: 'POST',
-			body: JSON.stringify({ description: text })
-		});
-		if (!res.ok) {
-			return text;
-		}
-		const data: { summary: string } = await res.json();
-		return data.summary;
-	});
+	const getRestrictionSummary = pMemoize(
+		async (text: string) => {
+			if (
+				['N/A', 'TODO EL SURTIDO', 'TODOS LOS PRODUCTOS', 'ELECTRODOMESTICOS', 'LIBRERIA'].includes(
+					text.replaceAll(/ó/gu, 'o').replaceAll(/í/giu, 'i').replaceAll(/é/giu, 'e').toUpperCase()
+				)
+			)
+				return text;
+			if (text.toLowerCase() === 'electro') return 'Electrodomésticos';
+
+			const res = await fetch('https://nulo-productsummaryapi.web.val.run', {
+				method: 'POST',
+				body: JSON.stringify({ description: text })
+			});
+			if (!res.ok) {
+				return text;
+			}
+			const data: { summary: string } = await res.json();
+			return data.summary;
+		},
+		{ cacheKey: ([t]) => t.toLowerCase() }
+	);
 </script>
 
 <script lang="ts">
