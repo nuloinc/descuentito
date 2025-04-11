@@ -11,7 +11,10 @@
 				destructive:
 					'bg-destructive text-destructive-foreground hover:bg-destructive/80 border-transparent',
 				outline: 'text-foreground',
-				yellow: 'bg-yellow-500 text-white hover:bg-yellow-600 border-transparent'
+				yellow: 'bg-yellow-500 text-white hover:bg-yellow-600 border-transparent',
+
+				shiny:
+					'bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 text-white hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 border-0 shadow-md'
 			}
 		},
 		defaultVariants: {

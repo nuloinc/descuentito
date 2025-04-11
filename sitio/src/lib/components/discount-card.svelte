@@ -132,20 +132,11 @@
 		return (
 			paymentMethods
 				?.flatMap((method) => {
-					if (Array.isArray(method)) return method[0];
+					if (Array.isArray(method)) return method;
 					return method;
 				})
-				.map((method: PaymentMethod | {}) => {
-					if (method === 'Tarjeta de débito VISA' || method === 'Tarjeta de crédito VISA') {
-						return 'VISA';
-					}
-					if (
-						method === 'Tarjeta de débito Mastercard' ||
-						method === 'Tarjeta de crédito Mastercard'
-					) {
-						return 'Mastercard';
-					}
-					return method as string;
+				.map((method: string) => {
+					return method.split(' - ')[0] as string;
 				})
 				.filter((method: string) => {
 					if (!(method in WALLET_ICONS)) {
@@ -153,123 +144,106 @@
 					}
 					return method in WALLET_ICONS;
 				})
-				.filter((v, i, a) => a.indexOf(v) === i) || []
+				.filter(
+					(v, i, a) =>
+						a.findIndex(
+							(v2) => WALLET_ICONS[v2 as PaymentMethod] === WALLET_ICONS[v as PaymentMethod]
+						) === i
+				) || []
 		);
 	}
 </script>
 
-<div class="bg-card text-card-foreground rounded-lg shadow-sm">
-	<!-- <div class="space-between flex items-center p-3 pb-0">
-		<div class="flex items-center gap-2 text-lg font-semibold">
-			{#if isPaymentMethod(mainPaymentMethod)}
-				<PaymentMethodLogo method={mainPaymentMethod} />
-			{:else}
-				{mainPaymentMethod}
-			{/if}
-		</div>
-	</div> -->
-	<!-- {#if paymentMethod !== mainPaymentMethod}
-			<h3 class="border-t px-3 pb-1 pt-3 text-lg font-semibold leading-none tracking-tight">
-				{#if isPaymentMethod(paymentMethod)}
-					<PaymentMethodLogo method={paymentMethod} />
-				{:else}
-					{paymentMethod}
-				{/if}
-			</h3>
-		{/if} -->
+<div class="bg-card text-card-foreground rounded-lg border px-3 py-2 shadow-md">
 	<Dialog.Root>
-		<Dialog.Trigger class="w-full">
-			<div
-				class="hover:bg-accent bg-primary-foreground flex items-center justify-between rounded-lg border p-2 transition-colors"
-			>
-				<div class="flex items-start gap-2 text-left">
-					{#if appliesOnlyTo.length > 0}
-						<Badge variant="default" class="mb-1 gap-1">
-							<WalletCards class="h-4 w-4" />
-							Solo para
-							{appliesOnlyTo.join(', ')}
-						</Badge>
+		<Dialog.Trigger class="flex w-full items-center justify-between">
+			<div class="flex items-center gap-2 text-left">
+				<BrandLogo
+					source={discount.source}
+					types={discount.where}
+					{selectedType}
+					small
+					containerClass="flex-grow flex-shrink-0"
+					class="!max-h-10 max-w-8"
+				/>
+
+				<div class="text-2xl font-black">
+					{#if discount.discount.type === 'porcentaje'}
+						{discount.discount.value}%
+					{:else if discount.discount.type === 'cuotas sin intereses'}
+						{discount.discount.value}<span class="text-sm">c/si</span>
+					{:else if discount.discount.type === 'merged cuotas sin intereses'}
+						{discount.discount.installmentOptions.sort((a, b) => a - b).join(', ')} cuotas sin intereses
 					{/if}
+				</div>
 
-					<BrandLogo
-						source={discount.source}
-						types={discount.where}
-						{selectedType}
-						small
-						containerClass="h-full flex-grow"
-					/>
-
-					<div class="text-2xl font-black">
-						{#if discount.discount.type === 'porcentaje'}
-							{discount.discount.value}%
-						{:else if discount.discount.type === 'cuotas sin intereses'}
-							{discount.discount.value}c/si
-						{:else if discount.discount.type === 'merged cuotas sin intereses'}
-							{discount.discount.installmentOptions.sort((a, b) => a - b).join(', ')} cuotas sin intereses
-						{/if}
-					</div>
-
+				<div class="flex flex-col items-start gap-1">
 					{#if discount.onlyForProducts}
-						<p class=" text-sm">
-							⚠️ Solo
+						<Badge variant="yellow" class="overflow-hidden text-ellipsis whitespace-nowrap text-xs">
+							Solo
 							{#await getRestrictionSummary(discount.onlyForProducts)}
 								<span class="animate-pulse">...</span>
 							{:then data}
 								{data}
 							{/await}
-						</p>
+						</Badge>
 					{/if}
 					{#if discount.excludesProducts}
-						<p class="text-sm font-medium text-red-600">! product restrictions apply</p>
+						<Badge variant="destructive" class="gap-1.5 px-2 py-0.5">
+							<span class="font-black">!</span>
+							Aplican restricciones
+						</Badge>
 					{/if}
-					<!-- <div>
-						{#if discount.paymentMethods && discount.paymentMethods.length > 0}
-							<div class="text-muted-foreground text-sm">
-								<ul>
-									{#each discount.paymentMethods.filter( (methods) => (paymentMethod !== 'other' ? methods.includes(paymentMethod) : true) ) as methods}
-										{#if Array.isArray(methods)}
-											<li>
-												{methods.filter((method) => method !== paymentMethod).join(' + ')}
-											</li>
-										{/if}
-									{/each}
-								</ul>
-							</div>
-						{/if}
-					</div> -->
 
-					<div class="flex flex-row gap-1">
-						{#if discount.limits?.maxDiscount}
-							Tope: {formatCurrency(discount.limits.maxDiscount)}
-						{:else if discount.limits?.explicitlyHasNoLimit}
-							<Badge variant="yellow" class="gap-1">
-								<StarsIcon class="h-4 w-4" />
-								Sin tope
-							</Badge>
-						{/if}
-						{#if discount.membership && discount.membership.length > 0}
-							<Badge variant="default" class="gap-1">
-								<WalletCards class="h-4 w-4" />
-								Solo con {discount.membership.join(' y ')}
-							</Badge>
-						{/if}
-					</div>
+					{#if appliesOnlyTo.length > 0}
+						<Badge variant="default" class="gap-1.5">
+							<WalletCards class="h-4 w-4" />
+							{appliesOnlyTo.join(', ')}
+						</Badge>
+					{/if}
+					{#if discount.membership && discount.membership.length > 0}
+						<Badge variant="default" class="gap-1">
+							<WalletCards class="h-4 w-4" />
+							Solo con {discount.membership.join(' y ')}
+						</Badge>
+					{/if}
+
+					{#if discount.limits?.maxDiscount}
+						<span class="text-sm leading-none"
+							>Tope: {formatCurrency(discount.limits.maxDiscount)}</span
+						>
+					{:else if discount.limits?.explicitlyHasNoLimit}
+						<Badge variant="shiny" class="gap-1">
+							<StarsIcon class="h-4 w-4" />
+							Sin tope
+						</Badge>
+					{/if}
 				</div>
-				{#if discount.paymentMethods && discount.paymentMethods.length > 0}
-					<div class="flex">
-						{#each paymentMethodsToIcons(discount.paymentMethods) as method}
-							<!-- TODO: mostrar los que no tienen iconos somehow -->
-							<img
-								src={WALLET_ICONS[method as PaymentMethod]}
-								alt={`${String(discount.source)} ${method}`}
-								class="h-8 w-auto rounded-sm"
-								loading="lazy"
-								decoding="async"
-							/>
-						{/each}
-					</div>
-				{/if}
 			</div>
+
+			{#if discount.paymentMethods && discount.paymentMethods.length > 0}
+				{@const methodIcons = paymentMethodsToIcons(discount.paymentMethods)}
+				<div
+					class="grid gap-1 {methodIcons.length > 9
+						? 'grid-cols-4'
+						: methodIcons.length > 4
+							? 'grid-cols-3'
+							: methodIcons.length > 1
+								? 'grid-cols-2'
+								: 'grid-cols-1'}"
+				>
+					{#each methodIcons as method}
+						<!-- TODO: mostrar los que no tienen iconos somehow -->
+						<img
+							src={WALLET_ICONS[method as PaymentMethod]}
+							alt={`${String(discount.source)} ${method}`}
+							class="h-6 w-auto rounded-sm"
+							loading="lazy"
+							decoding="async"
+						/>
+					{/each}
+				</div>
+			{/if}
 		</Dialog.Trigger>
 		<Dialog.Content class="p-0">
 			<ScrollArea class="max-h-[90vh]">
