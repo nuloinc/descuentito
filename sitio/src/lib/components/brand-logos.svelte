@@ -1,19 +1,34 @@
 <script lang="ts">
-	import { BRAND_LOGOS, BRAND_LOGOS_NEED_LIGHT_BACKGROUND } from '@/logos';
+	import { BRAND_LOGOS, BRAND_LOGOS_NEED_LIGHT_BACKGROUND, BRAND_LOGOS_SMALL } from '@/logos';
 	// import type { SOURCES } from '..';
 
-	const { source, types, selectedType } = $props<{
+	const {
+		source,
+		types,
+		selectedType,
+		small,
+		class: className,
+		containerClass
+	} = $props<{
 		source: string;
 		types: string[];
 		selectedType: 'Presencial' | 'Online';
+		small?: boolean;
+		class?: string;
+		containerClass?: string;
 	}>();
 
 	function getSrc(type: string) {
 		return (
-			BRAND_LOGOS[source as keyof typeof BRAND_LOGOS] &&
-			BRAND_LOGOS[source as keyof typeof BRAND_LOGOS][
-				type as keyof (typeof BRAND_LOGOS)[keyof typeof BRAND_LOGOS]
-			]
+			(small &&
+				BRAND_LOGOS_SMALL[source as keyof typeof BRAND_LOGOS_SMALL] &&
+				BRAND_LOGOS_SMALL[source as keyof typeof BRAND_LOGOS_SMALL][
+					type as keyof (typeof BRAND_LOGOS_SMALL)[keyof typeof BRAND_LOGOS_SMALL]
+				]) ||
+			(BRAND_LOGOS[source as keyof typeof BRAND_LOGOS] &&
+				BRAND_LOGOS[source as keyof typeof BRAND_LOGOS][
+					type as keyof (typeof BRAND_LOGOS)[keyof typeof BRAND_LOGOS]
+				])
 		);
 	}
 
@@ -45,7 +60,7 @@
 	const { types: typesShown, applies } = $derived(reduceTypes(types));
 </script>
 
-<div class="flex flex-wrap gap-2">
+<div class="flex flex-wrap gap-2 {containerClass}">
 	{#each typesShown as type, index}
 		{@const src = getSrc(type)}
 		{#if src}
@@ -53,7 +68,7 @@
 				<img
 					{src}
 					alt={`${String(source)} ${type}`}
-					class="h-8 w-auto {needsLightBackground(type) ? 'rounded bg-white p-1' : ''}"
+					class="h-8 w-auto {needsLightBackground(type) ? 'rounded bg-white p-1' : ''} {className}"
 					loading="lazy"
 					decoding="async"
 				/>
@@ -61,7 +76,9 @@
 				<enhanced:img
 					{src}
 					alt={`${String(source)} ${type}`}
-					class="h-8 w-auto rounded {needsLightBackground(type) ? 'bg-white p-1' : ''}"
+					class="max-h-8 w-auto rounded {needsLightBackground(type)
+						? 'bg-white p-1'
+						: ''} {className}"
 					loading="lazy"
 					decoding="async"
 				/>
@@ -72,7 +89,7 @@
 	{/each}
 </div>
 
-{#if applies?.length}
+{#if applies?.length && !small}
 	<div class="">
 		Aplica:
 		{#each applies as type, index}

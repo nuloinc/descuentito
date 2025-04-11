@@ -4,7 +4,13 @@
 	import { Tabs, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import * as Drawer from '$lib/components/ui/drawer';
 	import { buttonVariants } from '$lib/components/ui/button';
-	import { BANKS_OR_WALLETS, PAYMENT_METHODS, type Discount } from 'promos-db/schema';
+	import {
+		BANKS_OR_WALLETS,
+		JOIN_GROUPS,
+		PAYMENT_METHODS,
+		type Discount,
+		type PaymentMethodGroup
+	} from 'promos-db/schema';
 	import { dev } from '$app/environment';
 	import { page } from '$app/stores';
 	import DiscountCard from '@/components/discount-card.svelte';
@@ -272,7 +278,7 @@
 		});
 
 		// Group the filtered promotions by payment method
-		return groupPromotionsByPaymentMethod(dayPromotions);
+		return dayPromotions;
 	});
 
 	let selectedType: 'Presencial' | 'Online' = 'Presencial';
@@ -311,25 +317,6 @@
 			}
 		}
 
-		type PaymentMethodGroup = (typeof PAYMENT_METHODS)[number] | 'other';
-
-		const JOIN_GROUPS: PaymentMethodGroup[][] = [
-			['Banco Credicoop', 'Banco Credicoop - Plan Sueldo'],
-			['Banco ICBC', 'Banco ICBC - Cliente Payroll'],
-			['Banco Galicia', 'Banco Galicia - Eminent'],
-			['Tarjeta Carrefour Crédito', 'Tarjeta Carrefour Prepaga'],
-			['.Reba', '.Reba - Black'],
-			['Banco Ciudad', 'Banco Ciudad - Plan Sueldo y Jubilados'],
-			[
-				'Banco Supervielle',
-				'Banco Supervielle - Identité y Plan Sueldo',
-				'Banco Supervielle - Jubilados'
-			],
-			['Banco Nación', 'Banco Nación - Tarjeta Nativa'],
-			['Banco Santander', 'Banco Santander - Jubilados', 'Banco Santander - Women'],
-			['Banco Hipotecario', 'Banco Hipotecario - Búho/Plan Sueldo'],
-			['Banco Macro', 'Banco Macro - Tarjeta PLATINUM', 'Banco Macro - Tarjeta Selecta']
-		];
 		let joinedGrouped: Record<
 			PaymentMethodGroup,
 			Record<PaymentMethodGroup, Discount[]>
@@ -493,13 +480,9 @@
 				class:!opacity-100={index === currentContentIndex}
 				style="scroll-snap-align: center; scroll-snap-stop: always;"
 			>
-				<div class="grid grid-cols-1 gap-6 px-2 md:grid-cols-2 lg:grid-cols-3">
-					{#each Object.entries(promotionsByWeekday[index]) as [mainPaymentMethod, paymentMethods]}
-						<DiscountCard
-							mainPaymentMethod={mainPaymentMethod as (typeof BANKS_OR_WALLETS)[number] | 'other'}
-							{paymentMethods}
-							{selectedType}
-						/>
+				<div class="grid grid-cols-1 gap-4 px-2 md:grid-cols-2 lg:grid-cols-3">
+					{#each promotionsByWeekday[index] as discount}
+						<DiscountCard {selectedType} {discount} />
 					{/each}
 					{#if Object.values(promotionsByWeekday[index]).length === 0}
 						<div class="col-span-full">

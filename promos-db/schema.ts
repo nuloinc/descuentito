@@ -160,6 +160,29 @@ export const PAYMENT_METHODS = [
   "Tarjeta American Express - The Platinum Card ® y Centurion ®",
 ] as const;
 
+export type PaymentMethodGroup = (typeof PAYMENT_METHODS)[number] | "other";
+export const JOIN_GROUPS: PaymentMethodGroup[][] = [
+  ["Banco Credicoop", "Banco Credicoop - Plan Sueldo"],
+  ["Banco ICBC", "Banco ICBC - Cliente Payroll"],
+  ["Banco Galicia", "Banco Galicia - Eminent"],
+  ["Tarjeta Carrefour Crédito", "Tarjeta Carrefour Prepaga"],
+  [".Reba", ".Reba - Black"],
+  ["Banco Ciudad", "Banco Ciudad - Plan Sueldo y Jubilados"],
+  [
+    "Banco Supervielle",
+    "Banco Supervielle - Identité y Plan Sueldo",
+    "Banco Supervielle - Jubilados",
+  ],
+  ["Banco Nación", "Banco Nación - Tarjeta Nativa"],
+  ["Banco Santander", "Banco Santander - Jubilados", "Banco Santander - Women"],
+  ["Banco Hipotecario", "Banco Hipotecario - Búho/Plan Sueldo"],
+  [
+    "Banco Macro",
+    "Banco Macro - Tarjeta PLATINUM",
+    "Banco Macro - Tarjeta Selecta",
+  ],
+];
+
 export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
 
 export const BasicDiscountSchema = z.object({
