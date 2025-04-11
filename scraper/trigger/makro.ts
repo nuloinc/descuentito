@@ -14,7 +14,7 @@ import {
 import { savePromotions } from "../lib/git";
 import assert from "assert";
 import { createPlaywrightSession } from "../lib";
-
+import { cleanDiscounts } from "../lib/clean";
 const DiscountSchema = BasicDiscountSchema.extend({
   where: z.array(z.enum(["Makro"])),
   membership: z.array(z.enum(["Club +Simple"])).optional(),
@@ -120,6 +120,6 @@ ${LIMITS_PROMPT}
 
     assert(promotions.length > 6, "No promotions found");
 
-    await savePromotions("makro", promotions);
+    await savePromotions("makro", cleanDiscounts(promotions));
   },
 });

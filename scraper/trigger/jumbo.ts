@@ -15,6 +15,7 @@ import {
 } from "promos-db/schema";
 import { savePromotions } from "../lib/git";
 import { createPlaywrightSession, generateElementDescription } from "../lib";
+import { cleanDiscounts } from "../lib/clean";
 
 export const jumboTask = schedules.task({
   id: "jumbo-extractor",
@@ -151,7 +152,7 @@ ${LIMITS_PROMPT}
       }
     }
 
-    await savePromotions("jumbo", discounts);
+    await savePromotions("jumbo", cleanDiscounts(discounts));
   },
 });
 

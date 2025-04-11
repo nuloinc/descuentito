@@ -16,7 +16,7 @@ import { savePromotions } from "../lib/git";
 import { createPlaywrightSession, openrouter } from "../lib";
 import assert from "assert";
 import { writeFile } from "fs/promises";
-
+import { cleanDiscounts } from "../lib/clean";
 const promotionSchema = BasicDiscountSchema.extend({
   where: z.array(z.enum(["Coto", "Online"])),
   membership: z.array(z.enum(["Club La Nacion", "Comunidad Coto"])).optional(),
@@ -229,6 +229,6 @@ Legal text for reference (use ONLY to supplement missing details, particularly f
 
     assert(discounts.length > 4, "Not enough discounts found");
 
-    await savePromotions(source, discounts);
+    await savePromotions(source, cleanDiscounts(discounts));
   },
 });
