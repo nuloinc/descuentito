@@ -230,9 +230,9 @@
 					{/if}
 
 					{#if discount.limits?.maxDiscount}
-						<span class="text-sm leading-none"
-							>Tope: {formatCurrency(discount.limits.maxDiscount)}</span
-						>
+						<Badge variant="outline" class="gap-1">
+							Tope: {formatCurrency(discount.limits.maxDiscount)}
+						</Badge>
 					{:else if discount.limits?.explicitlyHasNoLimit}
 						<Badge variant="shiny" class="gap-1">
 							<StarsIcon class="h-4 w-4" />
@@ -349,7 +349,7 @@
 					{/if}
 					{#if discount.excludesProducts}
 						<h4 class="font-medium">No aplica para:</h4>
-						{#await getRestrictionSummary(discount.excludesProducts, true)}
+						{#await getRestrictionSummary(`Se excluyen: ${discount.excludesProducts}`, true)}
 							<p class="text-sm text-gray-500">Cargando...</p>
 						{:then summary}
 							<div class="mt-1 rounded-md border border-red-200 bg-red-50 p-2">
