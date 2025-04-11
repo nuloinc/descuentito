@@ -347,7 +347,7 @@
 	let isOpen = false;
 </script>
 
-<div class="site-container bg-background relative" data-vaul-drawer-wrapper>
+<div class="site-container bg-background relative">
 	<div class="title-container bg-sidebar pb-2 pt-4">
 		<div class="container mx-auto px-4">
 			<h1 class="flex items-center gap-2 text-3xl font-bold">
@@ -371,7 +371,7 @@
 						currentContentIndex = index;
 						scrollToDay(index);
 					}}
-					class="mx-auto mb-0  md:mx-0"
+					class="mx-auto mb-0"
 				>
 					<TabsList class="flex md:gap-1">
 						{#each formattedWeekDates as weekDateInfo}
@@ -412,7 +412,7 @@
 				class:!opacity-100={index === currentContentIndex}
 				style="scroll-snap-align: center; scroll-snap-stop: always;"
 			>
-				<div class="grid grid-cols-1 gap-4 px-2 md:grid-cols-2 lg:grid-cols-3">
+				<div class="mx-auto grid max-w-screen-md grid-cols-1 gap-4 px-2">
 					{#each promotionsByWeekday[index] as discount}
 						<DiscountCard {selectedType} {discount} />
 					{/each}
@@ -426,7 +426,7 @@
 		{/each}
 	</div>
 
-	<Drawer.Root shouldScaleBackground bind:open={isOpen}>
+	<Drawer.Root bind:open={isOpen}>
 		<Drawer.Trigger
 			class={`bg-sidebar text-primary sticky bottom-0 z-50 flex w-full flex-col items-center justify-center gap-2 rounded-t-[10px] px-4 pb-2 text-lg font-medium shadow-xl`}
 			onmousedown={(e) => {
