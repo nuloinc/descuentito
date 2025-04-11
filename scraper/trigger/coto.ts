@@ -229,6 +229,6 @@ Legal text for reference (use ONLY to supplement missing details, particularly f
 
     assert(discounts.length > 4, "Not enough discounts found");
 
-    await savePromotions(source, cleanDiscounts(discounts));
+    await savePromotions(ctx, source, cleanDiscounts(discounts));
   },
 });

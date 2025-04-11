@@ -128,6 +128,6 @@ ${LIMITS_PROMPT}
       i++;
     }
 
-    await savePromotions("dia", promotions);
+    await savePromotions(ctx, "dia", promotions);
   },
 });

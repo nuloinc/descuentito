@@ -88,6 +88,6 @@ ${LIMITS_PROMPT}
 
     assert(promotions.length > 0, "No promotions found");
 
-    await savePromotions("carrefour", promotions);
+    await savePromotions(ctx, "carrefour", promotions);
   },
 });

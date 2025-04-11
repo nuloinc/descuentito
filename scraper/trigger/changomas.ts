@@ -103,6 +103,6 @@ ${LIMITS_PROMPT}
 
     assert(promotions.length > 10, "No promotions found");
 
-    await savePromotions("changomas", promotions);
+    await savePromotions(ctx, "changomas", promotions);
   },
 });

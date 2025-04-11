@@ -120,6 +120,6 @@ ${LIMITS_PROMPT}
 
     assert(promotions.length > 6, "No promotions found");
 
-    await savePromotions("makro", cleanDiscounts(promotions));
+    await savePromotions(ctx, "makro", cleanDiscounts(promotions));
   },
 });

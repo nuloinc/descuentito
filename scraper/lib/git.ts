@@ -5,7 +5,7 @@ import { rm } from "fs/promises";
 import { Octokit } from "@octokit/rest";
 import { format } from "date-fns";
 import { execa } from "execa";
-import { logger } from "@trigger.dev/sdk/v3";
+import { Context, logger } from "@trigger.dev/sdk/v3";
 import { nanoid } from "nanoid";
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN!;
 const GITHUB_OWNER = process.env.GITHUB_OWNER!;
@@ -46,12 +46,16 @@ export async function initGitRepo() {
   return {
     dir: REPO_DIR,
     [Symbol.asyncDispose]: async () => {
-        await rm(REPO_DIR, { recursive: true, force: true });
+      await rm(REPO_DIR, { recursive: true, force: true });
     },
   };
 }
 
-export async function savePromotions(source: string, promotions: any[]) {
+export async function savePromotions(
+  ctx: Context,
+  source: string,
+  promotions: any[]
+) {
   await using repo = await initGitRepo();
   const { dir } = repo;
 
@@ -105,12 +109,22 @@ export async function savePromotions(source: string, promotions: any[]) {
     cwd: dir,
   });
 
-  await octokit.pulls.create({
+  const prResponse = await octokit.pulls.create({
     owner: GITHUB_OWNER,
     repo: GITHUB_REPO,
     title: `Update ${source} promotions for ${date}`,
     head: branchName,
     base: "main",
-    body: `Automated PR to update ${source} promotions for ${date}`,
+    body: `Automated PR to update ${source} promotions for ${date}
+
+Run: https://cloud.trigger.dev/orgs/${ctx.organization.slug}/projects/${ctx.project.slug}/env/${ctx.environment.slug}/runs/${ctx.run.id}`,
+  });
+
+  // Automatically merge the pull request
+  await octokit.pulls.merge({
+    owner: GITHUB_OWNER,
+    repo: GITHUB_REPO,
+    pull_number: prResponse.data.number,
+    merge_method: "squash",
   });
 }
