@@ -111,7 +111,7 @@ export const BANKS_OR_WALLETS = [
   "Banco Santander - Jubilados",
   "Banco Santander - Women",
   "Banco ICBC",
-  "Banco ICBC – Cliente Payroll",
+  "Banco ICBC - Cliente Payroll",
   "Banco Credicoop",
   "Banco Credicoop - Plan Sueldo",
   "Banco Comafi",

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { logos, LOGOS_NEED_LIGHT_BACKGROUND } from '@/logos';
+	import { LOGOS, LOGOS_NEED_LIGHT_BACKGROUND } from '@/logos';
 	import type { PAYMENT_METHODS } from 'promos-db/schema';
 
 	export let method: (typeof PAYMENT_METHODS)[number];
 
-	$: logo = logos[method];
+	$: logo = LOGOS[method];
 	$: lightBackground = LOGOS_NEED_LIGHT_BACKGROUND.includes(method);
 </script>
 

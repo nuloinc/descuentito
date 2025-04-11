@@ -315,7 +315,7 @@
 
 		const JOIN_GROUPS: PaymentMethodGroup[][] = [
 			['Banco Credicoop', 'Banco Credicoop - Plan Sueldo'],
-			['Banco ICBC', 'Banco ICBC – Cliente Payroll'],
+			['Banco ICBC', 'Banco ICBC - Cliente Payroll'],
 			['Banco Galicia', 'Banco Galicia - Eminent'],
 			['Tarjeta Carrefour Crédito', 'Tarjeta Carrefour Prepaga'],
 			['.Reba', '.Reba - Black'],

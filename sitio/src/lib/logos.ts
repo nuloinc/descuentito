@@ -44,7 +44,7 @@ import { default as CotoDigital } from './logos/supermercados/coto_digital.png?e
 import { default as ChangoMas } from './logos/supermercados/changomas.png?enhanced';
 import { default as ChangoMasOnline } from './logos/supermercados/changomas_online.png?enhanced';
 import { default as Makro } from './logos/supermercados/makro.svg';
-export const logos: {
+export const LOGOS: {
 	[key in PaymentMethod]?:
 		| {
 				sources: Record<string, string>;

@@ -10,7 +10,7 @@
 	import type { BANKS_OR_WALLETS } from 'promos-db/schema';
 	import { PAYMENT_METHODS } from 'promos-db/schema';
 	import type { PaymentMethod } from 'promos-db/schema';
-	import { logos } from '@/logos';
+	import { LOGOS } from '@/logos';
 	import BrandLogo from './brand-logos.svelte';
 	import { ScrollArea } from './ui/scroll-area';
 
