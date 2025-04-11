@@ -15,7 +15,7 @@
 	import { page } from '$app/stores';
 	import DiscountCard from '@/components/discount-card.svelte';
 	import SupermarketFilter from '$lib/components/supermarket-filter.svelte';
-	import { Filter } from 'lucide-svelte';
+	import { Filter, Sparkles } from 'lucide-svelte';
 	import dayjs from 'dayjs';
 	import utc from 'dayjs/plugin/utc';
 	import timezone from 'dayjs/plugin/timezone';
@@ -320,10 +320,13 @@
 			{:else}
 				<a
 					href="/configuracion/medios"
-					class="mb-6 flex w-full items-center space-x-2 rounded-md border border-gray-300 bg-gray-100/50 p-3 text-sm transition-all hover:bg-gray-200/50"
+					class="mt-2 flex w-full items-center space-x-2 rounded-md border border-yellow-300 bg-gradient-to-r from-yellow-100/70 to-amber-100/70 p-3 text-sm shadow-sm transition-all hover:bg-gradient-to-r hover:from-yellow-200/70 hover:to-amber-200/70"
 				>
-					<span class="flex-grow font-medium">Configurar medios de pago</span>
-					<span class="text-gray-500">→</span>
+					<Sparkles class="mr-1 h-8 w-8 text-yellow-500" />
+					<span class="flex-grow font-medium"
+						>Configura tus medios de pago para ver descuentos personalizados</span
+					>
+					<span class="text-amber-600">→</span>
 				</a>
 			{/if}
 		</div>
