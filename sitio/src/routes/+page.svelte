@@ -324,8 +324,8 @@
 </script>
 
 <div class="site-container bg-background relative">
-	<div class="title-container bg-sidebar pb-2 pt-4">
-		<div class="container mx-auto px-4">
+	<div class="bg-sidebar pb-2 pt-4">
+		<div class="container mx-auto max-w-4xl px-4">
 			<h1 class="flex items-center gap-2 text-3xl font-bold">
 				descuentito.ar
 				<Badge variant="destructive">beta :)</Badge>
@@ -344,13 +344,13 @@
 			{:else}
 				<a
 					href="/configuracion/medios"
-					class="mt-2 flex w-full items-center space-x-2 rounded-md border border-yellow-300 bg-gradient-to-r from-yellow-100/70 to-amber-100/70 p-3 text-sm shadow-sm transition-all hover:bg-gradient-to-r hover:from-yellow-200/70 hover:to-amber-200/70"
+					class="mt-2 flex w-full items-center space-x-2 rounded-md border border-yellow-300 bg-gradient-to-r from-yellow-100/70 to-amber-100/70 p-3 text-sm shadow-sm transition-all hover:bg-gradient-to-r hover:from-yellow-200/70 hover:to-amber-200/70 dark:border-yellow-700 dark:bg-gradient-to-r dark:from-yellow-900/40 dark:to-amber-900/40 dark:hover:from-yellow-800/40 dark:hover:to-amber-800/40"
 				>
-					<Sparkles class="mr-1 h-8 w-8 text-yellow-500" />
+					<Sparkles class="mr-1 h-8 w-8 text-yellow-500 dark:text-yellow-400" />
 					<span class="flex-grow font-medium"
 						>Configura tus medios de pago para ver descuentos personalizados</span
 					>
-					<span class="text-amber-600">→</span>
+					<span class="text-amber-600 dark:text-amber-400">→</span>
 				</a>
 			{/if}
 		</div>

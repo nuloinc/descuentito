@@ -42,7 +42,7 @@
 {@render children()}
 
 <footer
-	class="mt-8 flex flex-col items-center justify-center gap-3 px-2 py-4 text-center text-gray-500"
+	class="mb-24 mt-8 flex flex-col items-center justify-center gap-3 px-2 py-4 text-center text-gray-500"
 >
 	<p>
 		Los resultados mostrados son generados automaticamente. Siempre verifica la información en la

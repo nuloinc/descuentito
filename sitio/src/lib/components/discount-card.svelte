@@ -350,10 +350,12 @@
 					{#if discount.excludesProducts}
 						<h4 class="font-medium">No aplica para:</h4>
 						{#await getRestrictionSummary(`Se excluyen: ${discount.excludesProducts}`, true)}
-							<p class="text-sm text-gray-500">Cargando...</p>
+							<p class="text-sm text-gray-500 dark:text-gray-400">Cargando...</p>
 						{:then summary}
-							<div class="mt-1 rounded-md border border-red-200 bg-red-50 p-2">
-								<p class="text-sm text-red-600">
+							<div
+								class="mt-1 rounded-md border border-red-200 bg-red-50 p-2 dark:border-red-900 dark:bg-red-950"
+							>
+								<p class="text-sm text-red-600 dark:text-red-400">
 									<span class="font-medium">Resumen:</span>
 									{summary}
 								</p>
@@ -363,14 +365,16 @@
 						<Accordion.Root type="single">
 							<Accordion.Item
 								value="original-text"
-								class="rounded-md border border-red-200 bg-red-50"
+								class="rounded-md border border-red-200 bg-red-50 dark:border-red-900 dark:bg-red-950"
 							>
 								<Accordion.Trigger
-									class="flex w-full items-center justify-between rounded-md p-2 text-left text-sm font-medium text-red-600"
+									class="flex w-full items-center justify-between rounded-md p-2 text-left text-sm font-medium text-red-600 dark:text-red-400"
 								>
 									Ver texto completo
 								</Accordion.Trigger>
-								<Accordion.Content class="rounded-b-md border-x border-b  p-2 text-sm text-red-600">
+								<Accordion.Content
+									class="rounded-b-md border-x border-b p-2 text-sm text-red-600 dark:border-red-900 dark:text-red-400"
+								>
 									{discount.excludesProducts}
 								</Accordion.Content>
 							</Accordion.Item>
