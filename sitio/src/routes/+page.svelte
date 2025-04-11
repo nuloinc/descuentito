@@ -238,39 +238,59 @@
 		...data.promotions.jumbo,
 		...data.promotions.makro,
 		...(SHOW_CHANGOMAS ? data.promotions.changomas : [])
-	].filter((promotion) => {
-		if (selectedType === 'Online') {
-			if (!(promotion.where as string[]).includes('Online')) return false;
-		} else {
-			if (promotion.where.length === 1 && promotion.where[0] === 'Online') return false;
-		}
+	]
+		.filter((promotion) => {
+			if (selectedType === 'Online') {
+				if (!(promotion.where as string[]).includes('Online')) return false;
+			} else {
+				if (promotion.where.length === 1 && promotion.where[0] === 'Online') return false;
+			}
 
-		if (selectedSupermarket && selectedSupermarket !== promotion.source) return false;
+			if (selectedSupermarket && selectedSupermarket !== promotion.source) return false;
 
-		if (selectedPromotionType === 'Descuentos' && promotion.discount.type !== 'porcentaje')
-			return false;
-		if (selectedPromotionType === 'Cuotas' && promotion.discount.type !== 'cuotas sin intereses')
-			return false;
-
-		if (promotion.paymentMethods && $filteringByPaymentMethods) {
-			if (
-				!Array.from(promotion.paymentMethods).some((pm) => {
-					const pms = Array.isArray(pm) ? pm : [pm];
-					if (pms.every((pm2) => PAYMENT_RAILS.includes(pm2 as any))) return true;
-					return pms.some(
-						(pm2) => !PAYMENT_RAILS.includes(pm2 as any) && $savedPaymentMethods.has(pm2 as any)
-					);
-				})
-			)
+			if (selectedPromotionType === 'Descuentos' && promotion.discount.type !== 'porcentaje')
 				return false;
-		}
-		// es muy específico
-		if (promotion.appliesOnlyTo?.programaCiudadaniaPorteña) return false;
-		if (promotion.appliesOnlyTo?.anses && !$savedConditions.anses) return false;
-		if (promotion.appliesOnlyTo?.jubilados && !$savedConditions.jubilados) return false;
+			if (selectedPromotionType === 'Cuotas' && promotion.discount.type !== 'cuotas sin intereses')
+				return false;
 
-		return true;
-	});
+			if (promotion.paymentMethods && $filteringByPaymentMethods) {
+				if (
+					!Array.from(promotion.paymentMethods).some((pm) => {
+						const pms = Array.isArray(pm) ? pm : [pm];
+						if (pms.every((pm2) => PAYMENT_RAILS.includes(pm2 as any))) return true;
+						return pms.some(
+							(pm2) => !PAYMENT_RAILS.includes(pm2 as any) && $savedPaymentMethods.has(pm2 as any)
+						);
+					})
+				)
+					return false;
+			}
+			// es muy específico
+			if (promotion.appliesOnlyTo?.programaCiudadaniaPorteña) return false;
+			if (promotion.appliesOnlyTo?.anses && !$savedConditions.anses) return false;
+			if (promotion.appliesOnlyTo?.jubilados && !$savedConditions.jubilados) return false;
+
+			return true;
+		})
+		.sort((a, b) => {
+			// Prioritize better discount percentage, then more cuotas sin interés
+			if (a.discount.type === 'porcentaje' && b.discount.type === 'porcentaje') {
+				// Higher percentage first
+				return b.discount.value - a.discount.value;
+			} else if (
+				a.discount.type === 'cuotas sin intereses' &&
+				b.discount.type === 'cuotas sin intereses'
+			) {
+				// More installments first
+				return b.discount.value - a.discount.value;
+			} else if (a.discount.type === 'porcentaje') {
+				// Prioritize percentage discounts over installments
+				return -1;
+			} else {
+				// Installments come after percentage discounts
+				return 1;
+			}
+		});
 
 	// Pre-filter promotions for each weekday
 	$: promotionsByWeekday = formattedWeekDates.map((weekDateInfo) => {

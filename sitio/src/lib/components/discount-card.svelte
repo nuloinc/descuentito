@@ -1,7 +1,7 @@
 <script module lang="ts">
 	import pMemoize from 'p-memoize';
 	const getRestrictionSummary = pMemoize(
-		async (text: string) => {
+		async (text: string, long = false) => {
 			if (
 				['N/A', 'TODO EL SURTIDO', 'TODOS LOS PRODUCTOS', 'ELECTRODOMESTICOS', 'LIBRERIA'].includes(
 					text.replaceAll(/ó/gu, 'o').replaceAll(/í/giu, 'i').replaceAll(/é/giu, 'e').toUpperCase()
@@ -12,7 +12,7 @@
 
 			const res = await fetch('https://nulo-productsummaryapi.web.val.run', {
 				method: 'POST',
-				body: JSON.stringify({ description: text })
+				body: JSON.stringify({ description: text, long })
 			});
 			if (!res.ok) {
 				return text;
@@ -20,7 +20,7 @@
 			const data: { summary: string } = await res.json();
 			return data.summary;
 		},
-		{ cacheKey: ([t]) => t.toLowerCase() }
+		{ cacheKey: ([t, l]) => `${t.toLowerCase()}-${l}` }
 	);
 	const CURRENCY_FORMATTER = new Intl.NumberFormat('es-AR', {
 		style: 'currency',
@@ -44,6 +44,7 @@
 	import BrandLogo from './brand-logos.svelte';
 	import { ScrollArea } from './ui/scroll-area';
 	import { filteringByPaymentMethods, savedPaymentMethods } from '..';
+	import * as Accordion from '$lib/components/ui/accordion';
 
 	export let discount: schema.Discount;
 	export let selectedType: 'Presencial' | 'Online';
@@ -347,10 +348,33 @@
 						</div>
 					{/if}
 					{#if discount.excludesProducts}
-						<div>
-							<h4 class="font-medium">No aplica para:</h4>
-							<p class="text-sm text-red-600">{discount.excludesProducts}</p>
-						</div>
+						<h4 class="font-medium">No aplica para:</h4>
+						{#await getRestrictionSummary(discount.excludesProducts, true)}
+							<p class="text-sm text-gray-500">Cargando...</p>
+						{:then summary}
+							<div class="mt-1 rounded-md border border-red-200 bg-red-50 p-2">
+								<p class="text-sm text-red-600">
+									<span class="font-medium">Resumen:</span>
+									{summary}
+								</p>
+							</div>
+						{/await}
+
+						<Accordion.Root type="single">
+							<Accordion.Item
+								value="original-text"
+								class="rounded-md border border-red-200 bg-red-50"
+							>
+								<Accordion.Trigger
+									class="flex w-full items-center justify-between rounded-md p-2 text-left text-sm font-medium text-red-600"
+								>
+									Ver texto completo
+								</Accordion.Trigger>
+								<Accordion.Content class="rounded-b-md border-x border-b  p-2 text-sm text-red-600">
+									{discount.excludesProducts}
+								</Accordion.Content>
+							</Accordion.Item>
+						</Accordion.Root>
 					{/if}
 					<Alert.Root variant="warning">
 						<Alert.Title>Verifica los detalles</Alert.Title>
