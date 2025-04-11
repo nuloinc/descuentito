@@ -1,6 +1,6 @@
 // place files you want to import through the `$lib` alias in this folder.
 
-import { persistentAtom } from '@nanostores/persistent';
+import { persistentAtom, persistentMap } from '@nanostores/persistent';
 import type { PAYMENT_METHODS } from 'promos-db/schema';
 
 export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
@@ -28,5 +28,14 @@ export const savedPaymentMethods = persistentAtom<Set<PaymentMethod>>(
 export const filteringByPaymentMethods = persistentAtom<boolean>(
 	'filteringByPaymentMethods',
 	true,
+	{ encode: JSON.stringify, decode: JSON.parse }
+);
+
+export const savedConditions = persistentMap<{
+	jubilados: boolean;
+	anses: boolean;
+}>(
+	'savedConditions:',
+	{ jubilados: false, anses: false },
 	{ encode: JSON.stringify, decode: JSON.parse }
 );

@@ -2,7 +2,7 @@
 	import { Checkbox } from '$lib/components/ui/checkbox/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
 	import { ArrowLeft } from 'lucide-svelte';
-	import { savedPaymentMethods } from '$lib/index';
+	import { savedPaymentMethods, savedConditions } from '$lib/index';
 	import { PAYMENT_METHODS, JOIN_GROUPS } from 'promos-db/schema';
 	import type { PaymentMethod } from 'promos-db/schema';
 	import { WALLET_ICONS } from '@/logos';
@@ -132,6 +132,27 @@
 	<FilterByPaymentMethodsButton
 		class="mb-6 {$savedPaymentMethods.size == 0 ? 'pointer-events-none opacity-0' : ''}"
 	/>
+
+	<div class="mb-6 space-y-4">
+		<div class="space-y-3">
+			<div class="flex items-center space-x-3">
+				<Checkbox
+					id="jubilados"
+					checked={$savedConditions.jubilados}
+					onCheckedChange={(e) => savedConditions.setKey('jubilados', e)}
+				/>
+				<Label for="jubilados" class="font-medium">Soy jubilado/a</Label>
+			</div>
+			<div class="flex items-center space-x-3">
+				<Checkbox
+					id="anses"
+					checked={$savedConditions.anses}
+					onCheckedChange={(e) => savedConditions.setKey('anses', e)}
+				/>
+				<Label for="anses" class="font-medium">Recibo beneficios de ANSES</Label>
+			</div>
+		</div>
+	</div>
 
 	<div class="space-y-6">
 		{#each displayOptions as bank (bank.id)}

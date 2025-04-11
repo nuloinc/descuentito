@@ -4,14 +4,6 @@
 	import { Tabs, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import * as Drawer from '$lib/components/ui/drawer';
 	import { buttonVariants } from '$lib/components/ui/button';
-	import {
-		BANKS_OR_WALLETS,
-		JOIN_GROUPS,
-		PAYMENT_METHODS,
-		type Discount,
-		type PaymentMethodGroup
-	} from 'promos-db/schema';
-	import { dev } from '$app/environment';
 	import { page } from '$app/stores';
 	import DiscountCard from '@/components/discount-card.svelte';
 	import SupermarketFilter from '$lib/components/supermarket-filter.svelte';
@@ -24,7 +16,7 @@
 	import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 	import { onMount } from 'svelte';
 	import FilterByPaymentMethodsButton from '@/components/filter-by-payment-methods-button.svelte';
-	import { filteringByPaymentMethods, savedPaymentMethods } from '@/index';
+	import { filteringByPaymentMethods, savedPaymentMethods, savedConditions } from '@/index';
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 	dayjs.extend(weekday);
@@ -269,6 +261,10 @@
 			)
 				return false;
 		}
+		// es muy específico
+		if (promotion.appliesOnlyTo?.programaCiudadaniaPorteña) return false;
+		if (promotion.appliesOnlyTo?.anses && !$savedConditions.anses) return false;
+		if (promotion.appliesOnlyTo?.jubilados && !$savedConditions.jubilados) return false;
 
 		return true;
 	});
@@ -402,7 +398,7 @@
 
 	<Drawer.Root bind:open={isOpen}>
 		<Drawer.Trigger
-			class={`bg-sidebar text-primary sticky bottom-0 z-50 flex w-full flex-col items-center justify-center gap-2 rounded-t-[10px] px-4 pb-2 text-lg font-medium shadow-xl`}
+			class={`bg-sidebar text-primary fixed bottom-0 z-50 flex w-full flex-col items-center justify-center gap-2 rounded-t-[10px] px-4 pb-2 text-lg font-medium shadow-xl`}
 			onmousedown={(e) => {
 				e.preventDefault();
 				isOpen = true;
