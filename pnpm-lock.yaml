@@ -148,6 +148,9 @@ importers:
       drizzle-orm:
         specifier: ^0.39.3
         version: 0.39.3(@cloudflare/workers-types@4.20250303.0)(@libsql/client@0.14.0)(@opentelemetry/api@1.9.0)(@types/pg@8.6.1)
+      p-memoize:
+        specifier: ^7.1.1
+        version: 7.1.1
       posthog-js:
         specifier: ^1.229.5
         version: 1.229.5
@@ -4095,6 +4098,10 @@ packages:
     resolution: {integrity: sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==}
     engines: {node: '>=10'}
 
+  p-memoize@7.1.1:
+    resolution: {integrity: sha512-DZ/bONJILHkQ721hSr/E9wMz5Am/OTJ9P6LhLFo2Tu+jL8044tgc9LwHO8g4PiaYePnlVVRAJcKmgy8J9MVFrA==}
+    engines: {node: '>=14.16'}
+
   p-queue@8.1.0:
     resolution: {integrity: sha512-mxLDbbGIBEXTJL0zEx8JIylaj3xQ7Z/7eEVjcF9fJX4DBiH9oqe+oahYnlKKxm0Ci9TlWTyhSHgygxMxjIB2jw==}
     engines: {node: '>=18'}
@@ -4785,6 +4792,10 @@ packages:
   type-fest@1.4.0:
     resolution: {integrity: sha512-yGSza74xk0UG8k+pLh5oeoYirvIiWo5t0/o3zHHAO2tRDiZcxWP7fywNlXhqb6/r6sWvwi+RsyQMWhVLe4BVuA==}
     engines: {node: '>=10'}
+
+  type-fest@3.13.1:
+    resolution: {integrity: sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==}
+    engines: {node: '>=14.16'}
 
   typed-query-selector@2.12.0:
     resolution: {integrity: sha512-SbklCd1F0EiZOyPiW192rrHZzZ5sBijB6xM+cpmrwDqObvdtunOHHIk9fCGsoK5JVIYXoyEp4iEdE3upFH3PAg==}
@@ -9113,6 +9124,11 @@ snapshots:
     dependencies:
       p-limit: 3.1.0
 
+  p-memoize@7.1.1:
+    dependencies:
+      mimic-fn: 4.0.0
+      type-fest: 3.13.1
+
   p-queue@8.1.0:
     dependencies:
       eventemitter3: 5.0.1
@@ -9857,6 +9873,8 @@ snapshots:
       fsevents: 2.3.3
 
   type-fest@1.4.0: {}
+
+  type-fest@3.13.1: {}
 
   typed-query-selector@2.12.0: {}
 

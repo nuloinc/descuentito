@@ -1,3 +1,18 @@
+<script module lang="ts">
+	import pMemoize from 'p-memoize';
+	const getRestrictionSummary = pMemoize(async (text: string) => {
+		const res = await fetch('https://nulo-productsummaryapi.web.val.run', {
+			method: 'POST',
+			body: JSON.stringify({ description: text })
+		});
+		if (!res.ok) {
+			return text;
+		}
+		const data: { summary: string } = await res.json();
+		return data.summary;
+	});
+</script>
+
 <script lang="ts">
 	import type * as schema from 'promos-db/schema';
 	import * as Card from '$lib/components/ui/card';
@@ -185,7 +200,12 @@
 
 					{#if discount.onlyForProducts}
 						<p class=" text-sm">
-							⚠️ Solo para productos: {discount.onlyForProducts}
+							⚠️ Solo
+							{#await getRestrictionSummary(discount.onlyForProducts)}
+								<span class="animate-pulse">...</span>
+							{:then data}
+								{data}
+							{/await}
 						</p>
 					{/if}
 					{#if discount.excludesProducts}
