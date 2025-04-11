@@ -47,6 +47,7 @@ import { default as CotoStacked } from './logos/supermercados/coto_stacked.svg';
 import { default as ChangoMas } from './logos/supermercados/changomas.png?enhanced';
 import { default as ChangoMasOnline } from './logos/supermercados/changomas_online.png?enhanced';
 import { default as Makro } from './logos/supermercados/makro.svg';
+import { default as MakroSmall } from './logos/supermercados/makro_small.svg';
 
 import { default as IconAstroPay } from './logos/wallet-icons/AstroPay.svg';
 import { default as IconBancoDelSol } from './logos/wallet-icons/Banco Del Sol.svg';
@@ -81,6 +82,7 @@ import { default as IconCencopay } from './logos/wallet-icons/Cencopay.svg';
 import { default as IconBancoDeCorrientes } from './logos/wallet-icons/Banco de Corrientes.svg';
 import { default as IconBancoSantaCruz } from './logos/wallet-icons/Banco Santa Cruz.svg';
 import { default as IconAmericanExpress } from './logos/wallet-icons/American Express.svg';
+import { default as IconCabal } from './logos/wallet-icons/Cabal.svg';
 export const LOGOS: {
 	[key in PaymentMethod]?:
 		| {
@@ -159,7 +161,14 @@ export const WALLET_ICONS: { [key in PaymentMethod]?: string } = {
 	'Banco Supervielle': IconBancoSupervielle,
 	'Banco San Juan': IconBancoSanJuan,
 	'Banco Santa Cruz': IconBancoSantaCruz,
-	'Tarjeta American Express': IconAmericanExpress
+	'Tarjeta American Express': IconAmericanExpress,
+	'Tarjeta de débito VISA': IconVISA,
+	'Tarjeta de crédito VISA': IconVISA,
+	'Tarjeta de débito Mastercard': IconMastercard,
+	'Tarjeta de crédito Mastercard': IconMastercard,
+	'Tarjeta Prepaga Mastercard': IconMastercard,
+	'Tarjeta de débito Cabal': IconCabal,
+	'Tarjeta de crédito Cabal': IconCabal
 };
 
 export const LOGOS_NEED_LIGHT_BACKGROUND: readonly PaymentMethod[] = [
@@ -208,7 +217,11 @@ export const BRAND_LOGOS = {
 	}
 };
 
-export const BRAND_LOGOS_SMALL = {
+export const BRAND_LOGOS_SMALL: {
+	[key in keyof typeof BRAND_LOGOS]?: {
+		[key in keyof (typeof BRAND_LOGOS)[keyof typeof BRAND_LOGOS]]: string;
+	};
+} = {
 	coto: {
 		Coto: CotoStacked
 	},
@@ -217,6 +230,9 @@ export const BRAND_LOGOS_SMALL = {
 	},
 	jumbo: {
 		Jumbo: JumboSmall
+	},
+	makro: {
+		Makro: MakroSmall
 	}
 };
 
