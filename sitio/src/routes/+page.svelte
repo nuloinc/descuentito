@@ -257,7 +257,12 @@
 				if (
 					!Array.from(promotion.paymentMethods).some((pm) => {
 						const pms = Array.isArray(pm) ? pm : [pm];
-						if (pms.every((pm2) => PAYMENT_RAILS.includes(pm2 as any))) return true;
+						if (
+							pms.every((pm2) => PAYMENT_RAILS.includes(pm2 as any)) &&
+							// para casos como "MODO+Cabal" pero el usuario tiene MODO pero no Cabal
+							(pm.length > 1 ? !pm.includes('MODO') : true)
+						)
+							return true;
 						return pms.some(
 							(pm2) => !PAYMENT_RAILS.includes(pm2 as any) && $savedPaymentMethods.has(pm2 as any)
 						);
