@@ -152,7 +152,7 @@ ${LIMITS_PROMPT}
       }
     }
 
-    await savePromotions("jumbo", cleanDiscounts(discounts));
+    await savePromotions(ctx, "jumbo", cleanDiscounts(discounts));
   },
 });
 
