@@ -343,9 +343,11 @@
 			console.log('Promotions by weekday:', promotionsByWeekday);
 		}
 	}
+
+	let isOpen = false;
 </script>
 
-<div class="site-container relative">
+<div class="site-container bg-background relative" data-vaul-drawer-wrapper>
 	<div class="title-container bg-sidebar pb-2 pt-4">
 		<div class="container mx-auto px-4">
 			<h1 class="flex items-center gap-2 text-3xl font-bold">
@@ -361,76 +363,6 @@
 	>
 		<div class="mx-auto w-full">
 			<div class="flex items-center justify-between gap-2 px-2">
-				<div class="none">
-					<Drawer.Root>
-						<Drawer.Trigger
-							class={`${buttonVariants({ variant: 'outline', size: 'icon' })} md:hidden`}
-						>
-							<Filter class="h-4 w-4" />
-						</Drawer.Trigger>
-						<Drawer.Trigger class={`${buttonVariants({ variant: 'outline' })} hidden md:flex`}>
-							<Filter class="h-4 w-4" />
-							<span class="">Filtros</span>
-						</Drawer.Trigger>
-						<Drawer.Content>
-							<div class="mx-auto w-full max-w-sm">
-								<Drawer.Header>
-									<Drawer.Title>Filtros</Drawer.Title>
-									<Drawer.Description>Personaliza tu búsqueda de promociones</Drawer.Description>
-								</Drawer.Header>
-								<div class="p-4">
-									<div class="mb-4">
-										<h3 class="mb-2 font-medium">Tipo de compra</h3>
-										<Tabs
-											value={selectedType}
-											onValueChange={(value) => (selectedType = value as 'Presencial' | 'Online')}
-											class="mb-4"
-										>
-											<TabsList class="w-full gap-2 rounded-full py-6">
-												{#each ['Presencial', 'Online'] as type}
-													<TabsTrigger value={type} class="w-1/2 rounded-full px-4 text-lg">
-														<span class="">{type}</span>
-													</TabsTrigger>
-												{/each}
-											</TabsList>
-										</Tabs>
-									</div>
-
-									<div class="mb-4">
-										<h3 class="mb-2 font-medium">Supermercado</h3>
-										<SupermarketFilter
-											{selectedSupermarket}
-											on:select={(e) => updateSupermarketFilter(e.detail)}
-										/>
-									</div>
-
-									<div class="mb-4">
-										<h3 class="mb-2 font-medium">Tipo de promoción</h3>
-										<Tabs
-											value={selectedPromotionType}
-											onValueChange={(value) => (selectedPromotionType = value as PromotionType)}
-											class="mb-4"
-										>
-											<TabsList class="w-full gap-2 rounded-full py-6">
-												{#each ['Todos', 'Descuentos', 'Cuotas'] as type}
-													<TabsTrigger value={type} class="flex-1 rounded-full px-4 text-lg">
-														<span class="">{type}</span>
-													</TabsTrigger>
-												{/each}
-											</TabsList>
-										</Tabs>
-									</div>
-								</div>
-								<Drawer.Footer>
-									<Drawer.Close class={buttonVariants({ variant: 'default' })}>
-										Aplicar filtros
-									</Drawer.Close>
-								</Drawer.Footer>
-							</div>
-						</Drawer.Content>
-					</Drawer.Root>
-				</div>
-
 				<Tabs
 					value={selectedTabId}
 					onValueChange={(value) => {
@@ -493,6 +425,79 @@
 			</div>
 		{/each}
 	</div>
+
+	<Drawer.Root shouldScaleBackground bind:open={isOpen}>
+		<Drawer.Trigger
+			class={`bg-sidebar text-primary sticky bottom-0 z-50 flex w-full flex-col items-center justify-center gap-2 rounded-t-[10px] px-4 pb-2 text-lg font-medium shadow-xl`}
+			onmousedown={(e) => {
+				e.preventDefault();
+				isOpen = true;
+				return false;
+			}}
+		>
+			<div class="bg-muted mx-auto mt-4 h-2 w-[100px] rounded-full"></div>
+			<div class="flex items-center gap-2">
+				<Filter class="h-4 w-4" />
+				<span class="">Filtros</span>
+			</div>
+		</Drawer.Trigger>
+		<Drawer.Content>
+			<div class="mx-auto w-full max-w-sm">
+				<Drawer.Header>
+					<Drawer.Title>Filtros</Drawer.Title>
+					<Drawer.Description>Personaliza tu búsqueda de promociones</Drawer.Description>
+				</Drawer.Header>
+				<div class="p-4">
+					<div class="mb-4">
+						<h3 class="mb-2 font-medium">Tipo de compra</h3>
+						<Tabs
+							value={selectedType}
+							onValueChange={(value) => (selectedType = value as 'Presencial' | 'Online')}
+							class="mb-4"
+						>
+							<TabsList class="w-full gap-2 rounded-full py-6">
+								{#each ['Presencial', 'Online'] as type}
+									<TabsTrigger value={type} class="w-1/2 rounded-full px-4 text-lg">
+										<span class="">{type}</span>
+									</TabsTrigger>
+								{/each}
+							</TabsList>
+						</Tabs>
+					</div>
+
+					<div class="mb-4">
+						<h3 class="mb-2 font-medium">Supermercado</h3>
+						<SupermarketFilter
+							{selectedSupermarket}
+							on:select={(e) => updateSupermarketFilter(e.detail)}
+						/>
+					</div>
+
+					<div class="mb-4">
+						<h3 class="mb-2 font-medium">Tipo de promoción</h3>
+						<Tabs
+							value={selectedPromotionType}
+							onValueChange={(value) => (selectedPromotionType = value as PromotionType)}
+							class="mb-4"
+						>
+							<TabsList class="w-full gap-2 rounded-full py-6">
+								{#each ['Todos', 'Descuentos', 'Cuotas'] as type}
+									<TabsTrigger value={type} class="flex-1 rounded-full px-4 text-lg">
+										<span class="">{type}</span>
+									</TabsTrigger>
+								{/each}
+							</TabsList>
+						</Tabs>
+					</div>
+				</div>
+				<Drawer.Footer>
+					<Drawer.Close class={buttonVariants({ variant: 'default' })}>
+						Aplicar filtros
+					</Drawer.Close>
+				</Drawer.Footer>
+			</div>
+		</Drawer.Content>
+	</Drawer.Root>
 </div>
 
 <style>
