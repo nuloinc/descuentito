@@ -156,7 +156,15 @@
 						a.findIndex(
 							(v2) => WALLET_ICONS[v2 as PaymentMethod] === WALLET_ICONS[v as PaymentMethod]
 						) === i
-				) || []
+				)
+
+				.sort((a, b) => {
+					const aIsRail = PAYMENT_RAILS.includes(a as any);
+					const bIsRail = PAYMENT_RAILS.includes(b as any);
+					if (aIsRail && !bIsRail) return 1;
+					if (!aIsRail && bIsRail) return -1;
+					return 0;
+				}) || []
 		);
 	}
 </script>

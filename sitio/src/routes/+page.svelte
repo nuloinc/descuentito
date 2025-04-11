@@ -17,6 +17,7 @@
 	import { onMount } from 'svelte';
 	import FilterByPaymentMethodsButton from '@/components/filter-by-payment-methods-button.svelte';
 	import { filteringByPaymentMethods, savedPaymentMethods, savedConditions } from '@/index';
+	import { PAYMENT_RAILS } from 'promos-db/schema';
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 	dayjs.extend(weekday);
@@ -253,11 +254,13 @@
 
 		if (promotion.paymentMethods && $filteringByPaymentMethods) {
 			if (
-				!Array.from(promotion.paymentMethods).some((pm) =>
-					Array.isArray(pm)
-						? pm.some((pm2) => $savedPaymentMethods.has(pm2 as any))
-						: $savedPaymentMethods.has(pm as any)
-				)
+				!Array.from(promotion.paymentMethods).some((pm) => {
+					const pms = Array.isArray(pm) ? pm : [pm];
+					if (pms.every((pm2) => PAYMENT_RAILS.includes(pm2 as any))) return true;
+					return pms.some(
+						(pm2) => !PAYMENT_RAILS.includes(pm2 as any) && $savedPaymentMethods.has(pm2 as any)
+					);
+				})
 			)
 				return false;
 		}
