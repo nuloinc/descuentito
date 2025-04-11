@@ -1,6 +1,5 @@
 <script lang="ts">
 	import '../app.css';
-	import NuloInc from '$lib/Nulo_Science_Inc.svg';
 	import { onMount } from 'svelte';
 	import posthog from 'posthog-js';
 	import { MediaQuery } from 'svelte/reactivity';
@@ -30,7 +29,6 @@
 		name="description"
 		content="Encuentra y compara descuentos en supermercados de Argentina. Carrefour, Coto, Día y Jumbo."
 	/>
-	<meta name="author" content="Nulo Science Inc." />
 	<meta property="og:title" content="descuentito.ar - Descuentos en supermercados" />
 	<meta
 		property="og:description"
@@ -51,16 +49,4 @@
 		fuente original.
 	</p>
 	<p>Marcas registradas pertenecen a sus respectivos dueños.</p>
-	<div>
-		Un experimento de
-		<a href="https://nulo.lol" target="_blank">
-			<img
-				src={NuloInc}
-				alt="Nulo Science Inc."
-				class="h-12 dark:invert"
-				loading="lazy"
-				decoding="async"
-			/>
-		</a>
-	</div>
 </footer>
