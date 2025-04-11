@@ -38,12 +38,12 @@
 	import * as Dialog from '$lib/components/ui/dialog';
 	import * as Alert from '$lib/components/ui/alert';
 	import PaymentMethodLogo from '@/components/payment-method-logo.svelte';
-	import type { BANKS_OR_WALLETS } from 'promos-db/schema';
-	import { PAYMENT_METHODS } from 'promos-db/schema';
+	import { PAYMENT_METHODS, PAYMENT_RAILS } from 'promos-db/schema';
 	import type { PaymentMethod } from 'promos-db/schema';
 	import { LOGOS, WALLET_ICONS } from '@/logos';
 	import BrandLogo from './brand-logos.svelte';
 	import { ScrollArea } from './ui/scroll-area';
+	import { filteringByPaymentMethods, savedPaymentMethods } from '..';
 
 	export let discount: schema.Discount;
 	export let selectedType: 'Presencial' | 'Online';
@@ -139,6 +139,12 @@
 				.map((method: string) => {
 					return method.split(' - ')[0] as string;
 				})
+				.filter(
+					(method) =>
+						!$filteringByPaymentMethods ||
+						PAYMENT_RAILS.includes(method as any) ||
+						$savedPaymentMethods.has(method as PaymentMethod)
+				)
 				.filter((method: string) => {
 					if (!(method in WALLET_ICONS)) {
 						console.log(method, method in WALLET_ICONS);
@@ -178,15 +184,20 @@
 					{/if}
 				</div>
 
-				<div class="flex flex-col items-start gap-1">
+				<div class="flex flex-shrink flex-col items-start gap-1 pr-1">
 					{#if discount.onlyForProducts}
-						<Badge variant="yellow" class="overflow-hidden text-ellipsis whitespace-nowrap text-xs">
-							Solo
-							{#await getRestrictionSummary(discount.onlyForProducts)}
-								<span class="animate-pulse">...</span>
-							{:then data}
-								{data}
-							{/await}
+						<Badge
+							variant="yellow"
+							class="w-36 max-w-full overflow-hidden text-ellipsis whitespace-nowrap text-xs min-[400px]:w-44"
+						>
+							<span class="overflow-hidden text-ellipsis whitespace-nowrap">
+								Solo{' '}
+								{#await getRestrictionSummary(discount.onlyForProducts)}
+									...
+								{:then data}
+									{data}
+								{/await}
+							</span>
 						</Badge>
 					{/if}
 					{#if discount.excludesProducts}
@@ -225,7 +236,7 @@
 			{#if discount.paymentMethods && discount.paymentMethods.length > 0}
 				{@const methodIcons = paymentMethodsToIcons(discount.paymentMethods)}
 				<div
-					class="grid gap-1 {methodIcons.length > 9
+					class="grid flex-shrink-0 gap-1 {methodIcons.length > 9
 						? 'grid-cols-4'
 						: methodIcons.length > 4
 							? 'grid-cols-3'
@@ -238,7 +249,7 @@
 						<img
 							src={WALLET_ICONS[method as PaymentMethod]}
 							alt={`${String(discount.source)} ${method}`}
-							class="h-6 w-auto rounded-sm"
+							class="h-6 w-6 rounded-sm"
 							loading="lazy"
 							decoding="async"
 						/>

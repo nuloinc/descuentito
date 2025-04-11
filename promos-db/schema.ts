@@ -144,10 +144,10 @@ export const BANKS_OR_WALLETS = [
   "Tarjeta de Crédito Patagonia 365",
   "Tarjeta de Crédito Sol",
   "BanCo (Banco de Corrientes)",
+  "Tarjeta American Express - The Platinum Card ® y Centurion ®",
 ] as const;
 
-export const PAYMENT_METHODS = [
-  ...BANKS_OR_WALLETS,
+export const PAYMENT_RAILS = [
   "MODO",
   "Tarjeta de crédito VISA",
   "Tarjeta de débito VISA",
@@ -157,8 +157,9 @@ export const PAYMENT_METHODS = [
   "Tarjeta de crédito Cabal",
   "Tarjeta de débito Cabal",
   "Tarjeta American Express",
-  "Tarjeta American Express - The Platinum Card ® y Centurion ®",
 ] as const;
+
+export const PAYMENT_METHODS = [...BANKS_OR_WALLETS, ...PAYMENT_RAILS] as const;
 
 export type PaymentMethodGroup = (typeof PAYMENT_METHODS)[number] | "other";
 export const JOIN_GROUPS: (typeof PAYMENT_METHODS)[number][][] = [

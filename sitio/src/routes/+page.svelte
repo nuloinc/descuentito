@@ -24,7 +24,7 @@
 	import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 	import { onMount } from 'svelte';
 	import FilterByPaymentMethodsButton from '@/components/filter-by-payment-methods-button.svelte';
-	import { savedPaymentMethods } from '@/index';
+	import { filteringByPaymentMethods, savedPaymentMethods } from '@/index';
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 	dayjs.extend(weekday);
@@ -258,6 +258,17 @@
 			return false;
 		if (selectedPromotionType === 'Cuotas' && promotion.discount.type !== 'cuotas sin intereses')
 			return false;
+
+		if (promotion.paymentMethods && $filteringByPaymentMethods) {
+			if (
+				!Array.from(promotion.paymentMethods).some((pm) =>
+					Array.isArray(pm)
+						? pm.some((pm2) => $savedPaymentMethods.has(pm2 as any))
+						: $savedPaymentMethods.has(pm as any)
+				)
+			)
+				return false;
+		}
 
 		return true;
 	});
