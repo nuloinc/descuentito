@@ -31,11 +31,7 @@ import {
   SOURCES,
   SUPERMARKET_NAMES,
 } from "app/lib/state";
-import { PAYMENT_RAILS } from "promos-db/schema";
-
-// import type { Discount } from "promos-db"; // Assuming Discount type is exported
-// Use any for now to unblock UI porting
-type Discount = any;
+import { Discount, PAYMENT_RAILS } from "promos-db/schema";
 
 // Define the data structure we expect
 export type PromotionData = {
@@ -301,7 +297,7 @@ function Home() {
       // Filter by payment methods if enabled
       if (promotion.paymentMethods && shouldFilterByPaymentMethods) {
         if (
-          !Array.from(promotion.paymentMethods as any[]).some((pm: any) => {
+          !Array.from(promotion.paymentMethods as string[]).some((pm) => {
             const pms = Array.isArray(pm) ? pm : [pm];
             if (
               pms.every((pm2: string) => PAYMENT_RAILS.includes(pm2 as any)) &&
