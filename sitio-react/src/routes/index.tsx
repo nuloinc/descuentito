@@ -108,7 +108,6 @@ function Home() {
   const [selectedTabId, setSelectedTabId] = useState<string | undefined>(
     undefined
   );
-  const [currentContentIndex, setCurrentContentIndex] = useState<number>(0);
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
   const [selectedType, setSelectedType] = useState<"Presencial" | "Online">(
     "Presencial"
@@ -124,80 +123,17 @@ function Home() {
   const { savedPaymentMethods, savedConditions } = usePaymentMethodsStore();
   const shouldFilterByPaymentMethods = useShouldFilterByPaymentMethods();
 
-  // Refs for scrolling
-  const contentContainerRef = useRef<HTMLDivElement>(null);
-  const contentElementsRef = useRef<HTMLDivElement[]>([]);
-
-  // Effect to set initial tab/index after mount
+  // Effect to set initial tab after mount
   useEffect(() => {
     if (formattedWeekDates.length > 0) {
       const initialIndex = todayIndex >= 0 ? todayIndex : 0;
-      setCurrentContentIndex(initialIndex);
       setSelectedTabId(formattedWeekDates[initialIndex]?.id ?? undefined);
     }
   }, [formattedWeekDates, todayIndex]); // Run when dates/index are ready
 
-  // Implement scrolling logic using IntersectionObserver
-  useEffect(() => {
-    if (!contentContainerRef.current) return;
-
-    const contentContainer = contentContainerRef.current;
-    const contentElements = contentElementsRef.current.filter(Boolean);
-
-    if (contentElements.length === 0) return;
-
-    // Set up IntersectionObserver to track which day is most visible
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            const index = contentElements.findIndex(
-              (el) => el === entry.target
-            );
-            if (index !== -1 && index !== currentContentIndex) {
-              setCurrentContentIndex(index);
-              setSelectedTabId(formattedWeekDates[index]?.id);
-            }
-            break;
-          }
-        }
-      },
-      {
-        root: contentContainer,
-        threshold: 0.7,
-        rootMargin: "0px",
-      }
-    );
-
-    // Observe all content sections
-    contentElements.forEach((el) => {
-      if (el) observer.observe(el);
-    });
-
-    return () => {
-      contentElements.forEach((el) => {
-        if (el) observer.unobserve(el);
-      });
-    };
-  }, [formattedWeekDates, currentContentIndex]);
-
-  // Function to scroll to a specific day
-  const scrollToDay = (index: number) => {
-    if (contentElementsRef.current[index] && contentContainerRef.current) {
-      contentContainerRef.current.scrollTo({
-        left: contentElementsRef.current[index].offsetLeft,
-        behavior: "smooth",
-      });
-    }
-  };
-
   // Update tab when handleTabChange is called
   const handleTabChange = (value: string) => {
-    const index = formattedWeekDates.findIndex((date) => date.id === value);
-    if (index === -1) return;
     setSelectedTabId(value);
-    setCurrentContentIndex(index);
-    scrollToDay(index);
   };
 
   const basePromotions = useMemo(() => {
@@ -329,9 +265,15 @@ function Home() {
     ) {
       const newIndex = todayIndex >= 0 ? todayIndex : 0;
       setSelectedTabId(formattedWeekDates[newIndex]?.id ?? undefined);
-      setCurrentContentIndex(newIndex);
     }
   }, [selectedTabId, formattedWeekDates, todayIndex]);
+
+  // Get the currently selected content index
+  const currentTabIndex = selectedTabId
+    ? formattedWeekDates.findIndex((d) => d.id === selectedTabId)
+    : todayIndex >= 0
+      ? todayIndex
+      : 0;
 
   if (error) {
     return <div>Error loading promotions: {error.message}</div>;
@@ -393,7 +335,7 @@ function Home() {
               onValueChange={handleTabChange}
               className="mx-auto mb-0"
             >
-              <TabsList className="flex md:gap-1">
+              <TabsList className="flex md:gap-1 overflow-x-auto scrollbar-hide">
                 {formattedWeekDates.map((weekDateInfo) => (
                   <TabsTrigger
                     key={weekDateInfo.id}
@@ -414,39 +356,20 @@ function Home() {
         </div>
       </header>
 
-      {/* Content Area - Horizontal Scroll */}
-      <div
-        ref={contentContainerRef}
-        className="scrollbar-hide flex w-full flex-grow snap-x snap-mandatory overflow-x-auto pt-3"
-        style={{
-          scrollBehavior: "smooth",
-          WebkitOverflowScrolling: "touch",
-          scrollSnapType: "x mandatory",
-        }}
-      >
-        {formattedWeekDates.map((weekDateInfo, index) => (
-          <div
-            key={weekDateInfo.id}
-            ref={(el) => {
-              if (el) contentElementsRef.current[index] = el;
-            }} // Assign ref
-            className={cn(
-              "w-full min-w-full flex-shrink-0 flex-grow-0 snap-center px-1 opacity-30 transition-opacity duration-300 ease-out",
-              index === currentContentIndex && "!opacity-100"
-            )}
-            style={{ scrollSnapAlign: "center" }}
-          >
-            <div className="mx-auto grid max-w-screen-md grid-cols-1 gap-4 px-2 pb-20">
-              {" "}
-              {/* Added padding bottom */}
-              {promotionsByWeekday[index]?.map((discount, idx) => (
+      {/* Content Area */}
+      <div className="flex-grow pt-3">
+        {selectedTabId && (
+          <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-4 px-2 pb-20">
+            {currentTabIndex >= 0 &&
+              promotionsByWeekday[currentTabIndex]?.map((discount, idx) => (
                 <DiscountCard
                   key={`${discount.source}-${idx}`}
                   discount={discount}
-                  selectedType={selectedType} // Pass selectedType
-                /> // Added key
+                  selectedType={selectedType}
+                />
               ))}
-              {promotionsByWeekday[index]?.length === 0 && (
+            {currentTabIndex >= 0 &&
+              promotionsByWeekday[currentTabIndex]?.length === 0 && (
                 <div className="col-span-full py-8">
                   <div className="flex flex-col items-center justify-center gap-4 rounded-lg border bg-card p-8 text-center">
                     <div className="text-muted-foreground">
@@ -474,9 +397,8 @@ function Home() {
                   </div>
                 </div>
               )}
-            </div>
           </div>
-        ))}
+        )}
       </div>
 
       {/* Filter Drawer */}
