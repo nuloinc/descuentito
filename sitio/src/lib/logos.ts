@@ -1,4 +1,4 @@
-import type { PaymentMethod } from '.';
+import type { PaymentMethod } from './index.svelte';
 
 import { default as BancoNacion } from './logos/Banco Nación.png?enhanced';
 import { default as BancoPatagonia } from './logos/Banco Patagonia.png?enhanced';

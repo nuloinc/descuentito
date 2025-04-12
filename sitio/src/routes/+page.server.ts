@@ -1,4 +1,4 @@
-import { SOURCES } from '@/index';
+import { SOURCES } from '@/index.svelte';
 import type { PageServerLoad } from './$types';
 import type { GenericDiscount, Discount } from 'promos-db/schema';
 import { dev } from '$app/environment';

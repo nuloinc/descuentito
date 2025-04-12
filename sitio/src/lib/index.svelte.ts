@@ -2,6 +2,7 @@
 
 import { persistentAtom, persistentMap } from '@nanostores/persistent';
 import type { PAYMENT_METHODS } from 'promos-db/schema';
+import { derived } from 'svelte/store';
 
 export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
 
@@ -30,8 +31,10 @@ export const filteringByPaymentMethods = persistentAtom<boolean>(
 	true,
 	{ encode: JSON.stringify, decode: JSON.parse }
 );
-export const shouldFilterByPaymentMethods = $derived(
-	filteringByPaymentMethods.get() && savedPaymentMethods.get().size > 0
+export const shouldFilterByPaymentMethods = derived(
+	[filteringByPaymentMethods, savedPaymentMethods],
+	([filteringByPaymentMethods, savedPaymentMethods]) =>
+		filteringByPaymentMethods && savedPaymentMethods.size > 0
 );
 
 export const savedConditions = persistentMap<{

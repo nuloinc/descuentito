@@ -43,7 +43,7 @@
 	import { LOGOS, WALLET_ICONS } from '@/logos';
 	import BrandLogo from './brand-logos.svelte';
 	import { ScrollArea } from './ui/scroll-area';
-	import { savedPaymentMethods, shouldFilterByPaymentMethods } from '..';
+	import { savedPaymentMethods, shouldFilterByPaymentMethods } from '../index.svelte';
 	import * as Accordion from '$lib/components/ui/accordion';
 	import * as Drawer from '$lib/components/ui/drawer';
 	export let discount: schema.Discount;
@@ -142,7 +142,7 @@
 				})
 				.filter(
 					(method) =>
-						!shouldFilterByPaymentMethods ||
+						!$shouldFilterByPaymentMethods ||
 						PAYMENT_RAILS.includes(method as any) ||
 						$savedPaymentMethods.has(method as PaymentMethod)
 				)

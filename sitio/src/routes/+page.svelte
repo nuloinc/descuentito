@@ -21,7 +21,7 @@
 		savedPaymentMethods,
 		savedConditions,
 		shouldFilterByPaymentMethods
-	} from '@/index';
+	} from '@/index.svelte';
 	import { PAYMENT_RAILS } from 'promos-db/schema';
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
@@ -258,7 +258,7 @@
 			if (selectedPromotionType === 'Cuotas' && promotion.discount.type !== 'cuotas sin intereses')
 				return false;
 
-			if (promotion.paymentMethods && shouldFilterByPaymentMethods) {
+			if (promotion.paymentMethods && $shouldFilterByPaymentMethods) {
 				if (
 					!Array.from(promotion.paymentMethods).some((pm) => {
 						const pms = Array.isArray(pm) ? pm : [pm];

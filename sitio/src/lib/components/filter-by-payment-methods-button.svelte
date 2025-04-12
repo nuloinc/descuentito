@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { filteringByPaymentMethods, savedPaymentMethods } from '$lib/index';
+	import { filteringByPaymentMethods, savedPaymentMethods } from '@/index.svelte';
 	import { Sparkles } from 'lucide-svelte';
 	import { Switch } from '$lib/components/ui/switch/index.js';
 

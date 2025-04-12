@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { Filter } from 'lucide-svelte';
-	import { SOURCES, SUPERMARKET_NAMES } from '$lib';
+	import { SOURCES, SUPERMARKET_NAMES } from '@/index.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import { page } from '$app/stores';
 	export let selectedSupermarket: string | null = null;
