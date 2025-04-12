@@ -45,6 +45,7 @@ import {
   BRAND_LOGOS_NEED_LIGHT_BACKGROUND,
 } from "app/lib/logos"; // Import logo constants
 import { PAYMENT_RAILS, type Discount } from "promos-db/schema";
+import SupermarketLogo from "./supermarket-logo";
 
 //--- Helper Components (Implement actual components) ---
 const PaymentMethodLogo = ({ method }: { method: string }) => {
@@ -70,81 +71,6 @@ const PaymentMethodLogo = ({ method }: { method: string }) => {
     />
   );
 };
-
-const BrandLogo = ({
-  source,
-  types,
-  selectedType,
-  small,
-  containerClass,
-  className,
-}: {
-  source: string;
-  types: string[];
-  selectedType: "Presencial" | "Online";
-  small?: boolean;
-  containerClass?: string;
-  className?: string;
-}) => {
-  let logoKey = types.includes("Online") ? "Online" : (types[0] ?? source);
-  // Handle specific Carrefour cases from Svelte logic
-  if (source === "carrefour") {
-    if (types.includes("Market")) logoKey = "Market";
-    else if (types.includes("Express")) logoKey = "Express";
-    else if (types.includes("Maxi")) logoKey = "Maxi";
-    // Default to "Carrefour" or "Online" if not specified otherwise
-    else if (!types.includes("Online")) logoKey = "Carrefour";
-  } else if (source === "coto") {
-    logoKey = types.includes("Online") ? "Online" : "Coto";
-  } else if (source === "dia") {
-    logoKey = types.includes("Online") ? "Online" : "Dia";
-  } else if (source === "jumbo") {
-    logoKey = types.includes("Online") ? "Online" : "Jumbo"; // Jumbo uses same logo
-  } else if (source === "changomas") {
-    logoKey = types.includes("Online") ? "Online" : "ChangoMas";
-  } else if (source === "makro") {
-    logoKey = "Makro"; // Makro seems to have one main logo type
-  }
-
-  const logoSet =
-    small && BRAND_LOGOS_SMALL[source]
-      ? BRAND_LOGOS_SMALL[source]
-      : BRAND_LOGOS[source];
-  const logoSrc = logoSet?.[logoKey];
-  const needsLightBg =
-    BRAND_LOGOS_NEED_LIGHT_BACKGROUND[source]?.includes(logoKey);
-
-  if (!logoSrc) {
-    // Fallback if no logo found
-    return (
-      <div
-        className={cn(
-          containerClass,
-          "w-10 h-10 bg-gray-300 flex items-center justify-center rounded"
-        )}
-      >
-        <span className="text-xs font-bold">
-          {source.substring(0, 1).toUpperCase()}
-        </span>
-      </div>
-    );
-  }
-
-  return (
-    <div className={cn(containerClass, "flex items-center justify-center")}>
-      <img
-        src={logoSrc}
-        alt={source}
-        className={cn(
-          "object-contain",
-          className,
-          needsLightBg && "bg-white p-0.5 rounded-sm" // Add white background if needed
-        )}
-      />
-    </div>
-  );
-};
-//----------------------------------------------------------------------------------
 
 // --- Restriction Summary Logic ---
 const getRestrictionSummary = pMemoize(
@@ -330,12 +256,10 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
             <div className="flex items-center gap-2 text-left flex-grow min-w-0">
               {" "}
               {/* Added min-w-0 */}
-              <BrandLogo
+              <SupermarketLogo
                 source={discount.source}
-                types={discount.where || []}
-                selectedType={selectedType}
                 small
-                containerClass="flex-shrink-0 mr-2" // Adjusted classes
+                containerClassName="flex-shrink-0 mr-2" // Adjusted classes
                 className="h-8 max-w-8 md:h-10 md:max-w-10" // Responsive size
               />
               <div className="text-xl md:text-2xl font-black flex-shrink-0">

@@ -265,6 +265,7 @@ function Home() {
               !(promotion.where.length === 1 && promotion.where[0] === "Maxi")
           );
         }
+        if (source === "changomas") return [];
         return promotions;
       })
       .filter(Boolean);

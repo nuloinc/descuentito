@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: Resolve type imports later
-type PaymentMethod = any;
 
 // --- Wallet Icons ---
 // Assuming logos are copied to /public/logos/wallet-icons/
@@ -147,7 +146,6 @@ export const BRAND_LOGOS_SMALL: Record<string, Record<string, string>> = {
   },
 };
 
-// List of payment methods needing a light background (copied from Svelte)
 export const LOGOS_NEED_LIGHT_BACKGROUND: readonly string[] = [
   "Banco Galicia Más", // Note: This might not be a key in WALLET_ICONS
   "Banco Entre Ríos",
@@ -165,9 +163,7 @@ export const LOGOS_NEED_LIGHT_BACKGROUND: readonly string[] = [
   "Banco Ciudad",
 ];
 
-// List of brand logos needing a light background (copied from Svelte)
 export const BRAND_LOGOS_NEED_LIGHT_BACKGROUND: Record<string, string[]> = {
   changomas: ["Online"],
   makro: ["Makro"],
 };
-//--------------------
