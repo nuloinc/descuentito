@@ -1,42 +1,40 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: Resolve type imports later
 
-// --- Wallet Icons ---
-// Assuming logos are copied to /public/logos/wallet-icons/
-const IconAstroPay = "/logos/wallet-icons/AstroPay.svg";
-const IconBancoDelSol = "/logos/wallet-icons/Banco Del Sol.svg";
-const IconBancoEntreRios = "/logos/wallet-icons/Banco Entre Rios.svg";
-const IconBancoNacion = "/logos/wallet-icons/Banco Nacion.svg";
-const IconBancoSantaFe = "/logos/wallet-icons/Banco Santa Fe.svg";
-const IconPrex = "/logos/wallet-icons/Prex.svg";
-const IconBancoPatagonia = "/logos/wallet-icons/Banco Patagonia.svg";
-const IconMODO = "/logos/wallet-icons/MODO.svg";
-const IconMastercard = "/logos/wallet-icons/Mastercard.svg";
-const IconVISA = "/logos/wallet-icons/VISA.svg";
-const IconMercadoPago = "/logos/wallet-icons/MercadoPago.svg";
-const IconBancoMacro = "/logos/wallet-icons/Banco Macro.svg";
-const IconBancoGalicia = "/logos/wallet-icons/Banco Galicia.svg";
-const IconBancoSantander = "/logos/wallet-icons/Banco Santander.svg";
-const IconBancoColumbia = "/logos/wallet-icons/Banco Columbia.svg";
-const IconCuentaDNI = "/logos/wallet-icons/Cuenta DNI.svg";
-const IconBancoSupervielle = "/logos/wallet-icons/Banco Supervielle.svg";
-const IconBancoBBVA = "/logos/wallet-icons/Banco BBVA.svg";
-const IconBancoCiudad = "/logos/wallet-icons/Banco Ciudad.svg";
-const IconNaranjaX = "/logos/wallet-icons/NaranjaX.svg";
-const IconBancoComafi = "/logos/wallet-icons/Banco Comafi.svg";
-const IconUala = "/logos/wallet-icons/Uala.svg";
-const IconBancoCredicoop = "/logos/wallet-icons/Banco Credicoop.svg";
-const IconPersonalPay = "/logos/wallet-icons/Personal Pay.svg";
-const IconBancoHipotecario = "/logos/wallet-icons/Banco Hipotecario.svg";
-const IconBancoSanJuan = "/logos/wallet-icons/Banco San Juan.svg";
-const IconBancoICBC = "/logos/wallet-icons/Banco ICBC.svg";
-const IconBancoProvincia = "/logos/wallet-icons/Banco Provincia.svg";
-const IconYOY = "/logos/wallet-icons/YOY.svg";
-const IconCencopay = "/logos/wallet-icons/Cencopay.svg";
-const IconBancoDeCorrientes = "/logos/wallet-icons/Banco de Corrientes.svg";
-const IconBancoSantaCruz = "/logos/wallet-icons/Banco Santa Cruz.svg";
-const IconAmericanExpress = "/logos/wallet-icons/American Express.svg";
-const IconCabal = "/logos/wallet-icons/Cabal.svg";
+import IconAstroPay from "~/logos/wallet-icons/AstroPay.svg?url";
+import IconBancoDelSol from "~/logos/wallet-icons/Banco Del Sol.svg?url";
+import IconBancoEntreRios from "~/logos/wallet-icons/Banco Entre Rios.svg?url";
+import IconBancoNacion from "~/logos/wallet-icons/Banco Nacion.svg?url";
+import IconBancoSantaFe from "~/logos/wallet-icons/Banco Santa Fe.svg?url";
+import IconPrex from "~/logos/wallet-icons/Prex.svg?url";
+import IconBancoPatagonia from "~/logos/wallet-icons/Banco Patagonia.svg?url";
+import IconMODO from "~/logos/wallet-icons/MODO.svg?url";
+import IconMastercard from "~/logos/wallet-icons/Mastercard.svg?url";
+import IconVISA from "~/logos/wallet-icons/VISA.svg?url";
+import IconMercadoPago from "~/logos/wallet-icons/MercadoPago.svg?url";
+import IconBancoMacro from "~/logos/wallet-icons/Banco Macro.svg?url";
+import IconBancoGalicia from "~/logos/wallet-icons/Banco Galicia.svg?url";
+import IconBancoSantander from "~/logos/wallet-icons/Banco Santander.svg?url";
+import IconBancoColumbia from "~/logos/wallet-icons/Banco Columbia.svg?url";
+import IconCuentaDNI from "~/logos/wallet-icons/Cuenta DNI.svg?url";
+import IconBancoSupervielle from "~/logos/wallet-icons/Banco Supervielle.svg?url";
+import IconBancoBBVA from "~/logos/wallet-icons/Banco BBVA.svg?url";
+import IconBancoCiudad from "~/logos/wallet-icons/Banco Ciudad.svg?url";
+import IconNaranjaX from "~/logos/wallet-icons/NaranjaX.svg?url";
+import IconBancoComafi from "~/logos/wallet-icons/Banco Comafi.svg?url";
+import IconUala from "~/logos/wallet-icons/Uala.svg?url";
+import IconBancoCredicoop from "~/logos/wallet-icons/Banco Credicoop.svg?url";
+import IconPersonalPay from "~/logos/wallet-icons/Personal Pay.svg?url";
+import IconBancoHipotecario from "~/logos/wallet-icons/Banco Hipotecario.svg?url";
+import IconBancoSanJuan from "~/logos/wallet-icons/Banco San Juan.svg?url";
+import IconBancoICBC from "~/logos/wallet-icons/Banco ICBC.svg?url";
+import IconBancoProvincia from "~/logos/wallet-icons/Banco Provincia.svg?url";
+import IconYOY from "~/logos/wallet-icons/YOY.svg?url";
+import IconCencopay from "~/logos/wallet-icons/Cencopay.svg?url";
+import IconBancoDeCorrientes from "~/logos/wallet-icons/Banco de Corrientes.svg?url";
+import IconBancoSantaCruz from "~/logos/wallet-icons/Banco Santa Cruz.svg?url";
+import IconAmericanExpress from "~/logos/wallet-icons/American Express.svg?url";
+import IconCabal from "~/logos/wallet-icons/Cabal.svg?url";
 
 export const WALLET_ICONS: { [key: string]: string } = {
   // AstroPay: IconAstroPay,
@@ -81,25 +79,24 @@ export const WALLET_ICONS: { [key: string]: string } = {
 //---------------------------
 
 // --- Brand Logos ---
-// Assuming logos are copied to /public/logos/supermercados/
-const CarrefourMarket = "/logos/supermercados/carrefour_market.png";
-const CarrefourComAr = "/logos/supermercados/carrefour_com_ar.png";
-const CarrefourMaxi = "/logos/supermercados/carrefour_maxi.svg";
-const CarrefourSinTexto = "/logos/supermercados/carrefour_sin_texto.svg";
-const CarrefourExpressHorizontal =
-  "/logos/supermercados/carrefour_express_horizontal.png";
-const Jumbo = "/logos/supermercados/jumbo_cropped.png";
-const JumboSmall = "/logos/supermercados/jumbo.png";
-const DiaOnline = "/logos/supermercados/dia_online.png";
-const Dia = "/logos/supermercados/dia.svg";
-const DiaSmall = "/logos/supermercados/dia_small.svg";
-const Coto = "/logos/supermercados/coto.svg";
-const CotoDigital = "/logos/supermercados/coto_digital.png";
-const CotoStacked = "/logos/supermercados/coto_stacked.svg";
-const ChangoMas = "/logos/supermercados/changomas.png";
-const ChangoMasOnline = "/logos/supermercados/changomas_online.png";
-const Makro = "/logos/supermercados/makro.svg";
-const MakroSmall = "/logos/supermercados/makro_small.svg";
+// Assuming logos are copied to /public~/logos/supermercados/
+import CarrefourMarket from "~/logos/supermercados/carrefour_market.png?url";
+import CarrefourComAr from "~/logos/supermercados/carrefour_com_ar.png?url";
+import CarrefourMaxi from "~/logos/supermercados/carrefour_maxi.svg?url";
+import CarrefourSinTexto from "~/logos/supermercados/carrefour_sin_texto.svg?url";
+import CarrefourExpressHorizontal from "~/logos/supermercados/carrefour_express_horizontal.png?url";
+import Jumbo from "~/logos/supermercados/jumbo_cropped.png?url";
+import JumboSmall from "~/logos/supermercados/jumbo.png?url";
+import DiaOnline from "~/logos/supermercados/dia_online.png?url";
+import Dia from "~/logos/supermercados/dia.svg?url";
+import DiaSmall from "~/logos/supermercados/dia_small.svg?url";
+import Coto from "~/logos/supermercados/coto.svg?url";
+import CotoDigital from "~/logos/supermercados/coto_digital.png?url";
+import CotoStacked from "~/logos/supermercados/coto_stacked.svg?url";
+import ChangoMas from "~/logos/supermercados/changomas.png?url";
+import ChangoMasOnline from "~/logos/supermercados/changomas_online.png?url";
+import Makro from "~/logos/supermercados/makro.svg?url";
+import MakroSmall from "~/logos/supermercados/makro_small.svg?url";
 
 // Structure mirrors Svelte version, using simple string paths
 export const BRAND_LOGOS: Record<string, Record<string, string>> = {
