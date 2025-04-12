@@ -13,20 +13,14 @@ interface SupermarketLogoProps {
   containerClassName?: string;
 }
 
-/**
- * SupermarketLogo component for displaying supermarket logos consistently across the app.
- * A simplified version of BrandLogo focused on supermarket sources without type variants.
- */
 const SupermarketLogo: React.FC<SupermarketLogoProps> = ({
   source,
   small = false,
   className,
   containerClassName,
 }) => {
-  // For filter buttons we want the main logo, not Online or other variants
   let logoKey = source;
 
-  // Special case handling for specific supermarkets
   if (source === "carrefour") {
     logoKey = "Carrefour";
   } else if (source === "coto") {
@@ -52,7 +46,7 @@ const SupermarketLogo: React.FC<SupermarketLogoProps> = ({
 
   // Check if logo needs a light background
   const needsLightBg =
-    BRAND_LOGOS_NEED_LIGHT_BACKGROUND[source]?.includes(logoKey);
+    BRAND_LOGOS_NEED_LIGHT_BACKGROUND[source]?.includes(logoKey) && !small;
 
   if (!logoSrc) {
     // Fallback if no logo found

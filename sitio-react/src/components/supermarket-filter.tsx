@@ -1,6 +1,5 @@
 import React from "react";
 import { Button } from "src/components/ui/button";
-import { cn } from "src/lib/utils";
 import { SOURCES, SUPERMARKET_NAMES } from "src/lib/state";
 import { useLocation } from "@tanstack/react-router";
 import SupermarketLogo from "./supermarket-logo";
@@ -14,13 +13,11 @@ const SupermarketFilter: React.FC<SupermarketFilterProps> = ({
   selectedSupermarket,
   onSelect,
 }) => {
-  // Get URL to check for showChangomas parameter
   const location = useLocation();
   const showChangomas = new URLSearchParams(location.search).has(
     "showChangomas"
   );
 
-  // Filter sources based on showChangomas parameter (like in the Svelte version)
   const filteredSources = SOURCES.filter((source) => {
     if (showChangomas) return true;
     return source !== "changomas";

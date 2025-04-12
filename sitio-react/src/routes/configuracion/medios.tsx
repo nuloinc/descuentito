@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { usePaymentMethodsStore } from "src/lib/state";
@@ -118,9 +118,9 @@ function PaymentMethodsConfig() {
   return (
     <div className="min-h-screen bg-background">
       <nav className="sticky top-0 z-10 flex items-center gap-2 border-b p-2 bg-sidebar">
-        <a href="/">
+        <Link to="/">
           <ArrowLeft className="h-8 w-8" />
-        </a>
+        </Link>
         <span className="flex-grow text-left font-medium">Medios de pago</span>
       </nav>
 
@@ -232,10 +232,10 @@ function PaymentMethodsConfig() {
 
         <div className="mt-8 flex justify-end">
           <Button variant="default" className="w-full" asChild>
-            <a href="/">
+            <Link to="/">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Volver a tus descuentos
-            </a>
+            </Link>
           </Button>
         </div>
       </div>

@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState, useRef, useEffect, useMemo } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useEffect, useMemo } from "react";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
@@ -20,19 +20,16 @@ import {
 } from "src/components/ui/drawer";
 import { Button } from "src/components/ui/button";
 import { Filter, Sparkles } from "lucide-react";
-import { cn } from "src/lib/utils"; // Import cn utility
 import { DiscountCard, PaymentMethodLogo } from "src/components/discount-card"; // Import the actual component
 import SupermarketFilter from "src/components/supermarket-filter"; // Import the actual component
 import FilterByPaymentMethodsButton from "src/components/filter-by-payment-methods-button"; // Import the actual component
 import {
   usePaymentMethodsStore,
   useShouldFilterByPaymentMethods,
-  SOURCES,
   SUPERMARKET_NAMES,
 } from "src/lib/state";
 import { Discount, PAYMENT_RAILS } from "promos-db/schema";
-import { getPromotions, PromotionData } from "src/server/promotions";
-import { useRouter } from "@tanstack/react-router";
+import { getPromotions } from "src/server/promotions";
 import { BRAND_LOGOS_SMALL } from "@/lib/logos";
 import SupermarketLogo from "@/components/supermarket-logo";
 
@@ -264,8 +261,8 @@ function Home() {
           {savedPaymentMethods.size > 0 ? (
             <>
               <FilterByPaymentMethodsButton className="mt-2" />
-              <a
-                href="/configuracion/medios"
+              <Link
+                to="/configuracion/medios"
                 className="mt-2 flex flex-col w-full space-x-2 rounded-md border p-3 text-sm ring-1 ring-secondary transition-all gap-1"
               >
                 <div className="flex-grow flex items-center justify-between">
@@ -279,11 +276,11 @@ function Home() {
                     <PaymentMethodLogo key={pm} method={pm} small />
                   ))}
                 </div>
-              </a>
+              </Link>
             </>
           ) : (
-            <a
-              href="/configuracion/medios"
+            <Link
+              to="/configuracion/medios"
               className="mt-2 flex w-full items-center space-x-2 rounded-md border border-yellow-300 bg-gradient-to-r from-yellow-100/70 to-amber-100/70 p-3 text-sm shadow-sm transition-all hover:bg-gradient-to-r hover:from-yellow-200/70 hover:to-amber-200/70 dark:border-yellow-700 dark:bg-gradient-to-r dark:from-yellow-900/40 dark:to-amber-900/40 dark:hover:from-yellow-800/40 dark:hover:to-amber-800/40"
             >
               <Sparkles className="mr-1 h-8 w-8 text-yellow-500 dark:text-yellow-400" />
@@ -291,7 +288,7 @@ function Home() {
                 Configura tus medios de pago para ver descuentos personalizados
               </span>
               <span className="text-amber-600 dark:text-amber-400">→</span>
-            </a>
+            </Link>
           )}
         </div>
       </div>

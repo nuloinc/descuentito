@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from "react";
-import pMemoize from "p-memoize";
 import { Button } from "src/components/ui/button";
 import { Badge } from "src/components/ui/badge";
 import { ExternalLinkIcon, StarsIcon, WalletCards, XIcon } from "lucide-react";
@@ -96,46 +95,42 @@ export const PaymentMethodLogo = ({
   );
 };
 
-// --- Restriction Summary Logic ---
-const getRestrictionSummary = pMemoize(
-  async (text: string, long = false): Promise<string> => {
-    if (!text) return "";
-    const upperText = text
-      .replaceAll(/ó/gu, "o")
-      .replaceAll(/í/giu, "i")
-      .replaceAll(/é/giu, "e")
-      .toUpperCase();
-    if (
-      [
-        "N/A",
-        "TODO EL SURTIDO",
-        "TODOS LOS PRODUCTOS",
-        "ELECTRODOMESTICOS",
-        "LIBRERIA",
-      ].includes(upperText)
-    )
-      return text;
-    if (text.toLowerCase() === "electro") return "Electrodomésticos";
+const getRestrictionSummary = async (
+  text: string,
+  long = false
+): Promise<string> => {
+  if (!text) return "";
+  const upperText = text
+    .replaceAll(/ó/gu, "o")
+    .replaceAll(/í/giu, "i")
+    .replaceAll(/é/giu, "e")
+    .toUpperCase();
+  if (
+    [
+      "N/A",
+      "TODO EL SURTIDO",
+      "TODOS LOS PRODUCTOS",
+      "ELECTRODOMESTICOS",
+      "LIBRERIA",
+    ].includes(upperText)
+  )
+    return text;
+  if (text.toLowerCase() === "electro") return "Electrodomésticos";
 
-    try {
-      const res = await fetch("https://nulo-productsummaryapi.web.val.run", {
-        method: "POST",
-        body: JSON.stringify({ description: text, long }),
-        headers: { "Content-Type": "application/json" },
-      });
-      if (!res.ok) {
-        console.warn("Restriction summary fetch failed:", res.statusText);
-        return text; // Return original text on failure
-      }
-      const data: { summary: string } = await res.json();
-      return data.summary;
-    } catch (error) {
-      console.error("Restriction summary fetch error:", error);
-      return text; // Return original text on error
-    }
-  },
-  { cacheKey: ([t, l]) => `${String(t).toLowerCase()}-${l}` }
-);
+  try {
+    const res = await fetch("https://nulo-productsummaryapi.web.val.run", {
+      method: "POST",
+      body: JSON.stringify({ description: text, long }),
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!res.ok) throw new Error("Status: " + res.status);
+    const data: { summary: string } = await res.json();
+    return data.summary;
+  } catch (error) {
+    console.error("Restriction summary fetch error:", error);
+    return text; // Return original text on error
+  }
+};
 
 const useRestrictionSummary = (text: string | undefined, long = false) => {
   const query = useQuery({
@@ -245,7 +240,6 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
         </>
       );
     }
-    // Handle merged type if needed
     return null;
   };
 
@@ -408,7 +402,6 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                                 >
                                   {methods.map((methodItem, itemIdx) => (
                                     <React.Fragment key={itemIdx}>
-                                      {/* Use actual PaymentMethodLogo */}
                                       <PaymentMethodLogo method={methodItem} />
                                       {itemIdx < methods.length - 1 && (
                                         <span>+</span>
@@ -417,7 +410,6 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                                   ))}
                                 </div>
                               ) : (
-                                // Render non-array payment methods if needed
                                 <PaymentMethodLogo key={idx} method={methods} />
                               )
                           )}

@@ -4,8 +4,6 @@ import { Switch } from "src/components/ui/switch";
 import { cn } from "src/lib/utils";
 import { usePaymentMethodsStore } from "src/lib/state";
 
-// TODO: Replace with proper state management like React Context or Zustand
-// In Svelte, this component is using persistent stores
 interface FilterByPaymentMethodsButtonProps {
   className?: string;
 }
@@ -13,14 +11,12 @@ interface FilterByPaymentMethodsButtonProps {
 const FilterByPaymentMethodsButton: React.FC<
   FilterByPaymentMethodsButtonProps
 > = ({ className }) => {
-  // Use the Zustand store for state management
   const {
     filteringByPaymentMethods,
     setFilteringByPaymentMethods,
     savedPaymentMethods,
   } = usePaymentMethodsStore();
 
-  // Check if there are saved payment methods
   const hasSavedPaymentMethods = savedPaymentMethods.size > 0;
 
   const handleToggle = (e: React.MouseEvent | React.KeyboardEvent) => {
