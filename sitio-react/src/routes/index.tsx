@@ -39,7 +39,6 @@ dayjs.extend(weekday);
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
-// Helper for weekdays
 const timeZone = "America/Argentina/Buenos_Aires";
 const getFormattedWeekDates = () => {
   const weekStartDate = dayjs().tz(timeZone).startOf("day");
@@ -79,10 +78,8 @@ const getFormattedWeekDates = () => {
 
 export const Route = createFileRoute("/")({
   component: Home,
-  loader: async () => {
-    // Use the server function to load data
-    return await getPromotions();
-  },
+  loader: async () => await getPromotions(),
+  // para que no haya flash de contenido sin filtrar
   ssr: false,
 });
 
@@ -168,9 +165,9 @@ function Home() {
               return true;
             }
             return pms.some(
-              (pm2: string) =>
+              (pm2) =>
                 !PAYMENT_RAILS.includes(pm2 as any) &&
-                savedPaymentMethods.has(pm2)
+                savedPaymentMethods.has(pm2 as any)
             );
           })
         ) {
@@ -322,7 +319,6 @@ function Home() {
         </div>
       </header>
 
-      {/* Content Area */}
       <div className="flex-grow pt-3">
         {selectedTabId && (
           <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2">
@@ -367,12 +363,12 @@ function Home() {
         )}
       </div>
 
-      {/* Filter Drawer */}
       <Drawer open={isFilterDrawerOpen} onOpenChange={setIsFilterDrawerOpen}>
         <DrawerTrigger asChild>
           <div
             className="bg-sidebar text-primary fixed bottom-0 z-50 flex w-full flex-col items-center justify-center gap-2 rounded-t-[10px] px-4 pb-2 text-lg font-medium shadow-xl"
             onClick={() => setIsFilterDrawerOpen(true)}
+            onTouchStart={() => setIsFilterDrawerOpen(true)}
           >
             <div className="bg-muted mx-auto mt-4 h-2 w-[100px] rounded-full"></div>
             <div className="flex items-center gap-2">
@@ -410,7 +406,6 @@ function Home() {
               </DrawerDescription>
             </DrawerHeader>
             <div className="p-4">
-              {/* Type Filter (Presencial/Online) */}
               <div className="mb-4">
                 <h3 className="mb-2 font-medium">Tipo de compra</h3>
                 <Tabs
