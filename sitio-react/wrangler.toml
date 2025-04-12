@@ -1,0 +1,10 @@
+name = "descuentito"
+pages_build_output_dir = "./dist"
+compatibility_flags = ["nodejs_compat"]
+compatibility_date = "2025-02-14"
+observability = { enabled = true }
+
+# KV Namespace binding from the original wrangler.jsonc
+[[kv_namespaces]]
+binding = "DESCUENTITO_DATA"
+id = "f207d1c49cc144ac893eb40be075bd0d" 

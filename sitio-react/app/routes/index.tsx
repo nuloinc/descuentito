@@ -32,33 +32,8 @@ import {
   SUPERMARKET_NAMES,
 } from "app/lib/state";
 import { Discount, PAYMENT_RAILS } from "promos-db/schema";
-
-// Define the data structure we expect
-export type PromotionData = {
-  [key in (typeof SOURCES)[number]]?: Discount[];
-};
-
-// Async function to fetch all promotions
-const fetchPromotions = async (): Promise<PromotionData> => {
-  const dataEntries = await Promise.all(
-    SOURCES.map(async (source) => {
-      const url = `https://raw.githubusercontent.com/nuloinc/descuentito-data/refs/heads/main/${source}.json`;
-      try {
-        const response = await fetch(url);
-        if (!response.ok) {
-          console.warn(`Failed to fetch ${source}: ${response.statusText}`);
-          return [source, []];
-        }
-        const kv = await response.text();
-        return [source, JSON.parse(kv) as Discount[]];
-      } catch (error) {
-        console.error(`Error fetching or parsing ${source}:`, error);
-        return [source, []];
-      }
-    })
-  );
-  return Object.fromEntries(dataEntries);
-};
+import { getPromotions, PromotionData } from "app/server/promotions";
+import { useRouter } from "@tanstack/react-router";
 
 // Dayjs setup
 dayjs.extend(utc);
@@ -107,18 +82,17 @@ const getFormattedWeekDates = () => {
 
 export const Route = createFileRoute("/")({
   component: Home,
+  loader: async () => {
+    // Use the server function to load data
+    return await getPromotions();
+  },
 });
 
 function Home() {
-  const {
-    data: promotionsData,
-    isLoading,
-    error,
-  } = useQuery<PromotionData, Error>({
-    queryKey: ["promotions"],
-    queryFn: fetchPromotions,
-    staleTime: 1000 * 60 * 5, // Cache data for 5 minutes
-  });
+  const promotionsData = Route.useLoaderData();
+  const router = useRouter();
+  const isLoading = router.state.isLoading;
+  const [error, setError] = useState<Error | null>(null);
 
   const formattedWeekDates = useMemo(getFormattedWeekDates, []);
   const todayIndex = useMemo(

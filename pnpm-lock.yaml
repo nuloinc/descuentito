@@ -322,6 +322,9 @@ importers:
       tw-animate-css:
         specifier: ^1.2.5
         version: 1.2.5
+      unenv:
+        specifier: ^1.10.0
+        version: 1.10.0
       vaul:
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -332,6 +335,9 @@ importers:
         specifier: ^5.0.3
         version: 5.0.3(@types/react@19.1.1)(react@19.1.0)(use-sync-external-store@1.4.0(react@19.1.0))
     devDependencies:
+      '@cloudflare/workers-types':
+        specifier: ^4.20250303.0
+        version: 4.20250303.0
       '@types/node':
         specifier: ^22.5.4
         version: 22.13.9
@@ -353,6 +359,9 @@ importers:
       vite-tsconfig-paths:
         specifier: ^5.1.4
         version: 5.1.4(typescript@5.8.2)(vite@6.2.1(@types/node@22.13.9)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.2)(yaml@2.7.0))
+      wrangler:
+        specifier: ^3.114.0
+        version: 3.114.0(@cloudflare/workers-types@4.20250303.0)
 
 packages:
 
