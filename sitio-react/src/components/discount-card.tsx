@@ -238,8 +238,7 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
         ?.flatMap((method: string | string[]) =>
           Array.isArray(method) ? method : [method]
         )
-        .map((method: string) => method.split(" - ")[0] as string)
-        .filter((method: string) => WALLET_ICONS[method])
+        .filter((method: string) => WALLET_ICONS[method.split(" - ")[0]])
         .filter(
           (v: string, i: number, a: string[]) =>
             a.findIndex((v2) => WALLET_ICONS[v2] === WALLET_ICONS[v]) === i

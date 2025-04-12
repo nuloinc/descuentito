@@ -34,6 +34,8 @@ import {
 import { Discount, PAYMENT_RAILS } from "promos-db/schema";
 import { getPromotions, PromotionData } from "src/server/promotions";
 import { useRouter } from "@tanstack/react-router";
+import { BRAND_LOGOS_SMALL } from "@/lib/logos";
+import SupermarketLogo from "@/components/supermarket-logo";
 
 // Dayjs setup
 dayjs.extend(utc);
@@ -415,6 +417,23 @@ function Home() {
               <Badge variant="outline" className="ml-1">
                 {selectedType}
               </Badge>
+              {selectedSupermarket &&
+                (BRAND_LOGOS_SMALL[selectedSupermarket] ? (
+                  <SupermarketLogo
+                    source={selectedSupermarket}
+                    small
+                    className="h-4 w-4"
+                  />
+                ) : (
+                  <Badge variant="outline" className="ml-1">
+                    {selectedSupermarket}
+                  </Badge>
+                ))}
+              {selectedPromotionType !== "Todos" && (
+                <Badge variant="outline" className="ml-1">
+                  {selectedPromotionType}
+                </Badge>
+              )}
             </div>
           </div>
         </DrawerTrigger>
