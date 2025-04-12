@@ -9,10 +9,10 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import * as React from "react";
 import type { QueryClient } from "@tanstack/react-query";
-import { DefaultCatchBoundary } from "app/components/DefaultCatchBoundary";
-import { NotFound } from "app/components/NotFound";
+import { DefaultCatchBoundary } from "src/components/DefaultCatchBoundary";
+import { NotFound } from "src/components/NotFound";
 import appCss from "@/styles/app.css?url";
-import { seo } from "app/utils/seo";
+import { seo } from "src/utils/seo";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;

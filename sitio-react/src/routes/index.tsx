@@ -7,8 +7,8 @@ import timezone from "dayjs/plugin/timezone";
 import weekday from "dayjs/plugin/weekday";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
-import { Badge } from "app/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger } from "app/components/ui/tabs";
+import { Badge } from "src/components/ui/badge";
+import { Tabs, TabsList, TabsTrigger } from "src/components/ui/tabs";
 import {
   Drawer,
   DrawerContent,
@@ -18,21 +18,21 @@ import {
   DrawerDescription,
   DrawerFooter,
   DrawerClose,
-} from "app/components/ui/drawer";
-import { Button } from "app/components/ui/button";
+} from "src/components/ui/drawer";
+import { Button } from "src/components/ui/button";
 import { Filter, Sparkles } from "lucide-react";
-import { cn } from "app/lib/utils"; // Import cn utility
-import { DiscountCard } from "app/components/discount-card"; // Import the actual component
-import SupermarketFilter from "app/components/supermarket-filter"; // Import the actual component
-import FilterByPaymentMethodsButton from "app/components/filter-by-payment-methods-button"; // Import the actual component
+import { cn } from "src/lib/utils"; // Import cn utility
+import { DiscountCard } from "src/components/discount-card"; // Import the actual component
+import SupermarketFilter from "src/components/supermarket-filter"; // Import the actual component
+import FilterByPaymentMethodsButton from "src/components/filter-by-payment-methods-button"; // Import the actual component
 import {
   usePaymentMethodsStore,
   useShouldFilterByPaymentMethods,
   SOURCES,
   SUPERMARKET_NAMES,
-} from "app/lib/state";
+} from "src/lib/state";
 import { Discount, PAYMENT_RAILS } from "promos-db/schema";
-import { getPromotions, PromotionData } from "app/server/promotions";
+import { getPromotions, PromotionData } from "src/server/promotions";
 import { useRouter } from "@tanstack/react-router";
 
 // Dayjs setup

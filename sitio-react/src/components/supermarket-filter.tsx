@@ -1,7 +1,7 @@
 import React from "react";
-import { Button } from "app/components/ui/button";
-import { cn } from "app/lib/utils";
-import { SOURCES, SUPERMARKET_NAMES } from "app/lib/state";
+import { Button } from "src/components/ui/button";
+import { cn } from "src/lib/utils";
+import { SOURCES, SUPERMARKET_NAMES } from "src/lib/state";
 import { useLocation } from "@tanstack/react-router";
 import SupermarketLogo from "./supermarket-logo";
 

@@ -1,15 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
-import { usePaymentMethodsStore } from "app/lib/state";
+import { usePaymentMethodsStore } from "src/lib/state";
 import { PAYMENT_METHODS, JOIN_GROUPS } from "promos-db/schema";
 import type { PaymentMethod } from "promos-db/schema";
-import { WALLET_ICONS } from "app/lib/logos";
-import FilterByPaymentMethodsButton from "app/components/filter-by-payment-methods-button";
-import { Button } from "app/components/ui/button";
-import { Checkbox } from "app/components/ui/checkbox";
-import { Label } from "app/components/ui/label";
-import { cn } from "app/lib/utils";
+import { WALLET_ICONS } from "src/lib/logos";
+import FilterByPaymentMethodsButton from "src/components/filter-by-payment-methods-button";
+import { Button } from "src/components/ui/button";
+import { Checkbox } from "src/components/ui/checkbox";
+import { Label } from "src/components/ui/label";
+import { cn } from "src/lib/utils";
 
 // Create types similar to the Svelte version
 type SubOptionDisplay = {

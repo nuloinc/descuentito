@@ -1,8 +1,8 @@
 import React from "react";
 import { Sparkles } from "lucide-react";
-import { Switch } from "app/components/ui/switch";
-import { cn } from "app/lib/utils";
-import { usePaymentMethodsStore } from "app/lib/state";
+import { Switch } from "src/components/ui/switch";
+import { cn } from "src/lib/utils";
+import { usePaymentMethodsStore } from "src/lib/state";
 
 // TODO: Replace with proper state management like React Context or Zustand
 // In Svelte, this component is using persistent stores

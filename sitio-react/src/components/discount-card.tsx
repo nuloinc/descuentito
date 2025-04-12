@@ -7,9 +7,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "app/components/ui/card"; // Assuming Card maps to the outer container
-import { Button } from "app/components/ui/button";
-import { Badge } from "app/components/ui/badge";
+} from "src/components/ui/card"; // Assuming Card maps to the outer container
+import { Button } from "src/components/ui/button";
+import { Badge } from "src/components/ui/badge";
 import {
   ChevronDown,
   ExternalLinkIcon,
@@ -27,23 +27,23 @@ import {
   DrawerFooter,
   DrawerClose,
   DrawerPortal,
-} from "app/components/ui/drawer";
-import { Alert, AlertDescription, AlertTitle } from "app/components/ui/alert";
+} from "src/components/ui/drawer";
+import { Alert, AlertDescription, AlertTitle } from "src/components/ui/alert";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "app/components/ui/accordion";
-import { ScrollArea } from "app/components/ui/scroll-area";
-import { cn } from "app/lib/utils";
+} from "src/components/ui/accordion";
+import { ScrollArea } from "src/components/ui/scroll-area";
+import { cn } from "src/lib/utils";
 import {
   WALLET_ICONS,
   BRAND_LOGOS,
   BRAND_LOGOS_SMALL,
   LOGOS_NEED_LIGHT_BACKGROUND,
   BRAND_LOGOS_NEED_LIGHT_BACKGROUND,
-} from "app/lib/logos"; // Import logo constants
+} from "src/lib/logos"; // Import logo constants
 import { PAYMENT_RAILS, type Discount } from "promos-db/schema";
 import SupermarketLogo from "./supermarket-logo";
 

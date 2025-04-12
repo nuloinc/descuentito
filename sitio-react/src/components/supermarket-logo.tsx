@@ -1,10 +1,10 @@
 import React from "react";
-import { cn } from "app/lib/utils";
+import { cn } from "src/lib/utils";
 import {
   BRAND_LOGOS,
   BRAND_LOGOS_SMALL,
   BRAND_LOGOS_NEED_LIGHT_BACKGROUND,
-} from "app/lib/logos";
+} from "src/lib/logos";
 
 interface SupermarketLogoProps {
   source: string;
