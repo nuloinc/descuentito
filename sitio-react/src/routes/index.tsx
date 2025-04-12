@@ -22,7 +22,7 @@ import {
 import { Button } from "src/components/ui/button";
 import { Filter, Sparkles } from "lucide-react";
 import { cn } from "src/lib/utils"; // Import cn utility
-import { DiscountCard } from "src/components/discount-card"; // Import the actual component
+import { DiscountCard, PaymentMethodLogo } from "src/components/discount-card"; // Import the actual component
 import SupermarketFilter from "src/components/supermarket-filter"; // Import the actual component
 import FilterByPaymentMethodsButton from "src/components/filter-by-payment-methods-button"; // Import the actual component
 import {
@@ -354,12 +354,19 @@ function Home() {
               <FilterByPaymentMethodsButton className="mt-2" />
               <a
                 href="/configuracion/medios"
-                className="mt-2 flex w-full items-center space-x-2 rounded-md border p-3 text-sm ring-1 ring-gray-300 transition-all"
+                className="mt-2 flex flex-col w-full space-x-2 rounded-md border p-3 text-sm ring-1 ring-gray-300 transition-all gap-1"
               >
-                <span className="flex-grow font-medium">
-                  Configurar mis medios de pago guardados
-                </span>
-                <span className="text-gray-500">→</span>
+                <div className="flex-grow flex items-center justify-between">
+                  <span className="flex-grow font-medium">
+                    Configurar mis medios de pago guardados
+                  </span>
+                  <span className="text-gray-500">→</span>
+                </div>
+                <div className="flex items-center gap-1 flex-wrap">
+                  {Array.from(savedPaymentMethods).map((pm) => (
+                    <PaymentMethodLogo key={pm} method={pm} small />
+                  ))}
+                </div>
               </a>
             </>
           ) : (

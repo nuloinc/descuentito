@@ -3,6 +3,7 @@ import pMemoize from "p-memoize";
 import { Button } from "src/components/ui/button";
 import { Badge } from "src/components/ui/badge";
 import {
+  AsteriskIcon,
   ChevronDown,
   ExternalLinkIcon,
   StarsIcon,
@@ -39,9 +40,11 @@ import {
 } from "src/lib/logos"; // Import logo constants
 import { PAYMENT_RAILS, type Discount } from "promos-db/schema";
 import SupermarketLogo from "./supermarket-logo";
+import { useShouldFilterByPaymentMethods } from "@/lib/state";
+import { usePaymentMethodsStore } from "@/lib/state";
 
 //--- Helper Components (Implement actual components) ---
-const PaymentMethodLogo = ({
+export const PaymentMethodLogo = ({
   method,
   small,
 }: {
@@ -49,7 +52,6 @@ const PaymentMethodLogo = ({
   small?: boolean;
 }) => {
   const logoSrc = WALLET_ICONS[method];
-  const needsLightBg = LOGOS_NEED_LIGHT_BACKGROUND.includes(method);
 
   // Extract the base payment method (VISA, Mastercard, etc.) and type (credit, debit, etc.)
   let displayTitle = method;
@@ -74,11 +76,24 @@ const PaymentMethodLogo = ({
   }
 
   if (!logoSrc) {
-    return (
-      <span className="text-xs border px-1 rounded bg-primary text-primary-foreground">
-        {displayTitle}
-      </span>
-    );
+    if (small && WALLET_ICONS[method.split(" - ")[0]]) {
+      return (
+        <div className="relative">
+          <img
+            src={WALLET_ICONS[method.split(" - ")[0]]}
+            alt={method}
+            className={cn(
+              "h-6 w-6 rounded-sm object-contain ring-1 ring-yellow-400"
+            )}
+          />
+        </div>
+      );
+    } else
+      return (
+        <span className="text-xs border px-1 rounded bg-primary text-primary-foreground">
+          {displayTitle}
+        </span>
+      );
   }
 
   return (
@@ -86,10 +101,7 @@ const PaymentMethodLogo = ({
       <img
         src={logoSrc}
         alt={method}
-        className={cn(
-          "h-6 w-6 rounded-sm object-contain",
-          needsLightBg && "bg-white p-0.5" // Add white background if needed
-        )}
+        className={cn("h-6 w-6 rounded-sm object-contain")}
       />
       {cardType && !small && (
         <span className="text-xs border px-1 rounded bg-primary text-primary-foreground">
@@ -202,6 +214,8 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
   selectedType,
 }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const { savedPaymentMethods } = usePaymentMethodsStore();
+  const shouldFilterByPaymentMethods = useShouldFilterByPaymentMethods();
 
   // --- Derived Data ---
   const appliesOnlyTo = useMemo(() => {
@@ -230,6 +244,11 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
           (v: string, i: number, a: string[]) =>
             a.findIndex((v2) => WALLET_ICONS[v2] === WALLET_ICONS[v]) === i
         )
+        .filter((method: string) => {
+          if (!shouldFilterByPaymentMethods) return true;
+          if (PAYMENT_RAILS.includes(method as any)) return true;
+          return savedPaymentMethods.has(method);
+        })
         .sort((a: string, b: string) => {
           const aIsRail = PAYMENT_RAILS.includes(a as any);
           const bIsRail = PAYMENT_RAILS.includes(b as any);
@@ -238,7 +257,11 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
           return 0;
         }) || []
     );
-  }, [discount.paymentMethods]);
+  }, [
+    discount.paymentMethods,
+    savedPaymentMethods,
+    shouldFilterByPaymentMethods,
+  ]);
 
   // Only fetch summaries when drawer is open
   const { summary: onlyForProductsSummary, isLoading: isLoadingOnlyFor } =
