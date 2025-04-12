@@ -11,6 +11,9 @@ export default defineConfig({
     unenv: cloudflare,
   },
   vite: {
+    build: {
+      sourcemap: true,
+    },
     plugins: [
       tsConfigPaths({
         projects: ["./tsconfig.json"],
