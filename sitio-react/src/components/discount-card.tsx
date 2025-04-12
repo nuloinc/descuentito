@@ -1,13 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
 import pMemoize from "p-memoize";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "src/components/ui/card"; // Assuming Card maps to the outer container
 import { Button } from "src/components/ui/button";
 import { Badge } from "src/components/ui/badge";
 import {
@@ -27,6 +19,7 @@ import {
   DrawerFooter,
   DrawerClose,
   DrawerPortal,
+  DrawerOverlay,
 } from "src/components/ui/drawer";
 import { Alert, AlertDescription, AlertTitle } from "src/components/ui/alert";
 import {
@@ -48,27 +41,62 @@ import { PAYMENT_RAILS, type Discount } from "promos-db/schema";
 import SupermarketLogo from "./supermarket-logo";
 
 //--- Helper Components (Implement actual components) ---
-const PaymentMethodLogo = ({ method }: { method: string }) => {
+const PaymentMethodLogo = ({
+  method,
+  small,
+}: {
+  method: string;
+  small?: boolean;
+}) => {
   const logoSrc = WALLET_ICONS[method];
   const needsLightBg = LOGOS_NEED_LIGHT_BACKGROUND.includes(method);
 
+  // Extract the base payment method (VISA, Mastercard, etc.) and type (credit, debit, etc.)
+  let displayTitle = method;
+
+  const cardType = method.includes("crédito")
+    ? "Crédito"
+    : method.includes("débito")
+      ? "Débito"
+      : method.includes("Prepaga")
+        ? "Prepaga"
+        : "";
+
+  // Check if it's one of the payment rails with type information
+  if (PAYMENT_RAILS.includes(method as any)) {
+    // For payment rails like "Tarjeta de crédito VISA", extract the card network
+    const parts = method.split(" ");
+    const cardNetwork = parts[parts.length - 1];
+
+    if (cardType) {
+      displayTitle = `${cardNetwork} (${cardType})`;
+    }
+  }
+
   if (!logoSrc) {
-    // Fallback for unknown methods
     return (
-      <span className="text-xs border px-1 rounded bg-gray-200">{method}</span>
+      <span className="text-xs border px-1 rounded bg-primary text-primary-foreground">
+        {displayTitle}
+      </span>
     );
   }
 
   return (
-    <img
-      src={logoSrc}
-      alt={method}
-      className={cn(
-        "h-6 w-6 rounded-sm object-contain",
-        needsLightBg && "bg-white p-0.5" // Add white background if needed
+    <div className="flex items-center gap-1">
+      <img
+        src={logoSrc}
+        alt={method}
+        className={cn(
+          "h-6 w-6 rounded-sm object-contain",
+          needsLightBg && "bg-white p-0.5" // Add white background if needed
+        )}
+      />
+      {cardType && !small && (
+        <span className="text-xs border px-1 rounded bg-primary text-primary-foreground">
+          {cardType}
+        </span>
       )}
-      title={method} // Add title for hover
-    />
+    </div>
   );
 };
 
@@ -341,7 +369,7 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                 {" "}
                 {/* Added margin */}
                 {paymentMethodIcons.map((method: string) => (
-                  <PaymentMethodLogo key={method} method={method} />
+                  <PaymentMethodLogo key={method} method={method} small />
                 ))}
               </div>
             )}
@@ -350,132 +378,139 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
 
         {/* Drawer Content */}
         <DrawerPortal>
-          <DrawerContent className="max-h-[96%]">
-            <DrawerClose
-              className="bg-muted fixed right-4 top-4 rounded p-2 z-50"
-              aria-label="Cerrar"
-            >
-              <XIcon className="h-4 w-4" />
-            </DrawerClose>
-            <ScrollArea className="h-full">
-              <div className="space-y-4 p-4 mt-8 mb-16">
-                {/* Drawer Details Here */}
-                {discount.where?.length > 0 && (
-                  <div>
-                    <h4 className="font-medium mb-1">Comprando en:</h4>
-                    <p className="text-sm">{discount.where.join(", ")}</p>
-                  </div>
-                )}
-                {discount.limits?.maxDiscount !== undefined && (
-                  <div>
-                    <h4 className="font-medium mb-1">Tope de descuento:</h4>
-                    <p className="font-medium text-sm">
-                      {formatCurrency(discount.limits.maxDiscount)}
-                    </p>
-                  </div>
-                )}
-                {discount.limits?.explicitlyHasNoLimit && (
-                  <p className="flex items-center gap-1 text-sm">
-                    <StarsIcon className="h-4 w-4 text-yellow-500" />
-                    <span className="font-bold text-yellow-500">Sin tope</span>
-                  </p>
-                )}
-                {discount.membership && discount.membership.length > 0 && (
-                  <div>
-                    <h4 className="font-medium mb-1">
-                      Beneficio exclusivo para:
-                    </h4>
-                    <p className="text-sm">{discount.membership.join(", ")}</p>
-                  </div>
-                )}
-                {discount.paymentMethods &&
-                  discount.paymentMethods.length > 0 && (
+          <DrawerOverlay className="fixed inset-0 bg-black/40" />
+          <DrawerContent className="bg-background flex flex-col rounded-t-[10px] mt-24 h-[90%] fixed bottom-0 left-0 right-0 outline-none max-w-2xl mx-auto">
+            <div className="p-4 flex-1 overflow-y-auto">
+              <div className="mx-auto">
+                <DrawerClose
+                  className="bg-muted absolute right-4 top-4 rounded p-2 z-50"
+                  aria-label="Cerrar"
+                >
+                  <XIcon className="h-4 w-4" />
+                </DrawerClose>
+                <div className="space-y-4">
+                  {discount.where?.length > 0 && (
                     <div>
-                      <h4 className="font-medium mb-1">Medios de pago:</h4>
-                      <div className="mt-1 flex flex-col gap-2">
-                        {discount.paymentMethods.map(
-                          (methods: string | string[], idx: number) =>
-                            Array.isArray(methods) ? (
-                              <div
-                                key={idx}
-                                className="flex flex-wrap items-center gap-2"
-                              >
-                                {methods.map((methodItem, itemIdx) => (
-                                  <React.Fragment key={itemIdx}>
-                                    {/* Use actual PaymentMethodLogo */}
-                                    <PaymentMethodLogo method={methodItem} />
-                                    {itemIdx < methods.length - 1 && (
-                                      <span className="mx-1">+</span>
-                                    )}
-                                  </React.Fragment>
-                                ))}
-                              </div>
-                            ) : (
-                              // Render non-array payment methods if needed
-                              <PaymentMethodLogo key={idx} method={methods} />
-                            )
-                        )}
-                      </div>
+                      <h4 className="font-medium mb-1">Comprando en:</h4>
+                      <p className="text-sm">{discount.where.join(", ")}</p>
                     </div>
                   )}
-                {discount.restrictions && discount.restrictions.length > 0 && (
-                  <div>
-                    <h4 className="font-medium mb-1">Restricciones:</h4>
-                    <ul className="list-disc pl-5 text-sm space-y-1">
-                      {discount.restrictions.map(
-                        (restriction: string, idx: number) => (
-                          <li key={idx}>{restriction}</li>
-                        )
-                      )}
-                    </ul>
-                  </div>
-                )}
-                {discount.excludesProducts && (
-                  <div>
-                    <h4 className="font-medium mb-1">No aplica para:</h4>
-                    {isLoadingExcludes ? (
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Cargando resumen...
+                  {discount.limits?.maxDiscount !== undefined && (
+                    <div>
+                      <h4 className="font-medium mb-1">Tope de descuento:</h4>
+                      <p className="font-medium text-sm">
+                        {formatCurrency(discount.limits.maxDiscount)}
                       </p>
-                    ) : (
-                      <div className="mt-1 rounded-md border border-red-200 bg-red-50 p-2 dark:border-red-900 dark:bg-red-950">
-                        <p className="text-sm text-red-600 dark:text-red-400">
-                          <span className="font-medium">Resumen:</span>{" "}
-                          {excludesProductsSummary}
-                        </p>
+                    </div>
+                  )}
+                  {discount.limits?.explicitlyHasNoLimit && (
+                    <p className="flex items-center gap-1 text-sm">
+                      <StarsIcon className="h-4 w-4 text-yellow-500" />
+                      <span className="font-bold text-yellow-500">
+                        Sin tope
+                      </span>
+                    </p>
+                  )}
+                  {discount.membership && discount.membership.length > 0 && (
+                    <div>
+                      <h4 className="font-medium mb-1">
+                        Beneficio exclusivo para:
+                      </h4>
+                      <p className="text-sm">
+                        {discount.membership.join(", ")}
+                      </p>
+                    </div>
+                  )}
+                  {discount.paymentMethods &&
+                    discount.paymentMethods.length > 0 && (
+                      <div>
+                        <h4 className="font-medium mb-1">Medios de pago:</h4>
+                        <div className="mt-1 flex flex-col gap-2">
+                          {discount.paymentMethods.map(
+                            (methods: string | string[], idx: number) =>
+                              Array.isArray(methods) ? (
+                                <div
+                                  key={idx}
+                                  className="flex flex-wrap items-center gap-1"
+                                >
+                                  {methods.map((methodItem, itemIdx) => (
+                                    <React.Fragment key={itemIdx}>
+                                      {/* Use actual PaymentMethodLogo */}
+                                      <PaymentMethodLogo method={methodItem} />
+                                      {itemIdx < methods.length - 1 && (
+                                        <span>+</span>
+                                      )}
+                                    </React.Fragment>
+                                  ))}
+                                </div>
+                              ) : (
+                                // Render non-array payment methods if needed
+                                <PaymentMethodLogo key={idx} method={methods} />
+                              )
+                          )}
+                        </div>
                       </div>
                     )}
-                    <Accordion
-                      type="single"
-                      collapsible
-                      className="w-full mt-2"
-                    >
-                      <AccordionItem
-                        value="original-text"
-                        className="rounded-md border border-red-200 bg-red-50 dark:border-red-900 dark:bg-red-950"
+                  {discount.restrictions &&
+                    discount.restrictions.length > 0 && (
+                      <div>
+                        <h4 className="font-medium mb-1">Restricciones:</h4>
+                        <ul className="list-disc pl-5 text-sm space-y-1">
+                          {discount.restrictions.map(
+                            (restriction: string, idx: number) => (
+                              <li key={idx}>{restriction}</li>
+                            )
+                          )}
+                        </ul>
+                      </div>
+                    )}
+                  {discount.excludesProducts && (
+                    <div>
+                      <h4 className="font-medium mb-1">No aplica para:</h4>
+                      {isLoadingExcludes ? (
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          Cargando resumen...
+                        </p>
+                      ) : (
+                        <div className="mt-1 rounded-md border border-red-200 bg-red-50 p-2 dark:border-red-900 dark:bg-red-950">
+                          <p className="text-sm text-red-600 dark:text-red-400">
+                            <span className="font-medium">Resumen:</span>{" "}
+                            {excludesProductsSummary}
+                          </p>
+                        </div>
+                      )}
+                      <Accordion
+                        type="single"
+                        collapsible
+                        className="w-full mt-2"
                       >
-                        <AccordionTrigger className="flex w-full items-center justify-between rounded-md p-2 text-left text-sm font-medium text-red-600 dark:text-red-400 hover:no-underline">
-                          Ver texto completo
-                        </AccordionTrigger>
-                        <AccordionContent className="rounded-b-md border-t p-2 text-sm text-red-600 dark:border-red-900 dark:text-red-400">
-                          {discount.excludesProducts}
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                  </div>
-                )}
-                <Alert
-                  variant="default"
-                  className="mt-4 border-yellow-500/50 text-yellow-700 dark:border-yellow-500/50 dark:text-yellow-500 [&>svg]:text-yellow-700 dark:[&>svg]:text-yellow-500"
-                >
-                  <AlertTitle>Verifica los detalles</AlertTitle>
-                  <AlertDescription>
-                    Te recomendamos verificar los detalles de la promoción en el
-                    sitio de la tienda.
-                  </AlertDescription>
-                </Alert>
+                        <AccordionItem
+                          value="original-text"
+                          className="rounded-md border border-red-200 bg-red-50 dark:border-red-900 dark:bg-red-950"
+                        >
+                          <AccordionTrigger className="flex w-full items-center justify-between rounded-md p-2 text-left text-sm font-medium text-red-600 dark:text-red-400 hover:no-underline">
+                            Ver texto completo
+                          </AccordionTrigger>
+                          <AccordionContent className="rounded-b-md border-t p-2 text-sm text-red-600 dark:border-red-900 dark:text-red-400">
+                            {discount.excludesProducts}
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+                    </div>
+                  )}
+                  <Alert
+                    variant="default"
+                    className="mt-4 border-yellow-500/50 text-yellow-700 dark:border-yellow-500/50 dark:text-yellow-500 [&>svg]:text-yellow-700 dark:[&>svg]:text-yellow-500"
+                  >
+                    <AlertTitle>Verifica los detalles</AlertTitle>
+                    <AlertDescription>
+                      Te recomendamos verificar los detalles de la promoción en
+                      el sitio de la tienda.
+                    </AlertDescription>
+                  </Alert>
+                </div>
               </div>
-            </ScrollArea>
+            </div>
             <DrawerFooter className="border-t sticky bottom-0 bg-background py-2">
               <Button
                 variant="outline"
