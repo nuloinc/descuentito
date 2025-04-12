@@ -1,19 +1,9 @@
-import { sql } from "drizzle-orm";
-import { text, sqliteTable } from "drizzle-orm/sqlite-core";
 import { z } from "zod";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 dayjs.extend(utc);
 dayjs.extend(timezone);
-
-export const promotionsTable = sqliteTable("promotions", {
-  source: text("source").notNull(),
-  json: text("json", { mode: "json" }).notNull(),
-  createdAt: text("created_at")
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
-});
 
 export const SOURCES = ["galicia"] as const;
 export type Weekday =
