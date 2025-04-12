@@ -4,16 +4,30 @@ import { cloudflare } from "unenv";
 
 export default defineConfig({
   tsr: {
-    appDirectory: "app",
+    appDirectory: "src",
   },
   server: {
     preset: "cloudflare-pages",
     unenv: cloudflare,
   },
+  // https://react.dev/learn/react-compiler
+  react: {
+    babel: {
+      plugins: [
+        [
+          "babel-plugin-react-compiler",
+          {
+            target: "19",
+          },
+        ],
+      ],
+    },
+  },
   vite: {
     build: {
       sourcemap: true,
     },
+
     plugins: [
       tsConfigPaths({
         projects: ["./tsconfig.json"],

@@ -15,8 +15,8 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["app/*"],
-      "~/*": ["app/*"],
+      "@/*": ["src/*"],
+      "~/*": ["src/*"],
       "promos-db": ["../promos-db/src"]
     },
     "noEmit": true

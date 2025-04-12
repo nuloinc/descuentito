@@ -51,6 +51,8 @@
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "autoprefixer": "^10.4.20",
+    "babel-plugin-react-compiler": "19.0.0-beta-e993439-20250405",
+    "eslint-plugin-react-compiler": "19.0.0-beta-e993439-20250405",
     "postcss": "^8.5.3",
     "typescript": "^5.7.2",
     "vite-tsconfig-paths": "^5.1.4",
