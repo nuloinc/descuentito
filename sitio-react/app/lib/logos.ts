@@ -76,17 +76,14 @@ export const WALLET_ICONS: { [key: string]: string } = {
   "Tarjeta de débito Cabal": IconCabal,
   "Tarjeta de crédito Cabal": IconCabal,
 };
-//---------------------------
 
-// --- Brand Logos ---
-// Assuming logos are copied to /public~/logos/supermercados/
 import CarrefourMarket from "~/logos/supermercados/carrefour_market.png?url";
 import CarrefourComAr from "~/logos/supermercados/carrefour_com_ar.png?url";
 import CarrefourMaxi from "~/logos/supermercados/carrefour_maxi.svg?url";
 import CarrefourSinTexto from "~/logos/supermercados/carrefour_sin_texto.svg?url";
 import CarrefourExpressHorizontal from "~/logos/supermercados/carrefour_express_horizontal.png?url";
 import Jumbo from "~/logos/supermercados/jumbo_cropped.png?url";
-import JumboSmall from "~/logos/supermercados/jumbo.png?url";
+import JumboSmall from "~/logos/supermercados/jumbo.webp?url";
 import DiaOnline from "~/logos/supermercados/dia_online.png?url";
 import Dia from "~/logos/supermercados/dia.svg?url";
 import DiaSmall from "~/logos/supermercados/dia_small.svg?url";
