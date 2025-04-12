@@ -2,3 +2,4 @@ packages:
   - scraper
   - promos-db
   - sitio
+  - sitio-react
