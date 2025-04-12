@@ -129,61 +129,90 @@ function Home() {
       .filter(Boolean);
 
     // Apply filters based on selected options
-    return allPromotions.filter((promotion: Discount) => {
-      if (selectedType === "Online") {
-        if (!(promotion.where as string[]).includes("Online")) return false;
-      } else {
-        if (promotion.where.length === 1 && promotion.where[0] === "Online")
+    return allPromotions
+      .filter((promotion: Discount) => {
+        if (selectedType === "Online") {
+          if (!(promotion.where as string[]).includes("Online")) return false;
+        } else {
+          if (promotion.where.length === 1 && promotion.where[0] === "Online")
+            return false;
+        }
+
+        if (selectedSupermarket && selectedSupermarket !== promotion.source)
           return false;
-      }
 
-      if (selectedSupermarket && selectedSupermarket !== promotion.source)
-        return false;
-
-      if (
-        selectedPromotionType === "Descuentos" &&
-        promotion.discount.type !== "porcentaje"
-      ) {
-        return false;
-      }
-      if (
-        selectedPromotionType === "Cuotas" &&
-        promotion.discount.type !== "cuotas sin intereses"
-      ) {
-        return false;
-      }
-
-      if (promotion.paymentMethods && shouldFilterByPaymentMethods) {
         if (
-          !Array.from(promotion.paymentMethods as string[]).some((pm) => {
-            const pms = Array.isArray(pm) ? pm : [pm];
-            if (
-              pms.every((pm2: string) => PAYMENT_RAILS.includes(pm2 as any)) &&
-              // For cases like "MODO+Cabal" where user has MODO but not Cabal
-              (pms.length > 1 ? !pms.includes("MODO") : true)
-            ) {
-              return true;
-            }
-            return pms.some(
-              (pm2) =>
-                !PAYMENT_RAILS.includes(pm2 as any) &&
-                savedPaymentMethods.has(pm2 as any)
-            );
-          })
+          selectedPromotionType === "Descuentos" &&
+          promotion.discount.type !== "porcentaje"
         ) {
           return false;
         }
-      }
+        if (
+          selectedPromotionType === "Cuotas" &&
+          promotion.discount.type !== "cuotas sin intereses"
+        ) {
+          return false;
+        }
 
-      // Filter out specific programs that user might not qualify for
-      if (promotion.appliesOnlyTo?.programaCiudadaniaPorteña) return false;
-      if (promotion.appliesOnlyTo?.anses && !savedConditions.anses)
-        return false;
-      if (promotion.appliesOnlyTo?.jubilados && !savedConditions.jubilados)
-        return false;
+        if (promotion.paymentMethods && shouldFilterByPaymentMethods) {
+          const isPassedByPaymentMethods = (() => {
+            if (
+              // if promotion only requires a payment rail and user has it
+              promotion.paymentMethods
+                .map((pm) => (Array.isArray(pm) ? pm : [pm]))
+                .every(
+                  (pm) =>
+                    pm.length === 1 && PAYMENT_RAILS.includes(pm[0] as any)
+                ) &&
+              promotion.paymentMethods
+                .flat()
+                .some((pm) => savedPaymentMethods.has(pm as any))
+            ) {
+              return true;
+            }
 
-      return true;
-    });
+            if (
+              Array.from(promotion.paymentMethods).some((pm) => {
+                const pms = Array.isArray(pm) ? pm : [pm];
+                return pms.some(
+                  (pm2) =>
+                    !PAYMENT_RAILS.includes(pm2 as any) &&
+                    savedPaymentMethods.has(pm2 as any)
+                );
+              })
+            ) {
+              return true;
+            }
+          })();
+          if (!isPassedByPaymentMethods) return false;
+        }
+
+        // Filter out specific programs that user might not qualify for
+        if (promotion.appliesOnlyTo?.programaCiudadaniaPorteña) return false;
+        if (promotion.appliesOnlyTo?.anses && !savedConditions.anses)
+          return false;
+        if (promotion.appliesOnlyTo?.jubilados && !savedConditions.jubilados)
+          return false;
+
+        return true;
+      })
+      .sort((a, b) => {
+        // First sort by discount type: percentage discounts first, then cuotas sin intereses
+        if (a.discount.type !== b.discount.type) {
+          return a.discount.type === "porcentaje" ? -1 : 1;
+        }
+
+        // Then sort by discount value (higher percentages or more installments first)
+        if (a.discount.value !== b.discount.value) {
+          return b.discount.value - a.discount.value;
+        }
+
+        // Finally, sort by date as a tiebreaker
+        if (a.validFrom && b.validFrom) {
+          return dayjs(a.validFrom).isBefore(dayjs(b.validFrom)) ? -1 : 1;
+        }
+        return 0;
+      });
   }, [
     promotionsData,
     selectedType,
