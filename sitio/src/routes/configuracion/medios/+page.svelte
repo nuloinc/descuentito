@@ -2,12 +2,13 @@
 	import { Checkbox } from '$lib/components/ui/checkbox/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
 	import { ArrowLeft } from 'lucide-svelte';
-	import { savedPaymentMethods, savedConditions } from '$lib/index';
+	import { savedPaymentMethods, savedConditions } from '@/index.svelte';
 	import { PAYMENT_METHODS, JOIN_GROUPS } from 'promos-db/schema';
 	import type { PaymentMethod } from 'promos-db/schema';
 	import { WALLET_ICONS } from '@/logos';
 	import { slide } from 'svelte/transition';
 	import FilterByPaymentMethodsButton from '$lib/components/filter-by-payment-methods-button.svelte';
+	import Button from '@/components/ui/button/button.svelte';
 
 	type SubOptionDisplay = {
 		id: PaymentMethod;
@@ -197,5 +198,12 @@
 				</div>
 			</div>
 		{/each}
+	</div>
+
+	<div class="mt-8 flex justify-end">
+		<Button variant="default" class="w-full" href="/">
+			<ArrowLeft class="h-4 w-4" />
+			Volve a tus descuentos
+		</Button>
 	</div>
 </div>
