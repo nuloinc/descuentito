@@ -362,10 +362,6 @@ function Home() {
     }
   }, [selectedTabId, formattedWeekDates, todayIndex]);
 
-  if (isLoading) {
-    return <div>Loading promotions...</div>;
-  }
-
   if (error) {
     return <div>Error loading promotions: {error.message}</div>;
   }
