@@ -128,15 +128,6 @@ function Home() {
   const contentContainerRef = useRef<HTMLDivElement>(null);
   const contentElementsRef = useRef<HTMLDivElement[]>([]);
 
-  // Initialize selectedSupermarket from URL on mount
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const supermarketParam = params.get("supermarket");
-    if (supermarketParam) {
-      setSelectedSupermarket(supermarketParam);
-    }
-  }, []);
-
   // Effect to set initial tab/index after mount
   useEffect(() => {
     if (formattedWeekDates.length > 0) {
@@ -209,27 +200,11 @@ function Home() {
     scrollToDay(index);
   };
 
-  const handleSupermarketSelect = (supermarket: string | null) => {
-    setSelectedSupermarket(supermarket);
-
-    // Update URL with supermarket parameter (similar to Svelte implementation)
-    const url = new URL(window.location.href);
-    if (supermarket) {
-      url.searchParams.set("supermarket", supermarket);
-    } else {
-      url.searchParams.delete("supermarket");
-    }
-    history.pushState({}, "", url.toString());
-  };
-
-  // Enhanced filtering logic matching the Svelte implementation
   const basePromotions = useMemo(() => {
     if (!promotionsData) return [];
 
-    // Create a flattened array of all promotions from all sources
     const allPromotions = Object.entries(promotionsData)
       .flatMap(([source, promotions]) => {
-        // Filter out Maxi Carrefour stores (following Svelte logic)
         if (source === "carrefour") {
           return promotions.filter(
             (promotion) =>
@@ -243,7 +218,6 @@ function Home() {
 
     // Apply filters based on selected options
     return allPromotions.filter((promotion: Discount) => {
-      // Filter by purchase type (Online/Presencial)
       if (selectedType === "Online") {
         if (!(promotion.where as string[]).includes("Online")) return false;
       } else {
@@ -251,11 +225,9 @@ function Home() {
           return false;
       }
 
-      // Filter by selected supermarket
       if (selectedSupermarket && selectedSupermarket !== promotion.source)
         return false;
 
-      // Filter by promotion type (discount percentage vs installments)
       if (
         selectedPromotionType === "Descuentos" &&
         promotion.discount.type !== "porcentaje"
@@ -269,7 +241,6 @@ function Home() {
         return false;
       }
 
-      // Filter by payment methods if enabled
       if (promotion.paymentMethods && shouldFilterByPaymentMethods) {
         if (
           !Array.from(promotion.paymentMethods as string[]).some((pm) => {
@@ -368,7 +339,6 @@ function Home() {
 
   return (
     <div className="site-container bg-background relative min-h-screen flex flex-col">
-      {/* Header Section */}
       <div className="bg-sidebar pb-2 pt-4">
         <div className="container mx-auto max-w-4xl px-4">
           <h1 className="flex items-center gap-2 text-3xl font-bold">
@@ -488,7 +458,7 @@ function Home() {
                     {selectedSupermarket && (
                       <Button
                         variant="outline"
-                        onClick={() => handleSupermarketSelect(null)}
+                        onClick={() => setSelectedSupermarket(null)}
                         className="mt-2"
                       >
                         Ver todos los supermercados
@@ -557,7 +527,9 @@ function Home() {
                 <h3 className="mb-2 font-medium">Supermercado</h3>
                 <SupermarketFilter
                   selectedSupermarket={selectedSupermarket}
-                  onSelect={handleSupermarketSelect}
+                  onSelect={(supermarket: string | null) => {
+                    setSelectedSupermarket(supermarket);
+                  }}
                 />
               </div>
 
