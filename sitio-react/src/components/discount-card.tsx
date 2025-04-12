@@ -491,7 +491,7 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                           <AccordionTrigger className="flex w-full items-center justify-between rounded-md p-2 text-left text-sm font-medium text-red-600 dark:text-red-400 hover:no-underline border-b border-red-200 dark:border-red-900">
                             Ver texto completo
                           </AccordionTrigger>
-                          <AccordionContent className="rounded-b-md p-2 text-sm text-red-600 dark:border-red-900 dark:text-red-400">
+                          <AccordionContent className="rounded-b-md p-2 text-sm text-red-600 dark:text-red-400 border-b border-red-200 dark:border-red-900">
                             {discount.excludesProducts}
                           </AccordionContent>
                         </AccordionItem>
