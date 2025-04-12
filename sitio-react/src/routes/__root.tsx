@@ -113,14 +113,10 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const [isDarkMode, setIsDarkMode] = React.useState(false);
-
   React.useEffect(() => {
     const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    setIsDarkMode(darkModeQuery.matches);
 
     const updateTheme = (e: MediaQueryListEvent) => {
-      setIsDarkMode(e.matches);
       if (e.matches) {
         document.documentElement.classList.add("dark");
       } else {
