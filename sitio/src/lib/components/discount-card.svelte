@@ -34,7 +34,7 @@
 	import * as Card from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
 	import { Badge } from '$lib/components/ui/badge';
-	import { ChevronDown, ExternalLinkIcon, StarsIcon, WalletCards } from 'lucide-svelte';
+	import { ChevronDown, ExternalLinkIcon, StarsIcon, WalletCards, XIcon } from 'lucide-svelte';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import * as Alert from '$lib/components/ui/alert';
 	import PaymentMethodLogo from '@/components/payment-method-logo.svelte';
@@ -45,7 +45,7 @@
 	import { ScrollArea } from './ui/scroll-area';
 	import { filteringByPaymentMethods, savedPaymentMethods } from '..';
 	import * as Accordion from '$lib/components/ui/accordion';
-
+	import * as Drawer from '$lib/components/ui/drawer';
 	export let discount: schema.Discount;
 	export let selectedType: 'Presencial' | 'Online';
 
@@ -171,8 +171,8 @@
 </script>
 
 <div class="bg-card text-card-foreground rounded-lg border px-3 py-2 shadow-md">
-	<Dialog.Root>
-		<Dialog.Trigger class="flex w-full items-center justify-between">
+	<Drawer.Root>
+		<Drawer.Trigger class="flex w-full items-center justify-between">
 			<div class="flex items-center gap-2 text-left">
 				<BrandLogo
 					source={discount.source}
@@ -263,13 +263,13 @@
 					{/each}
 				</div>
 			{/if}
-		</Dialog.Trigger>
-		<Dialog.Content class="p-0">
-			<ScrollArea class="max-h-[90vh]">
-				<Dialog.Header>
-					<Dialog.Title>{discount.title}</Dialog.Title>
-				</Dialog.Header>
-				<div class="space-y-4 p-4">
+		</Drawer.Trigger>
+		<Drawer.Portal>
+			<Drawer.Content class="max-h-[96%] p-0">
+				<Drawer.Close class="bg-muted fixed right-4 top-4 rounded p-2" aria-label="Cerrar">
+					<XIcon class="h-4 w-4" />
+				</Drawer.Close>
+				<div class="space-y-4 overflow-y-auto p-4">
 					{#if discount.where?.length > 0}
 						<div>
 							<h4 class="font-medium">Comprando en:</h4>
@@ -384,6 +384,8 @@
 							>Te recomendamos verificar los detalles de la promoción en el sitio de la tienda.</Alert.Description
 						>
 					</Alert.Root>
+				</div>
+				<Drawer.Footer class="border-t">
 					<Button
 						variant="outline"
 						href={discount.url}
@@ -394,8 +396,8 @@
 						<ExternalLinkIcon class="h-4 w-4" />
 						Ver más detalles
 					</Button>
-				</div>
-			</ScrollArea>
-		</Dialog.Content>
-	</Dialog.Root>
+				</Drawer.Footer>
+			</Drawer.Content>
+		</Drawer.Portal>
+	</Drawer.Root>
 </div>
