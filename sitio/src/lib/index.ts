@@ -30,6 +30,9 @@ export const filteringByPaymentMethods = persistentAtom<boolean>(
 	true,
 	{ encode: JSON.stringify, decode: JSON.parse }
 );
+export const shouldFilterByPaymentMethods = $derived(
+	filteringByPaymentMethods.get() && savedPaymentMethods.get().size > 0
+);
 
 export const savedConditions = persistentMap<{
 	jubilados: boolean;
