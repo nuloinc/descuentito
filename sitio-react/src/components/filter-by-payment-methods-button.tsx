@@ -36,8 +36,8 @@ const FilterByPaymentMethodsButton: React.FC<
       className={cn(
         "flex w-full items-center space-x-2 rounded-md border p-3 transition-all cursor-pointer",
         filteringByPaymentMethods
-          ? "border-green-400 bg-green-400/10 ring-1 ring-green-400"
-          : "border-red-400 bg-red-400/10 ring-1 ring-red-400",
+          ? "border-green-400 dark:border-green-500 bg-green-400/10 dark:bg-green-500/10"
+          : "border-red-400 dark:border-red-500 bg-red-400/10 dark:bg-red-500/10",
         hasSavedPaymentMethods ? "" : "opacity-50 pointer-events-none",
         className
       )}

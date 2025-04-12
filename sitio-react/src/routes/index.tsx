@@ -296,13 +296,13 @@ function Home() {
               <FilterByPaymentMethodsButton className="mt-2" />
               <a
                 href="/configuracion/medios"
-                className="mt-2 flex flex-col w-full space-x-2 rounded-md border p-3 text-sm ring-1 ring-gray-300 transition-all gap-1"
+                className="mt-2 flex flex-col w-full space-x-2 rounded-md border p-3 text-sm ring-1 ring-secondary transition-all gap-1"
               >
                 <div className="flex-grow flex items-center justify-between">
                   <span className="flex-grow font-medium">
                     Configurar mis medios de pago guardados
                   </span>
-                  <span className="text-gray-500">→</span>
+                  <span>→</span>
                 </div>
                 <div className="flex items-center gap-1 flex-wrap">
                   {Array.from(savedPaymentMethods).map((pm) => (
@@ -359,7 +359,7 @@ function Home() {
       {/* Content Area */}
       <div className="flex-grow pt-3">
         {selectedTabId && (
-          <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-4 px-2 pb-20">
+          <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2">
             {currentTabIndex >= 0 &&
               promotionsByWeekday[currentTabIndex]?.map((discount, idx) => (
                 <DiscountCard
