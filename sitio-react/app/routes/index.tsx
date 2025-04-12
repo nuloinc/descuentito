@@ -86,6 +86,7 @@ export const Route = createFileRoute("/")({
     // Use the server function to load data
     return await getPromotions();
   },
+  ssr: false,
 });
 
 function Home() {
