@@ -1,8 +1,6 @@
+import { PaymentMethod } from "promos-db/schema";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-
-// TODO: Import proper types from promos-db when available
-export type PaymentMethod = string;
 
 interface PaymentMethodsState {
   savedPaymentMethods: Set<PaymentMethod>;

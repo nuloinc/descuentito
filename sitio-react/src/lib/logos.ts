@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// TODO: Resolve type imports later
-
 import IconAstroPay from "~/logos/wallet-icons/AstroPay.svg?url";
 import IconBancoDelSol from "~/logos/wallet-icons/Banco Del Sol.svg?url";
 import IconBancoEntreRios from "~/logos/wallet-icons/Banco Entre Rios.svg?url";

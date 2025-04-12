@@ -200,15 +200,15 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
         ?.flatMap((method: string | string[]) =>
           Array.isArray(method) ? method : [method]
         )
-        .filter((method: string) => WALLET_ICONS[method.split(" - ")[0]])
+        .filter((method) => WALLET_ICONS[method.split(" - ")[0]])
         .filter(
-          (v: string, i: number, a: string[]) =>
+          (v, i, a) =>
             a.findIndex((v2) => WALLET_ICONS[v2] === WALLET_ICONS[v]) === i
         )
-        .filter((method: string) => {
+        .filter((method) => {
           if (!shouldFilterByPaymentMethods) return true;
           if (PAYMENT_RAILS.includes(method as any)) return true;
-          return savedPaymentMethods.has(method);
+          return savedPaymentMethods.has(method as any);
         })
         .sort((a: string, b: string) => {
           const aIsRail = PAYMENT_RAILS.includes(a as any);
