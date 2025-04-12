@@ -1,22 +1,12 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import pMemoize from "p-memoize";
 import { Button } from "src/components/ui/button";
 import { Badge } from "src/components/ui/badge";
-import {
-  AsteriskIcon,
-  ChevronDown,
-  ExternalLinkIcon,
-  StarsIcon,
-  WalletCards,
-  XIcon,
-} from "lucide-react";
+import { ExternalLinkIcon, StarsIcon, WalletCards, XIcon } from "lucide-react";
 import {
   Drawer,
   DrawerTrigger,
   DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerDescription,
   DrawerFooter,
   DrawerClose,
   DrawerPortal,
@@ -29,19 +19,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "src/components/ui/accordion";
-import { ScrollArea } from "src/components/ui/scroll-area";
 import { cn } from "src/lib/utils";
-import {
-  WALLET_ICONS,
-  BRAND_LOGOS,
-  BRAND_LOGOS_SMALL,
-  LOGOS_NEED_LIGHT_BACKGROUND,
-  BRAND_LOGOS_NEED_LIGHT_BACKGROUND,
-} from "src/lib/logos"; // Import logo constants
+import { WALLET_ICONS } from "src/lib/logos"; // Import logo constants
 import { PAYMENT_RAILS, type Discount } from "promos-db/schema";
 import SupermarketLogo from "./supermarket-logo";
 import { useShouldFilterByPaymentMethods } from "@/lib/state";
 import { usePaymentMethodsStore } from "@/lib/state";
+import { useQuery } from "@tanstack/react-query";
 
 //--- Helper Components (Implement actual components) ---
 export const PaymentMethodLogo = ({
@@ -154,40 +138,22 @@ const getRestrictionSummary = pMemoize(
 );
 
 const useRestrictionSummary = (text: string | undefined, long = false) => {
-  const [summary, setSummary] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const query = useQuery({
+    queryKey: ["restrictionSummary", text, long],
+    queryFn: () => getRestrictionSummary(text || "", long),
+    enabled: !!text,
+    staleTime: 1000 * 60 * 60, // 1 hour
+    gcTime: 1000 * 60 * 60 * 24, // 24 hours
+    initialData: text ? undefined : "",
+    retry: false,
+  });
 
-  useEffect(() => {
-    if (!text) {
-      setSummary("");
-      return;
-    }
-    let isMounted = true;
-    setIsLoading(true);
-    getRestrictionSummary(text, long)
-      .then((result) => {
-        if (isMounted) {
-          setSummary(result);
-          setIsLoading(false);
-        }
-      })
-      .catch(() => {
-        if (isMounted) {
-          setSummary(text); // Fallback to original text on error
-          setIsLoading(false);
-        }
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [text, long]);
-
-  return { summary, isLoading };
+  return {
+    summary: query.data || text || "",
+    isLoading: query.isLoading,
+  };
 };
-//-----------------------------------
 
-// --- Currency Formatter ---
 const CURRENCY_FORMATTER = new Intl.NumberFormat("es-AR", {
   style: "currency",
   currency: "ARS",
@@ -201,9 +167,6 @@ function formatCurrency(amount: number | undefined) {
   }
   return CURRENCY_FORMATTER.format(amount);
 }
-//--------------------------
-
-// --- Main DiscountCard Component ---
 interface DiscountCardProps {
   discount: Discount;
   selectedType: "Presencial" | "Online";
@@ -217,7 +180,6 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
   const { savedPaymentMethods } = usePaymentMethodsStore();
   const shouldFilterByPaymentMethods = useShouldFilterByPaymentMethods();
 
-  // --- Derived Data ---
   const appliesOnlyTo = useMemo(() => {
     const APPLIES_ONLY_STRINGS: Record<string, string> = {
       anses: "ANSES",
@@ -270,9 +232,6 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
       isDrawerOpen ? discount.excludesProducts : undefined,
       true
     );
-  //---------------------
-
-  if (!discount) return null; // Handle case where discount might be null/undefined
 
   const renderDiscountValue = () => {
     if (discount.discount.type === "porcentaje") {
@@ -302,19 +261,16 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
       <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
         <DrawerTrigger asChild className="w-full cursor-pointer">
           <div className="flex items-center justify-between w-full">
-            {/* Main Card Content (Trigger Area) - Uses implemented BrandLogo */}
             <div className="flex items-center gap-2 text-left flex-grow min-w-0">
               {" "}
-              {/* Added min-w-0 */}
               <SupermarketLogo
                 source={discount.source}
                 small
-                containerClassName="flex-shrink-0 mr-2" // Adjusted classes
-                className="h-8 max-w-8 md:h-10 md:max-w-10" // Responsive size
+                containerClassName="flex-shrink-0 mr-2"
+                className="h-8 max-w-8 md:h-10 md:max-w-10"
               />
               <div className="text-xl md:text-2xl font-black flex-shrink-0">
                 {" "}
-                {/* Adjusted size */}
                 {renderDiscountValue()}
               </div>
               <div className="flex flex-col items-start gap-1 flex-grow min-w-0">
@@ -323,8 +279,8 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                 {discount.onlyForProducts && (
                   <Badge
                     variant="secondary"
-                    className="overflow-hidden text-ellipsis whitespace-nowrap text-xs px-1.5 py-0.5" // Adjusted padding/width
-                    title={discount.onlyForProducts} // Add full text on hover
+                    className="overflow-hidden text-ellipsis whitespace-nowrap text-xs px-1.5 py-0.5"
+                    title={discount.onlyForProducts}
                   >
                     <span className="overflow-hidden text-ellipsis whitespace-nowrap">
                       Solo {isLoadingOnlyFor ? "..." : onlyForProductsSummary}
@@ -337,12 +293,10 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                     className="gap-1 px-1.5 py-0.5 text-xs"
                   >
                     {" "}
-                    {/* Adjusted padding/size */}
                     <span className="font-black">!</span>
                     Restricciones
                   </Badge>
                 )}
-                {/* Keep other badges as is for now */}
                 {appliesOnlyTo.length > 0 && (
                   <Badge
                     variant="default"
@@ -380,7 +334,6 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                 )}
               </div>
             </div>
-            {/* Payment Method Icons - Uses implemented PaymentMethodLogo */}
             {paymentMethodIcons.length > 0 && (
               <div
                 className={cn(
@@ -389,7 +342,6 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                 )}
               >
                 {" "}
-                {/* Added margin */}
                 {paymentMethodIcons.map((method: string) => (
                   <PaymentMethodLogo key={method} method={method} small />
                 ))}
@@ -398,7 +350,6 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
           </div>
         </DrawerTrigger>
 
-        {/* Drawer Content */}
         <DrawerPortal>
           <DrawerOverlay className="fixed inset-0 bg-black/40" />
           <DrawerContent className="bg-background flex flex-col rounded-t-[10px] mt-24 h-[90%] fixed bottom-0 left-0 right-0 outline-none max-w-2xl mx-auto">
@@ -534,16 +485,12 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
               </div>
             </div>
             <DrawerFooter className="border-t sticky bottom-0 bg-background py-2">
-              <Button
-                variant="outline"
-                asChild // Use asChild to render an anchor tag
-                className="w-full"
-              >
+              <Button variant="outline" asChild className="w-full">
                 <a
                   href={discount.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-1" // Center content
+                  className="flex items-center justify-center gap-1"
                 >
                   <ExternalLinkIcon className="h-4 w-4" />
                   Ver más detalles

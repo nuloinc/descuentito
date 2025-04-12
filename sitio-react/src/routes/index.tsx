@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
 import { useState, useRef, useEffect, useMemo } from "react";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -37,7 +36,6 @@ import { useRouter } from "@tanstack/react-router";
 import { BRAND_LOGOS_SMALL } from "@/lib/logos";
 import SupermarketLogo from "@/components/supermarket-logo";
 
-// Dayjs setup
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(weekday);
@@ -93,9 +91,6 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const promotionsData = Route.useLoaderData();
-  const router = useRouter();
-  const isLoading = router.state.isLoading;
-  const [error, setError] = useState<Error | null>(null);
 
   const formattedWeekDates = useMemo(getFormattedWeekDates, []);
   const todayIndex = useMemo(
@@ -106,9 +101,8 @@ function Home() {
     [formattedWeekDates]
   );
 
-  // Initialize state with simple defaults
-  const [selectedTabId, setSelectedTabId] = useState<string | undefined>(
-    undefined
+  const [selectedTabId, setSelectedTabId] = useState<string>(
+    dayjs().tz(timeZone).format("YYYY-MM-DD")
   );
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
   const [selectedType, setSelectedType] = useState<"Presencial" | "Online">(
@@ -121,22 +115,8 @@ function Home() {
     "Todos" | "Descuentos" | "Cuotas"
   >("Todos");
 
-  // Get payment method state from Zustand store
   const { savedPaymentMethods, savedConditions } = usePaymentMethodsStore();
   const shouldFilterByPaymentMethods = useShouldFilterByPaymentMethods();
-
-  // Effect to set initial tab after mount
-  useEffect(() => {
-    if (formattedWeekDates.length > 0) {
-      const initialIndex = todayIndex >= 0 ? todayIndex : 0;
-      setSelectedTabId(formattedWeekDates[initialIndex]?.id ?? undefined);
-    }
-  }, [formattedWeekDates, todayIndex]); // Run when dates/index are ready
-
-  // Update tab when handleTabChange is called
-  const handleTabChange = (value: string) => {
-    setSelectedTabId(value);
-  };
 
   const basePromotions = useMemo(() => {
     if (!promotionsData) return [];
@@ -222,12 +202,7 @@ function Home() {
 
   const promotionsByWeekday = useMemo(() => {
     return formattedWeekDates.map((weekDateInfo) => {
-      // Defensive check for weekDateInfo
-      if (!weekDateInfo || !weekDateInfo.dayjs || !weekDateInfo.weekday)
-        return [];
       return basePromotions.filter((promotion: Discount) => {
-        // Defensive check for promotion object
-        if (!promotion) return false;
         // Basic date/weekday filtering - needs full logic from Svelte
         if (
           promotion.weekdays &&
@@ -270,16 +245,9 @@ function Home() {
     }
   }, [selectedTabId, formattedWeekDates, todayIndex]);
 
-  // Get the currently selected content index
-  const currentTabIndex = selectedTabId
-    ? formattedWeekDates.findIndex((d) => d.id === selectedTabId)
-    : todayIndex >= 0
-      ? todayIndex
-      : 0;
-
-  if (error) {
-    return <div>Error loading promotions: {error.message}</div>;
-  }
+  const currentTabIndex = formattedWeekDates.findIndex(
+    (d) => d.id === selectedTabId
+  );
 
   return (
     <div className="site-container bg-background relative min-h-screen flex flex-col">
@@ -328,13 +296,12 @@ function Home() {
         </div>
       </div>
 
-      {/* Sticky Tabs Header */}
       <header className="sticky top-0 z-40 w-full bg-sidebar/70 py-2 shadow-md backdrop-blur">
         <div className="mx-auto w-full">
           <div className="flex items-center justify-between gap-2 px-2">
             <Tabs
               value={selectedTabId}
-              onValueChange={handleTabChange}
+              onValueChange={(value: string) => setSelectedTabId(value)}
               className="mx-auto mb-0"
             >
               <TabsList className="flex md:gap-1 overflow-x-auto scrollbar-hide">
