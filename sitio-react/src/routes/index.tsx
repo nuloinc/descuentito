@@ -359,9 +359,7 @@ function Promotions({
             try {
               if (navigator.share) {
                 await navigator.share({
-                  title: "Descuentito.ar - Descuentos en supermercados",
                   text,
-                  url: window.location.href,
                 });
               } else {
                 navigator.clipboard.writeText(text);
