@@ -19,7 +19,7 @@ import {
   DrawerClose,
 } from "src/components/ui/drawer";
 import { Button } from "src/components/ui/button";
-import { Filter, MessageCircleWarning, Sparkles } from "lucide-react";
+import { Filter, MessageCircleWarning, Sparkles, Share2 } from "lucide-react";
 import { DiscountCard, PaymentMethodLogo } from "src/components/discount-card"; // Import the actual component
 import SupermarketFilter from "src/components/supermarket-filter"; // Import the actual component
 import FilterByPaymentMethodsButton from "src/components/filter-by-payment-methods-button"; // Import the actual component
@@ -266,45 +266,118 @@ function Promotions({
   }, [basePromotions, formattedWeekDates]);
 
   return (
-    selectedTabId && (
-      <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2">
-        {currentTabIndex >= 0 &&
-          promotionsByWeekday[currentTabIndex]?.map((discount, idx) => (
-            <DiscountCard
-              key={`${discount.source}-${idx}`}
-              discount={discount}
-              selectedType={selectedType}
-            />
-          ))}
-        {currentTabIndex >= 0 &&
-          promotionsByWeekday[currentTabIndex]?.length === 0 && (
-            <div className="col-span-full py-8">
-              <div className="flex flex-col items-center justify-center gap-4 rounded-lg border bg-card p-8 text-center">
-                <div className="text-muted-foreground">
-                  <Filter className="mx-auto mb-2 h-12 w-12 opacity-50" />
-                  <h3 className="text-xl font-semibold">No hay promociones</h3>
-                  <p className="mt-2 text-sm">
-                    No se encontraron promociones para este día{" "}
-                    {selectedSupermarket
-                      ? `en ${SUPERMARKET_NAMES[selectedSupermarket]}`
-                      : ""}
-                    .
-                  </p>
+    <>
+      {selectedTabId && (
+        <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2">
+          {currentTabIndex >= 0 &&
+            promotionsByWeekday[currentTabIndex]?.map((discount, idx) => (
+              <DiscountCard
+                key={`${discount.source}-${idx}`}
+                discount={discount}
+                selectedType={selectedType}
+              />
+            ))}
+          {currentTabIndex >= 0 &&
+            promotionsByWeekday[currentTabIndex]?.length === 0 && (
+              <div className="col-span-full py-8">
+                <div className="flex flex-col items-center justify-center gap-4 rounded-lg border bg-card p-8 text-center">
+                  <div className="text-muted-foreground">
+                    <Filter className="mx-auto mb-2 h-12 w-12 opacity-50" />
+                    <h3 className="text-xl font-semibold">
+                      No hay promociones
+                    </h3>
+                    <p className="mt-2 text-sm">
+                      No se encontraron promociones para este día{" "}
+                      {selectedSupermarket
+                        ? `en ${SUPERMARKET_NAMES[selectedSupermarket]}`
+                        : ""}
+                      .
+                    </p>
+                  </div>
+                  {selectedSupermarket && (
+                    <Button
+                      variant="outline"
+                      onClick={() => setSelectedSupermarket(null)}
+                      className="mt-2"
+                    >
+                      Ver todos los supermercados
+                    </Button>
+                  )}
                 </div>
-                {selectedSupermarket && (
-                  <Button
-                    variant="outline"
-                    onClick={() => setSelectedSupermarket(null)}
-                    className="mt-2"
-                  >
-                    Ver todos los supermercados
-                  </Button>
-                )}
               </div>
-            </div>
-          )}
+            )}
+        </div>
+      )}
+      <div className="mt-2 mx-2 flex flex-col items-stretch p-2 border border-dashed border-secondary rounded-lg gap-2">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="outline" className="text-lg py-6" size="lg">
+              <MessageCircleWarning className="size-5" />
+              Reportar un problema
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Reportar un error en esta promoción</DialogTitle>
+              <DialogDescription>
+                ¿Encontraste un error o algo incorrecto en esta promoción? Por
+                favor, contanos qué viste.
+              </DialogDescription>
+            </DialogHeader>
+            <FeedbackForm />
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">Cerrar</Button>
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        <Button
+          variant="outline"
+          className="text-lg py-6"
+          size="lg"
+          onClick={async () => {
+            const promotionsText = promotionsByWeekday[currentTabIndex]
+              .map((promotion) => {
+                const source =
+                  SUPERMARKET_NAMES[promotion.source] || promotion.source;
+                const discountType =
+                  promotion.discount.type === "cuotas sin intereses"
+                    ? "CSI"
+                    : "%";
+                const paymentMethodsText =
+                  promotion.paymentMethods &&
+                  promotion.paymentMethods.length > 0
+                    ? ` con ${promotion.paymentMethods.flat().slice(0, 2).join(", ")}${promotion.paymentMethods.flat().length > 2 ? "..." : ""}`
+                    : "";
+                return `* ${promotion.discount.value}${discountType} en ${source}${paymentMethodsText}`;
+              })
+              .join("\n");
+            const text = `Mira estos descuentos en supermercados para ${formattedWeekDates[currentTabIndex]?.display || "hoy"}: ${promotionsText}`;
+
+            try {
+              if (navigator.share) {
+                await navigator.share({
+                  title: "Descuentito.ar - Descuentos en supermercados",
+                  text,
+                  url: window.location.href,
+                });
+              } else {
+                navigator.clipboard.writeText(text);
+                alert("Link copiado al portapapeles");
+              }
+            } catch (err) {
+              navigator.clipboard.writeText(text);
+              alert("Link copiado al portapapeles");
+            }
+          }}
+        >
+          <Share2 className="size-5" />
+          Compartir
+        </Button>
       </div>
-    )
+    </>
   );
 }
 
@@ -488,32 +561,6 @@ function Home() {
             )}
           </Await>
         )}
-      </div>
-
-      <div className="mt-2 mx-2 flex flex-col items-stretch p-2 border border-dashed border-secondary rounded-lg">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="outline" className="text-lg py-6" size="lg">
-              <MessageCircleWarning className="size-5" />
-              Reportar un problema
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Reportar un error en esta promoción</DialogTitle>
-              <DialogDescription>
-                ¿Encontraste un error o algo incorrecto en esta promoción? Por
-                favor, contanos qué viste.
-              </DialogDescription>
-            </DialogHeader>
-            <FeedbackForm />
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="outline">Cerrar</Button>
-              </DialogClose>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
       </div>
 
       <Drawer open={isFilterDrawerOpen} onOpenChange={setIsFilterDrawerOpen}>
