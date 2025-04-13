@@ -294,11 +294,10 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
               </div>
               <div className="flex flex-col items-start gap-1 flex-grow min-w-0">
                 {" "}
-                {/* Added min-w-0 */}
                 {discount.onlyForProducts && (
                   <Badge
                     variant="secondary"
-                    className="overflow-hidden text-ellipsis whitespace-nowrap text-xs px-1.5 py-0.5"
+                    className="overflow-hidden text-ellipsis whitespace-nowrap text-xs px-1.5 py-0.5 max-w-48"
                     title={discount.onlyForProducts}
                   >
                     <span className="overflow-hidden text-ellipsis whitespace-nowrap">
@@ -447,6 +446,12 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                       <div>
                         <h4 className="font-medium mb-1">Restricciones:</h4>
                         <ul className="list-disc pl-5 text-sm space-y-1">
+                          {discount.onlyForProducts ? (
+                            <li>
+                              <span className="font-bold">Solo para:</span>{" "}
+                              {discount.onlyForProducts}
+                            </li>
+                          ) : null}
                           {discount.restrictions.map(
                             (restriction: string, idx: number) => (
                               <li key={idx}>{restriction}</li>
