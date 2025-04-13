@@ -354,7 +354,7 @@ function Promotions({
                 return `* ${promotion.discount.value}${discountType} en ${source}${paymentMethodsText}`;
               })
               .join("\n");
-            const text = `Mira estos descuentos en supermercados para ${formattedWeekDates[currentTabIndex]?.display || "hoy"}: ${promotionsText}`;
+            const text = `Mira estos descuentos en supermercados para ${formattedWeekDates[currentTabIndex]?.display || "hoy"}:\n${promotionsText}\n\nEncontrá más descuentos en descuentito.ar`;
 
             try {
               if (navigator.share) {
