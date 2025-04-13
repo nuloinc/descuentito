@@ -307,72 +307,74 @@ function Promotions({
             )}
         </div>
       )}
-      <div className="mt-2 mx-2 flex flex-col items-stretch p-2 border border-dashed border-secondary rounded-lg gap-2 mb-2">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="outline" className="text-lg py-6" size="lg">
-              <MessageCircleWarning className="size-5" />
-              Reportar un problema
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Reportar un problema</DialogTitle>
-              <DialogDescription>
-                ¿Encontraste un error o algo incorrecto en la página? Por favor,
-                contanos qué viste.
-              </DialogDescription>
-            </DialogHeader>
-            <FeedbackForm />
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="outline">Cerrar</Button>
-              </DialogClose>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+      <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2">
+        <div className="mt-2 flex flex-col items-stretch p-2 border border-dashed border-secondary rounded-lg gap-2 mb-2 max-w-md w-full mx-auto">
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="text-lg py-6" size="lg">
+                <MessageCircleWarning className="size-5" />
+                Reportar un problema
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Reportar un problema</DialogTitle>
+                <DialogDescription>
+                  ¿Encontraste un error o algo incorrecto en la página? Por
+                  favor, contanos qué viste.
+                </DialogDescription>
+              </DialogHeader>
+              <FeedbackForm />
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button variant="outline">Cerrar</Button>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
 
-        <Button
-          variant="outline"
-          className="text-lg py-6"
-          size="lg"
-          onClick={async () => {
-            const promotionsText = promotionsByWeekday[currentTabIndex]
-              .map((promotion) => {
-                const source =
-                  SUPERMARKET_NAMES[promotion.source] || promotion.source;
-                const discountType =
-                  promotion.discount.type === "cuotas sin intereses"
-                    ? "CSI"
-                    : "%";
-                const paymentMethodsText =
-                  promotion.paymentMethods &&
-                  promotion.paymentMethods.length > 0
-                    ? ` con ${promotion.paymentMethods.flat().slice(0, 2).join(", ")}${promotion.paymentMethods.flat().length > 2 ? "..." : ""}`
-                    : "";
-                return `* ${promotion.discount.value}${discountType} en ${source}${paymentMethodsText}`;
-              })
-              .join("\n");
-            const text = `Mira estos descuentos en supermercados para ${formattedWeekDates[currentTabIndex]?.display || "hoy"}:\n${promotionsText}\n\nEncontrá más descuentos en descuentito.ar`;
+          <Button
+            variant="outline"
+            className="text-lg py-6"
+            size="lg"
+            onClick={async () => {
+              const promotionsText = promotionsByWeekday[currentTabIndex]
+                .map((promotion) => {
+                  const source =
+                    SUPERMARKET_NAMES[promotion.source] || promotion.source;
+                  const discountType =
+                    promotion.discount.type === "cuotas sin intereses"
+                      ? "CSI"
+                      : "%";
+                  const paymentMethodsText =
+                    promotion.paymentMethods &&
+                    promotion.paymentMethods.length > 0
+                      ? ` con ${promotion.paymentMethods.flat().slice(0, 2).join(", ")}${promotion.paymentMethods.flat().length > 2 ? "..." : ""}`
+                      : "";
+                  return `* ${promotion.discount.value}${discountType} en ${source}${paymentMethodsText}`;
+                })
+                .join("\n");
+              const text = `Mira estos descuentos en supermercados para ${formattedWeekDates[currentTabIndex]?.display || "hoy"}:\n${promotionsText}\n\nEncontrá más descuentos en descuentito.ar`;
 
-            try {
-              if (navigator.share) {
-                await navigator.share({
-                  text,
-                });
-              } else {
+              try {
+                if (navigator.share) {
+                  await navigator.share({
+                    text,
+                  });
+                } else {
+                  navigator.clipboard.writeText(text);
+                  alert("Link copiado al portapapeles");
+                }
+              } catch (err) {
                 navigator.clipboard.writeText(text);
                 alert("Link copiado al portapapeles");
               }
-            } catch (err) {
-              navigator.clipboard.writeText(text);
-              alert("Link copiado al portapapeles");
-            }
-          }}
-        >
-          <Share2 className="size-5" />
-          Compartir
-        </Button>
+            }}
+          >
+            <Share2 className="size-5" />
+            Compartir
+          </Button>
+        </div>
       </div>
     </>
   );
