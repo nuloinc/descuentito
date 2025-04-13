@@ -268,8 +268,12 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
   };
 
   return (
-    <div className="bg-card text-card-foreground rounded-lg border px-3 py-2 shadow-md">
-      <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+    <div className="bg-card text-card-foreground rounded-lg border px-3 py-2">
+      <Drawer
+        open={isDrawerOpen}
+        onOpenChange={setIsDrawerOpen}
+        repositionInputs={false}
+      >
         <DrawerTrigger asChild className="w-full cursor-pointer">
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-2 text-left flex-grow min-w-0">
@@ -521,7 +525,7 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                 </DialogContent>
               </Dialog>
             </div>
-            <DrawerFooter className="border-t sticky bottom-0 bg-background py-2 pb-[env(safe-area-inset-bottom,_10px)]">
+            <DrawerFooter className="border-t sticky bottom-0 bg-background py-2 pb-[calc(env(safe-area-inset-bottom)+.5rem)]">
               <Button asChild className="w-full">
                 <a
                   href={discount.url}

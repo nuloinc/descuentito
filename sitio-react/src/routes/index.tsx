@@ -308,7 +308,7 @@ function Promotions({
             )}
         </div>
       )}
-      <div className="mt-2 mx-2 flex flex-col items-stretch p-2 border border-dashed border-secondary rounded-lg gap-2">
+      <div className="mt-2 mx-2 flex flex-col items-stretch p-2 border border-dashed border-secondary rounded-lg gap-2 mb-2">
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="outline" className="text-lg py-6" size="lg">
@@ -458,7 +458,7 @@ function Home() {
   }, []);
 
   return (
-    <div className="site-container bg-background relative min-h-screen flex flex-col">
+    <div className="site-container bg-backgrounder relative min-h-screen flex flex-col">
       <div className="bg-sidebar pb-2 pt-4">
         <div className="container mx-auto max-w-4xl px-4">
           <h1 className="flex items-center gap-2 text-3xl font-bold">
@@ -509,9 +509,9 @@ function Home() {
         </div>
       </div>
 
-      <div className="h-[env(safe-area-inset-top)] fixed top-0 left-0 right-0 z-40 bg-sidebar/70 backdrop-blur"></div>
+      <div className="h-[env(safe-area-inset-top)] fixed top-0 left-0 right-0 z-40 bg-sidebar/90 backdrop-blur"></div>
 
-      <header className="sticky top-[env(safe-area-inset-top)] z-40 w-full bg-sidebar/70 shadow-md backdrop-blur">
+      <header className="sticky top-[env(safe-area-inset-top)] z-40 w-full bg-sidebar/90 shadow-md backdrop-blur">
         <div className="mx-auto w-full my-2">
           <div className="flex items-center justify-between gap-2 px-2">
             <Tabs
@@ -561,10 +561,14 @@ function Home() {
         )}
       </div>
 
-      <Drawer open={isFilterDrawerOpen} onOpenChange={setIsFilterDrawerOpen}>
+      <Drawer
+        open={isFilterDrawerOpen}
+        onOpenChange={setIsFilterDrawerOpen}
+        repositionInputs={false}
+      >
         <DrawerTrigger asChild>
           <div
-            className="bg-sidebar text-primary fixed bottom-0 z-50 flex w-full flex-col items-center justify-center gap-2 rounded-t-[10px] px-4 text-lg font-medium shadow-xl pb-[env(safe-area-inset-bottom,_10px)]"
+            className="bg-sidebar text-primary fixed bottom-0 z-50 flex w-full flex-col items-center justify-center gap-2 rounded-t-[10px] px-4 text-lg font-medium shadow-xl pb-[calc(env(safe-area-inset-bottom)+10px)]"
             onClick={() => setIsFilterDrawerOpen(true)}
             onTouchStart={() => setIsFilterDrawerOpen(true)}
           >
@@ -662,7 +666,7 @@ function Home() {
               </div>
               <FilterByPaymentMethodsButton className="mt-2" />
             </div>
-            <DrawerFooter className="border-t sticky bottom-0 pb-[env(safe-area-inset-bottom,_10px)] bg-sidebar">
+            <DrawerFooter className="border-t sticky bottom-0 pb-[calc(env(safe-area-inset-bottom)+.5rem)] bg-sidebar">
               <DrawerClose asChild>
                 <Button variant="default">Aplicar filtros</Button>
               </DrawerClose>
