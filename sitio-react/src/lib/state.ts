@@ -70,14 +70,12 @@ export const usePaymentMethodsStore = create<PaymentMethodsState>()(
   )
 );
 
-// Derived state selector (similar to Svelte's derived stores)
 export const useShouldFilterByPaymentMethods = () => {
   const { filteringByPaymentMethods, savedPaymentMethods } =
     usePaymentMethodsStore();
   return filteringByPaymentMethods && savedPaymentMethods.size > 0;
 };
 
-// Export SOURCES and SUPERMARKET_NAMES to avoid duplication
 export const SOURCES = [
   "carrefour",
   "coto",

@@ -234,10 +234,9 @@ function Promotions({
   const promotionsByWeekday = useMemo(() => {
     return formattedWeekDates.map((weekDateInfo) => {
       return basePromotions.filter((promotion: Discount) => {
-        // Basic date/weekday filtering - needs full logic from Svelte
         if (
           promotion.weekdays &&
-          !promotion.weekdays.includes(weekDateInfo.weekday) // weekday is checked above
+          !promotion.weekdays.includes(weekDateInfo.weekday)
         )
           return false;
         const weekdayDate = weekDateInfo.dayjs;

@@ -1,5 +1,6 @@
 ---
 description: Useful when writing SvelteKit components with styling
-globs: *.svelte
+globs: *.tsx
+alwaysApply: false
 ---
-When writing SvelteKit component, use Shadcn Svelte Next for basic components. If you need to request the docs, ask the user to query @shadcn svelte next.
+When writing React components, use Shadcn for basic components.

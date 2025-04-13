@@ -11,7 +11,6 @@ import { Checkbox } from "src/components/ui/checkbox";
 import { Label } from "src/components/ui/label";
 import { cn } from "src/lib/utils";
 
-// Create types similar to the Svelte version
 type SubOptionDisplay = {
   id: PaymentMethod;
   question: string; // Generated question
@@ -23,7 +22,6 @@ type BankOptionDisplay = {
   subOptions?: SubOptionDisplay[];
 };
 
-// Function to build display options with parent-child relationships
 function buildDisplayOptions(
   allMethods: readonly PaymentMethod[],
   groups: ReadonlyArray<readonly PaymentMethod[]>
@@ -31,12 +29,10 @@ function buildDisplayOptions(
   const optionsMap = new Map<PaymentMethod, BankOptionDisplay>();
   const allGroupChildren = new Set<PaymentMethod>();
 
-  // Initialize map with all methods as potential top-level options
   for (const method of allMethods) {
     optionsMap.set(method, { id: method, name: method, subOptions: [] });
   }
 
-  // Process groups to establish hierarchy and collect children
   for (const group of groups) {
     if (group.length > 1) {
       const parentId = group[0];

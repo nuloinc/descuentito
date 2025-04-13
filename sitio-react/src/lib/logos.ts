@@ -92,7 +92,6 @@ import ChangoMasOnline from "~/logos/supermercados/changomas_online.png?url";
 import Makro from "~/logos/supermercados/makro.svg?url";
 import MakroSmall from "~/logos/supermercados/makro_small.svg?url";
 
-// Structure mirrors Svelte version, using simple string paths
 export const BRAND_LOGOS: Record<string, Record<string, string>> = {
   carrefour: {
     Market: CarrefourMarket,
