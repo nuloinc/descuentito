@@ -19,7 +19,7 @@ import {
   DrawerClose,
 } from "src/components/ui/drawer";
 import { Button } from "src/components/ui/button";
-import { Filter, Sparkles } from "lucide-react";
+import { Filter, MessageCircleWarning, Sparkles } from "lucide-react";
 import { DiscountCard, PaymentMethodLogo } from "src/components/discount-card"; // Import the actual component
 import SupermarketFilter from "src/components/supermarket-filter"; // Import the actual component
 import FilterByPaymentMethodsButton from "src/components/filter-by-payment-methods-button"; // Import the actual component
@@ -33,6 +33,17 @@ import { getPromotions, PromotionData } from "src/server/promotions";
 import { BRAND_LOGOS_SMALL } from "@/lib/logos";
 import SupermarketLogo from "@/components/supermarket-logo";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
+import { FeedbackForm } from "@/components/feedback-form";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -401,7 +412,7 @@ function Home() {
               >
                 <div className="flex-grow flex items-center justify-between">
                   <span className="flex-grow font-medium">
-                    Configurar mis medios de pago guardados
+                    Configura tus medios de pago guardados
                   </span>
                   <span>→</span>
                 </div>
@@ -475,6 +486,32 @@ function Home() {
             )}
           </Await>
         )}
+      </div>
+
+      <div className="mt-2 mx-2 flex flex-col items-stretch p-2 border border-dashed border-secondary rounded-lg">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="outline" className="text-lg py-6" size="lg">
+              <MessageCircleWarning className="size-5" />
+              Reportar un problema
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Reportar un error en esta promoción</DialogTitle>
+              <DialogDescription>
+                ¿Encontraste un error o algo incorrecto en esta promoción? Por
+                favor, contanos qué viste.
+              </DialogDescription>
+            </DialogHeader>
+            <FeedbackForm />
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">Cerrar</Button>
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <Drawer open={isFilterDrawerOpen} onOpenChange={setIsFilterDrawerOpen}>
