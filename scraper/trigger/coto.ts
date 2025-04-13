@@ -15,7 +15,6 @@ import {
 import { savePromotions } from "../lib/git";
 import { createPlaywrightSession, openrouter } from "../lib";
 import assert from "assert";
-import { writeFile } from "fs/promises";
 import { cleanDiscounts } from "../lib/clean";
 
 const promotionSchema = BasicDiscountSchema.extend({
@@ -160,8 +159,6 @@ export const cotoTask = schedules.task({
 
     console.log(els.length);
 
-    await writeFile("highlightedContent.txt", highlightedContent);
-
     let discountData: {
       highlightedContent: string;
       txt: string;
@@ -176,7 +173,6 @@ export const cotoTask = schedules.task({
         txt,
         screenshot,
       });
-      await writeFile(`./${SOURCE}-${i}.png`, screenshot);
     }
     await Promise.all(
       discountData.map(async (data) => {
