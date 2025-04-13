@@ -189,8 +189,12 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
   selectedType,
 }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const { savedPaymentMethods } = usePaymentMethodsStore();
+  const { savedPaymentMethods, showingPaymentMethodsInDiscountCard } =
+    usePaymentMethodsStore();
   const shouldFilterByPaymentMethods = useShouldFilterByPaymentMethods();
+
+  const shouldShowPaymentMethodsInCard =
+    savedPaymentMethods.size > 0 ? showingPaymentMethodsInDiscountCard : true;
 
   const appliesOnlyTo = useMemo(() => {
     const APPLIES_ONLY_STRINGS: Record<string, string> = {
@@ -349,19 +353,20 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                 )}
               </div>
             </div>
-            {paymentMethodIcons.length > 0 && (
-              <div
-                className={cn(
-                  "grid flex-shrink-0 gap-1 ml-2",
-                  getPaymentMethodGridCols(paymentMethodIcons.length)
-                )}
-              >
-                {" "}
-                {paymentMethodIcons.map((method: string) => (
-                  <PaymentMethodLogo key={method} method={method} small />
-                ))}
-              </div>
-            )}
+            {paymentMethodIcons.length > 0 &&
+              shouldShowPaymentMethodsInCard && (
+                <div
+                  className={cn(
+                    "grid flex-shrink-0 gap-1 ml-2",
+                    getPaymentMethodGridCols(paymentMethodIcons.length)
+                  )}
+                >
+                  {" "}
+                  {paymentMethodIcons.map((method: string) => (
+                    <PaymentMethodLogo key={method} method={method} small />
+                  ))}
+                </div>
+              )}
           </div>
         </DrawerTrigger>
 

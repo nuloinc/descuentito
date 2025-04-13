@@ -5,6 +5,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 interface PaymentMethodsState {
   savedPaymentMethods: Set<PaymentMethod>;
   filteringByPaymentMethods: boolean;
+  showingPaymentMethodsInDiscountCard: boolean;
   savedConditions: {
     jubilados: boolean;
     anses: boolean;
@@ -12,6 +13,7 @@ interface PaymentMethodsState {
   addPaymentMethod: (method: PaymentMethod) => void;
   removePaymentMethod: (method: PaymentMethod) => void;
   setFilteringByPaymentMethods: (filtering: boolean) => void;
+  setShowingPaymentMethodsInDiscountCard: (showing: boolean) => void;
   setSavedCondition: (key: "jubilados" | "anses", value: boolean) => void;
 }
 
@@ -24,6 +26,7 @@ export const usePaymentMethodsStore = create<PaymentMethodsState>()(
     (set) => ({
       savedPaymentMethods: new Set<PaymentMethod>(),
       filteringByPaymentMethods: true,
+      showingPaymentMethodsInDiscountCard: false,
       savedConditions: {
         jubilados: false,
         anses: false,
@@ -42,6 +45,8 @@ export const usePaymentMethodsStore = create<PaymentMethodsState>()(
         }),
       setFilteringByPaymentMethods: (filtering) =>
         set({ filteringByPaymentMethods: filtering }),
+      setShowingPaymentMethodsInDiscountCard: (showing: boolean) =>
+        set({ showingPaymentMethodsInDiscountCard: showing }),
       setSavedCondition: (key, value) =>
         set((state) => ({
           savedConditions: {
@@ -56,6 +61,8 @@ export const usePaymentMethodsStore = create<PaymentMethodsState>()(
       partialize: (state) => ({
         savedPaymentMethods: setToArray(state.savedPaymentMethods),
         filteringByPaymentMethods: state.filteringByPaymentMethods,
+        showingPaymentMethodsInDiscountCard:
+          state.showingPaymentMethodsInDiscountCard,
         savedConditions: state.savedConditions,
       }),
       onRehydrateStorage: () => (state) => {

@@ -10,6 +10,7 @@ import { Button } from "src/components/ui/button";
 import { Checkbox } from "src/components/ui/checkbox";
 import { Label } from "src/components/ui/label";
 import { cn } from "src/lib/utils";
+import { Switch } from "@/components/ui/switch";
 
 type SubOptionDisplay = {
   id: PaymentMethod;
@@ -88,6 +89,8 @@ function PaymentMethodsConfig() {
     removePaymentMethod,
     savedConditions,
     setSavedCondition,
+    showingPaymentMethodsInDiscountCard,
+    setShowingPaymentMethodsInDiscountCard,
   } = usePaymentMethodsStore();
 
   // Process payment method options
@@ -114,10 +117,14 @@ function PaymentMethodsConfig() {
   return (
     <div className="min-h-screen bg-background">
       <nav className="sticky top-0 z-10 flex items-center gap-2 border-b p-2 bg-sidebar">
-        <Link to="/">
-          <ArrowLeft className="h-8 w-8" />
-        </Link>
-        <span className="flex-grow text-left font-medium">Medios de pago</span>
+        <div className="flex items-center gap-2 max-w-md w-full mx-auto">
+          <Link to="/">
+            <ArrowLeft className="h-7 w-7" />
+          </Link>
+          <span className="flex-grow text-left font-medium">
+            Medios de pago
+          </span>
+        </div>
       </nav>
 
       <div className="container mx-auto max-w-md p-4">
@@ -218,14 +225,27 @@ function PaymentMethodsConfig() {
             );
           })}
         </div>
-      </div>
-      <div className="mt-8 flex justify-end sticky bottom-0 border-t p-4 bg-background">
-        <Button variant="default" className="w-full" asChild>
-          <Link to="/" replace preload="intent">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Volver a tus descuentos
-          </Link>
-        </Button>
+        <div className="flex items-center space-x-3">
+          <Switch
+            id="mostrar-en-descuentos"
+            checked={showingPaymentMethodsInDiscountCard}
+            onCheckedChange={(checked) =>
+              setShowingPaymentMethodsInDiscountCard(checked === true)
+            }
+            className="mt-8 mb-6"
+          />
+          <Label htmlFor="mostrar-en-descuentos" className="pt-8 pb-6">
+            Mostrar medios de pago en descuentos
+          </Label>
+        </div>
+        <div className="mt-2 flex justify-end sticky bottom-0 border-t p-4 bg-background">
+          <Button variant="default" className="w-full" asChild>
+            <Link to="/" replace preload="intent">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Volver a tus descuentos
+            </Link>
+          </Button>
+        </div>
       </div>
     </div>
   );
