@@ -238,14 +238,19 @@ function PaymentMethodsConfig() {
             Mostrar medios de pago en descuentos
           </Label>
         </div>
-        <div className="mt-2 flex justify-end sticky bottom-0 border-t p-4 bg-background">
-          <Button variant="default" className="w-full" asChild>
-            <Link to="/" replace preload="intent">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Volver a tus descuentos
-            </Link>
-          </Button>
-        </div>
+      </div>
+      <div className="mt-2 flex justify-end sticky bottom-0 border-t p-4 bg-background">
+        <Button variant="default" asChild>
+          <Link
+            to="/"
+            replace
+            preload="intent"
+            className="w-full max-w-sm mx-auto"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Volver a tus descuentos
+          </Link>
+        </Button>
       </div>
     </div>
   );

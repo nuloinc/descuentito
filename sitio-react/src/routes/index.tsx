@@ -356,16 +356,11 @@ function Promotions({
                 .join("\n");
               const text = `Mira estos descuentos en supermercados para ${formattedWeekDates[currentTabIndex]?.display || "hoy"}:\n${promotionsText}\n\nEncontrá más descuentos en descuentito.ar`;
 
-              try {
-                if (navigator.share) {
-                  await navigator.share({
-                    text,
-                  });
-                } else {
-                  navigator.clipboard.writeText(text);
-                  alert("Link copiado al portapapeles");
-                }
-              } catch (err) {
+              if (navigator.share) {
+                await navigator.share({
+                  text,
+                });
+              } else {
                 navigator.clipboard.writeText(text);
                 alert("Link copiado al portapapeles");
               }
@@ -667,12 +662,14 @@ function Home() {
               </div>
               <FilterByPaymentMethodsButton className="mt-2" />
             </div>
-            <DrawerFooter className="border-t sticky bottom-0 pb-[calc(env(safe-area-inset-bottom)+.5rem)] bg-sidebar">
-              <DrawerClose asChild>
-                <Button variant="default">Aplicar filtros</Button>
-              </DrawerClose>
-            </DrawerFooter>
           </div>
+          <DrawerFooter className="border-t sticky bottom-0 pb-[calc(env(safe-area-inset-bottom)+.5rem)] bg-sidebar">
+            <DrawerClose asChild>
+              <Button variant="default" className="max-w-sm mx-auto w-full">
+                Aplicar filtros
+              </Button>
+            </DrawerClose>
+          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </div>
