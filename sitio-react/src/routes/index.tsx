@@ -438,8 +438,10 @@ function Home() {
         </div>
       </div>
 
-      <header className="sticky top-0 z-40 w-full bg-sidebar/70 py-2 shadow-md backdrop-blur">
-        <div className="mx-auto w-full">
+      <div className="h-[env(safe-area-inset-top)] fixed top-0 left-0 right-0 z-40 bg-sidebar/70 backdrop-blur"></div>
+
+      <header className="sticky top-[env(safe-area-inset-top)] z-40 w-full bg-sidebar/70 shadow-md backdrop-blur">
+        <div className="mx-auto w-full my-2">
           <div className="flex items-center justify-between gap-2 px-2">
             <Tabs
               value={selectedTabId}
@@ -517,7 +519,7 @@ function Home() {
       <Drawer open={isFilterDrawerOpen} onOpenChange={setIsFilterDrawerOpen}>
         <DrawerTrigger asChild>
           <div
-            className="bg-sidebar text-primary fixed bottom-0 z-50 flex w-full flex-col items-center justify-center gap-2 rounded-t-[10px] px-4 pb-2 text-lg font-medium shadow-xl"
+            className="bg-sidebar text-primary fixed bottom-0 z-50 flex w-full flex-col items-center justify-center gap-2 rounded-t-[10px] px-4 pb-2 text-lg font-medium shadow-xl pb-safe"
             onClick={() => setIsFilterDrawerOpen(true)}
             onTouchStart={() => setIsFilterDrawerOpen(true)}
           >

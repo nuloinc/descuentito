@@ -24,17 +24,12 @@ export const Route = createRootRouteWithContext<{
       },
       {
         name: "viewport",
-        content:
-          "width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover",
+        content: "width=device-width, initial-scale=1, viewport-fit=cover",
       },
       {
         name: "description",
         content:
           "Encuentra y compara descuentos en supermercados de Argentina. Carrefour, Coto, Día y Jumbo.",
-      },
-      {
-        name: "theme-color",
-        content: "#ffffff",
       },
       {
         name: "mobile-web-app-capable",
@@ -142,6 +137,16 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <meta
+          name="theme-color"
+          media="(prefers-color-scheme: light)"
+          content="oklch(1 0 0)"
+        />
+        <meta
+          name="theme-color"
+          media="(prefers-color-scheme: dark)"
+          content="#171717"
+        />
       </head>
       <body>
         {children}
