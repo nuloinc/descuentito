@@ -21,4 +21,7 @@ yarn.lock
 /blob-report/
 /playwright/.cache/
 
-.env.local
+.env.
+
+dist/
+.wrangler

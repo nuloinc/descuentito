@@ -84,6 +84,7 @@ export const Route = createFileRoute("/")({
       promotions: getPromotions(),
     };
   },
+  staleTime: 1000 * 60 * 10,
 });
 
 function Promotions({
@@ -368,6 +369,12 @@ function Home() {
     (d) => d.id === selectedTabId
   );
 
+  // https://react.dev/reference/react-dom/client/hydrateRoot#handling-different-client-and-server-content
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <div className="site-container bg-background relative min-h-screen flex flex-col">
       <div className="bg-sidebar pb-2 pt-4">
@@ -380,7 +387,7 @@ function Home() {
             Descuentos en supermercados de CABA
           </h2>
 
-          {typeof window === "undefined" ? (
+          {!isClient ? (
             <div className="mt-2 flex w-full items-center gap-2 rounded-md border px-3 py-5">
               <Skeleton className="h-8 w-8 rounded-full" />
               <Skeleton className="h-4 flex-1" />
@@ -450,24 +457,22 @@ function Home() {
       </header>
 
       <div className="flex-grow pt-3 relative">
-        {typeof window === "undefined" ? (
+        {!isClient ? (
           <PromotionsSkeleton />
         ) : (
           <Await promise={promotions} fallback={<PromotionsSkeleton />}>
-            {(data) => {
-              return (
-                <Promotions
-                  promotionsData={data}
-                  selectedType={selectedType}
-                  selectedSupermarket={selectedSupermarket}
-                  selectedPromotionType={selectedPromotionType}
-                  formattedWeekDates={formattedWeekDates}
-                  selectedTabId={selectedTabId}
-                  currentTabIndex={currentTabIndex}
-                  setSelectedSupermarket={setSelectedSupermarket}
-                />
-              );
-            }}
+            {(data) => (
+              <Promotions
+                promotionsData={data}
+                selectedType={selectedType}
+                selectedSupermarket={selectedSupermarket}
+                selectedPromotionType={selectedPromotionType}
+                formattedWeekDates={formattedWeekDates}
+                selectedTabId={selectedTabId}
+                currentTabIndex={currentTabIndex}
+                setSelectedSupermarket={setSelectedSupermarket}
+              />
+            )}
           </Await>
         )}
       </div>

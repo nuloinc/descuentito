@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vinxi dev",
     "build": "vinxi build",
-    "start": "vinxi start"
+    "start": "wrangler --cwd dist/ pages dev"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.4",
