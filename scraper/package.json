@@ -3,19 +3,20 @@
   "scripts": {
     "check": "tsc",
     "dev": "pnpx trigger.dev@3.3.17 dev",
-    "deploy": "pnpx trigger.dev@3.3.17 deploy"
+    "deploy": "pnpx trigger.dev@3.3.17 deploy",
+    "test": "vitest"
   },
   "dependencies": {
-    "@ai-sdk/google": "^1.1.17",
+    "@ai-sdk/google": "^1.2.10",
     "@aws-sdk/client-s3": "3.712.0",
     "@aws-sdk/s3-request-presigner": "3.712.0",
     "@browserbasehq/stagehand": "^1.13.0",
     "@libsql/client": "^0.14.0",
     "@octokit/rest": "^21.1.1",
-    "@openrouter/ai-sdk-provider": "^0.4.2",
+    "@openrouter/ai-sdk-provider": "^0.4.5",
     "@playwright/test": "^1.50.1",
     "@trigger.dev/sdk": "3.3.17",
-    "ai": "^4.1.47",
+    "ai": "^4.3.5",
     "date-fns": "^3.3.1",
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.7",
@@ -41,6 +42,8 @@
     "@types/node": "^22.13.1",
     "prettier": "^3.4.2",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "vite": "^6.2.6",
+    "vitest": "^3.1.1"
   }
 }

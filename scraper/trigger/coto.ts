@@ -17,10 +17,14 @@ import { createPlaywrightSession, openrouter } from "../lib";
 import assert from "assert";
 import { writeFile } from "fs/promises";
 import { cleanDiscounts } from "../lib/clean";
+
 const promotionSchema = BasicDiscountSchema.extend({
   where: z.array(z.enum(["Coto", "Online"])),
   membership: z.array(z.enum(["Club La Nacion", "Comunidad Coto"])).optional(),
 });
+
+const SOURCE = "coto";
+const URL = "https://www.coto.com.ar/descuentos/index.asp";
 
 const SYSTEM_PROMPT = `${genStartPrompt("Coto")} 
 
@@ -60,8 +64,6 @@ export const cotoTask = schedules.task({
     await using session = await createPlaywrightSession();
     const { page } = session;
     let content: string;
-    const source = "coto";
-    const url = "https://www.coto.com.ar/descuentos/index.asp";
     {
       await page.goto("https://www.coto.com.ar/legales/", {
         waitUntil: "networkidle",
@@ -138,97 +140,126 @@ export const cotoTask = schedules.task({
 
     let discounts: CotoDiscount[] = [];
 
-    {
-      await page.setViewportSize({ width: 1920, height: 3840 });
-      await page.goto(url, { waitUntil: "networkidle" });
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+    await page.setViewportSize({ width: 1920, height: 3840 });
+    await page.goto(URL, { waitUntil: "networkidle" });
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      // merge all weekdays
-      await page.evaluate(() => {
-        document.querySelectorAll(".nav").forEach((e) => e.remove());
-        document.querySelectorAll("#discounts > *").forEach((e) => {
-          (e as HTMLElement).style.position = "unset";
-          (e as HTMLElement).style.display = "inline-block";
-        });
-        (
-          document.querySelector(".portfolio-grid") as HTMLElement
-        ).style.height = "auto";
+    // merge all weekdays
+    await page.evaluate(() => {
+      document.querySelectorAll(".nav").forEach((e) => e.remove());
+      document.querySelectorAll("#discounts > *").forEach((e) => {
+        (e as HTMLElement).style.position = "unset";
+        (e as HTMLElement).style.display = "inline-block";
       });
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      const els = await page.$$("#descuentos .grid-item");
-      if (!els) throw new Error("No discounts found");
+      (document.querySelector(".portfolio-grid") as HTMLElement).style.height =
+        "auto";
+    });
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    const els = await page.$$("#descuentos .grid-item");
+    if (!els) throw new Error("No discounts found");
 
-      console.log(els.length);
+    console.log(els.length);
 
-      for (const el of els) {
-        const txt = await el.textContent();
+    await writeFile("highlightedContent.txt", highlightedContent);
+
+    let discountData: {
+      highlightedContent: string;
+      txt: string;
+      screenshot: Buffer;
+    }[] = [];
+    for (let i = 0; i < els.length; i++) {
+      const el = els[i];
+      const txt = (await el.textContent()) || "";
+      const screenshot = await el.screenshot();
+      discountData.push({
+        highlightedContent,
+        txt,
+        screenshot,
+      });
+      await writeFile(`./${SOURCE}-${i}.png`, screenshot);
+    }
+    await Promise.all(
+      discountData.map(async (data) => {
         if (
-          txt?.includes("EXCLUSIVO SUCURSALES") ||
-          txt?.includes("descuentos del fin de semana")
+          data.txt.includes("EXCLUSIVO SUCURSALES") ||
+          data.txt.includes("descuentos del fin de semana")
         )
-          continue;
-        const screenshot = await el.screenshot();
+          return;
+        discounts.push(
+          ...(await getDiscounts({
+            highlightedContent: data.highlightedContent,
+            screenshot: data.screenshot,
+          }))
+        );
+      })
+    );
 
-        const { elementStream } = streamObject({
-          // model: openrouter.chat("google/gemini-2.0-flash-001"),
-          model: google("gemini-2.0-flash"),
-          schema: promotionSchema,
-          mode: "json",
-          output: "array",
-          temperature: 0,
-          messages: [
-            {
-              role: "user",
-              content: [
-                {
-                  type: "text",
-                  text: `Your primary task is to extract the discount information from the screenshot image, which shows a single valid promotion. The screenshot is your PRIMARY source of truth.
+    assert(discounts.length > 4, "Not enough discounts found");
+
+    await savePromotions(ctx, SOURCE, cleanDiscounts(discounts));
+  },
+});
+
+export async function getDiscounts({
+  highlightedContent,
+  screenshot,
+}: {
+  highlightedContent: string;
+  screenshot: Buffer;
+}) {
+  let discounts: CotoDiscount[] = [];
+  const { elementStream } = streamObject({
+    // model: openrouter.chat("google/gemini-2.5-pro-preview-03-25"),
+    model: google("gemini-2.5-pro-exp-03-25"),
+    schema: promotionSchema,
+    mode: "json",
+    output: "array",
+    temperature: 0,
+    messages: [
+      {
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text: `Your primary task is to extract the discount information from the screenshot image, which shows a single valid promotion. The screenshot is your PRIMARY source of truth.
 
 The legal text that follows is ONLY for supplementing specific details not visible in the screenshot:
-1. Most importantly, use it to identify excluded products (excludesProducts field)
+1. Most importantly, use it to identify excluded products (excludesProducts field). Look for sections marked with **NO INCLUYE** in the legal text.
 2. Look for restrictions and limitations
 3. Check for validity periods if not clear in the image
-
-Look for sections marked with **PRODUCT EXCLUSIONS:** in the legal text - these contain critical information about excluded products.
 
 The screenshot contains the accurate and current promotion information. If there's a contradiction between the image and legal text, the image ALWAYS takes precedence.
 
 For the "where" field, look for visual indicators in the image that specify if the discount applies to physical stores (mark as "Coto"), online (mark as "Online"), or both. By default, assume discounts apply to physical stores unless explicitly stated otherwise.
 
 Legal text for reference (use ONLY to supplement missing details, particularly for excludesProducts): \n\n${highlightedContent}`,
-                },
-                {
-                  type: "image",
-                  image: screenshot,
-                },
-              ],
-            },
-          ],
-          system: SYSTEM_PROMPT,
-        });
+          },
+          {
+            type: "image",
+            image: screenshot,
+          },
+        ],
+      },
+    ],
+    system: SYSTEM_PROMPT,
+  });
 
-        try {
-          for await (const object of elementStream) {
-            if (object.discount.value === 0) {
-              logger.info("Skipping discount", { object });
-              continue;
-            }
-            logger.info("Extracted discount", { object });
-
-            discounts.push({
-              ...object,
-              url,
-              source,
-            });
-          }
-        } catch (error) {
-          logger.error("Error processing content", { error });
-        }
+  try {
+    for await (const object of elementStream) {
+      if (object.discount.value === 0) {
+        logger.info("Skipping discount", { object });
+        continue;
       }
+      logger.info("Extracted discount", { object });
+
+      discounts.push({
+        ...object,
+        url: URL,
+        source: SOURCE,
+      });
     }
-
-    assert(discounts.length > 4, "Not enough discounts found");
-
-    await savePromotions(ctx, source, cleanDiscounts(discounts));
-  },
-});
+  } catch (error) {
+    logger.error("Error processing content", { error });
+  }
+  return discounts;
+}
