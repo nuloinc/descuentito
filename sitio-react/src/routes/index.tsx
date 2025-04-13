@@ -84,9 +84,6 @@ export const Route = createFileRoute("/")({
       promotions: getPromotions(),
     };
   },
-
-  // para que no haya flash de contenido sin filtrar
-  ssr: false,
 });
 
 function Promotions({
@@ -303,7 +300,7 @@ function PromotionsSkeleton() {
   return (
     <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2 py-3">
       <div className="space-y-2">
-        {Array.from({ length: 5 }).map((_, idx) => (
+        {Array.from({ length: 13 }).map((_, idx) => (
           <div
             key={idx}
             className="flex items-center gap-3 rounded-lg border bg-card px-3 py-2"
@@ -311,7 +308,7 @@ function PromotionsSkeleton() {
             <Skeleton className="h-8 w-8 rounded" />
             <Skeleton className="h-7 w-1/7" />
             <div className="flex-1 space-y-1.5">
-              <Skeleton className="h-5.5 w-1/2" />
+              <Skeleton className="h-5.5 w-2/3" />
               <Skeleton className="h-5.5 w-1/2" />
             </div>
             <div className="grid grid-cols-2 gap-1 items-center justify-center">
@@ -383,9 +380,14 @@ function Home() {
             Descuentos en supermercados de CABA
           </h2>
 
-          {savedPaymentMethods.size > 0 ? (
+          {typeof window === "undefined" ? (
+            <div className="mt-2 flex w-full items-center gap-2 rounded-md border px-3 py-5">
+              <Skeleton className="h-8 w-8 rounded-full" />
+              <Skeleton className="h-4 flex-1" />
+              <Skeleton className="h-4 w-4" />
+            </div>
+          ) : savedPaymentMethods.size > 0 ? (
             <>
-              <FilterByPaymentMethodsButton className="mt-2" />
               <Link
                 to="/configuracion/medios"
                 className="mt-2 flex flex-col w-full space-x-2 rounded-md border p-3 text-sm ring-1 ring-secondary transition-all gap-1"
@@ -406,7 +408,7 @@ function Home() {
           ) : (
             <Link
               to="/configuracion/medios"
-              className="mt-2 flex w-full items-center space-x-2 rounded-md border border-yellow-300 bg-gradient-to-r from-yellow-100/70 to-amber-100/70 p-3 text-sm shadow-sm transition-all hover:bg-gradient-to-r hover:from-yellow-200/70 hover:to-amber-200/70 dark:border-yellow-700 dark:bg-gradient-to-r dark:from-yellow-900/40 dark:to-amber-900/40 dark:hover:from-yellow-800/40 dark:hover:to-amber-800/40"
+              className="mt-2 flex w-full items-center space-x-2 rounded-md border border-yellow-300 bg-gradient-to-r from-yellow-100/70 to-amber-100/70 px-3 py-4 text-sm shadow-sm transition-all hover:bg-gradient-to-r hover:from-yellow-200/70 hover:to-amber-200/70 dark:border-yellow-700 dark:bg-gradient-to-r dark:from-yellow-900/40 dark:to-amber-900/40 dark:hover:from-yellow-800/40 dark:hover:to-amber-800/40 gap-1"
             >
               <Sparkles className="mr-1 h-8 w-8 text-yellow-500 dark:text-yellow-400" />
               <span className="flex-grow font-medium">
@@ -448,22 +450,26 @@ function Home() {
       </header>
 
       <div className="flex-grow pt-3 relative">
-        <Await promise={promotions} fallback={<PromotionsSkeleton />}>
-          {(data) => {
-            return (
-              <Promotions
-                promotionsData={data}
-                selectedType={selectedType}
-                selectedSupermarket={selectedSupermarket}
-                selectedPromotionType={selectedPromotionType}
-                formattedWeekDates={formattedWeekDates}
-                selectedTabId={selectedTabId}
-                currentTabIndex={currentTabIndex}
-                setSelectedSupermarket={setSelectedSupermarket}
-              />
-            );
-          }}
-        </Await>
+        {typeof window === "undefined" ? (
+          <PromotionsSkeleton />
+        ) : (
+          <Await promise={promotions} fallback={<PromotionsSkeleton />}>
+            {(data) => {
+              return (
+                <Promotions
+                  promotionsData={data}
+                  selectedType={selectedType}
+                  selectedSupermarket={selectedSupermarket}
+                  selectedPromotionType={selectedPromotionType}
+                  formattedWeekDates={formattedWeekDates}
+                  selectedTabId={selectedTabId}
+                  currentTabIndex={currentTabIndex}
+                  setSelectedSupermarket={setSelectedSupermarket}
+                />
+              );
+            }}
+          </Await>
+        )}
       </div>
 
       <Drawer open={isFilterDrawerOpen} onOpenChange={setIsFilterDrawerOpen}>
@@ -501,12 +507,9 @@ function Home() {
           </div>
         </DrawerTrigger>
         <DrawerContent>
-          <div className="mx-auto w-full max-w-sm">
-            <DrawerHeader>
+          <div className="mx-auto w-full max-w-sm overflow-y-auto">
+            <DrawerHeader className="pb-0 text-xl">
               <DrawerTitle>Filtros</DrawerTitle>
-              <DrawerDescription>
-                Personaliza tu búsqueda de promociones
-              </DrawerDescription>
             </DrawerHeader>
             <div className="p-4">
               <div className="mb-4">
@@ -568,8 +571,9 @@ function Home() {
                   </TabsList>
                 </Tabs>
               </div>
+              <FilterByPaymentMethodsButton className="mt-2" />
             </div>
-            <DrawerFooter>
+            <DrawerFooter className="border-t sticky bottom-0">
               <DrawerClose asChild>
                 <Button variant="default">Aplicar filtros</Button>
               </DrawerClose>

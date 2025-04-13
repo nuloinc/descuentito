@@ -125,13 +125,6 @@ function PaymentMethodsConfig() {
       </nav>
 
       <div className="container mx-auto max-w-md p-4">
-        <FilterByPaymentMethodsButton
-          className={cn(
-            "mb-6",
-            savedPaymentMethods.size === 0 && "pointer-events-none opacity-0"
-          )}
-        />
-
         <div className="mb-6 space-y-4">
           <div className="space-y-3">
             <div className="flex items-center space-x-3">
@@ -229,15 +222,14 @@ function PaymentMethodsConfig() {
             );
           })}
         </div>
-
-        <div className="mt-8 flex justify-end">
-          <Button variant="default" className="w-full" asChild>
-            <Link to="/">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Volver a tus descuentos
-            </Link>
-          </Button>
-        </div>
+      </div>
+      <div className="mt-8 flex justify-end sticky bottom-0 border-t p-4 bg-background">
+        <Button variant="default" className="w-full" asChild>
+          <Link to="/" replace preload="intent">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Volver a tus descuentos
+          </Link>
+        </Button>
       </div>
     </div>
   );

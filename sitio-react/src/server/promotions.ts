@@ -29,7 +29,6 @@ export {};
 export const getPromotions = createServerFn({
   method: "GET",
 }).handler(async () => {
-  // When using Cloudflare Pages, we can access platform directly from the global scope
   const platform = (globalThis as any).platform as App.Platform | undefined;
 
   const dataEntries = await Promise.all(
