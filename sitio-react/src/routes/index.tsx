@@ -564,7 +564,7 @@ function Home() {
       <Drawer open={isFilterDrawerOpen} onOpenChange={setIsFilterDrawerOpen}>
         <DrawerTrigger asChild>
           <div
-            className="bg-sidebar text-primary fixed bottom-0 z-50 flex w-full flex-col items-center justify-center gap-2 rounded-t-[10px] px-4 pb-2 text-lg font-medium shadow-xl pb-safe"
+            className="bg-sidebar text-primary fixed bottom-0 z-50 flex w-full flex-col items-center justify-center gap-2 rounded-t-[10px] px-4 text-lg font-medium shadow-xl pb-[env(safe-area-inset-bottom,_10px)]"
             onClick={() => setIsFilterDrawerOpen(true)}
             onTouchStart={() => setIsFilterDrawerOpen(true)}
           >
@@ -662,7 +662,7 @@ function Home() {
               </div>
               <FilterByPaymentMethodsButton className="mt-2" />
             </div>
-            <DrawerFooter className="border-t sticky bottom-0">
+            <DrawerFooter className="border-t sticky bottom-0 pb-[env(safe-area-inset-bottom,_10px)] bg-sidebar">
               <DrawerClose asChild>
                 <Button variant="default">Aplicar filtros</Button>
               </DrawerClose>

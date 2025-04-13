@@ -219,7 +219,7 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
         )
         .filter((method) => {
           if (!shouldFilterByPaymentMethods) return true;
-          if (PAYMENT_RAILS.includes(method as any)) return true;
+          if (PAYMENT_RAILS.includes(method as any)) return false;
           return savedPaymentMethods.has(method as any);
         })
         .sort((a: string, b: string) => {
@@ -521,8 +521,8 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                 </DialogContent>
               </Dialog>
             </div>
-            <DrawerFooter className="border-t sticky bottom-0 bg-background py-2">
-              <Button variant="outline" asChild className="w-full">
+            <DrawerFooter className="border-t sticky bottom-0 bg-background py-2 pb-[env(safe-area-inset-bottom,_10px)]">
+              <Button asChild className="w-full">
                 <a
                   href={discount.url}
                   target="_blank"
