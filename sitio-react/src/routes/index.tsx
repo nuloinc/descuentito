@@ -1,6 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Await, createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useMemo } from "react";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import weekday from "dayjs/plugin/weekday";
@@ -29,9 +29,10 @@ import {
   SUPERMARKET_NAMES,
 } from "src/lib/state";
 import { Discount, PAYMENT_RAILS } from "promos-db/schema";
-import { getPromotions } from "src/server/promotions";
+import { getPromotions, PromotionData } from "src/server/promotions";
 import { BRAND_LOGOS_SMALL } from "@/lib/logos";
 import SupermarketLogo from "@/components/supermarket-logo";
+import { Skeleton } from "@/components/ui/skeleton";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -78,37 +79,35 @@ const getFormattedWeekDates = () => {
 
 export const Route = createFileRoute("/")({
   component: Home,
-  loader: async () => await getPromotions(),
+  loader: async () => {
+    return {
+      promotions: getPromotions(),
+    };
+  },
+
   // para que no haya flash de contenido sin filtrar
   ssr: false,
 });
 
-function Home() {
-  const promotionsData = Route.useLoaderData();
-
-  const formattedWeekDates = useMemo(getFormattedWeekDates, []);
-  const todayIndex = useMemo(
-    () =>
-      formattedWeekDates.findIndex((date) =>
-        date.dayjs.isSame(dayjs().tz(timeZone), "day")
-      ),
-    [formattedWeekDates]
-  );
-
-  const [selectedTabId, setSelectedTabId] = useState<string>(
-    dayjs().tz(timeZone).format("YYYY-MM-DD")
-  );
-  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
-  const [selectedType, setSelectedType] = useState<"Presencial" | "Online">(
-    "Presencial"
-  );
-  const [selectedSupermarket, setSelectedSupermarket] = useState<string | null>(
-    null
-  );
-  const [selectedPromotionType, setSelectedPromotionType] = useState<
-    "Todos" | "Descuentos" | "Cuotas"
-  >("Todos");
-
+function Promotions({
+  promotionsData,
+  selectedType,
+  selectedSupermarket,
+  selectedPromotionType,
+  formattedWeekDates,
+  selectedTabId,
+  currentTabIndex,
+  setSelectedSupermarket,
+}: {
+  promotionsData: PromotionData;
+  selectedType: "Presencial" | "Online";
+  selectedSupermarket: string | null;
+  selectedPromotionType: "Todos" | "Descuentos" | "Cuotas";
+  formattedWeekDates: ReturnType<typeof getFormattedWeekDates>;
+  selectedTabId: string;
+  currentTabIndex: number;
+  setSelectedSupermarket: (supermarket: string | null) => void;
+}) {
   const { savedPaymentMethods, savedConditions } = usePaymentMethodsStore();
   const shouldFilterByPaymentMethods = useShouldFilterByPaymentMethods();
 
@@ -257,6 +256,106 @@ function Home() {
     });
   }, [basePromotions, formattedWeekDates]);
 
+  return (
+    selectedTabId && (
+      <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2">
+        {currentTabIndex >= 0 &&
+          promotionsByWeekday[currentTabIndex]?.map((discount, idx) => (
+            <DiscountCard
+              key={`${discount.source}-${idx}`}
+              discount={discount}
+              selectedType={selectedType}
+            />
+          ))}
+        {currentTabIndex >= 0 &&
+          promotionsByWeekday[currentTabIndex]?.length === 0 && (
+            <div className="col-span-full py-8">
+              <div className="flex flex-col items-center justify-center gap-4 rounded-lg border bg-card p-8 text-center">
+                <div className="text-muted-foreground">
+                  <Filter className="mx-auto mb-2 h-12 w-12 opacity-50" />
+                  <h3 className="text-xl font-semibold">No hay promociones</h3>
+                  <p className="mt-2 text-sm">
+                    No se encontraron promociones para este día{" "}
+                    {selectedSupermarket
+                      ? `en ${SUPERMARKET_NAMES[selectedSupermarket]}`
+                      : ""}
+                    .
+                  </p>
+                </div>
+                {selectedSupermarket && (
+                  <Button
+                    variant="outline"
+                    onClick={() => setSelectedSupermarket(null)}
+                    className="mt-2"
+                  >
+                    Ver todos los supermercados
+                  </Button>
+                )}
+              </div>
+            </div>
+          )}
+      </div>
+    )
+  );
+}
+
+function PromotionsSkeleton() {
+  return (
+    <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2 py-3">
+      <div className="space-y-2">
+        {Array.from({ length: 5 }).map((_, idx) => (
+          <div
+            key={idx}
+            className="flex items-center gap-3 rounded-lg border bg-card px-3 py-2"
+          >
+            <Skeleton className="h-8 w-8 rounded" />
+            <Skeleton className="h-7 w-1/7" />
+            <div className="flex-1 space-y-1.5">
+              <Skeleton className="h-5.5 w-1/2" />
+              <Skeleton className="h-5.5 w-1/2" />
+            </div>
+            <div className="grid grid-cols-2 gap-1 items-center justify-center">
+              <Skeleton className="h-6 w-6 rounded" />
+              <Skeleton className="h-6 w-6 rounded" />
+              <Skeleton className="h-6 w-6 rounded" />
+              <Skeleton className="h-6 w-6 rounded" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Home() {
+  const { promotions } = Route.useLoaderData();
+
+  const formattedWeekDates = useMemo(getFormattedWeekDates, []);
+  const todayIndex = useMemo(
+    () =>
+      formattedWeekDates.findIndex((date) =>
+        date.dayjs.isSame(dayjs().tz(timeZone), "day")
+      ),
+    [formattedWeekDates]
+  );
+
+  const [selectedTabId, setSelectedTabId] = useState<string>(
+    dayjs().tz(timeZone).format("YYYY-MM-DD")
+  );
+  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
+  const [selectedType, setSelectedType] = useState<"Presencial" | "Online">(
+    "Presencial"
+  );
+  const [selectedSupermarket, setSelectedSupermarket] = useState<string | null>(
+    null
+  );
+  const [selectedPromotionType, setSelectedPromotionType] = useState<
+    "Todos" | "Descuentos" | "Cuotas"
+  >("Todos");
+
+  const { savedPaymentMethods, savedConditions } = usePaymentMethodsStore();
+  const shouldFilterByPaymentMethods = useShouldFilterByPaymentMethods();
+
   // Reset selectedTabId if it becomes invalid (e.g., due to data changes)
   useEffect(() => {
     if (
@@ -348,48 +447,23 @@ function Home() {
         </div>
       </header>
 
-      <div className="flex-grow pt-3">
-        {selectedTabId && (
-          <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2">
-            {currentTabIndex >= 0 &&
-              promotionsByWeekday[currentTabIndex]?.map((discount, idx) => (
-                <DiscountCard
-                  key={`${discount.source}-${idx}`}
-                  discount={discount}
-                  selectedType={selectedType}
-                />
-              ))}
-            {currentTabIndex >= 0 &&
-              promotionsByWeekday[currentTabIndex]?.length === 0 && (
-                <div className="col-span-full py-8">
-                  <div className="flex flex-col items-center justify-center gap-4 rounded-lg border bg-card p-8 text-center">
-                    <div className="text-muted-foreground">
-                      <Filter className="mx-auto mb-2 h-12 w-12 opacity-50" />
-                      <h3 className="text-xl font-semibold">
-                        No hay promociones
-                      </h3>
-                      <p className="mt-2 text-sm">
-                        No se encontraron promociones para este día{" "}
-                        {selectedSupermarket
-                          ? `en ${SUPERMARKET_NAMES[selectedSupermarket]}`
-                          : ""}
-                        .
-                      </p>
-                    </div>
-                    {selectedSupermarket && (
-                      <Button
-                        variant="outline"
-                        onClick={() => setSelectedSupermarket(null)}
-                        className="mt-2"
-                      >
-                        Ver todos los supermercados
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              )}
-          </div>
-        )}
+      <div className="flex-grow pt-3 relative">
+        <Await promise={promotions} fallback={<PromotionsSkeleton />}>
+          {(data) => {
+            return (
+              <Promotions
+                promotionsData={data}
+                selectedType={selectedType}
+                selectedSupermarket={selectedSupermarket}
+                selectedPromotionType={selectedPromotionType}
+                formattedWeekDates={formattedWeekDates}
+                selectedTabId={selectedTabId}
+                currentTabIndex={currentTabIndex}
+                setSelectedSupermarket={setSelectedSupermarket}
+              />
+            );
+          }}
+        </Await>
       </div>
 
       <Drawer open={isFilterDrawerOpen} onOpenChange={setIsFilterDrawerOpen}>
