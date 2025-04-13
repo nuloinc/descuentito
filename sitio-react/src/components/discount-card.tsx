@@ -1,7 +1,13 @@
 import React, { useState, useMemo } from "react";
 import { Button } from "src/components/ui/button";
 import { Badge } from "src/components/ui/badge";
-import { ExternalLinkIcon, StarsIcon, WalletCards, XIcon } from "lucide-react";
+import {
+  ExternalLinkIcon,
+  MessageCircleWarning,
+  StarsIcon,
+  WalletCards,
+  XIcon,
+} from "lucide-react";
 import {
   Drawer,
   DrawerTrigger,
@@ -25,6 +31,17 @@ import SupermarketLogo from "./supermarket-logo";
 import { useShouldFilterByPaymentMethods } from "@/lib/state";
 import { usePaymentMethodsStore } from "@/lib/state";
 import { useQuery } from "@tanstack/react-query";
+import { FeedbackForm } from "./feedback-form";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogDescription,
+} from "./ui/dialog";
 
 //--- Helper Components (Implement actual components) ---
 export const PaymentMethodLogo = ({
@@ -475,6 +492,34 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                   </Alert>
                 </div>
               </div>
+
+              <Dialog>
+                <DialogTrigger asChild>
+                  <div className="flex justify-center">
+                    <Button variant="outline" className="mx-auto my-2">
+                      <MessageCircleWarning className="size-5" />
+                      Reportar un problema
+                    </Button>
+                  </div>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>
+                      Reportar un problema en este descuento
+                    </DialogTitle>
+                    <DialogDescription>
+                      ¿Encontraste un error o algo incorrecto en este descuento?
+                      Por favor, contanos qué viste.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <FeedbackForm discount={discount} />
+                  <DialogFooter>
+                    <DialogClose asChild>
+                      <Button variant="outline">Cerrar</Button>
+                    </DialogClose>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </div>
             <DrawerFooter className="border-t sticky bottom-0 bg-background py-2">
               <Button variant="outline" asChild className="w-full">

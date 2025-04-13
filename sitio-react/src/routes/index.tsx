@@ -318,10 +318,10 @@ function Promotions({
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Reportar un error en esta promoción</DialogTitle>
+              <DialogTitle>Reportar un problema</DialogTitle>
               <DialogDescription>
-                ¿Encontraste un error o algo incorrecto en esta promoción? Por
-                favor, contanos qué viste.
+                ¿Encontraste un error o algo incorrecto en la página? Por favor,
+                contanos qué viste.
               </DialogDescription>
             </DialogHeader>
             <FeedbackForm />

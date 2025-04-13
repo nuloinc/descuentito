@@ -4,6 +4,7 @@ import { z } from "zod";
 const FeedbackRequest = z.object({
   feedback: z.string(),
   replayUrl: z.string().optional(),
+  discount: z.any().optional(),
   config: z.object({
     savedPaymentMethods: z.array(z.string()),
     savedConditions: z.object({
@@ -31,13 +32,14 @@ export const sendFeedback = createServerFn({
         );
       }
 
-      const { feedback, replayUrl, config } = req.data;
+      const { feedback, replayUrl, config, discount } = req.data;
 
       const message = `
 <b>Nuevo feedback recibido</b>
 <b>Feedback:</b> ${feedback}
 ${replayUrl ? `<b>Replay:</b> <a href="${replayUrl}">${replayUrl}</a>` : ""}
 <b>Configuración:</b> ${JSON.stringify(config, null, 2)}
+${discount ? `<b>Descuento:</b> ${JSON.stringify(discount, null, 2)}` : ""}
 `;
 
       const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;

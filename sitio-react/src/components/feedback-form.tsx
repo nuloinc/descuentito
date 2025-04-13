@@ -5,7 +5,11 @@ import { usePostHog } from "posthog-js/react";
 import { sendFeedback } from "@/server/feedback";
 import { useMutation } from "@tanstack/react-query";
 import { usePaymentMethodsStore } from "@/lib/state";
-export const FeedbackForm: React.FC<{}> = ({}) => {
+import { Discount } from "promos-db/schema";
+
+export const FeedbackForm: React.FC<{ discount?: Discount }> = ({
+  discount,
+}) => {
   const [feedback, setFeedback] = useState("");
   const posthog = usePostHog();
 
@@ -23,6 +27,7 @@ export const FeedbackForm: React.FC<{}> = ({}) => {
         data: {
           feedback,
           replayUrl,
+          discount,
           config: {
             savedPaymentMethods: Array.from(savedPaymentMethods),
             savedConditions,
@@ -52,16 +57,16 @@ export const FeedbackForm: React.FC<{}> = ({}) => {
         type="submit"
         disabled={feedbackMutation.isPending || !feedback.trim()}
       >
-        {feedbackMutation.isPending ? "Enviando..." : "Enviar feedback"}
+        {feedbackMutation.isPending ? "Enviando..." : "Enviar reporte"}
       </Button>
       {feedbackMutation.isSuccess && (
         <div className="text-green-600 text-xs mt-1">
-          ¡Gracias! El feedback fue enviado.
+          ¡Gracias! El reporte fue enviado.
         </div>
       )}
       {feedbackMutation.isError && (
         <div className="text-red-600 text-xs mt-1">
-          {feedbackMutation.error?.message || "Error al enviar el feedback"}
+          {feedbackMutation.error?.message || "Error al enviar el reporte"}
         </div>
       )}
     </form>
