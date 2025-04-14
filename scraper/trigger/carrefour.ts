@@ -39,14 +39,27 @@ export const carrefourTask = schedules.task({
     );
 
     logger.info("DOM Description", { domDescription });
+    let promotions = [];
+    for await (const promotion of extractDiscounts({ domDescription }))
+      promotions.push(promotion);
 
-    let promotions: CarrefourDiscount[] = [];
-    const { elementStream } = await streamObject({
-      model: google("gemini-2.0-flash"),
-      output: "array",
-      schema: DiscountSchema,
-      temperature: 0,
-      system: `${genStartPrompt("Carrefour")}
+    assert(promotions.length > 0, "No promotions found");
+
+    await savePromotions(ctx, "carrefour", promotions);
+  },
+});
+
+export async function* extractDiscounts({
+  domDescription,
+}: {
+  domDescription: string;
+}) {
+  const { elementStream } = streamObject({
+    model: google("gemini-2.0-flash"),
+    output: "array",
+    schema: DiscountSchema,
+    temperature: 0,
+    system: `${genStartPrompt("Carrefour")}
 
 ${PAYMENT_METHODS_PROMPT}
 
@@ -60,34 +73,29 @@ WHERE
 
 ${LIMITS_PROMPT}
 `,
-      messages: [
-        {
-          role: "user",
-          content: [
-            {
-              type: "text",
-              text:
-                "Extract the promotions from the following pseudo-html: \n\n" +
-                domDescription,
-              // text: "Extract the promotions from the following screenshot: ",
-            },
-            // { type: "image", image: screenshot },
-          ],
-        },
-      ],
-    });
+    messages: [
+      {
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text:
+              "Extract the promotions from the following pseudo-html: \n\n" +
+              domDescription,
+            // text: "Extract the promotions from the following screenshot: ",
+          },
+          // { type: "image", image: screenshot },
+        ],
+      },
+    ],
+  });
 
-    for await (const element of elementStream) {
-      logger.info("Element", { element });
-      promotions.push({
-        ...element,
-        url: "https://www.carrefour.com.ar/descuentos-bancarios",
-        source: "carrefour",
-      });
-    }
-
-    assert(promotions.length > 0, "No promotions found");
-
-    await savePromotions(ctx, "carrefour", promotions);
-  },
-});
+  for await (const element of elementStream) {
+    yield {
+      ...element,
+      url: "https://www.carrefour.com.ar/descuentos-bancarios",
+      source: "carrefour",
+    };
+    logger.info("Element", { element });
+  }
+}
