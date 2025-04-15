@@ -46,7 +46,7 @@ export const Route = createRootRouteWithContext<{
         title: "descuentito.ar - Descuentos en supermercados",
         description:
           "Encontrá y compará descuentos en supermercados de Argentina. Carrefour, Coto, Día y Jumbo. Busca por tus medios de pago favoritos.",
-        image: "/twitter-card.png",
+        image: "https://descuentito.ar/twitter-card.png",
       }),
     ],
     links: [
