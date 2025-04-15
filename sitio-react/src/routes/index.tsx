@@ -162,6 +162,11 @@ function Promotions({
           return false;
         }
 
+        if (promotion.onlyForProducts?.match(/electro|aires/i)) {
+          // jumbo tiene muchos descuentos solo para electrodomesticos o aires acondicionados
+          return false;
+        }
+
         if (promotion.paymentMethods && shouldFilterByPaymentMethods) {
           const isPassedByPaymentMethods = (() => {
             if (
