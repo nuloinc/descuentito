@@ -1,4 +1,4 @@
-import { batch, task } from "@trigger.dev/sdk/v3";
+import { batch, task } from "@trigger.dev/sdk";
 import { carrefourTask } from "./carrefour";
 import { cotoTask } from "./coto";
 import { diaTask } from "./dia";

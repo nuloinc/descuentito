@@ -5,7 +5,7 @@ import { rm } from "fs/promises";
 import { Octokit } from "@octokit/rest";
 import { format } from "date-fns";
 import { execa } from "execa";
-import { Context, logger } from "@trigger.dev/sdk/v3";
+import { Context, logger } from "@trigger.dev/sdk";
 import { nanoid } from "nanoid";
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN!;
 const GITHUB_OWNER = process.env.GITHUB_OWNER!;

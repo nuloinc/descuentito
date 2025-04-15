@@ -1,4 +1,4 @@
-import { defineConfig } from "@trigger.dev/sdk/v3";
+import { defineConfig } from "@trigger.dev/sdk";
 
 import { puppeteer } from "@trigger.dev/build/extensions/puppeteer";
 import { additionalPackages } from "@trigger.dev/build/extensions/core";
@@ -50,6 +50,8 @@ export default defineConfig({
       "@libsql/linux-x64-gnu",
       "fsevents",
       "playwright",
+      // https://github.com/microsoft/playwright/issues/35479
+      "playwright-core",
     ],
   },
 });
