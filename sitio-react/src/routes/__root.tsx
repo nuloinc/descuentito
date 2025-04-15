@@ -27,11 +27,6 @@ export const Route = createRootRouteWithContext<{
         content: "width=device-width, initial-scale=1, viewport-fit=cover",
       },
       {
-        name: "description",
-        content:
-          "Encuentra y compara descuentos en supermercados de Argentina. Carrefour, Coto, Día y Jumbo.",
-      },
-      {
         name: "mobile-web-app-capable",
         content: "yes",
       },
@@ -44,30 +39,13 @@ export const Route = createRootRouteWithContext<{
         content: "black-translucent",
       },
       {
-        property: "og:title",
-        content: "descuentito.ar - Descuentos en supermercados",
-      },
-      {
-        property: "og:description",
-        content:
-          "Encuentra y compara descuentos en supermercados de Argentina. Carrefour, Coto, Día y Jumbo.",
-      },
-      {
-        property: "og:image",
-        content: "/og.png",
-      },
-      {
         property: "og:url",
         content: "https://descuentito.ar",
-      },
-      {
-        property: "og:type",
-        content: "website",
       },
       ...seo({
         title: "descuentito.ar - Descuentos en supermercados",
         description:
-          "Encuentra y compara descuentos en supermercados de Argentina. Carrefour, Coto, Día y Jumbo.",
+          "Encontrá y compará descuentos en supermercados de Argentina. Carrefour, Coto, Día y Jumbo. Busca por tus medios de pago favoritos.",
         image: "/twitter-card.png",
       }),
     ],
@@ -92,6 +70,7 @@ export const Route = createRootRouteWithContext<{
       },
       { rel: "manifest", href: "/site.webmanifest" },
       { rel: "icon", href: "/favicon.ico" },
+      { rel: "canonical", href: "https://descuentito.ar" },
     ],
   }),
   errorComponent: (props) => {
