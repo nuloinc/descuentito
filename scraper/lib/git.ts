@@ -60,7 +60,8 @@ export async function savePromotions(
   const { dir } = repo;
 
   const date = format(new Date(), "yyyy-MM-dd");
-  const branchName = `promotions/${date}/${nanoid()}/${source}`;
+  const isProd = ctx.environment.type === "PRODUCTION";
+  let branchName = "main";
 
   try {
     await git.checkout({
@@ -71,14 +72,24 @@ export async function savePromotions(
     });
   } catch (error) {
     console.warn("Could not checkout main, creating from current HEAD");
+    if (isProd) {
+      throw new Error(`Failed to checkout main branch in prod: ${error}`);
+    }
+    logger.warn(
+      "Proceeding to create branch from current HEAD for non-prod env."
+    );
   }
 
-  await git.branch({
-    fs,
-    dir: dir,
-    ref: branchName,
-    checkout: true,
-  });
+  // Only create a new branch if not in production
+  if (!isProd) {
+    branchName = `promotions/${date}/${nanoid()}/${source}`;
+    await git.branch({
+      fs,
+      dir: dir,
+      ref: branchName,
+      checkout: true,
+    });
+  }
 
   const filepath = `${source}.json`;
   fs.writeFileSync(`${dir}/${filepath}`, JSON.stringify(promotions, null, 2));
@@ -105,26 +116,42 @@ export async function savePromotions(
   });
 
   const remote = `https://catdevnull-bot:${GITHUB_TOKEN}@github.com/${GITHUB_OWNER}/${GITHUB_REPO}.git`;
-  await execa("git", ["push", remote, branchName], {
-    cwd: dir,
-  });
 
-  const prResponse = await octokit.pulls.create({
-    owner: GITHUB_OWNER,
-    repo: GITHUB_REPO,
-    title: `Update ${source} promotions for ${date}`,
-    head: branchName,
-    base: "main",
-    body: `Automated PR to update ${source} promotions for ${date}
+  // Push directly to main if in prod, otherwise push branch and create PR
+  if (isProd) {
+    logger.info(`Prod env detected. Pushing changes directly to main branch.`);
+    await execa("git", ["push", remote, "main"], {
+      cwd: dir,
+    });
+    logger.info(`Successfully pushed changes to main for ${source}.`);
+  } else {
+    logger.info(
+      `Non-prod env detected. Pushing to branch ${branchName} and creating PR.`
+    );
+    await execa("git", ["push", remote, branchName], {
+      cwd: dir,
+    });
+
+    const prResponse = await octokit.pulls.create({
+      owner: GITHUB_OWNER,
+      repo: GITHUB_REPO,
+      title: `Update ${source} promotions for ${date}`, // Use commit message for PR title
+      head: branchName,
+      base: "main",
+      body: `Automated PR to update ${source} promotions for ${date}
 
 Run: https://cloud.trigger.dev/orgs/${ctx.organization.slug}/projects/${ctx.project.slug}/env/${ctx.environment.slug}/runs/${ctx.run.id}`,
-  });
+    });
+    logger.info(`Created PR #${prResponse.data.number} for ${source}`);
 
-  // Automatically merge the pull request
-  await octokit.pulls.merge({
-    owner: GITHUB_OWNER,
-    repo: GITHUB_REPO,
-    pull_number: prResponse.data.number,
-    merge_method: "squash",
-  });
+    // Automatically merge the pull request
+    await octokit.pulls.merge({
+      owner: GITHUB_OWNER,
+      repo: GITHUB_REPO,
+      pull_number: prResponse.data.number,
+      commit_title: `${`Update ${source} promotions for ${date}`} (#${prResponse.data.number})`, // Add PR number to squash commit
+      merge_method: "squash",
+    });
+    logger.info(`Merged PR #${prResponse.data.number} for ${source}`);
+  }
 }
