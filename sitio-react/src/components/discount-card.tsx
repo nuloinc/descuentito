@@ -286,10 +286,6 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
     shouldFilterByPaymentMethods,
   ]);
 
-  // Only fetch summaries when drawer is open
-  const { summary: onlyForProductsSummary, isLoading: isLoadingOnlyFor } =
-    useRestrictionSummary(discount.onlyForProducts);
-
   const renderDiscountValue = () => {
     if (discount.discount.type === "porcentaje") {
       return <>{discount.discount.value}%</>;
@@ -342,7 +338,7 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                     title={discount.onlyForProducts}
                   >
                     <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-                      Solo {isLoadingOnlyFor ? "..." : onlyForProductsSummary}
+                      Solo {discount.onlyForProducts}
                     </span>
                   </Badge>
                 )}
