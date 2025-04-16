@@ -184,6 +184,52 @@ interface DiscountCardProps {
   selectedType: "Presencial" | "Online";
 }
 
+export const ExcludesProductsSummary: React.FC<{
+  discount: Discount & { excludesProducts: string };
+  isDrawerOpen: boolean;
+}> = ({ discount, isDrawerOpen }) => {
+  const { summary: excludesProductsSummary, isLoading: isLoadingExcludes } =
+    useRestrictionSummary(
+      isDrawerOpen ? discount.excludesProducts : undefined,
+      true
+    );
+  const summarySucks =
+    excludesProductsSummary.length > 0 &&
+    excludesProductsSummary.length > discount.excludesProducts.length;
+
+  return (
+    <div className="mt-1 rounded-md border border-red-200 bg-red-50 p-2 dark:border-red-900 dark:bg-red-950 text-red-600 dark:text-red-400">
+      {isLoadingExcludes ? (
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Cargando resumen...
+        </p>
+      ) : summarySucks ? (
+        <p className="text-sm">{discount.excludesProducts}</p>
+      ) : (
+        <p className="text-sm">
+          <span className="font-medium">Resumen:</span>{" "}
+          {excludesProductsSummary}
+        </p>
+      )}
+      {summarySucks ? null : (
+        <Accordion type="single" collapsible className="w-full mt-2">
+          <AccordionItem
+            value="original-text"
+            className="rounded-md border border-red-200 bg-red-50 dark:border-red-900 dark:bg-red-950"
+          >
+            <AccordionTrigger className="flex w-full items-center justify-between rounded-md p-2 text-left text-sm font-medium text-red-600 dark:text-red-400 hover:no-underline border-b border-red-200 dark:border-red-900">
+              Ver texto completo
+            </AccordionTrigger>
+            <AccordionContent className="rounded-b-md p-2 text-sm text-red-600 dark:text-red-400 border-b border-red-200 dark:border-red-900">
+              {discount.excludesProducts}
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      )}
+    </div>
+  );
+};
+
 export const DiscountCard: React.FC<DiscountCardProps> = ({
   discount,
   selectedType,
@@ -243,11 +289,6 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
   // Only fetch summaries when drawer is open
   const { summary: onlyForProductsSummary, isLoading: isLoadingOnlyFor } =
     useRestrictionSummary(discount.onlyForProducts);
-  const { summary: excludesProductsSummary, isLoading: isLoadingExcludes } =
-    useRestrictionSummary(
-      isDrawerOpen ? discount.excludesProducts : undefined,
-      true
-    );
 
   const renderDiscountValue = () => {
     if (discount.discount.type === "porcentaje") {
@@ -441,6 +482,20 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                         </div>
                       </div>
                     )}
+
+                  {discount.excludesProducts && (
+                    <div>
+                      <h4 className="font-medium mb-1">
+                        No aplica para productos:
+                      </h4>
+                      <ExcludesProductsSummary
+                        discount={
+                          discount as Discount & { excludesProducts: string }
+                        }
+                        isDrawerOpen={isDrawerOpen}
+                      />
+                    </div>
+                  )}
                   {discount.restrictions &&
                     discount.restrictions.length > 0 && (
                       <div>
@@ -460,40 +515,6 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                         </ul>
                       </div>
                     )}
-                  {discount.excludesProducts && (
-                    <div>
-                      <h4 className="font-medium mb-1">No aplica para:</h4>
-                      {isLoadingExcludes ? (
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                          Cargando resumen...
-                        </p>
-                      ) : (
-                        <div className="mt-1 rounded-md border border-red-200 bg-red-50 p-2 dark:border-red-900 dark:bg-red-950">
-                          <p className="text-sm text-red-600 dark:text-red-400">
-                            <span className="font-medium">Resumen:</span>{" "}
-                            {excludesProductsSummary}
-                          </p>
-                        </div>
-                      )}
-                      <Accordion
-                        type="single"
-                        collapsible
-                        className="w-full mt-2"
-                      >
-                        <AccordionItem
-                          value="original-text"
-                          className="rounded-md border border-red-200 bg-red-50 dark:border-red-900 dark:bg-red-950"
-                        >
-                          <AccordionTrigger className="flex w-full items-center justify-between rounded-md p-2 text-left text-sm font-medium text-red-600 dark:text-red-400 hover:no-underline border-b border-red-200 dark:border-red-900">
-                            Ver texto completo
-                          </AccordionTrigger>
-                          <AccordionContent className="rounded-b-md p-2 text-sm text-red-600 dark:text-red-400 border-b border-red-200 dark:border-red-900">
-                            {discount.excludesProducts}
-                          </AccordionContent>
-                        </AccordionItem>
-                      </Accordion>
-                    </div>
-                  )}
                   <Alert
                     variant="default"
                     className="mt-4 border-yellow-500/50 text-yellow-700 dark:border-yellow-500/50 dark:text-yellow-500 [&>svg]:text-yellow-700 dark:[&>svg]:text-yellow-500"
