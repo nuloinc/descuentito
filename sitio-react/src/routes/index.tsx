@@ -573,7 +573,7 @@ function Home() {
             onClick={() => setIsFilterDrawerOpen(true)}
             onTouchStart={() => setIsFilterDrawerOpen(true)}
           >
-            <div className="bg-muted mx-auto mt-4 h-2 w-[100px] rounded-full"></div>
+            <div className="bg-sidebar-ring mx-auto mt-4 h-2 w-[100px] rounded-full"></div>
             <div className="flex items-center gap-2">
               <Filter className="h-4 w-4" />
               <span className="">Filtros</span>
