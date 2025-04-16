@@ -382,7 +382,7 @@ function Promotions({
 
 function PromotionsSkeleton() {
   return (
-    <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2 py-3">
+    <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2">
       <div className="space-y-2">
         {Array.from({ length: 13 }).map((_, idx) => (
           <div
@@ -498,7 +498,7 @@ function Home() {
           ) : (
             <Link
               to="/configuracion/medios"
-              className="mt-2 flex w-full items-center space-x-2 rounded-md border border-yellow-300 bg-gradient-to-r from-yellow-100/70 to-amber-100/70 px-3 py-4 text-sm shadow-sm transition-all hover:bg-gradient-to-r hover:from-yellow-200/70 hover:to-amber-200/70 dark:border-yellow-700 dark:bg-gradient-to-r dark:from-yellow-900/40 dark:to-amber-900/40 dark:hover:from-yellow-800/40 dark:hover:to-amber-800/40 gap-1"
+              className="mt-2 flex w-full items-center space-x-2 rounded-md border border-yellow-300 bg-gradient-to-r from-yellow-100/70 to-amber-100/70 px-3 py-5 text-sm shadow-sm transition-all hover:bg-gradient-to-r hover:from-yellow-200/70 hover:to-amber-200/70 dark:border-yellow-700 dark:bg-gradient-to-r dark:from-yellow-900/40 dark:to-amber-900/40 dark:hover:from-yellow-800/40 dark:hover:to-amber-800/40 gap-1"
             >
               <Sparkles className="mr-1 h-8 w-8 text-yellow-500 dark:text-yellow-400" />
               <span className="flex-grow font-medium">
