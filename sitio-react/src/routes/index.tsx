@@ -461,7 +461,7 @@ function Home() {
   return (
     <div className="site-container bg-backgrounder relative min-h-screen flex flex-col">
       <div className="bg-sidebar pb-2 pt-4">
-        <div className="container mx-auto max-w-4xl px-4">
+        <div className="container mx-auto max-w-3xl px-4">
           <h1 className="flex items-center gap-2 text-3xl font-bold">
             descuentito.ar
             <Badge variant="destructive">beta :)</Badge>
@@ -498,12 +498,16 @@ function Home() {
           ) : (
             <Link
               to="/configuracion/medios"
-              className="mt-2 flex w-full items-center space-x-2 rounded-md border border-yellow-300 bg-gradient-to-r from-yellow-100/70 to-amber-100/70 px-3 py-5 text-sm shadow-sm transition-all hover:bg-gradient-to-r hover:from-yellow-200/70 hover:to-amber-200/70 dark:border-yellow-700 dark:bg-gradient-to-r dark:from-yellow-900/40 dark:to-amber-900/40 dark:hover:from-yellow-800/40 dark:hover:to-amber-800/40 gap-1"
+              className="mt-2 flex w-full items-center space-x-2 rounded-md border border-yellow-300 bg-gradient-to-r from-yellow-100/70 to-amber-100/70 px-3 py-4 text-sm shadow-sm transition-all hover:bg-gradient-to-r hover:from-yellow-200/70 hover:to-amber-200/70 dark:border-yellow-700 dark:bg-gradient-to-r dark:from-yellow-900/40 dark:to-amber-900/40 dark:hover:from-yellow-800/40 dark:hover:to-amber-800/40 gap-1"
             >
               <Sparkles className="mr-1 h-8 w-8 text-yellow-500 dark:text-yellow-400" />
-              <span className="flex-grow font-medium">
-                Configura tus medios de pago para ver descuentos personalizados
-              </span>
+              <div className="flex-grow flex flex-col justify-between">
+                <span>Estás viendo todos los descuentos.</span>
+                <span className="flex-grow font-medium">
+                  Configura tus medios de pago para ver descuentos
+                  personalizados
+                </span>
+              </div>
               <span className="text-amber-600 dark:text-amber-400">→</span>
             </Link>
           )}
