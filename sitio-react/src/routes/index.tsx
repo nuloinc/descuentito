@@ -51,7 +51,7 @@ import {
 } from "@/components/ui/dialog";
 import { Dialog } from "@/components/ui/dialog";
 import { FeedbackForm } from "@/components/feedback-form";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -277,49 +277,55 @@ function Promotions({
     });
   }, [basePromotions, formattedWeekDates]);
 
+  const currentPromotions =
+    currentTabIndex >= 0 ? promotionsByWeekday[currentTabIndex] : [];
+
   return (
     <>
-      {selectedTabId && (
-        <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2">
-          {currentTabIndex >= 0 &&
-            promotionsByWeekday[currentTabIndex]?.map((discount, idx) => (
-              <DiscountCard
-                key={`${discount.source}-${idx}`}
-                discount={discount}
-                selectedType={selectedType}
-              />
-            ))}
-          {currentTabIndex >= 0 &&
-            promotionsByWeekday[currentTabIndex]?.length === 0 && (
-              <div className="col-span-full py-8">
-                <div className="flex flex-col items-center justify-center gap-4 rounded-lg border bg-card p-8 text-center">
-                  <div className="text-muted-foreground">
-                    <Filter className="mx-auto mb-2 h-12 w-12 opacity-50" />
-                    <h3 className="text-xl font-semibold">
-                      No hay promociones
-                    </h3>
-                    <p className="mt-2 text-sm">
-                      No se encontraron promociones para este día{" "}
-                      {selectedSupermarket
-                        ? `en ${SUPERMARKET_NAMES[selectedSupermarket]}`
-                        : ""}
-                      .
-                    </p>
-                  </div>
-                  {selectedSupermarket && (
-                    <Button
-                      variant="outline"
-                      onClick={() => setSelectedSupermarket(null)}
-                      className="mt-2"
-                    >
-                      Ver todos los supermercados
-                    </Button>
-                  )}
-                </div>
+      <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2">
+        {currentPromotions.map((discount, idx) => (
+          <motion.div
+            key={`${discount.source}-${idx}`}
+            layoutId={`discount-${selectedTabId}-${idx}`}
+            layout="position"
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <DiscountCard discount={discount} selectedType={selectedType} />
+          </motion.div>
+        ))}
+        {currentPromotions.length === 0 && selectedTabId && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="col-span-full py-8"
+          >
+            <div className="flex flex-col items-center justify-center gap-4 rounded-lg border bg-card p-8 text-center">
+              <div className="text-muted-foreground">
+                <Filter className="mx-auto mb-2 h-12 w-12 opacity-50" />
+                <h3 className="text-xl font-semibold">No hay promociones</h3>
+                <p className="mt-2 text-sm">
+                  No se encontraron promociones para este día{" "}
+                  {selectedSupermarket
+                    ? `en ${SUPERMARKET_NAMES[selectedSupermarket]}`
+                    : ""}
+                  .
+                </p>
               </div>
-            )}
-        </div>
-      )}
+              {selectedSupermarket && (
+                <Button
+                  variant="outline"
+                  onClick={() => setSelectedSupermarket(null)}
+                  className="mt-2"
+                >
+                  Ver todos los supermercados
+                </Button>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </div>
       <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2">
         <div className="mt-2 flex flex-col items-stretch p-2 border border-dashed border-secondary rounded-lg gap-2 mb-2 max-w-md w-full mx-auto">
           <Dialog>
@@ -351,7 +357,7 @@ function Promotions({
             className="text-lg py-6"
             size="lg"
             onClick={async () => {
-              const promotionsText = promotionsByWeekday[currentTabIndex]
+              const promotionsText = currentPromotions
                 .map((promotion) => {
                   const source =
                     SUPERMARKET_NAMES[promotion.source] || promotion.source;
@@ -388,28 +394,33 @@ function Promotions({
   );
 }
 
-function PromotionsSkeleton() {
+function PromotionsSkeleton({ tabId }: { tabId: string }) {
   return (
     <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2">
       <div className="space-y-2">
-        {Array.from({ length: 13 }).map((_, idx) => (
-          <div
-            key={idx}
-            className="flex items-center gap-3 rounded-lg border bg-card px-3 py-2"
+        {Array.from({ length: 10 }).map((_, idx) => (
+          <motion.div
+            key={`skeleton-${tabId}-${idx}`}
+            layoutId={`discount-${tabId}-${idx}`}
+            layout="position"
+            className="rounded-lg border bg-card px-3 py-2"
+            transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <Skeleton className="h-8 w-8 rounded" />
-            <Skeleton className="h-7 w-1/7" />
-            <div className="flex-1 space-y-1.5">
-              <Skeleton className="h-5.5 w-2/3" />
-              <Skeleton className="h-5.5 w-1/2" />
+            <div className="flex items-center gap-3">
+              <Skeleton className="h-8 w-8 rounded" />
+              <Skeleton className="h-7 w-1/7" />
+              <div className="flex-1 space-y-1.5">
+                <Skeleton className="h-5.5 w-2/3" />
+                <Skeleton className="h-5.5 w-1/2" />
+              </div>
+              <div className="grid grid-cols-2 gap-1 items-center justify-center">
+                <Skeleton className="h-6 w-6 rounded" />
+                <Skeleton className="h-6 w-6 rounded" />
+                <Skeleton className="h-6 w-6 rounded" />
+                <Skeleton className="h-6 w-6 rounded" />
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-1 items-center justify-center">
-              <Skeleton className="h-6 w-6 rounded" />
-              <Skeleton className="h-6 w-6 rounded" />
-              <Skeleton className="h-6 w-6 rounded" />
-              <Skeleton className="h-6 w-6 rounded" />
-            </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
@@ -468,8 +479,9 @@ function Home() {
 
   return (
     <div className="site-container bg-backgrounder relative min-h-screen flex flex-col">
-      <div className="bg-sidebar pb-2 pt-4">
-        <div className="container mx-auto max-w-3xl px-4">
+      {/* Static Title Block */}
+      <div className="container mx-auto max-w-3xl px-4 pt-4 bg-sidebar">
+        <div>
           <h1 className="flex items-center gap-2 text-3xl font-bold">
             descuentito.ar
             <Badge variant="destructive">beta :)</Badge>
@@ -477,127 +489,123 @@ function Home() {
           <h2 className="text-lg font-medium">
             Descuentos en supermercados de CABA
           </h2>
-          <motion.div
-            layout
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="flex flex-col justify-center"
-          >
-            {
-              !isClient ? (
-                <div className="mt-2 flex w-full items-center gap-2 rounded-md border px-3 py-5">
-                  <Skeleton className="h-8 w-8 rounded-full" />
-                  <Skeleton className="h-4 flex-1" />
-                  <Skeleton className="h-4 w-4" />
-                </div>
-              ) : savedPaymentMethods.size > 0 ? (
-                <>
-                  <Link
-                    to="/configuracion/medios"
-                    className="mt-2 flex flex-col w-full space-x-2 rounded-md border p-3 text-sm ring-1 ring-secondary transition-all gap-1"
-                  >
-                    <div className="flex-grow flex items-center justify-between">
-                      <span className="flex-grow font-medium">
-                        Configura tus medios de pago guardados
-                      </span>
-                      <span>→</span>
+        </div>
+      </div>
+
+      {/* Conditional Content Block (Separate Sibling) */}
+      <div className="container mx-auto max-w-3xl px-4 bg-sidebar">
+        <motion.div className="flex flex-col justify-center">
+          <AnimatePresence mode="popLayout">
+            {!isClient ? (
+              <motion.div
+                key="skeleton"
+                layout
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="mt-2 flex w-full items-center gap-2 rounded-md border bg-sidebar px-3 py-5"
+              >
+                <Skeleton className="h-8 w-8 rounded-full" />
+                <Skeleton className="h-4 flex-1" />
+                <Skeleton className="h-4 w-4" />
+              </motion.div>
+            ) : savedPaymentMethods.size > 0 ? (
+              <motion.div
+                key="saved-payments"
+                layout
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Link
+                  to="/configuracion/medios"
+                  className="mt-2 flex flex-col w-full space-x-2 rounded-md border p-3 text-sm ring-1 ring-secondary transition-all gap-1"
+                >
+                  <div className="flex-grow flex items-center justify-between">
+                    <span className="flex-grow font-medium">
+                      Configura tus medios de pago guardados
+                    </span>
+                    <span>→</span>
+                  </div>
+                  <div className="flex items-center gap-1 flex-wrap">
+                    {Array.from(savedPaymentMethods).map((pm) => (
+                      <PaymentMethodLogo key={pm} method={pm} small />
+                    ))}
+                  </div>
+                </Link>
+              </motion.div>
+            ) : (
+              <motion.div
+                className="mt-2"
+                key="welcome-message"
+                layout
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.div className="flex flex-col w-full rounded-md border border-green-300 bg-green-50 dark:border-green-800 dark:bg-green-950/40 p-4 shadow-sm gap-3">
+                  <div className="flex gap-3 items-start">
+                    <motion.div
+                      className="h-10 w-10 flex-shrink-0 flex items-center justify-center"
+                      initial={{ scale: 0.8 }}
+                      animate={{ scale: 1 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 260,
+                        damping: 20,
+                        delay: 0.2,
+                      }}
+                    >
+                      <img
+                        src="/descuentin.svg"
+                        alt="Descuentin"
+                        className="size-16"
+                      />
+                    </motion.div>
+                    <div className="flex-1">
+                      <motion.p
+                        className="font-medium text-green-800 dark:text-green-300"
+                        initial={{ opacity: 0, x: -5 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.3, duration: 0.3 }}
+                      >
+                        ¡Hola! Soy Descuentin y te voy a ayudar a encontrar los
+                        mejores descuentos
+                      </motion.p>
+                      <motion.p
+                        className="mt-1 text-sm text-green-700 dark:text-green-400"
+                        initial={{ opacity: 0, x: -5 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.5, duration: 0.3 }}
+                      >
+                        Configurá tus medios de pago para ver solo los
+                        descuentos que te sirven a vos
+                      </motion.p>
                     </div>
-                    <div className="flex items-center gap-1 flex-wrap">
-                      {Array.from(savedPaymentMethods).map((pm) => (
-                        <PaymentMethodLogo key={pm} method={pm} small />
-                      ))}
-                    </div>
-                  </Link>
-                </>
-              ) : (
-                <AnimatePresence>
+                  </div>
                   <motion.div
+                    className="flex gap-2 justify-end"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="mt-2"
+                    transition={{ delay: 0.7, duration: 0.3 }}
                   >
-                    <div className="flex flex-col w-full rounded-md border border-green-300 bg-green-50 dark:border-green-800 dark:bg-green-950/40 p-4 shadow-sm gap-3">
-                      <div className="flex gap-3 items-start">
-                        <motion.div
-                          className="h-10 w-10 flex-shrink-0 flex items-center justify-center"
-                          initial={{ scale: 0.8 }}
-                          animate={{ scale: 1 }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 260,
-                            damping: 20,
-                            delay: 0.2,
-                          }}
-                        >
-                          <img
-                            src="/descuentin.svg"
-                            alt="Descuentin"
-                            className="size-16"
-                          />
-                        </motion.div>
-                        <div className="flex-1">
-                          <motion.p
-                            className="font-medium text-green-800 dark:text-green-300"
-                            initial={{ opacity: 0, x: -5 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.3, duration: 0.3 }}
-                          >
-                            ¡Hola! Soy Descuentin y te voy a ayudar a encontrar
-                            los mejores descuentos
-                          </motion.p>
-                          <motion.p
-                            className="mt-1 text-sm text-green-700 dark:text-green-400"
-                            initial={{ opacity: 0, x: -5 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.5, duration: 0.3 }}
-                          >
-                            Configurá tus medios de pago para ver solo los
-                            descuentos que te sirven a vos
-                          </motion.p>
-                        </div>
-                      </div>
-                      <motion.div
-                        className="flex gap-2 justify-end"
-                        initial={{ opacity: 0, y: 5 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.7, duration: 0.3 }}
+                    <Link to="/configuracion/medios">
+                      <Button
+                        variant="default"
+                        size="sm"
+                        className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
                       >
-                        <Link to="/configuracion/medios">
-                          <Button
-                            variant="default"
-                            size="sm"
-                            className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
-                          >
-                            Configurar ahora
-                            <CreditCard className="ml-2 h-4 w-4" />
-                          </Button>
-                        </Link>
-                      </motion.div>
-                    </div>
+                        Configurar ahora
+                        <CreditCard className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
                   </motion.div>
-                </AnimatePresence>
-              )
-              // : (
-              // <Link
-              //   to="/configuracion/medios"
-              //   className="mt-2 flex w-full items-center space-x-2 rounded-md border border-yellow-300 bg-gradient-to-r from-yellow-100/70 to-amber-100/70 px-3 py-4 text-sm shadow-sm transition-all hover:bg-gradient-to-r hover:from-yellow-200/70 hover:to-amber-200/70 dark:border-yellow-700 dark:bg-gradient-to-r dark:from-yellow-900/40 dark:to-amber-900/40 dark:hover:from-yellow-800/40 dark:hover:to-amber-800/40 gap-1"
-              // >
-              //   <Sparkles className="mr-1 h-8 w-8 text-yellow-500 dark:text-yellow-400" />
-              //   <div className="flex-grow flex flex-col justify-between">
-              //     <span>Estás viendo todos los descuentos.</span>
-              //     <span className="flex-grow font-medium">
-              //       Configura tus medios de pago para ver descuentos
-              //       personalizados
-              //     </span>
-              //   </div>
-              //   <span className="text-amber-600 dark:text-amber-400">→</span>
-              // </Link>
-              // )
-            }
-          </motion.div>{" "}
-          {/* Close motion wrapper div */}
-        </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
       </div>
 
       <div className="h-[env(safe-area-inset-top)] fixed top-0 left-0 right-0 z-40 bg-sidebar/90 backdrop-blur"></div>
@@ -635,29 +643,41 @@ function Home() {
         </div>
       </motion.header>
 
-      <motion.div
-        layout
-        transition={{ duration: 0.2, ease: "easeInOut" }}
-        className="flex-grow pt-3 relative"
-      >
-        {!isClient ? (
-          <PromotionsSkeleton />
-        ) : (
-          <Await promise={promotions} fallback={<PromotionsSkeleton />}>
-            {(data) => (
-              <Promotions
-                promotionsData={data}
-                selectedType={selectedType}
-                selectedSupermarket={selectedSupermarket}
-                selectedPromotionType={selectedPromotionType}
-                formattedWeekDates={formattedWeekDates}
-                selectedTabId={selectedTabId}
-                currentTabIndex={currentTabIndex}
-                setSelectedSupermarket={setSelectedSupermarket}
+      <motion.div className="flex-grow pt-3 relative">
+        <LayoutGroup>
+          <AnimatePresence initial={false} mode="wait">
+            {!isClient ? (
+              <PromotionsSkeleton
+                key={`skeleton-${selectedTabId}`}
+                tabId={selectedTabId}
               />
+            ) : (
+              <Await
+                promise={promotions}
+                fallback={
+                  <PromotionsSkeleton
+                    key={`skeleton-fallback-${selectedTabId}`}
+                    tabId={selectedTabId}
+                  />
+                }
+              >
+                {(data) => (
+                  <Promotions
+                    key={`promotions-${selectedTabId}`}
+                    promotionsData={data}
+                    selectedType={selectedType}
+                    selectedSupermarket={selectedSupermarket}
+                    selectedPromotionType={selectedPromotionType}
+                    formattedWeekDates={formattedWeekDates}
+                    selectedTabId={selectedTabId}
+                    currentTabIndex={currentTabIndex}
+                    setSelectedSupermarket={setSelectedSupermarket}
+                  />
+                )}
+              </Await>
             )}
-          </Await>
-        )}
+          </AnimatePresence>
+        </LayoutGroup>
       </motion.div>
 
       <Drawer

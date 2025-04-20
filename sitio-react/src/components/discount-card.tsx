@@ -42,8 +42,8 @@ import {
   DialogTrigger,
   DialogDescription,
 } from "./ui/dialog";
+import { motion } from "framer-motion";
 
-//--- Helper Components (Implement actual components) ---
 export const PaymentMethodLogo = ({
   method,
   small,
@@ -316,9 +316,12 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
         repositionInputs={false}
       >
         <DrawerTrigger asChild className="w-full cursor-pointer">
-          <div className="flex items-center justify-between w-full">
+          <motion.div
+            layout
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="flex items-center justify-between w-full"
+          >
             <div className="flex items-center gap-2 text-left flex-grow min-w-0">
-              {" "}
               <SupermarketLogo
                 source={discount.source}
                 small
@@ -326,11 +329,9 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                 className="h-8 max-w-8 md:h-10 md:max-w-10"
               />
               <div className="text-xl md:text-2xl font-black flex-shrink-0">
-                {" "}
                 {renderDiscountValue()}
               </div>
               <div className="flex flex-col items-start gap-1 flex-grow min-w-0">
-                {" "}
                 {discount.onlyForProducts && (
                   <Badge
                     variant="secondary"
@@ -403,7 +404,7 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                   ))}
                 </div>
               )}
-          </div>
+          </motion.div>
         </DrawerTrigger>
 
         <DrawerPortal>
