@@ -29,6 +29,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
+    "framer-motion": "^11.0.14",
     "lucide-react": "^0.487.0",
     "p-memoize": "^7.1.1",
     "posthog-js": "^1.229.5",

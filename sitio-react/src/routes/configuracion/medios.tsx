@@ -11,6 +11,7 @@ import { Checkbox } from "src/components/ui/checkbox";
 import { Label } from "src/components/ui/label";
 import { cn } from "src/lib/utils";
 import { Switch } from "@/components/ui/switch";
+import { PaymentMethodWizard } from "@/components/payment-method-wizard";
 
 type SubOptionDisplay = {
   id: PaymentMethod;
@@ -93,6 +94,17 @@ function PaymentMethodsConfig() {
     setShowingPaymentMethodsInDiscountCard,
   } = usePaymentMethodsStore();
 
+  // State to track if this is the first visit (for showing the wizard)
+  const [showWizard, setShowWizard] = useState(false);
+
+  // Check local storage to see if the user has seen the wizard before
+  useEffect(() => {
+    const hasSeenWizard = localStorage.getItem("descuentito_wizard_seen");
+    if (!hasSeenWizard && savedPaymentMethods.size === 0) {
+      setShowWizard(true);
+    }
+  }, [savedPaymentMethods.size]);
+
   // Process payment method options
   const displayOptions = buildDisplayOptions(PAYMENT_METHODS, JOIN_GROUPS);
 
@@ -113,6 +125,38 @@ function PaymentMethodsConfig() {
       }
     }
   };
+
+  const handleWizardComplete = () => {
+    setShowWizard(false);
+    localStorage.setItem("descuentito_wizard_seen", "true");
+  };
+
+  if (showWizard) {
+    return (
+      <div className="min-h-screen bg-background">
+        <nav className="sticky top-0 z-10 flex items-center gap-2 border-b p-2 bg-sidebar">
+          <div className="flex items-center gap-2 max-w-md w-full mx-auto">
+            <Link to="/">
+              <ArrowLeft className="h-7 w-7" />
+            </Link>
+            <span className="flex-grow text-left font-medium">
+              Configuración inicial
+            </span>
+          </div>
+        </nav>
+
+        <div className="container mx-auto p-4 pt-6">
+          <PaymentMethodWizard
+            onComplete={handleWizardComplete}
+            onSelectPaymentMethod={updateStore}
+            selectedMethods={savedPaymentMethods}
+            onSelectCondition={setSavedCondition}
+            selectedConditions={savedConditions}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
