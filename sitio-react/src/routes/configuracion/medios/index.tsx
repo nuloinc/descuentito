@@ -1,17 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { usePaymentMethodsStore } from "src/lib/state";
 import { PAYMENT_METHODS, JOIN_GROUPS } from "promos-db/schema";
 import type { PaymentMethod } from "promos-db/schema";
 import { WALLET_ICONS } from "src/lib/logos";
-import FilterByPaymentMethodsButton from "src/components/filter-by-payment-methods-button";
 import { Button } from "src/components/ui/button";
 import { Checkbox } from "src/components/ui/checkbox";
 import { Label } from "src/components/ui/label";
-import { cn } from "src/lib/utils";
+import { cn, useIsClient } from "src/lib/utils";
 import { Switch } from "@/components/ui/switch";
-import { PaymentMethodWizard } from "@/components/payment-method-wizard";
 
 type SubOptionDisplay = {
   id: PaymentMethod;
@@ -78,7 +76,7 @@ function buildDisplayOptions(
   return finalOptions;
 }
 
-export const Route = createFileRoute("/configuracion/medios")({
+export const Route = createFileRoute("/configuracion/medios/")({
   component: PaymentMethodsConfig,
 });
 
@@ -94,16 +92,20 @@ function PaymentMethodsConfig() {
     setShowingPaymentMethodsInDiscountCard,
   } = usePaymentMethodsStore();
 
-  // State to track if this is the first visit (for showing the wizard)
-  const [showWizard, setShowWizard] = useState(false);
+  const isClient = useIsClient();
 
-  // Check local storage to see if the user has seen the wizard before
+  // Check local storage and redirect to wizard if needed
   useEffect(() => {
+    if (!isClient) return; // Only run on client
+    if (window.location.pathname === "/configuracion/medios/wizard/welcome")
+      return;
+
     const hasSeenWizard = localStorage.getItem("descuentito_wizard_seen");
-    if (!hasSeenWizard && savedPaymentMethods.size === 0) {
-      setShowWizard(true);
+    if (!hasSeenWizard) {
+      // Redirect to the wizard on first visit
+      window.location.replace("/configuracion/medios/wizard/welcome");
     }
-  }, [savedPaymentMethods.size]);
+  }, [isClient]);
 
   // Process payment method options
   const displayOptions = buildDisplayOptions(PAYMENT_METHODS, JOIN_GROUPS);
@@ -126,33 +128,12 @@ function PaymentMethodsConfig() {
     }
   };
 
-  const handleWizardComplete = () => {
-    setShowWizard(false);
-    localStorage.setItem("descuentito_wizard_seen", "true");
-  };
-
-  if (showWizard) {
+  if (!isClient) {
+    // Still show loader during SSR or initial client load before effect runs
     return (
       <div className="min-h-screen bg-background">
-        <nav className="sticky top-0 z-10 flex items-center gap-2 border-b p-2 bg-sidebar">
-          <div className="flex items-center gap-2 max-w-md w-full mx-auto">
-            <Link to="/">
-              <ArrowLeft className="h-7 w-7" />
-            </Link>
-            <span className="flex-grow text-left font-medium">
-              Configuración inicial
-            </span>
-          </div>
-        </nav>
-
-        <div className="container mx-auto p-4 pt-6">
-          <PaymentMethodWizard
-            onComplete={handleWizardComplete}
-            onSelectPaymentMethod={updateStore}
-            selectedMethods={savedPaymentMethods}
-            onSelectCondition={setSavedCondition}
-            selectedConditions={savedConditions}
-          />
+        <div className="flex items-center justify-center h-screen p-8">
+          <Loader2 className="h-10 w-10 animate-spin" />
         </div>
       </div>
     );
@@ -223,7 +204,7 @@ function PaymentMethodsConfig() {
                   >
                     {bank.id in WALLET_ICONS && (
                       <img
-                        src={WALLET_ICONS[bank.id as PaymentMethod]}
+                        src={WALLET_ICONS[bank.id as keyof typeof WALLET_ICONS]}
                         alt={bank.name}
                         className="h-6 w-auto rounded-sm"
                       />
@@ -269,16 +250,15 @@ function PaymentMethodsConfig() {
             );
           })}
         </div>
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-3 mt-8 mb-6">
           <Switch
             id="mostrar-en-descuentos"
             checked={showingPaymentMethodsInDiscountCard}
             onCheckedChange={(checked) =>
               setShowingPaymentMethodsInDiscountCard(checked === true)
             }
-            className="mt-8 mb-6"
           />
-          <Label htmlFor="mostrar-en-descuentos" className="pt-8 pb-6">
+          <Label htmlFor="mostrar-en-descuentos" className="">
             Mostrar medios de pago en descuentos
           </Label>
         </div>

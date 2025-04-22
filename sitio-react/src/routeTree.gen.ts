@@ -12,7 +12,8 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
-import { Route as ConfiguracionMediosImport } from './routes/configuracion/medios'
+import { Route as ConfiguracionMediosIndexImport } from './routes/configuracion/medios/index'
+import { Route as ConfiguracionMediosWizardStepImport } from './routes/configuracion/medios/wizard.$step'
 
 // Create/Update Routes
 
@@ -22,11 +23,18 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const ConfiguracionMediosRoute = ConfiguracionMediosImport.update({
-  id: '/configuracion/medios',
-  path: '/configuracion/medios',
+const ConfiguracionMediosIndexRoute = ConfiguracionMediosIndexImport.update({
+  id: '/configuracion/medios/',
+  path: '/configuracion/medios/',
   getParentRoute: () => rootRoute,
 } as any)
+
+const ConfiguracionMediosWizardStepRoute =
+  ConfiguracionMediosWizardStepImport.update({
+    id: '/configuracion/medios/wizard/$step',
+    path: '/configuracion/medios/wizard/$step',
+    getParentRoute: () => rootRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -39,11 +47,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/configuracion/medios': {
-      id: '/configuracion/medios'
+    '/configuracion/medios/': {
+      id: '/configuracion/medios/'
       path: '/configuracion/medios'
       fullPath: '/configuracion/medios'
-      preLoaderRoute: typeof ConfiguracionMediosImport
+      preLoaderRoute: typeof ConfiguracionMediosIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/configuracion/medios/wizard/$step': {
+      id: '/configuracion/medios/wizard/$step'
+      path: '/configuracion/medios/wizard/$step'
+      fullPath: '/configuracion/medios/wizard/$step'
+      preLoaderRoute: typeof ConfiguracionMediosWizardStepImport
       parentRoute: typeof rootRoute
     }
   }
@@ -53,37 +68,49 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/configuracion/medios': typeof ConfiguracionMediosRoute
+  '/configuracion/medios': typeof ConfiguracionMediosIndexRoute
+  '/configuracion/medios/wizard/$step': typeof ConfiguracionMediosWizardStepRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/configuracion/medios': typeof ConfiguracionMediosRoute
+  '/configuracion/medios': typeof ConfiguracionMediosIndexRoute
+  '/configuracion/medios/wizard/$step': typeof ConfiguracionMediosWizardStepRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/configuracion/medios': typeof ConfiguracionMediosRoute
+  '/configuracion/medios/': typeof ConfiguracionMediosIndexRoute
+  '/configuracion/medios/wizard/$step': typeof ConfiguracionMediosWizardStepRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/configuracion/medios'
+  fullPaths:
+    | '/'
+    | '/configuracion/medios'
+    | '/configuracion/medios/wizard/$step'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/configuracion/medios'
-  id: '__root__' | '/' | '/configuracion/medios'
+  to: '/' | '/configuracion/medios' | '/configuracion/medios/wizard/$step'
+  id:
+    | '__root__'
+    | '/'
+    | '/configuracion/medios/'
+    | '/configuracion/medios/wizard/$step'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ConfiguracionMediosRoute: typeof ConfiguracionMediosRoute
+  ConfiguracionMediosIndexRoute: typeof ConfiguracionMediosIndexRoute
+  ConfiguracionMediosWizardStepRoute: typeof ConfiguracionMediosWizardStepRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ConfiguracionMediosRoute: ConfiguracionMediosRoute,
+  ConfiguracionMediosIndexRoute: ConfiguracionMediosIndexRoute,
+  ConfiguracionMediosWizardStepRoute: ConfiguracionMediosWizardStepRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,14 +124,18 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/configuracion/medios"
+        "/configuracion/medios/",
+        "/configuracion/medios/wizard/$step"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/configuracion/medios": {
-      "filePath": "configuracion/medios.tsx"
+    "/configuracion/medios/": {
+      "filePath": "configuracion/medios/index.tsx"
+    },
+    "/configuracion/medios/wizard/$step": {
+      "filePath": "configuracion/medios/wizard.$step.tsx"
     }
   }
 }

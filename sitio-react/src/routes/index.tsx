@@ -52,6 +52,7 @@ import {
 import { Dialog } from "@/components/ui/dialog";
 import { FeedbackForm } from "@/components/feedback-form";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import { useIsClient } from "@/lib/utils";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -471,142 +472,151 @@ function Home() {
     (d) => d.id === selectedTabId
   );
 
-  // https://react.dev/reference/react-dom/client/hydrateRoot#handling-different-client-and-server-content
-  const [isClient, setIsClient] = useState(false);
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const isClient = useIsClient();
 
   return (
     <div className="site-container bg-backgrounder relative min-h-screen flex flex-col">
-      {/* Static Title Block */}
-      <div className="container mx-auto max-w-3xl px-4 pt-4 bg-sidebar">
-        <div>
-          <h1 className="flex items-center gap-2 text-3xl font-bold">
-            descuentito.ar
-            <Badge variant="destructive">beta :)</Badge>
-          </h1>
-          <h2 className="text-lg font-medium">
-            Descuentos en supermercados de CABA
-          </h2>
-        </div>
-      </div>
+      <motion.div
+        className="bg-sidebar"
+        layout="size"
+        transition={{ duration: 0.3 }}
+      >
+        {/* Static Title Block */}
+        <motion.div
+          className="container mx-auto max-w-3xl px-4 pt-4 bg-sidebar"
+          layout="position"
+          transition={{ duration: 0.3 }}
+        >
+          <div>
+            <h1 className="flex items-center gap-2 text-3xl font-bold">
+              descuentito.ar
+              <Badge variant="destructive">beta :)</Badge>
+            </h1>
+            <h2 className="text-lg font-medium">
+              Descuentos en supermercados de CABA
+            </h2>
+          </div>
+        </motion.div>
 
-      {/* Conditional Content Block (Separate Sibling) */}
-      <div className="container mx-auto max-w-3xl px-4 bg-sidebar">
-        <motion.div className="flex flex-col justify-center">
-          <AnimatePresence mode="popLayout">
-            {!isClient ? (
-              <motion.div
-                key="skeleton"
-                layout
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="mt-2 flex w-full items-center gap-2 rounded-md border bg-sidebar px-3 py-5"
-              >
-                <Skeleton className="h-8 w-8 rounded-full" />
-                <Skeleton className="h-4 flex-1" />
-                <Skeleton className="h-4 w-4" />
-              </motion.div>
-            ) : savedPaymentMethods.size > 0 ? (
-              <motion.div
-                key="saved-payments"
-                layout
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Link
-                  to="/configuracion/medios"
-                  className="mt-2 flex flex-col w-full space-x-2 rounded-md border p-3 text-sm ring-1 ring-secondary transition-all gap-1"
+        {/* Conditional Content Block (Separate Sibling) */}
+        <div className="container mx-auto max-w-3xl px-4 bg-sidebar">
+          <motion.div className="flex flex-col justify-center">
+            <AnimatePresence mode="popLayout">
+              {!isClient ? (
+                <motion.div
+                  key="skeleton"
+                  layout
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="mt-2 flex w-full items-center gap-2 rounded-md border bg-sidebar px-3 py-5"
                 >
-                  <div className="flex-grow flex items-center justify-between">
-                    <span className="flex-grow font-medium">
-                      Configura tus medios de pago guardados
-                    </span>
-                    <span>→</span>
-                  </div>
-                  <div className="flex items-center gap-1 flex-wrap">
-                    {Array.from(savedPaymentMethods).map((pm) => (
-                      <PaymentMethodLogo key={pm} method={pm} small />
-                    ))}
-                  </div>
-                </Link>
-              </motion.div>
-            ) : (
-              <motion.div
-                className="mt-2"
-                key="welcome-message"
-                layout
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <motion.div className="flex flex-col w-full rounded-md border border-green-300 bg-green-50 dark:border-green-800 dark:bg-green-950/40 p-4 shadow-sm gap-3">
-                  <div className="flex gap-3 items-start">
-                    <motion.div
-                      className="h-10 w-10 flex-shrink-0 flex items-center justify-center"
-                      initial={{ scale: 0.8 }}
-                      animate={{ scale: 1 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 260,
-                        damping: 20,
-                        delay: 0.2,
-                      }}
-                    >
-                      <img
-                        src="/descuentin.svg"
-                        alt="Descuentin"
-                        className="size-16"
-                      />
-                    </motion.div>
-                    <div className="flex-1">
-                      <motion.p
-                        className="font-medium text-green-800 dark:text-green-300"
-                        initial={{ opacity: 0, x: -5 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.3, duration: 0.3 }}
-                      >
-                        ¡Hola! Soy Descuentin y te voy a ayudar a encontrar los
-                        mejores descuentos
-                      </motion.p>
-                      <motion.p
-                        className="mt-1 text-sm text-green-700 dark:text-green-400"
-                        initial={{ opacity: 0, x: -5 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.5, duration: 0.3 }}
-                      >
-                        Configurá tus medios de pago para ver solo los
-                        descuentos que te sirven a vos
-                      </motion.p>
-                    </div>
-                  </div>
-                  <motion.div
-                    className="flex gap-2 justify-end"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.7, duration: 0.3 }}
+                  <Skeleton className="h-8 w-8 rounded-full" />
+                  <Skeleton className="h-4 flex-1" />
+                  <Skeleton className="h-4 w-4" />
+                </motion.div>
+              ) : savedPaymentMethods.size > 0 ? (
+                <motion.div
+                  key="saved-payments"
+                  layout
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Link
+                    to="/configuracion/medios"
+                    className="mt-2 flex flex-col w-full space-x-2 rounded-md border p-3 text-sm ring-1 ring-secondary transition-all gap-1"
                   >
-                    <Link to="/configuracion/medios">
-                      <Button
-                        variant="default"
-                        size="sm"
-                        className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
+                    <div className="flex-grow flex items-center justify-between">
+                      <span className="flex-grow font-medium">
+                        Configura tus medios de pago guardados
+                      </span>
+                      <span>→</span>
+                    </div>
+                    <div className="flex items-center gap-1 flex-wrap">
+                      {Array.from(savedPaymentMethods).map((pm) => (
+                        <PaymentMethodLogo key={pm} method={pm} small />
+                      ))}
+                    </div>
+                  </Link>
+                </motion.div>
+              ) : (
+                <motion.div
+                  className="my-2"
+                  key="welcome-message"
+                  layout
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div className="flex flex-col w-full rounded-md border border-green-300 bg-green-50 dark:border-green-800 dark:bg-green-950/40 p-4 shadow-sm gap-3">
+                    <div className="flex gap-3 items-start">
+                      <motion.div
+                        className="h-10 w-10 flex-shrink-0 flex items-center justify-center"
+                        initial={{ scale: 0.8 }}
+                        animate={{ scale: 1 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 260,
+                          damping: 20,
+                          delay: 0.2,
+                        }}
                       >
-                        Configurar ahora
-                        <CreditCard className="ml-2 h-4 w-4" />
-                      </Button>
-                    </Link>
+                        <img
+                          src="/descuentin.svg"
+                          alt="Descuentin"
+                          className="size-16"
+                        />
+                      </motion.div>
+                      <div className="flex-1">
+                        <motion.p
+                          className="font-medium text-green-800 dark:text-green-300"
+                          initial={{ opacity: 0, x: -5 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.3, duration: 0.3 }}
+                        >
+                          ¡Hola! Soy Descuentin y te voy a ayudar a encontrar
+                          los mejores descuentos
+                        </motion.p>
+                        <motion.p
+                          className="mt-1 text-sm text-green-700 dark:text-green-400"
+                          initial={{ opacity: 0, x: -5 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.5, duration: 0.3 }}
+                        >
+                          Configurá tus medios de pago para ver solo los
+                          descuentos que te sirven a vos
+                        </motion.p>
+                      </div>
+                    </div>
+                    <motion.div
+                      className="flex gap-2 justify-end"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.7, duration: 0.3 }}
+                    >
+                      <Link
+                        to="/configuracion/medios/wizard/$step"
+                        params={{ step: "welcome" }}
+                      >
+                        <Button
+                          variant="default"
+                          size="sm"
+                          className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
+                        >
+                          Configurar ahora
+                          <CreditCard className="ml-2 h-4 w-4" />
+                        </Button>
+                      </Link>
+                    </motion.div>
                   </motion.div>
                 </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-      </div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        </div>
+      </motion.div>
 
       <div className="h-[env(safe-area-inset-top)] fixed top-0 left-0 right-0 z-40 bg-sidebar/90 backdrop-blur"></div>
 
