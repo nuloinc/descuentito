@@ -236,7 +236,7 @@ function WizardStepComponent() {
       className="flex flex-col gap-2 mt-4"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: 0.3 }}
+      transition={{ duration: 0.4 }}
     >
       {hierarchicalMethods.map(({ method, isParent, children = [] }, index) => {
         const isSelected = savedPaymentMethods.has(method);
@@ -255,7 +255,7 @@ function WizardStepComponent() {
             className="flex flex-col"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 * index }}
+            transition={{ duration: 0.3, delay: 0.05 * index }}
           >
             <Button
               variant={buttonVariant}
@@ -379,7 +379,7 @@ function WizardStepComponent() {
             className="grid grid-cols-1 gap-2 mt-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.3 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
           >
             {[
               { key: "jubilados", label: "Soy jubilado/a" },
@@ -389,7 +389,7 @@ function WizardStepComponent() {
                 key={key}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.1 * (i + 1) }}
+                transition={{ duration: 0.3, delay: 0.05 * (i + 1) }}
               >
                 <Button
                   variant={
@@ -430,7 +430,7 @@ function WizardStepComponent() {
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.3, delay: 0.5 * index + 0.2 }}
+            transition={{ duration: 0.3, delay: 0.2 * index }}
             className={cn(
               "flex items-start gap-2",
               message.isUser ? "justify-end" : "justify-start"
@@ -470,7 +470,7 @@ function WizardStepComponent() {
       x: 0,
       opacity: 1,
       transition: {
-        x: { type: "spring", stiffness: 300, damping: 30 },
+        x: { type: "spring", stiffness: 500, damping: 40 },
         opacity: { duration: 0.2 },
       },
     },
@@ -478,7 +478,7 @@ function WizardStepComponent() {
       x: direction === "right" ? -300 : 300,
       opacity: 0,
       transition: {
-        x: { type: "spring", stiffness: 300, damping: 30 },
+        x: { type: "spring", stiffness: 500, damping: 40 },
         opacity: { duration: 0.2 },
       },
     }),
@@ -549,7 +549,7 @@ function WizardStepComponent() {
                   className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4 dark:bg-amber-950/30 dark:border-amber-800"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.6, duration: 0.3 }}
+                  transition={{ delay: 0.5, duration: 0.3 }}
                 >
                   <div className="flex items-start gap-2">
                     <AlertCircle className="h-5 w-5 text-amber-600 dark:text-amber-400 mt-0.5" />
@@ -567,7 +567,7 @@ function WizardStepComponent() {
                 className="flex justify-end mt-6"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 0.3 }}
+                transition={{ delay: 0.2, duration: 0.3 }}
               >
                 {step === "complete" ? (
                   <Button
