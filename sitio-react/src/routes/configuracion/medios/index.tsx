@@ -81,7 +81,6 @@ export const Route = createFileRoute("/configuracion/medios/")({
 });
 
 function PaymentMethodsConfig() {
-  // Use the Zustand store
   const {
     savedPaymentMethods,
     addPaymentMethod,
@@ -94,7 +93,6 @@ function PaymentMethodsConfig() {
 
   const isClient = useIsClient();
 
-  // Check local storage and redirect to wizard if needed
   useEffect(() => {
     if (!isClient) return; // Only run on client
     if (window.location.pathname === "/configuracion/medios/wizard/welcome")
@@ -102,7 +100,6 @@ function PaymentMethodsConfig() {
 
     const hasSeenWizard = localStorage.getItem("descuentito_wizard_seen");
     if (!hasSeenWizard) {
-      // Redirect to the wizard on first visit
       window.location.replace("/configuracion/medios/wizard/welcome");
     }
   }, [isClient]);
@@ -129,7 +126,6 @@ function PaymentMethodsConfig() {
   };
 
   if (!isClient) {
-    // Still show loader during SSR or initial client load before effect runs
     return (
       <div className="min-h-screen bg-background">
         <div className="flex items-center justify-center h-screen p-8">

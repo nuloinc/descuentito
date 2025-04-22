@@ -30,7 +30,7 @@ type WizardStepId =
   | "welcome"
   | "disclaimer"
   | "banks"
-  | "creditCards"
+  | "cards"
   | "digitalWallets"
   | "conditions"
   | "complete";
@@ -39,7 +39,7 @@ const WIZARD_STEP_ORDER: WizardStepId[] = [
   "welcome",
   "disclaimer",
   "banks",
-  "creditCards",
+  "cards",
   "digitalWallets",
   "conditions",
   "complete",
@@ -93,9 +93,8 @@ function buildHierarchy(methods: PaymentMethod[]): HierarchicalMethod[] {
 
 const CATEGORY_FILTERS = {
   banks: (m: PaymentMethod) => m.startsWith("Banco") || m === "Sidecreer",
-  creditCards: (m: PaymentMethod) =>
-    m.startsWith("Tarjeta") ||
-    ["NaranjaX", "MODO", "Tarjeta American Express"].includes(m),
+  cards: (m: PaymentMethod) =>
+    m.startsWith("Tarjeta") || ["MODO", "Tarjeta American Express"].includes(m),
   digitalWallets: (m: PaymentMethod) =>
     [
       "Mercado Pago",
@@ -111,11 +110,11 @@ const CATEGORY_FILTERS = {
 } as const;
 
 const HIERARCHY = Object.fromEntries(
-  (["banks", "creditCards", "digitalWallets"] as const).map((step) => [
+  (["banks", "cards", "digitalWallets"] as const).map((step) => [
     step,
     buildHierarchy(PAYMENT_METHODS.filter(CATEGORY_FILTERS[step])),
   ])
-) as Record<"banks" | "creditCards" | "digitalWallets", HierarchicalMethod[]>;
+) as Record<"banks" | "cards" | "digitalWallets", HierarchicalMethod[]>;
 
 const chatMessages: Record<
   WizardStepId,
@@ -151,9 +150,9 @@ const chatMessages: Record<
       isUser: false,
     },
   ],
-  creditCards: [
+  cards: [
     {
-      text: "¿Qué tarjetas de crédito tenés? Selecciona todas las que usas.",
+      text: "¿Qué medios de pago tenés? Selecciona todas las que usas.",
       isUser: false,
     },
   ],
@@ -214,17 +213,13 @@ function WizardStepComponent() {
   } = usePaymentMethodsStore();
 
   const [direction, setDirection] = useState<"right" | "left">("right");
-  const [visibleMessageCount, setVisibleMessageCount] = useState(0);
-  const [expandedGroups, setExpandedGroups] = useState<Set<PaymentMethod>>(
-    new Set()
-  );
   const hierarchicalMethodsMap = HIERARCHY;
 
   const step: WizardStepId = WIZARD_STEP_ORDER.includes(
     params.step as WizardStepId
   )
     ? (params.step as WizardStepId)
-    : "welcome"; // Default to 'welcome' if invalid
+    : "welcome";
 
   useEffect(() => {
     if (params.step !== step) {
@@ -236,19 +231,6 @@ function WizardStepComponent() {
     }
   }, [params.step, step, navigate]);
 
-  useEffect(() => {
-    setVisibleMessageCount(0);
-    const messages = chatMessages[step];
-    const timeouts = messages.map((_, index) =>
-      setTimeout(
-        () =>
-          setVisibleMessageCount((prev) => Math.min(prev + 1, messages.length)),
-        400 * (index + 1)
-      )
-    );
-    return () => timeouts.forEach(clearTimeout);
-  }, [step]);
-
   const renderMethodsList = (hierarchicalMethods: HierarchicalMethod[]) => (
     <motion.div
       className="flex flex-col gap-2 mt-4"
@@ -257,8 +239,8 @@ function WizardStepComponent() {
       transition={{ duration: 0.4, delay: 0.3 }}
     >
       {hierarchicalMethods.map(({ method, isParent, children = [] }, index) => {
-        const isExpanded = isParent && expandedGroups.has(method);
         const isSelected = savedPaymentMethods.has(method);
+        const isExpanded = isParent && isSelected;
         const hasSelectedChildren =
           isParent && children.some((child) => savedPaymentMethods.has(child));
         const buttonVariant = isSelected
@@ -289,11 +271,6 @@ function WizardStepComponent() {
                   } else {
                     addPaymentMethod(method);
                   }
-                  setExpandedGroups((prev) => {
-                    const next = new Set(prev);
-                    next.has(method) ? next.delete(method) : next.add(method);
-                    return next;
-                  });
                 } else {
                   isSelected
                     ? removePaymentMethod(method)
@@ -393,7 +370,7 @@ function WizardStepComponent() {
       case "disclaimer":
         return null;
       case "banks":
-      case "creditCards":
+      case "cards":
       case "digitalWallets":
         return renderMethodsList(hierarchicalMethodsMap[step]);
       case "conditions":
@@ -527,7 +504,12 @@ function WizardStepComponent() {
             <Link
               to={`/configuracion/medios/wizard/$step`}
               params={{ step: prevStep }}
-              onClick={() => setDirection("left")}
+              onClick={() => {
+                setDirection("left");
+                setTimeout(() => {
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }, 100);
+              }}
               className="p-1"
             >
               <ArrowLeft className="h-6 w-6" />
@@ -601,11 +583,17 @@ function WizardStepComponent() {
                   <Button
                     asChild
                     className="transition-all"
-                    onClick={() => setDirection("right")}
+                    onClick={() => {
+                      setDirection("right");
+                      setTimeout(() => {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }, 100);
+                    }}
                   >
                     <Link
                       to={`/configuracion/medios/wizard/$step`}
                       params={{ step: nextStep }}
+                      resetScroll
                     >
                       Siguiente <ChevronRight className="ml-1 h-4 w-4" />
                     </Link>
