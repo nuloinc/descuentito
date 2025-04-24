@@ -6,6 +6,7 @@ import { sendFeedback } from "@/server/feedback";
 import { useMutation } from "@tanstack/react-query";
 import { usePaymentMethodsStore } from "@/lib/state";
 import { Discount } from "promos-db/schema";
+import { Textarea } from "./ui/textarea";
 
 export const FeedbackForm: React.FC<{ discount?: Discount }> = ({
   discount,
@@ -45,8 +46,7 @@ export const FeedbackForm: React.FC<{ discount?: Discount }> = ({
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-      <textarea
-        className="border rounded p-2 min-h-[80px] text-sm"
+      <Textarea
         placeholder="Describí el error o problema..."
         value={feedback}
         onChange={(e) => setFeedback(e.target.value)}
