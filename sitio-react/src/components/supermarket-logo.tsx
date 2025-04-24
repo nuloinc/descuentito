@@ -70,7 +70,7 @@ const SupermarketLogo: React.FC<SupermarketLogoProps> = ({
     <div className={cn("flex items-center justify-center", containerClassName)}>
       <img
         src={logoSrc}
-        alt={`Logo de ${source}`}
+        alt={`${source}`}
         className={cn(
           "h-5 object-contain",
           needsLightBg && "rounded-sm bg-white p-0.5",
