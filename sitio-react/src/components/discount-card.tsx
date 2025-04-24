@@ -17,7 +17,6 @@ import {
   DrawerPortal,
   DrawerOverlay,
 } from "src/components/ui/drawer";
-import { Alert, AlertDescription, AlertTitle } from "src/components/ui/alert";
 import {
   Accordion,
   AccordionContent,
@@ -174,8 +173,12 @@ const CURRENCY_FORMATTER = new Intl.NumberFormat("es-AR", {
 
 function formatCurrency(amount: number | undefined) {
   if (amount === undefined) return "";
-  if (amount > 1000 && amount % 1000 === 0) {
-    return `$${amount / 1000}mil`;
+  if (amount > 100 && amount % 100 === 0) {
+    const thousands = amount / 1000;
+    if (thousands % 1 === 0) {
+      return `$${thousands}mil`;
+    }
+    return `$${thousands.toFixed(1)}mil`;
   }
   return CURRENCY_FORMATTER.format(amount);
 }
