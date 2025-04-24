@@ -626,18 +626,18 @@ function Home() {
         className="sticky top-[env(safe-area-inset-top)] z-40 w-full bg-sidebar/90 shadow-md backdrop-blur"
       >
         <div className="mx-auto w-full my-2">
-          <div className="flex items-center justify-between gap-2 px-2">
+          <div className="flex items-center justify-center px-2">
             <Tabs
               value={selectedTabId}
               onValueChange={(value: string) => setSelectedTabId(value)}
-              className="mx-auto mb-0"
+              className="mb-0"
             >
               <TabsList className="flex md:gap-1 overflow-x-auto scrollbar-hide">
                 {formattedWeekDates.map((weekDateInfo) => (
                   <TabsTrigger
                     key={weekDateInfo.id}
                     value={weekDateInfo.id}
-                    className="xs:px-4 px-2.5"
+                    className="xs:px-4 px-2"
                   >
                     <span className="hidden lg:block">
                       {weekDateInfo.display}
@@ -649,11 +649,28 @@ function Home() {
                 ))}
               </TabsList>
             </Tabs>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setIsFilterDrawerOpen(true)}
+              className="ml-2 flex-shrink-0 relative"
+            >
+              <Filter className="h-4 w-4" />
+              {(selectedSupermarket ||
+                selectedPromotionType !== "Todos" ||
+                selectedType !== "Online" ||
+                shouldFilterByPaymentMethods) && (
+                <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+                </span>
+              )}
+            </Button>
           </div>
         </div>
       </motion.header>
 
-      <motion.div className="flex-grow pt-3 relative">
+      <motion.div className="flex-grow pt-3 relative pb-16">
         <LayoutGroup>
           <AnimatePresence initial={false} mode="wait">
             {!isClient ? (
@@ -695,39 +712,6 @@ function Home() {
         onOpenChange={setIsFilterDrawerOpen}
         repositionInputs={false}
       >
-        <DrawerTrigger asChild>
-          <div
-            className="bg-sidebar text-primary fixed bottom-0 z-50 flex w-full flex-col items-center justify-center gap-2 rounded-t-[10px] px-4 text-lg font-medium shadow-xl pb-[calc(env(safe-area-inset-bottom)+10px)]"
-            onClick={() => setIsFilterDrawerOpen(true)}
-            onTouchStart={() => setIsFilterDrawerOpen(true)}
-          >
-            <div className="bg-sidebar-ring mx-auto mt-4 h-2 w-[100px] rounded-full"></div>
-            <div className="flex items-center gap-2">
-              <Filter className="h-4 w-4" />
-              <span className="">Filtros</span>
-              <Badge variant="outline" className="ml-1">
-                {selectedType}
-              </Badge>
-              {selectedSupermarket &&
-                (BRAND_LOGOS_SMALL[selectedSupermarket] ? (
-                  <SupermarketLogo
-                    source={selectedSupermarket}
-                    small
-                    className="h-4 w-4"
-                  />
-                ) : (
-                  <Badge variant="outline" className="ml-1">
-                    {selectedSupermarket}
-                  </Badge>
-                ))}
-              {selectedPromotionType !== "Todos" && (
-                <Badge variant="outline" className="ml-1">
-                  {selectedPromotionType}
-                </Badge>
-              )}
-            </div>
-          </div>
-        </DrawerTrigger>
         <DrawerContent>
           <div className="mx-auto w-full max-w-sm overflow-y-auto">
             <DrawerHeader className="pb-0 text-xl">
