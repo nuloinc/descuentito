@@ -518,16 +518,6 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                   </ul>
                 </div>
               )}
-              <Alert
-                variant="default"
-                className="mt-4 border-yellow-500/50 text-yellow-700 dark:border-yellow-500/50 dark:text-yellow-500 [&>svg]:text-yellow-700 dark:[&>svg]:text-yellow-500"
-              >
-                <AlertTitle>Verificá los detalles</AlertTitle>
-                <AlertDescription>
-                  Te recomendamos verificar los detalles de la promoción en el
-                  sitio de la tienda.
-                </AlertDescription>
-              </Alert>
             </div>
           </div>
 
@@ -560,15 +550,19 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
           </Dialog>
         </div>
         <DrawerFooter className="border-t sticky bottom-0 bg-background py-2 pb-[calc(env(safe-area-inset-bottom)+.5rem)]">
+          <p className="text-sm text-center text-amber-500">
+            Te recomendamos verificar los detalles de la promoción en el sitio
+            del supermercado.
+          </p>
           <Button asChild className="w-full">
             <a
               href={discount.url}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
               className="flex items-center justify-center gap-1"
             >
               <ExternalLinkIcon className="h-4 w-4" />
-              Ver más detalles
+              Ver en el sitio del supermercado
             </a>
           </Button>
         </DrawerFooter>
