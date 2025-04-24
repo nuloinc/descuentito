@@ -89,6 +89,9 @@ export const BANKS_OR_WALLETS = [
   "Banco Ciudad",
   "Banco Ciudad - Plan Sueldo y Jubilados",
   "Personal Pay",
+  "Personal Pay - Nivel 1",
+  "Personal Pay - Nivel 2",
+  "Personal Pay - Nivel 3",
   "Uala",
   "Banco Patagonia",
   "Banco BBVA",
@@ -172,6 +175,12 @@ export const JOIN_GROUPS: (typeof PAYMENT_METHODS)[number][][] = [
     "Banco Macro - Tarjeta PLATINUM",
     "Banco Macro - Tarjeta Selecta",
   ],
+  [
+    "Personal Pay",
+    "Personal Pay - Nivel 1",
+    "Personal Pay - Nivel 2",
+    "Personal Pay - Nivel 3",
+  ],
 ];
 
 export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
@@ -242,7 +251,6 @@ Group payment methods into valid combinations that work together for a discount.
    - For generic VISA/Mastercard: use "Tarjeta de crédito VISA"/"Tarjeta de crédito Mastercard"
    - Handle bank-specific variations carefully (e.g. "Banco Galicia Más" ≠ "Banco Galicia")
    - Account for special account types like "Plan Sueldo" when explicitly mentioned
-   - If multiple Niveles are specified for "Personal Pay", just use the first one
 
 3. **Structure & Ordering**
    Within each combination array, sort elements by:
