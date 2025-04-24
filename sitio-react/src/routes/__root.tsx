@@ -24,7 +24,8 @@ export const Route = createRootRouteWithContext<{
       },
       {
         name: "viewport",
-        content: "width=device-width, initial-scale=1, viewport-fit=cover",
+        content:
+          "width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no",
       },
       {
         name: "mobile-web-app-capable",
