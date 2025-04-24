@@ -8,6 +8,7 @@ import {
 
 interface SupermarketLogoProps {
   source: string;
+  where?: string;
   small?: boolean;
   className?: string;
   containerClassName?: string;
@@ -15,6 +16,7 @@ interface SupermarketLogoProps {
 
 const SupermarketLogo: React.FC<SupermarketLogoProps> = ({
   source,
+  where,
   small = false,
   className,
   containerClassName,
@@ -42,7 +44,7 @@ const SupermarketLogo: React.FC<SupermarketLogoProps> = ({
       : BRAND_LOGOS[source];
 
   // Get logo URL for the selected key
-  const logoSrc = logoSet?.[logoKey];
+  const logoSrc = logoSet?.[where || logoKey];
 
   // Check if logo needs a light background
   const needsLightBg =

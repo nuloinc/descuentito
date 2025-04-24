@@ -411,6 +411,25 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
           <DrawerOverlay className="fixed inset-0 bg-black/40" />
           <DrawerContent className="bg-background flex flex-col rounded-t-[10px] mt-24 h-[90%] fixed bottom-0 left-0 right-0 outline-none max-w-2xl mx-auto">
             <div className="p-4 flex-1 overflow-y-auto">
+              {/* Discount Title */}
+              <div className="text-center mb-4">
+                <h2 className="text-3xl font-bold">
+                  {discount.discount.type === "porcentaje"
+                    ? `${discount.discount.value}% OFF`
+                    : `${discount.discount.value} Cuotas sin interés`}
+                </h2>
+                <div className="flex items-center justify-center gap-2 mt-1">
+                  en{" "}
+                  {discount.where?.length > 0 &&
+                    discount.where.map((where) => (
+                      <SupermarketLogo
+                        source={discount.source}
+                        where={where}
+                        className="h-6"
+                      />
+                    ))}
+                </div>
+              </div>
               <div className="mx-auto">
                 <DrawerClose
                   className="bg-muted absolute right-4 top-4 rounded p-2 z-50"
@@ -419,12 +438,6 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                   <XIcon className="h-4 w-4" />
                 </DrawerClose>
                 <div className="space-y-4">
-                  {discount.where?.length > 0 && (
-                    <div>
-                      <h4 className="font-medium mb-1">Comprando en:</h4>
-                      <p className="text-sm">{discount.where.join(", ")}</p>
-                    </div>
-                  )}
                   {discount.limits?.maxDiscount !== undefined && (
                     <div>
                       <h4 className="font-medium mb-1">Tope de descuento:</h4>
