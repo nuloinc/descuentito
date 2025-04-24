@@ -25,6 +25,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { useIsClient } from "@/lib/utils";
+import { PaymentMethodLogo } from "@/components/discount-card";
 
 type WizardStepId =
   | "welcome"
@@ -415,7 +416,36 @@ function WizardStepComponent() {
           </motion.div>
         );
       case "complete":
-        return null;
+        return (
+          <motion.div
+            className="grid grid-cols-6 gap-4 mt-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+          >
+            {Array.from(savedPaymentMethods)
+              .filter((method) => method in WALLET_ICONS)
+              .map(
+                (method) => WALLET_ICONS[method as keyof typeof WALLET_ICONS]
+              )
+              .filter((logo, index, array) => array.indexOf(logo) === index)
+              .map((logo, i) => (
+                <motion.div
+                  key={logo}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: 0.1 * i + 0.3 }}
+                  className="flex items-center justify-center"
+                >
+                  <img
+                    src={logo}
+                    alt={logo}
+                    className="w-12 h-auto rounded-lg"
+                  />
+                </motion.div>
+              ))}
+          </motion.div>
+        );
       default:
         return null;
     }
