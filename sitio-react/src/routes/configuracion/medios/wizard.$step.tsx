@@ -132,7 +132,7 @@ const chatMessages: Record<
   ],
   disclaimer: [
     {
-      text: "¡Importante! Siempre verifica los detalles del descuento en la página oficial del supermercado.",
+      text: "¡Importante! Siempre verificá los detalles del descuento en la página oficial del supermercado.",
       isUser: false,
     },
     {

@@ -522,7 +522,7 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                 variant="default"
                 className="mt-4 border-yellow-500/50 text-yellow-700 dark:border-yellow-500/50 dark:text-yellow-500 [&>svg]:text-yellow-700 dark:[&>svg]:text-yellow-500"
               >
-                <AlertTitle>Verifica los detalles</AlertTitle>
+                <AlertTitle>Verificá los detalles</AlertTitle>
                 <AlertDescription>
                   Te recomendamos verificar los detalles de la promoción en el
                   sitio de la tienda.

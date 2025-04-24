@@ -529,7 +529,7 @@ function Home() {
                   >
                     <div className="flex-grow flex items-center justify-between">
                       <span className="flex-grow font-medium">
-                        Configura tus medios de pago guardados
+                        Configurá tus medios de pago guardados
                       </span>
                       <span>→</span>
                     </div>
@@ -605,7 +605,7 @@ function Home() {
                           size="sm"
                           className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
                         >
-                          Configurar ahora
+                          Configurá ahora
                           <CreditCard className="ml-2 h-4 w-4" />
                         </Button>
                       </Link>

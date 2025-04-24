@@ -268,7 +268,7 @@ function PaymentMethodsConfig() {
             className="w-full max-w-sm mx-auto"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Volver a tus descuentos
+            Volver a descuentos
           </Link>
         </Button>
       </div>
