@@ -309,17 +309,17 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
   };
 
   return (
-    <div className="bg-card text-card-foreground rounded-lg border px-3 py-2">
-      <Drawer
-        open={isDrawerOpen}
-        onOpenChange={setIsDrawerOpen}
-        repositionInputs={false}
-      >
-        <DrawerTrigger asChild className="w-full cursor-pointer">
+    <Drawer
+      open={isDrawerOpen}
+      onOpenChange={setIsDrawerOpen}
+      repositionInputs={false}
+    >
+      <DrawerTrigger asChild>
+        <div className="bg-card text-card-foreground rounded-lg border px-3 py-2">
           <motion.div
             layout
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="flex items-center justify-between w-full"
+            className="flex items-center justify-between w-full cursor-pointer"
           >
             <div className="flex items-center gap-2 text-left flex-grow min-w-0">
               <SupermarketLogo
@@ -405,183 +405,174 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                 </div>
               )}
           </motion.div>
-        </DrawerTrigger>
+        </div>
+      </DrawerTrigger>
 
-        <DrawerPortal>
-          <DrawerOverlay className="fixed inset-0 bg-black/40" />
-          <DrawerContent className="bg-background flex flex-col rounded-t-[10px] mt-24 h-[90%] fixed bottom-0 left-0 right-0 outline-none max-w-2xl mx-auto">
-            <div className="p-4 flex-1 overflow-y-auto">
-              {/* Discount Title */}
-              <div className="text-center mb-4">
-                <h2 className="text-3xl font-bold">
-                  {discount.discount.type === "porcentaje"
-                    ? `${discount.discount.value}% OFF`
-                    : `${discount.discount.value} Cuotas sin interés`}
-                </h2>
-                <div className="flex items-center justify-center gap-2 mt-1">
-                  en{" "}
-                  {discount.where?.length > 0 &&
-                    discount.where.map((where) => (
-                      <SupermarketLogo
-                        source={discount.source}
-                        where={where}
-                        className="h-6"
-                      />
-                    ))}
-                </div>
-              </div>
-              <div className="mx-auto">
-                <DrawerClose
-                  className="bg-muted absolute right-4 top-4 rounded p-2 z-50"
-                  aria-label="Cerrar"
-                >
-                  <XIcon className="h-4 w-4" />
-                </DrawerClose>
-                <div className="space-y-4">
-                  {discount.limits?.maxDiscount !== undefined && (
-                    <div>
-                      <h4 className="font-medium mb-1">Tope de descuento:</h4>
-                      <p className="font-medium text-sm">
-                        {formatCurrency(discount.limits.maxDiscount)}
-                      </p>
-                    </div>
-                  )}
-                  {discount.limits?.explicitlyHasNoLimit && (
-                    <p className="flex items-center gap-1 text-sm">
-                      <StarsIcon className="h-4 w-4 text-yellow-500" />
-                      <span className="font-bold text-yellow-500">
-                        Sin tope
-                      </span>
-                    </p>
-                  )}
-                  {discount.membership && discount.membership.length > 0 && (
-                    <div>
-                      <h4 className="font-medium mb-1">
-                        Beneficio exclusivo para:
-                      </h4>
-                      <p className="text-sm">
-                        {discount.membership.join(", ")}
-                      </p>
-                    </div>
-                  )}
-                  {discount.paymentMethods &&
-                    discount.paymentMethods.length > 0 && (
-                      <div>
-                        <h4 className="font-medium mb-1">Medios de pago:</h4>
-                        <div className="mt-1 flex flex-col gap-2">
-                          {discount.paymentMethods.map(
-                            (methods: string | string[], idx: number) =>
-                              Array.isArray(methods) ? (
-                                <div
-                                  key={idx}
-                                  className="flex flex-wrap items-center gap-1"
-                                >
-                                  {methods.map((methodItem, itemIdx) => (
-                                    <React.Fragment key={itemIdx}>
-                                      <PaymentMethodLogo method={methodItem} />
-                                      {itemIdx < methods.length - 1 && (
-                                        <span>+</span>
-                                      )}
-                                    </React.Fragment>
-                                  ))}
-                                </div>
-                              ) : (
-                                <PaymentMethodLogo key={idx} method={methods} />
-                              )
-                          )}
-                        </div>
-                      </div>
-                    )}
-
-                  {discount.excludesProducts && (
-                    <div>
-                      <h4 className="font-medium mb-1">
-                        No aplica para productos:
-                      </h4>
-                      <ExcludesProductsSummary
-                        discount={
-                          discount as Discount & { excludesProducts: string }
-                        }
-                        isDrawerOpen={isDrawerOpen}
-                      />
-                    </div>
-                  )}
-                  {discount.restrictions &&
-                    discount.restrictions.length > 0 && (
-                      <div>
-                        <h4 className="font-medium mb-1">Restricciones:</h4>
-                        <ul className="list-disc pl-5 text-sm space-y-1">
-                          {discount.onlyForProducts ? (
-                            <li>
-                              <span className="font-bold">Solo para:</span>{" "}
-                              {discount.onlyForProducts}
-                            </li>
-                          ) : null}
-                          {discount.restrictions.map(
-                            (restriction: string, idx: number) => (
-                              <li key={idx}>{restriction}</li>
-                            )
-                          )}
-                        </ul>
-                      </div>
-                    )}
-                  <Alert
-                    variant="default"
-                    className="mt-4 border-yellow-500/50 text-yellow-700 dark:border-yellow-500/50 dark:text-yellow-500 [&>svg]:text-yellow-700 dark:[&>svg]:text-yellow-500"
-                  >
-                    <AlertTitle>Verifica los detalles</AlertTitle>
-                    <AlertDescription>
-                      Te recomendamos verificar los detalles de la promoción en
-                      el sitio de la tienda.
-                    </AlertDescription>
-                  </Alert>
-                </div>
-              </div>
-
-              <Dialog>
-                <DialogTrigger asChild>
-                  <div className="flex justify-center">
-                    <Button variant="outline" className="mx-auto my-2">
-                      <MessageCircleWarning className="size-5" />
-                      Reportar un problema
-                    </Button>
-                  </div>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>
-                      Reportar un problema en este descuento
-                    </DialogTitle>
-                    <DialogDescription>
-                      ¿Encontraste un error o algo incorrecto en este descuento?
-                      Por favor, contanos qué viste.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <FeedbackForm discount={discount} />
-                  <DialogFooter>
-                    <DialogClose asChild>
-                      <Button variant="outline">Cerrar</Button>
-                    </DialogClose>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
+      <DrawerContent className="bg-background flex flex-col rounded-t-[10px] mt-24 h-[90%] fixed bottom-0 left-0 right-0 outline-none max-w-2xl mx-auto">
+        <div className="p-4 flex-1 overflow-y-auto">
+          <DialogHeader className="text-center mb-4 flex flex-col items-center gap-0">
+            <DialogTitle className="text-2xl font-black">
+              {discount.discount.type === "porcentaje"
+                ? `${discount.discount.value}% OFF`
+                : `${discount.discount.value} cuotas sin interés`}
+            </DialogTitle>
+            <div className="flex items-center justify-center gap-1">
+              en{" "}
+              {discount.where?.length > 0 &&
+                discount.where.map((where) => (
+                  <SupermarketLogo
+                    source={discount.source}
+                    where={where}
+                    className="h-6"
+                  />
+                ))}
             </div>
-            <DrawerFooter className="border-t sticky bottom-0 bg-background py-2 pb-[calc(env(safe-area-inset-bottom)+.5rem)]">
-              <Button asChild className="w-full">
-                <a
-                  href={discount.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-1"
-                >
-                  <ExternalLinkIcon className="h-4 w-4" />
-                  Ver más detalles
-                </a>
-              </Button>
-            </DrawerFooter>
-          </DrawerContent>
-        </DrawerPortal>
-      </Drawer>
-    </div>
+          </DialogHeader>
+          <div className="mx-auto">
+            <DrawerClose
+              className="bg-muted absolute right-4 top-4 rounded p-2 z-50"
+              aria-label="Cerrar"
+            >
+              <XIcon className="h-4 w-4" />
+            </DrawerClose>
+            <div className="space-y-4">
+              {discount.limits?.maxDiscount !== undefined && (
+                <div>
+                  <h4 className="font-medium mb-1">Tope de descuento:</h4>
+                  <p className="font-medium text-sm">
+                    {formatCurrency(discount.limits.maxDiscount)}
+                  </p>
+                </div>
+              )}
+              {discount.limits?.explicitlyHasNoLimit && (
+                <p className="flex items-center gap-1 text-sm">
+                  <StarsIcon className="h-4 w-4 text-yellow-500" />
+                  <span className="font-bold text-yellow-500">Sin tope</span>
+                </p>
+              )}
+              {discount.membership && discount.membership.length > 0 && (
+                <div>
+                  <h4 className="font-medium mb-1">
+                    Beneficio exclusivo para:
+                  </h4>
+                  <p className="text-sm">{discount.membership.join(", ")}</p>
+                </div>
+              )}
+              {discount.paymentMethods &&
+                discount.paymentMethods.length > 0 && (
+                  <div>
+                    <h4 className="font-medium mb-1">Medios de pago:</h4>
+                    <div className="mt-1 flex flex-col gap-2">
+                      {discount.paymentMethods.map(
+                        (methods: string | string[], idx: number) =>
+                          Array.isArray(methods) ? (
+                            <div
+                              key={idx}
+                              className="flex flex-wrap items-center gap-1"
+                            >
+                              {methods.map((methodItem, itemIdx) => (
+                                <React.Fragment key={itemIdx}>
+                                  <PaymentMethodLogo method={methodItem} />
+                                  {itemIdx < methods.length - 1 && (
+                                    <span>+</span>
+                                  )}
+                                </React.Fragment>
+                              ))}
+                            </div>
+                          ) : (
+                            <PaymentMethodLogo key={idx} method={methods} />
+                          )
+                      )}
+                    </div>
+                  </div>
+                )}
+
+              {discount.excludesProducts && (
+                <div>
+                  <h4 className="font-medium mb-1">
+                    No aplica para productos:
+                  </h4>
+                  <ExcludesProductsSummary
+                    discount={
+                      discount as Discount & { excludesProducts: string }
+                    }
+                    isDrawerOpen={isDrawerOpen}
+                  />
+                </div>
+              )}
+              {discount.restrictions && discount.restrictions.length > 0 && (
+                <div>
+                  <h4 className="font-medium mb-1">Restricciones:</h4>
+                  <ul className="list-disc pl-5 text-sm space-y-1">
+                    {discount.onlyForProducts ? (
+                      <li>
+                        <span className="font-bold">Solo para:</span>{" "}
+                        {discount.onlyForProducts}
+                      </li>
+                    ) : null}
+                    {discount.restrictions.map(
+                      (restriction: string, idx: number) => (
+                        <li key={idx}>{restriction}</li>
+                      )
+                    )}
+                  </ul>
+                </div>
+              )}
+              <Alert
+                variant="default"
+                className="mt-4 border-yellow-500/50 text-yellow-700 dark:border-yellow-500/50 dark:text-yellow-500 [&>svg]:text-yellow-700 dark:[&>svg]:text-yellow-500"
+              >
+                <AlertTitle>Verifica los detalles</AlertTitle>
+                <AlertDescription>
+                  Te recomendamos verificar los detalles de la promoción en el
+                  sitio de la tienda.
+                </AlertDescription>
+              </Alert>
+            </div>
+          </div>
+
+          <Dialog>
+            <DialogTrigger asChild>
+              <div className="flex justify-center">
+                <Button variant="outline" className="mx-auto my-2">
+                  <MessageCircleWarning className="size-5" />
+                  Reportar un problema
+                </Button>
+              </div>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>
+                  Reportar un problema en este descuento
+                </DialogTitle>
+                <DialogDescription>
+                  ¿Encontraste un error o algo incorrecto en este descuento? Por
+                  favor, contanos qué viste.
+                </DialogDescription>
+              </DialogHeader>
+              <FeedbackForm discount={discount} />
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button variant="outline">Cerrar</Button>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
+        <DrawerFooter className="border-t sticky bottom-0 bg-background py-2 pb-[calc(env(safe-area-inset-bottom)+.5rem)]">
+          <Button asChild className="w-full">
+            <a
+              href={discount.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-1"
+            >
+              <ExternalLinkIcon className="h-4 w-4" />
+              Ver más detalles
+            </a>
+          </Button>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
   );
 };
