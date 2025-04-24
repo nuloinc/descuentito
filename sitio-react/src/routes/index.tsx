@@ -654,6 +654,7 @@ function Home() {
               size="icon"
               onClick={() => setIsFilterDrawerOpen(true)}
               className="ml-2 flex-shrink-0 relative"
+              aria-label="Filtros"
             >
               <Filter className="h-4 w-4" />
               {(selectedSupermarket ||
