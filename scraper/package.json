@@ -2,8 +2,8 @@
   "type": "module",
   "scripts": {
     "check": "tsc",
-    "dev": "pnpx trigger.dev@v4-beta.8 dev",
-    "deploy": "pnpx trigger.dev@v4-beta.8 deploy",
+    "dev": "pnpx trigger.dev@4.0.0-v4-beta.8 dev",
+    "deploy": "pnpx trigger.dev@4.0.0-v4-beta.8 deploy",
     "test": "vitest"
   },
   "dependencies": {

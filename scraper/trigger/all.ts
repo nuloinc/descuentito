@@ -31,23 +31,9 @@ export const allScrapersTask = task({
       { task: changomasTask, payload: p },
     ]);
 
-    const summary = results.runs.map((run, index) => {
-      const stores = [
-        "Carrefour",
-        "Coto",
-        "Dia",
-        "Jumbo",
-        "Makro",
-        "ChangoMas",
-      ];
-      const store = stores[index];
-
-      return `✅ ${store}: Task triggered with run ID ${run}`;
-    });
-
     return {
       message: "All scrapers triggered successfully",
-      summary,
+      results,
     };
   },
 });
