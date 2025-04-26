@@ -1,21 +1,21 @@
 import { logger, schedules } from "@trigger.dev/sdk";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
-import { generateObject, NoObjectGeneratedError, streamObject } from "ai";
+import { streamObject } from "ai";
 import {
   BasicDiscountSchema,
   CotoDiscount,
   genStartPrompt,
   LIMITS_PROMPT,
-  PAYMENT_METHODS,
   PAYMENT_METHODS_PROMPT,
   PRODUCTS_PROMPT,
   RESTRICTIONS_PROMPT,
 } from "promos-db/schema";
 import { savePromotions } from "../lib/git";
-import { createPlaywrightSession, openrouter } from "../lib";
+import { createPlaywrightSession } from "../lib";
 import assert from "assert";
 import { cleanDiscounts } from "../lib/clean";
+import { openrouter } from "@openrouter/ai-sdk-provider";
 
 const promotionSchema = BasicDiscountSchema.extend({
   where: z.array(z.enum(["Coto", "Online"])),
@@ -62,12 +62,12 @@ export const cotoTask = schedules.task({
   run: async (payload, { ctx }) => {
     await using session = await createPlaywrightSession();
     const { page } = session;
-    let content: string;
+    let legales: string;
     {
       await page.goto("https://www.coto.com.ar/legales/", {
         waitUntil: "networkidle",
       });
-      content = await page.evaluate(() => {
+      legales = await page.evaluate(() => {
         const container = document.querySelector("section .container");
         ["button", "input", "#button-container"].forEach((selector) => {
           const elements = document.querySelectorAll(selector);
@@ -77,14 +77,14 @@ export const cotoTask = schedules.task({
         });
         return container?.textContent || "";
       });
-      logger.info("Content", { length: content.length, content });
+      logger.info("Content", { length: legales.length, content: legales });
 
-      if (!content) {
+      if (!legales) {
         throw new Error("No content found");
       }
     }
 
-    const processedContent = content
+    legales = legales
       .split("\n**")
       .slice(1)
       .filter(
@@ -111,10 +111,6 @@ export const cotoTask = schedules.task({
       )
       .join("\n\n");
 
-    // Extract and highlight product exclusions and restrictions
-    let highlightedContent = processedContent;
-
-    // Look for common exclusion phrases and highlight them
     const exclusionPatterns = [
       /NO PARTICIPA[N]?[\s\:]+(.*?)(?=\.|$)/gi,
       /EXCLU[YIÍ]DOS?[\s\:]+(.*?)(?=\.|$)/gi,
@@ -126,30 +122,24 @@ export const cotoTask = schedules.task({
     ];
 
     for (const pattern of exclusionPatterns) {
-      highlightedContent = highlightedContent.replace(pattern, (match) => {
+      legales = legales.replace(pattern, (match) => {
         return `\n\n**PRODUCT EXCLUSIONS:** ${match}\n\n`;
       });
     }
-
-    // const oldPromotions = await fetch(
-    //   `https://raw.githubusercontent.com/nuloinc/descuentito-data/refs/heads/main/${source}.json`
-    // )
-    //   .then((res) => res.json())
-    //   .catch(() => []);
-
-    let discounts: CotoDiscount[] = [];
 
     await page.setViewportSize({ width: 1920, height: 3840 });
     await page.goto(URL, { waitUntil: "networkidle" });
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     // merge all weekdays
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       document.querySelectorAll(".nav").forEach((e) => e.remove());
+      await new Promise((resolve) => setTimeout(resolve, 200));
       document.querySelectorAll("#discounts > *").forEach((e) => {
         (e as HTMLElement).style.position = "unset";
         (e as HTMLElement).style.display = "inline-block";
       });
+      await new Promise((resolve) => setTimeout(resolve, 500));
       (document.querySelector(".portfolio-grid") as HTMLElement).style.height =
         "auto";
     });
@@ -157,10 +147,10 @@ export const cotoTask = schedules.task({
     const els = await page.$$("#descuentos .grid-item");
     if (!els) throw new Error("No discounts found");
 
-    console.log(els.length);
+    console.log("Descuentos found:", els.length);
+    assert(els.length > 12, "muy pocos descuentos");
 
     let discountData: {
-      highlightedContent: string;
       txt: string;
       screenshot: Buffer;
     }[] = [];
@@ -169,26 +159,26 @@ export const cotoTask = schedules.task({
       const txt = (await el.textContent()) || "";
       const screenshot = await el.screenshot();
       discountData.push({
-        highlightedContent,
         txt,
         screenshot,
       });
     }
-    await Promise.all(
-      discountData.map(async (data) => {
-        if (
-          data.txt.includes("EXCLUSIVO SUCURSALES") ||
-          data.txt.includes("descuentos del fin de semana")
-        )
-          return;
-        discounts.push(
-          ...(await getDiscounts({
-            highlightedContent: data.highlightedContent,
-            screenshot: data.screenshot,
-          }))
-        );
-      })
-    );
+    const discounts: CotoDiscount[] = (
+      await Promise.all(
+        discountData
+          .filter(
+            (data) =>
+              !data.txt.includes("EXCLUSIVO SUCURSALES") &&
+              !data.txt.includes("descuentos del fin de semana")
+          )
+          .map((data) =>
+            getDiscounts({
+              legales,
+              screenshot: data.screenshot,
+            })
+          )
+      )
+    ).flat();
 
     assert(discounts.length > 4, "Not enough discounts found");
 
@@ -197,18 +187,17 @@ export const cotoTask = schedules.task({
 });
 
 export async function getDiscounts({
-  highlightedContent,
+  legales,
   screenshot,
 }: {
-  highlightedContent: string;
+  legales: string;
   screenshot: Buffer;
 }) {
   let discounts: CotoDiscount[] = [];
   const { elementStream } = streamObject({
-    // model: openrouter.chat("google/gemini-2.5-pro-preview-03-25"),
-    model: google("gemini-2.5-pro-exp-03-25"),
+    model: openrouter.chat("google/gemini-2.5-flash-preview:thinking"),
+    // model: google("gemini-2.5-pro-exp-03-25"),
     schema: promotionSchema,
-    mode: "json",
     output: "array",
     temperature: 0,
     messages: [
@@ -228,7 +217,7 @@ The screenshot contains the accurate and current promotion information. If there
 
 For the "where" field, look for visual indicators in the image that specify if the discount applies to physical stores (mark as "Coto"), online (mark as "Online"), or both. By default, assume discounts apply to physical stores unless explicitly stated otherwise.
 
-Legal text for reference (use ONLY to supplement missing details, particularly for excludesProducts): \n\n${highlightedContent}`,
+Legal text for reference (use ONLY to supplement missing details, particularly for excludesProducts): \n\n${legales}`,
           },
           {
             type: "image",
@@ -256,6 +245,9 @@ Legal text for reference (use ONLY to supplement missing details, particularly f
     }
   } catch (error) {
     logger.error("Error processing content", { error });
+  }
+  if (discounts.length === 0) {
+    logger.error("No discounts found", { screenshot });
   }
   return discounts;
 }
