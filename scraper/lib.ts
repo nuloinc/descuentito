@@ -147,13 +147,15 @@ export async function generateElementDescription(
     function generateElementDescriptionInner(element: Element): string {
       let description = "";
 
-      // Handle current element
       const tagName = element.tagName.toLowerCase();
 
-      // Handle text nodes directly within the element
       const textNodes = Array.from(element.childNodes)
         .filter((node) => node.nodeType === Node.TEXT_NODE)
-        .map((node) => node.textContent?.trim())
+        .map((node) =>
+          node.textContent
+            ?.trim()
+            .replace(/[\u00A0\u2000-\u200F\u2028-\u202F\u205F-\u206F]/g, " ")
+        )
         .filter((text) => text && text.length > 0);
 
       if (
@@ -165,14 +167,16 @@ export async function generateElementDescription(
       ) {
         return generateElementDescriptionInner(element.children[0]);
       } else {
-        // For non-div elements, build the description as before
         description += `<${tagName}`;
 
-        // Add alt attribute for images
         if (tagName === "img") {
           const alt = element.getAttribute("alt");
           if (alt) {
             description += ` alt="${alt}"`;
+          }
+          const src = element.getAttribute("src");
+          if (src) {
+            description += ` src="${src}"`;
           }
         }
 
@@ -189,7 +193,6 @@ export async function generateElementDescription(
           description += ` "${textNodes.join(" ")}"`;
         }
 
-        // Recursively process child elements
         for (const child of Array.from(element.children)) {
           description += generateElementDescriptionInner(child);
         }
