@@ -61,7 +61,7 @@ export const cotoTask = schedules.task({
   id: "coto-extractor",
   maxDuration: 1800,
   retry: {
-    maxAttempts: 3,
+    maxAttempts: 1,
   },
   run: async (payload, { ctx }) => {
     let legales: string;

@@ -1,7 +1,7 @@
 import { logger, schedules } from "@trigger.dev/sdk";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
-import { generateObject, streamObject } from "ai";
+import { streamObject } from "ai";
 import {
   BasicDiscountSchema,
   DiaDiscount,
@@ -11,11 +11,7 @@ import {
   RESTRICTIONS_PROMPT,
 } from "promos-db/schema";
 import { savePromotions } from "../lib/git";
-import {
-  createPlaywrightSession,
-  createStagehandSession,
-  storeCacheData,
-} from "../lib";
+import { createPlaywrightSession, storeCacheData } from "../lib";
 
 export const diaTask = schedules.task({
   id: "dia-extractor",
