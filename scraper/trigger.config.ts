@@ -26,23 +26,7 @@ export default defineConfig({
     extensions: [
       puppeteer(),
       additionalPackages({ packages: ["@libsql/linux-x64-gnu"] }),
-      {
-        name: "PlaywrightExtension",
-        onBuildComplete: async (context, manifest) => {
-          if (context.target === "dev") {
-            return;
-          }
-
-          const instructions = [`RUN npx playwright install --with-deps`];
-
-          context.addLayer({
-            id: "puppeteer",
-            image: {
-              instructions,
-            },
-          });
-        },
-      },
+      installPlaywrightChromium(),
     ],
     external: [
       "@libsql/client",
@@ -55,3 +39,38 @@ export default defineConfig({
     ],
   },
 });
+
+// https://trigger.dev/docs/guides/python/python-crawl4ai#features
+export function installPlaywrightChromium() {
+  return {
+    name: "InstallPlaywrightChromium",
+    onBuildComplete(context: any) {
+      const instructions = [
+        // Base and Chromium dependencies
+        `RUN apt-get update && apt-get install -y --no-install-recommends \
+          curl unzip npm libnspr4 libatk1.0-0 libatk-bridge2.0-0 libatspi2.0-0 \
+          libasound2 libnss3 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 \
+          libgbm1 libxkbcommon0 \
+          && apt-get clean && rm -rf /var/lib/apt/lists/*`,
+
+        // Install Playwright and Chromium
+        `RUN npm install -g playwright`,
+        `RUN mkdir -p /ms-playwright`,
+        `RUN PLAYWRIGHT_BROWSERS_PATH=/ms-playwright npx playwright install --with-deps chromium chromium-headless-shell`,
+      ];
+
+      context.addLayer({
+        id: "playwright",
+        image: { instructions },
+        deploy: {
+          env: {
+            PLAYWRIGHT_BROWSERS_PATH: "/ms-playwright",
+            PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1",
+            PLAYWRIGHT_SKIP_BROWSER_VALIDATION: "1",
+          },
+          override: true,
+        },
+      });
+    },
+  };
+}

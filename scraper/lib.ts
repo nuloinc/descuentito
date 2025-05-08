@@ -1,4 +1,5 @@
 import puppeteer, { Page } from "puppeteer";
+import type * as puppeteerr from "puppeteer";
 import ProxyChain from "proxy-chain";
 import { s3, BUCKET_NAME } from "./fetch-cacher";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
@@ -29,15 +30,25 @@ async function createProxyServer() {
   return server;
 }
 
+const BCAT_URL = "wss://api.browsercat.com/connect";
+const LOCAL_BROWSER = process.env.LOCAL_BROWSER
+  ? process.env.LOCAL_BROWSER === "true"
+  : process.env.NODE_ENV === "development";
+
 export async function createBrowserSession() {
   const server = await createProxyServer();
-  // const browser = await puppeteer.connect({
-  //   browserURL: `wss://connect.browserbase.com?apiKey=${process.env.BROWSERBASE_API_KEY}`,
-  // });
-  const browser = await puppeteer.launch({
-    args: [`--proxy-server=localhost:8000`],
-    headless: process.env.NODE_ENV === "development" ? false : true,
-  });
+  let browser: puppeteerr.Browser;
+  if (LOCAL_BROWSER) {
+    browser = await puppeteer.launch({
+      args: [`--proxy-server=localhost:8000`],
+      headless: false,
+    });
+  } else {
+    browser = await puppeteer.connect({
+      browserWSEndpoint: BCAT_URL,
+      headers: { "api-key": process.env.BROWSERCAT_API_KEY! },
+    });
+  }
 
   const page = await browser.newPage();
   await page.setUserAgent(
@@ -72,13 +83,12 @@ export async function createBrowserSession() {
 
 export async function createPlaywrightSession() {
   let browser: pw.Browser;
-  if (process.env.NODE_ENV === "development") {
+  if (LOCAL_BROWSER) {
     browser = await pw.chromium.launch({
       headless: false,
     });
   } else {
-    const bcatUrl = "wss://api.browsercat.com/connect";
-    browser = await pw.chromium.connect(bcatUrl, {
+    browser = await pw.chromium.connect(BCAT_URL, {
       headers: { "Api-Key": process.env.BROWSERCAT_API_KEY! },
     });
   }
