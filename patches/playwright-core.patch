@@ -1,0 +1,13 @@
+diff --git a/lib/utilsBundle.js b/lib/utilsBundle.js
+index be908663ff850f3da09015ff8aff6b3715e8a5f2..45f53f39bb9052457936b2bcbb8687bf77ede0f0 100644
+--- a/lib/utilsBundle.js
++++ b/lib/utilsBundle.js
+@@ -57,7 +57,7 @@ const program = require("./utilsBundleImpl").program;
+ const progress = require("./utilsBundleImpl").progress;
+ const SocksProxyAgent = require("./utilsBundleImpl").SocksProxyAgent;
+ const yaml = require("./utilsBundleImpl").yaml;
+-const ws = require("./utilsBundleImpl").ws;
++const ws = exports.ws = 'Bun' in globalThis ? require('ws') : require('./utilsBundleImpl').ws;
+ const wsServer = require("./utilsBundleImpl").wsServer;
+ const wsReceiver = require("./utilsBundleImpl").wsReceiver;
+ const wsSender = require("./utilsBundleImpl").wsSender;

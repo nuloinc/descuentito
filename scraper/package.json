@@ -29,7 +29,7 @@
     "openai": "^4.85.3",
     "p-queue": "^8.1.0",
     "playwright": "^1.52.0",
-    "playwright-core": "^1.51.1",
+    "playwright-core": "^1.52.0",
     "promos-db": "workspace:^",
     "proxy-chain": "^2.5.6",
     "puppeteer": "npm:rebrowser-puppeteer@^23.10.0",

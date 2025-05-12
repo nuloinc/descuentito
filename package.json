@@ -1,0 +1,7 @@
+{
+  "pnpm": {
+    "patchedDependencies": {
+      "playwright-core@1.52.0": "patches/playwright-core.patch"
+    }
+  }
+}

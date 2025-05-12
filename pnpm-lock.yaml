@@ -4,7 +4,14 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  playwright-core@1.52.0:
+    hash: v67gmrbmltwee6dzkb5fv3qnxi
+    path: patches/playwright-core.patch
+
 importers:
+
+  .: {}
 
   promos-db:
     dependencies:
@@ -26,9 +33,6 @@ importers:
       '@aws-sdk/s3-request-presigner':
         specifier: 3.712.0
         version: 3.712.0
-      '@browserbasehq/sdk':
-        specifier: ^2.5.0
-        version: 2.5.0
       '@browserbasehq/stagehand':
         specifier: ^1.13.0
         version: 1.13.0(@playwright/test@1.50.1)(deepmerge@4.3.1)(dotenv@16.4.7)(openai@4.85.3(ws@8.18.1)(zod@3.24.2))(zod@3.24.2)
@@ -87,8 +91,8 @@ importers:
         specifier: ^1.52.0
         version: 1.52.0
       playwright-core:
-        specifier: ^1.51.1
-        version: 1.51.1
+        specifier: ^1.52.0
+        version: 1.52.0(patch_hash=v67gmrbmltwee6dzkb5fv3qnxi)
       promos-db:
         specifier: workspace:^
         version: link:../promos-db
@@ -5060,7 +5064,6 @@ packages:
 
   libsql@0.4.7:
     resolution: {integrity: sha512-T9eIRCs6b0J1SHKYIvD8+KCJMcWZ900iZyxdnSCdqxN12Z1ijzT+jY5nrk72Jw4B0HGzms2NgpryArlJqvc3Lw==}
-    cpu: [x64, arm64, wasm32]
     os: [darwin, linux, win32]
 
   lie@3.3.0:
@@ -5585,11 +5588,6 @@ packages:
 
   playwright-core@1.50.1:
     resolution: {integrity: sha512-ra9fsNWayuYumt+NiM069M6OkcRb1FZSK8bgi66AtpFoWkg2+y0bJSNmkFrWhMbEBbVKC/EruAHH3g0zmtwGmQ==}
-    engines: {node: '>=18'}
-    hasBin: true
-
-  playwright-core@1.51.1:
-    resolution: {integrity: sha512-/crRMj8+j/Nq5s8QcvegseuyeZPxpQCZb6HNk3Sos3BlZyAknRjoyJPFWkpNn8v0+P3WiwqFF8P+zQo4eqiNuw==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -12770,9 +12768,7 @@ snapshots:
 
   playwright-core@1.50.1: {}
 
-  playwright-core@1.51.1: {}
-
-  playwright-core@1.52.0: {}
+  playwright-core@1.52.0(patch_hash=v67gmrbmltwee6dzkb5fv3qnxi): {}
 
   playwright@1.50.1:
     dependencies:
@@ -12782,7 +12778,7 @@ snapshots:
 
   playwright@1.52.0:
     dependencies:
-      playwright-core: 1.52.0
+      playwright-core: 1.52.0(patch_hash=v67gmrbmltwee6dzkb5fv3qnxi)
     optionalDependencies:
       fsevents: 2.3.2
 
