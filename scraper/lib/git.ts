@@ -5,7 +5,6 @@ import { rm } from "fs/promises";
 import { Octokit } from "@octokit/rest";
 import { format } from "date-fns";
 import { execa } from "execa";
-import { Context } from "@trigger.dev/sdk";
 import { nanoid } from "nanoid";
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN!;
 const GITHUB_OWNER = process.env.GITHUB_OWNER!;
@@ -52,7 +51,7 @@ export async function initGitRepo() {
 }
 
 export async function savePromotions(
-  ctx: Context | undefined,
+  ctx: undefined,
   source: string,
   promotions: any[]
 ) {
@@ -61,9 +60,7 @@ export async function savePromotions(
 
   const date = format(new Date(), "yyyy-MM-dd");
   // Determine production mode
-  const isProd = ctx
-    ? ctx.environment.type === "PRODUCTION"
-    : process.env.NODE_ENV === "production";
+  const isProd = process.env.NODE_ENV === "production";
   let branchName = "main";
 
   try {
@@ -141,11 +138,7 @@ export async function savePromotions(
       title: `Update ${source} promotions for ${date}`,
       head: branchName,
       base: "main",
-      body: `Automated PR to update ${source} promotions for ${date}${
-        ctx
-          ? `\n\nRun: https://cloud.trigger.dev/orgs/${ctx.organization.slug}/projects/${ctx.project.slug}/env/${ctx.environment.slug}/runs/${ctx.run.id}`
-          : ""
-      }`,
+      body: `Automated PR to update ${source} promotions for ${date}`,
     });
     console.info(`Created PR #${prResponse.data.number} for ${source}`);
 
