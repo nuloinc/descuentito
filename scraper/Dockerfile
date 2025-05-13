@@ -16,7 +16,8 @@ WORKDIR /app
 COPY . .
 
 RUN pnpm install
+RUN npx puppeteer browsers install chrome
 
 WORKDIR /app/scraper
 
-CMD ["bun", "run", "cli", "all", "--save"]
+CMD ["xvfb-run", "bun", "run", "cli", "all", "--save"]

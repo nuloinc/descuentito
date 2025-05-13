@@ -34,6 +34,7 @@ const BCAT_URL = "wss://api.browsercat.com/connect";
 const LOCAL_BROWSER = process.env.LOCAL_BROWSER
   ? process.env.LOCAL_BROWSER === "true"
   : process.env.NODE_ENV === "development";
+const HEADLESS = process.env.HEADLESS === "false" ? false : true;
 
 export async function createBrowserSession() {
   const server = await createProxyServer();
@@ -41,7 +42,7 @@ export async function createBrowserSession() {
   if (LOCAL_BROWSER) {
     browser = await puppeteer.launch({
       args: [`--proxy-server=localhost:8000`],
-      headless: process.env.HEADLESS === "false" ? false : true,
+      headless: HEADLESS,
     });
   } else {
     browser = await puppeteer.connect({
@@ -85,7 +86,7 @@ export async function createPlaywrightSession() {
   let browser: pw.Browser;
   if (LOCAL_BROWSER) {
     browser = await pw.chromium.launch({
-      headless: process.env.HEADLESS === "false" ? false : true,
+      headless: HEADLESS,
     });
   } else {
     browser = await pw.chromium.connect(BCAT_URL, {
@@ -111,6 +112,7 @@ export async function createStagehandSession() {
     // localBrowserLaunchOptions: {
     //   args: [`--proxy-server=localhost:8000`],
     // },
+    headless: process.env.HEADLESS === "false" ? false : true,
     llmClient: new AISdkClient({
       model: google("gemini-2.0-pro-exp-02-05"),
     }),
