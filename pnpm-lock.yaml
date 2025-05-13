@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   playwright-core@1.52.0:
-    hash: e15f2b30530307ab497caf916a351dad9e2d73ecb45eb4931dd16a08ee6743a8
+    hash: v67gmrbmltwee6dzkb5fv3qnxi
     path: patches/playwright-core.patch
 
 importers:
@@ -80,7 +80,7 @@ importers:
         version: 1.52.0
       playwright-core:
         specifier: ^1.52.0
-        version: 1.52.0(patch_hash=e15f2b30530307ab497caf916a351dad9e2d73ecb45eb4931dd16a08ee6743a8)
+        version: 1.52.0(patch_hash=v67gmrbmltwee6dzkb5fv3qnxi)
       promos-db:
         specifier: workspace:^
         version: link:../promos-db
@@ -13142,7 +13142,7 @@ snapshots:
 
   playwright-core@1.50.1: {}
 
-  playwright-core@1.52.0(patch_hash=e15f2b30530307ab497caf916a351dad9e2d73ecb45eb4931dd16a08ee6743a8): {}
+  playwright-core@1.52.0(patch_hash=v67gmrbmltwee6dzkb5fv3qnxi): {}
 
   playwright@1.50.1:
     dependencies:
@@ -13152,7 +13152,7 @@ snapshots:
 
   playwright@1.52.0:
     dependencies:
-      playwright-core: 1.52.0(patch_hash=e15f2b30530307ab497caf916a351dad9e2d73ecb45eb4931dd16a08ee6743a8)
+      playwright-core: 1.52.0(patch_hash=v67gmrbmltwee6dzkb5fv3qnxi)
     optionalDependencies:
       fsevents: 2.3.2
 
