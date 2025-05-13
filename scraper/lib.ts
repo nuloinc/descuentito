@@ -41,7 +41,7 @@ export async function createBrowserSession() {
   if (LOCAL_BROWSER) {
     browser = await puppeteer.launch({
       args: [`--proxy-server=localhost:8000`],
-      headless: false,
+      headless: process.env.HEADLESS === "false" ? false : true,
     });
   } else {
     browser = await puppeteer.connect({
@@ -85,7 +85,7 @@ export async function createPlaywrightSession() {
   let browser: pw.Browser;
   if (LOCAL_BROWSER) {
     browser = await pw.chromium.launch({
-      headless: false,
+      headless: process.env.HEADLESS === "false" ? false : true,
     });
   } else {
     browser = await pw.chromium.connect(BCAT_URL, {
