@@ -1,5 +1,7 @@
 packages:
   - scraper
   - promos-db
-  - sitio
   - sitio-react
+onlyBuiltDependencies:
+  - esbuild
+  - workerd

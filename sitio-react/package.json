@@ -21,11 +21,11 @@
     "@tailwindcss/postcss": "^4.1.3",
     "@tanstack/react-query": "^5.66.0",
     "@tanstack/react-query-devtools": "^5.66.0",
-    "@tanstack/react-router": "^1.115.3",
+    "@tanstack/react-router": "^1.120.3",
     "@tanstack/react-router-devtools": "^1.115.3",
     "@tanstack/react-router-with-query": "^1.115.3",
-    "@tanstack/react-start": "^1.115.3",
-    "@tanstack/start": "^1.115.3",
+    "@tanstack/react-start": "^1.120.3",
+    "@tanstack/start": "^1.120.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
@@ -36,7 +36,6 @@
     "promos-db": "workspace:^",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "redaxios": "^0.5.1",
     "tailwind-merge": "^2.6.0",
     "tailwindcss": "^4.0.0",
     "tailwindcss-animate": "^1.0.7",
@@ -48,7 +47,7 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250303.0",
+    "@cloudflare/workers-types": "^4.20250513.0",
     "@types/node": "^22.5.4",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
@@ -58,7 +57,7 @@
     "postcss": "^8.5.3",
     "typescript": "^5.7.2",
     "vite-tsconfig-paths": "^5.1.4",
-    "wrangler": "^3.114.0"
+    "wrangler": "^4.14.4"
   },
   "packageManager": "pnpm@9.15.5+sha256.8472168c3e1fd0bff287e694b053fccbbf20579a3ff9526b6333beab8df65a8d"
 }
