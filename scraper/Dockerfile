@@ -16,7 +16,7 @@ WORKDIR /app
 COPY . .
 
 RUN pnpm install
-RUN npx puppeteer browsers install chrome
+RUN npx -y puppeteer@23.10.0 browsers install chrome
 
 WORKDIR /app/scraper
 
