@@ -23,15 +23,8 @@ export default defineConfig({
   },
   dirs: ["trigger"],
   build: {
-    extensions: [
-      puppeteer(),
-      additionalPackages({ packages: ["@libsql/linux-x64-gnu"] }),
-      installPlaywrightChromium(),
-    ],
+    extensions: [puppeteer(), installPlaywrightChromium()],
     external: [
-      "@libsql/client",
-      "@libsql/darwin-arm64",
-      "@libsql/linux-x64-gnu",
       "fsevents",
       "playwright",
       // https://github.com/microsoft/playwright/issues/35479
