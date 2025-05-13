@@ -1,0 +1,6 @@
+---
+description: When running npm commands or accessing npm-related files, use bun instead.
+globs: 
+alwaysApply: false
+---
+Use bun for all npm-related operations. Instead of npx, use bunx.

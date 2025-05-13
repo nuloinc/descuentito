@@ -1,7 +1,12 @@
 {
-  "pnpm": {
-    "patchedDependencies": {
-      "playwright-core@1.52.0": "patches/playwright-core.patch"
-    }
+  "name": "descuentito",
+  "version": "1.0.0",
+  "workspaces": [
+    "scraper",
+    "promos-db",
+    "sitio-react"
+  ],
+  "patchedDependencies": {
+    "playwright-core@1.52.0": "patches/playwright-core@1.52.0.patch"
   }
 }
