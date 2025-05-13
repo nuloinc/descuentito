@@ -1,4 +1,4 @@
-import { logger } from "@trigger.dev/sdk";
+import logger from "../lib/logger";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import { generateObject, streamObject } from "ai";
@@ -41,7 +41,7 @@ export async function scrapeJumbo() {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     const promotionEls = await page.$$(
-      ".vtex-render__container-id-discounts-financing div:nth-of-type(3) ul li",
+      ".vtex-render__container-id-discounts-financing div:nth-of-type(3) ul li"
     );
     logger.info("Found promotion elements", { count: promotionEls.length });
 
@@ -59,13 +59,13 @@ export async function scrapeJumbo() {
           const allSimilar = document.querySelectorAll(
             `${el.tagName.toLowerCase()}${Array.from(el.attributes)
               .map((attr) => `[${attr.name}="${attr.value}"]`)
-              .join("")}`,
+              .join("")}`
           );
           const index = Array.from(allSimilar).indexOf(el);
           return `${el.tagName.toLowerCase()}${Array.from(el.attributes)
             .map((attr) => `[${attr.name}="${attr.value}"]`)
             .join("")}:nth-of-type(${index + 1})`;
-        }),
+        })
       );
       logger.info("Text", { text });
 
@@ -114,18 +114,18 @@ ${LIMITS_PROMPT}
           (p) =>
             (p.weekdays
               ? p.weekdays.every((day) =>
-                  generatedDiscount.weekdays?.includes(day),
+                  generatedDiscount.weekdays?.includes(day)
                 )
               : !generatedDiscount.weekdays) &&
             p.where?.every((where) =>
-              generatedDiscount.where?.includes(where),
+              generatedDiscount.where?.includes(where)
             ) &&
             p.limits?.maxDiscount === generatedDiscount.limits?.maxDiscount &&
             p.discount.value === generatedDiscount.discount.value &&
             p.paymentMethods &&
             generatedDiscount.paymentMethods &&
             getBankOrWallet(p.paymentMethods) ===
-              getBankOrWallet(generatedDiscount.paymentMethods),
+              getBankOrWallet(generatedDiscount.paymentMethods)
         );
 
         if (existingDiscount) {

@@ -1,4 +1,4 @@
-import { logger, schedules } from "@trigger.dev/sdk";
+import { schedules } from "@trigger.dev/sdk";
 import { extractPromotions } from "./extract-promotions";
 import { BUCKET_NAME, s3 } from "../fetch-cacher";
 import { format } from "date-fns";

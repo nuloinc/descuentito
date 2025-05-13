@@ -1,4 +1,4 @@
-import { logger } from "@trigger.dev/sdk";
+import logger from "./logger";
 import {
   createBrowserSession,
   generateElementDescription,

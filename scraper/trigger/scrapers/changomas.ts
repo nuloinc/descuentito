@@ -1,4 +1,4 @@
-import { logger } from "@trigger.dev/sdk";
+import logger from "../lib/logger";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import { streamObject } from "ai";
@@ -33,7 +33,7 @@ export async function scrapeChangoMas() {
     "li a.valtech-gdn-banks-promotions-0-x-menuItem",
     {
       hasText: "Por Banco/Tarjeta",
-    },
+    }
   );
   await menuItem.click();
 

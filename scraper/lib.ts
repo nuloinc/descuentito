@@ -4,7 +4,7 @@ import ProxyChain from "proxy-chain";
 import { s3, BUCKET_NAME } from "./fetch-cacher";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { format } from "date-fns";
-import { logger } from "@trigger.dev/sdk";
+import logger from "./trigger/lib/logger";
 import { Stagehand } from "@browserbasehq/stagehand";
 import StagehandConfig from "./trigger/stagehand.config";
 import { AISdkClient } from "./trigger/lib/aisdk_client";

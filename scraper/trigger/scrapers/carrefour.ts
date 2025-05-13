@@ -1,4 +1,4 @@
-import { logger } from "@trigger.dev/sdk";
+import logger from "../lib/logger";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import { NoObjectGeneratedError, streamObject } from "ai";

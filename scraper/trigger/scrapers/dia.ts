@@ -1,4 +1,4 @@
-import { logger } from "@trigger.dev/sdk";
+import logger from "../lib/logger";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import { streamObject } from "ai";
@@ -33,11 +33,11 @@ export async function scrapeDia() {
     "https://diaonline.supermercadosdia.com.ar/medios-de-pago-y-promociones",
     {
       waitUntil: "domcontentloaded",
-    },
+    }
   );
 
   const elements = await page.$$(
-    ".diaio-custom-bank-promotions-0-x-list-by-days__item",
+    ".diaio-custom-bank-promotions-0-x-list-by-days__item"
   );
 
   let promotions: DiaDiscount[] = [];
@@ -53,7 +53,7 @@ export async function scrapeDia() {
     await storeCacheData("dia", `-element${i}.png`, screenshot);
 
     const legalBtn = await element.$(
-      ".diaio-custom-bank-promotions-0-x-bank-modal__button",
+      ".diaio-custom-bank-promotions-0-x-bank-modal__button"
     );
     if (!legalBtn) throw new Error("No legal button found");
     await legalBtn.click();

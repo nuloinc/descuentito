@@ -1,4 +1,4 @@
-import { logger } from "@trigger.dev/sdk";
+import logger from "../lib/logger";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import { streamObject } from "ai";
@@ -33,7 +33,7 @@ export async function scrapeMakro() {
 
   const x = await page.evaluate(() => {
     const elements = document.querySelectorAll(
-      ".et_builder_inner_content .section-promos-bancarias .et_pb_blurb_content:has(.et_pb_module_header)",
+      ".et_builder_inner_content .section-promos-bancarias .et_pb_blurb_content:has(.et_pb_module_header)"
     );
     return elements;
   });
@@ -41,7 +41,7 @@ export async function scrapeMakro() {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
   const elements = await page.$$(
-    ".et_builder_inner_content .section-promos-bancarias .et_pb_blurb_content:has(.et_pb_module_header)",
+    ".et_builder_inner_content .section-promos-bancarias .et_pb_blurb_content:has(.et_pb_module_header)"
   );
 
   let promotions: MakroDiscount[] = [];
