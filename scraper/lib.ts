@@ -9,7 +9,7 @@ import { Stagehand } from "@browserbasehq/stagehand";
 import StagehandConfig from "./trigger/stagehand.config";
 import { AISdkClient } from "./trigger/lib/aisdk_client";
 import { google } from "@ai-sdk/google";
-import * as pw from "playwright-core";
+import * as pw from "playwright";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 
 async function createProxyServer() {

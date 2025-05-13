@@ -7,6 +7,7 @@ import {
   scrapeChangoMas,
   scrapeCoto,
 } from "./scrapers";
+import { savePromotions } from "../lib/git";
 
 const scrapers = {
   jumbo: scrapeJumbo,
@@ -19,13 +20,42 @@ const scrapers = {
 
 type ScraperName = keyof typeof scrapers;
 
+async function processScraperResults(
+  scraperName: string,
+  results: any,
+  saveFlag: boolean
+) {
+  if (saveFlag) {
+    await savePromotions(undefined, scraperName, results);
+    console.log(`Promotions saved for ${scraperName}`);
+  } else {
+    console.log(JSON.stringify(results, null, 2));
+  }
+}
+
 async function main() {
-  const scraperName = process.argv[2] as ScraperName;
+  const scraperName = process.argv[2] as ScraperName | "all";
+  const saveFlag = process.argv.includes("--save");
 
   if (!scraperName) {
     console.error("Please provide a scraper name");
     console.error("Available scrapers:", Object.keys(scrapers).join(", "));
     process.exit(1);
+  }
+
+  if (scraperName === "all") {
+    await Promise.all(
+      Object.entries(scrapers).map(async ([name, scraper]) => {
+        try {
+          console.log(`Running ${name} scraper...`);
+          const results = await scraper();
+          await processScraperResults(name, results, saveFlag);
+        } catch (error) {
+          console.error(`Error running ${name} scraper:`, error);
+        }
+      })
+    );
+    return;
   }
 
   const scraper = scrapers[scraperName];
@@ -37,7 +67,7 @@ async function main() {
 
   try {
     const results = await scraper();
-    console.log(JSON.stringify(results, null, 2));
+    await processScraperResults(scraperName, results, saveFlag);
   } catch (error) {
     console.error("Error running scraper:", error);
     process.exit(1);

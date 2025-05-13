@@ -117,7 +117,7 @@ ${domDescription}
 async function getLegales(browser: Browser) {
   const page = await browser.newPage();
   await page.goto("https://www.coto.com.ar/legales/", {
-    waitUntil: "networkidle",
+    waitUntil: "domcontentloaded",
   });
   let legales = await page.evaluate(() => {
     const container = document.querySelector("section .container");
@@ -182,7 +182,7 @@ async function getDiscountData(browser: Browser) {
   >();
 
   await page.setViewportSize({ width: 1920, height: 3840 });
-  await page.goto(URL, { waitUntil: "networkidle" });
+  await page.goto(URL, { waitUntil: "domcontentloaded" });
   await new Promise((resolve) => setTimeout(resolve, 1500));
   await page.evaluate(async () => {
     document.querySelectorAll(".nav").forEach((e) => e.remove());

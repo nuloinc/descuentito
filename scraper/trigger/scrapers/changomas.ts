@@ -25,7 +25,7 @@ export async function scrapeChangoMas() {
   const { page } = sessions;
 
   await page.goto(URL, {
-    waitUntil: "networkidle",
+    waitUntil: "domcontentloaded",
   });
 
   await page.waitForSelector("li a.valtech-gdn-banks-promotions-0-x-menuItem");
@@ -33,7 +33,7 @@ export async function scrapeChangoMas() {
     "li a.valtech-gdn-banks-promotions-0-x-menuItem",
     {
       hasText: "Por Banco/Tarjeta",
-    }
+    },
   );
   await menuItem.click();
 

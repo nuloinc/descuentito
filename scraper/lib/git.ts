@@ -5,7 +5,7 @@ import { rm } from "fs/promises";
 import { Octokit } from "@octokit/rest";
 import { format } from "date-fns";
 import { execa } from "execa";
-import { Context, logger } from "@trigger.dev/sdk";
+import { Context } from "@trigger.dev/sdk";
 import { nanoid } from "nanoid";
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN!;
 const GITHUB_OWNER = process.env.GITHUB_OWNER!;
@@ -52,7 +52,7 @@ export async function initGitRepo() {
 }
 
 export async function savePromotions(
-  ctx: Context,
+  ctx: Context | undefined,
   source: string,
   promotions: any[]
 ) {
@@ -60,7 +60,10 @@ export async function savePromotions(
   const { dir } = repo;
 
   const date = format(new Date(), "yyyy-MM-dd");
-  const isProd = ctx.environment.type === "PRODUCTION";
+  // Determine production mode
+  const isProd = ctx
+    ? ctx.environment.type === "PRODUCTION"
+    : process.env.NODE_ENV === "production";
   let branchName = "main";
 
   try {
@@ -75,7 +78,7 @@ export async function savePromotions(
     if (isProd) {
       throw new Error(`Failed to checkout main branch in prod: ${error}`);
     }
-    logger.warn(
+    console.warn(
       "Proceeding to create branch from current HEAD for non-prod env."
     );
   }
@@ -99,7 +102,7 @@ export async function savePromotions(
     ([_file, _head, workdir, _stage]) => workdir !== 1
   );
   if (!hasChanges) {
-    logger.warn("No changes detected, skipping commit");
+    console.warn("No changes detected, skipping commit");
     return;
   }
 
@@ -119,13 +122,13 @@ export async function savePromotions(
 
   // Push directly to main if in prod, otherwise push branch and create PR
   if (isProd) {
-    logger.info(`Prod env detected. Pushing changes directly to main branch.`);
+    console.info(`Prod env detected. Pushing changes directly to main branch.`);
     await execa("git", ["push", remote, "main"], {
       cwd: dir,
     });
-    logger.info(`Successfully pushed changes to main for ${source}.`);
+    console.info(`Successfully pushed changes to main for ${source}.`);
   } else {
-    logger.info(
+    console.info(
       `Non-prod env detected. Pushing to branch ${branchName} and creating PR.`
     );
     await execa("git", ["push", remote, branchName], {
@@ -135,23 +138,25 @@ export async function savePromotions(
     const prResponse = await octokit.pulls.create({
       owner: GITHUB_OWNER,
       repo: GITHUB_REPO,
-      title: `Update ${source} promotions for ${date}`, // Use commit message for PR title
+      title: `Update ${source} promotions for ${date}`,
       head: branchName,
       base: "main",
-      body: `Automated PR to update ${source} promotions for ${date}
-
-Run: https://cloud.trigger.dev/orgs/${ctx.organization.slug}/projects/${ctx.project.slug}/env/${ctx.environment.slug}/runs/${ctx.run.id}`,
+      body: `Automated PR to update ${source} promotions for ${date}${
+        ctx
+          ? `\n\nRun: https://cloud.trigger.dev/orgs/${ctx.organization.slug}/projects/${ctx.project.slug}/env/${ctx.environment.slug}/runs/${ctx.run.id}`
+          : ""
+      }`,
     });
-    logger.info(`Created PR #${prResponse.data.number} for ${source}`);
+    console.info(`Created PR #${prResponse.data.number} for ${source}`);
 
     // Automatically merge the pull request
     await octokit.pulls.merge({
       owner: GITHUB_OWNER,
       repo: GITHUB_REPO,
       pull_number: prResponse.data.number,
-      commit_title: `${`Update ${source} promotions for ${date}`} (#${prResponse.data.number})`, // Add PR number to squash commit
+      commit_title: `${`Update ${source} promotions for ${date}`} (#${prResponse.data.number})`,
       merge_method: "squash",
     });
-    logger.info(`Merged PR #${prResponse.data.number} for ${source}`);
+    console.info(`Merged PR #${prResponse.data.number} for ${source}`);
   }
 }

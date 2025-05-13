@@ -26,14 +26,14 @@ export async function scrapeMakro() {
   const { page } = sessions;
 
   await page.goto(URL, {
-    waitUntil: "networkidle",
+    waitUntil: "domcontentloaded",
   });
   await page.waitForSelector(".et_pb_blurb_content");
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const x = await page.evaluate(() => {
     const elements = document.querySelectorAll(
-      ".et_builder_inner_content .section-promos-bancarias .et_pb_blurb_content:has(.et_pb_module_header)"
+      ".et_builder_inner_content .section-promos-bancarias .et_pb_blurb_content:has(.et_pb_module_header)",
     );
     return elements;
   });
@@ -41,7 +41,7 @@ export async function scrapeMakro() {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
   const elements = await page.$$(
-    ".et_builder_inner_content .section-promos-bancarias .et_pb_blurb_content:has(.et_pb_module_header)"
+    ".et_builder_inner_content .section-promos-bancarias .et_pb_blurb_content:has(.et_pb_module_header)",
   );
 
   let promotions: MakroDiscount[] = [];

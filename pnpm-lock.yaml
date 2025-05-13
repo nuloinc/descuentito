@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   playwright-core@1.52.0:
-    hash: v67gmrbmltwee6dzkb5fv3qnxi
+    hash: e15f2b30530307ab497caf916a351dad9e2d73ecb45eb4931dd16a08ee6743a8
     path: patches/playwright-core.patch
 
 importers:
@@ -92,7 +92,7 @@ importers:
         version: 1.52.0
       playwright-core:
         specifier: ^1.52.0
-        version: 1.52.0(patch_hash=v67gmrbmltwee6dzkb5fv3qnxi)
+        version: 1.52.0(patch_hash=e15f2b30530307ab497caf916a351dad9e2d73ecb45eb4931dd16a08ee6743a8)
       promos-db:
         specifier: workspace:^
         version: link:../promos-db
@@ -118,9 +118,6 @@ importers:
       prettier:
         specifier: ^3.4.2
         version: 3.5.0
-      tsx:
-        specifier: ^4.19.2
-        version: 4.19.2
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
@@ -12768,7 +12765,7 @@ snapshots:
 
   playwright-core@1.50.1: {}
 
-  playwright-core@1.52.0(patch_hash=v67gmrbmltwee6dzkb5fv3qnxi): {}
+  playwright-core@1.52.0(patch_hash=e15f2b30530307ab497caf916a351dad9e2d73ecb45eb4931dd16a08ee6743a8): {}
 
   playwright@1.50.1:
     dependencies:
@@ -12778,7 +12775,7 @@ snapshots:
 
   playwright@1.52.0:
     dependencies:
-      playwright-core: 1.52.0(patch_hash=v67gmrbmltwee6dzkb5fv3qnxi)
+      playwright-core: 1.52.0(patch_hash=e15f2b30530307ab497caf916a351dad9e2d73ecb45eb4931dd16a08ee6743a8)
     optionalDependencies:
       fsevents: 2.3.2
 
