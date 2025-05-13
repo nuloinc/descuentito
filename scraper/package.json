@@ -9,7 +9,6 @@
     "@ai-sdk/google": "^1.2.10",
     "@aws-sdk/client-s3": "3.712.0",
     "@aws-sdk/s3-request-presigner": "3.712.0",
-    "@browserbasehq/stagehand": "^1.13.0",
     "@octokit/rest": "^21.1.1",
     "@openrouter/ai-sdk-provider": "^0.4.5",
     "@playwright/test": "^1.50.1",

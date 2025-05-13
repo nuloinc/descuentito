@@ -5,9 +5,6 @@ import { s3, BUCKET_NAME } from "./fetch-cacher";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { format } from "date-fns";
 import logger from "./trigger/lib/logger";
-import { Stagehand } from "@browserbasehq/stagehand";
-import StagehandConfig from "./trigger/stagehand.config";
-import { AISdkClient } from "./trigger/lib/aisdk_client";
 import { google } from "@ai-sdk/google";
 import * as pw from "playwright";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
@@ -102,29 +99,6 @@ export async function createPlaywrightSession() {
     },
     browser,
     page,
-  };
-}
-
-export async function createStagehandSession() {
-  // const server = await createProxyServer();
-  const stagehand = new Stagehand({
-    ...StagehandConfig,
-    // localBrowserLaunchOptions: {
-    //   args: [`--proxy-server=localhost:8000`],
-    // },
-    headless: process.env.HEADLESS === "false" ? false : true,
-    llmClient: new AISdkClient({
-      model: google("gemini-2.0-pro-exp-02-05"),
-    }),
-  });
-  await stagehand.init();
-
-  return {
-    [Symbol.asyncDispose]: async () => {
-      await stagehand.close();
-      // await server.close(true);
-    },
-    stagehand,
   };
 }
 
