@@ -11,3 +11,4 @@ id = "f207d1c49cc144ac893eb40be075bd0d"
 
 [vars]
 BUN_VERSION = "1.2.11"
+SKIP_DEPENDENCY_INSTALL = true
