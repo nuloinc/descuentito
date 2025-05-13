@@ -319,6 +319,6 @@ export const LIMITS_PROMPT = `## LIMITS
 
 \`maxDiscount\` is the maximum discount amount in pesos that can be applied to the discount.
 
-\`explicitlyHasNoLimit\` is true if the discount explicitly states that there is no limit ("sin tope").
+\`explicitlyHasNoLimit\` is true if the discount explicitly states that there is no limit to the discount ("sin tope"). \`maxDiscount\` should be not be specified if \`explicitlyHasNoLimit\` is true.
 
 \`validFrom\` and \`validUntil\` are the dates when the discount is valid. If there's no mention of a valid from date, assume it's valid this month.`;
