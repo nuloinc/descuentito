@@ -327,10 +327,14 @@ function Promotions({
         )}
       </div>
       <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2">
-        <div className="mt-2 flex flex-col items-stretch p-2 border border-dashed border-secondary rounded-lg gap-2 mb-2 max-w-md w-full mx-auto">
+        <div className="mt-2 flex flex-col items-stretch p-2 border border-dashed border-secondary rounded-lg gap-2 mb-2 max-w-md mx-auto">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline" className="text-lg py-6" size="lg">
+              <Button
+                variant="outline"
+                className="text-lg py-6 rounded-full"
+                size="lg"
+              >
                 <MessageCircleWarning className="size-5" />
                 Reportar un problema
               </Button>
@@ -354,7 +358,7 @@ function Promotions({
 
           <Button
             variant="outline"
-            className="text-lg py-6"
+            className="text-lg py-6 rounded-full"
             size="lg"
             onClick={async () => {
               const promotionsText = currentPromotions
