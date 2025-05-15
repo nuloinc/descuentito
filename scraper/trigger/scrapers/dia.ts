@@ -11,6 +11,7 @@ import {
   RESTRICTIONS_PROMPT,
 } from "promos-db/schema";
 import { createPlaywrightSession, storeCacheData } from "../../lib";
+import assert from "node:assert";
 
 export async function scrapeDia() {
   await using sessions = await createPlaywrightSession();
@@ -35,6 +36,7 @@ export async function scrapeDia() {
       waitUntil: "domcontentloaded",
     }
   );
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const elements = await page.$$(
     ".diaio-custom-bank-promotions-0-x-list-by-days__item"
@@ -113,6 +115,8 @@ ${LIMITS_PROMPT}
 
     i++;
   }
+
+  assert(promotions.length > 0, "No promotions found");
 
   return promotions;
 }
