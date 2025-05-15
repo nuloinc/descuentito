@@ -14,14 +14,8 @@ const SupermarketFilter: React.FC<SupermarketFilterProps> = ({
   onSelect,
 }) => {
   const location = useLocation();
-  const showChangomas = new URLSearchParams(location.search).has(
-    "showChangomas"
-  );
 
-  const filteredSources = SOURCES.filter((source) => {
-    if (showChangomas) return true;
-    return source !== "changomas";
-  });
+  const filteredSources = SOURCES;
 
   return (
     <div className="grid w-full grid-cols-3 gap-2">
