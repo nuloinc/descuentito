@@ -98,6 +98,14 @@ export function Footer({ children }: { children?: React.ReactNode }) {
         la información en la fuente original.
       </p>
       <p>Marcas registradas pertenecen a sus respectivos dueños.</p>
+      <p>
+        <a
+          href="mailto:contacto@descuentito.ar"
+          className="text-primary underline"
+        >
+          contacto@descuentito.ar
+        </a>
+      </p>
     </footer>
   );
 }
