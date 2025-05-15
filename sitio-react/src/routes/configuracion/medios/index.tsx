@@ -10,6 +10,7 @@ import { Checkbox } from "src/components/ui/checkbox";
 import { Label } from "src/components/ui/label";
 import { cn, useIsClient } from "src/lib/utils";
 import { Switch } from "@/components/ui/switch";
+import { Footer } from "@/routes/__root";
 
 type SubOptionDisplay = {
   id: PaymentMethod;
@@ -136,142 +137,147 @@ function PaymentMethodsConfig() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <nav className="sticky top-0 z-10 flex items-center gap-2 border-b p-2 bg-sidebar">
-        <div className="flex items-center gap-2 max-w-md w-full mx-auto">
-          <Link to="/">
-            <ArrowLeft className="h-7 w-7" />
-          </Link>
-          <span className="flex-grow text-left font-medium">
-            Medios de pago
-          </span>
-        </div>
-      </nav>
+    <>
+      <div className="min-h-screen bg-background">
+        <nav className="sticky top-0 z-10 flex items-center gap-2 border-b p-2 bg-sidebar">
+          <div className="flex items-center gap-2 max-w-md w-full mx-auto">
+            <Link to="/">
+              <ArrowLeft className="h-7 w-7" />
+            </Link>
+            <span className="flex-grow text-left font-medium">
+              Medios de pago
+            </span>
+          </div>
+        </nav>
 
-      <div className="container mx-auto max-w-md p-4">
-        <div className="mb-6 space-y-4">
-          <div className="space-y-3">
-            <div className="flex items-center space-x-3">
-              <Checkbox
-                id="jubilados"
-                checked={savedConditions.jubilados}
-                onCheckedChange={(checked) =>
-                  setSavedCondition("jubilados", checked === true)
-                }
-              />
-              <Label htmlFor="jubilados" className="font-medium">
-                Soy jubilado/a
-              </Label>
-            </div>
-            <div className="flex items-center space-x-3">
-              <Checkbox
-                id="anses"
-                checked={savedConditions.anses}
-                onCheckedChange={(checked) =>
-                  setSavedCondition("anses", checked === true)
-                }
-              />
-              <Label htmlFor="anses" className="font-medium">
-                Recibo beneficios de ANSES
-              </Label>
+        <div className="container mx-auto max-w-md p-4">
+          <div className="mb-6 space-y-4">
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3">
+                <Checkbox
+                  id="jubilados"
+                  checked={savedConditions.jubilados}
+                  onCheckedChange={(checked) =>
+                    setSavedCondition("jubilados", checked === true)
+                  }
+                />
+                <Label htmlFor="jubilados" className="font-medium">
+                  Soy jubilado/a
+                </Label>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Checkbox
+                  id="anses"
+                  checked={savedConditions.anses}
+                  onCheckedChange={(checked) =>
+                    setSavedCondition("anses", checked === true)
+                  }
+                />
+                <Label htmlFor="anses" className="font-medium">
+                  Recibo beneficios de ANSES
+                </Label>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="space-y-6">
-          {displayOptions.map((bank) => {
-            const bankId = `bank-${bank.id}`;
-            const isBankChecked = savedPaymentMethods.has(bank.id);
+          <div className="space-y-6">
+            {displayOptions.map((bank) => {
+              const bankId = `bank-${bank.id}`;
+              const isBankChecked = savedPaymentMethods.has(bank.id);
 
-            return (
-              <div key={bank.id} className="flex items-stretch space-x-3">
-                <Checkbox
-                  id={bankId}
-                  checked={isBankChecked}
-                  onCheckedChange={(checked) =>
-                    updateStore(bank.id, checked === true)
-                  }
-                  className="mt-1"
-                />
-                <div className="grid flex-grow gap-1.5">
-                  <Label
-                    htmlFor={bankId}
-                    className="flex items-center gap-2 font-medium"
-                  >
-                    {bank.id in WALLET_ICONS && (
-                      <img
-                        src={WALLET_ICONS[bank.id as keyof typeof WALLET_ICONS]}
-                        alt={bank.name}
-                        className="h-6 w-auto rounded-sm"
-                      />
-                    )}
-                    <span className="flex-grow leading-relaxed">
-                      {bank.name}
-                    </span>
-                  </Label>
-                  {isBankChecked &&
-                    bank.subOptions &&
-                    bank.subOptions.length > 0 && (
-                      <div className="mt-2 space-y-3 pl-6">
-                        {bank.subOptions.map((subOption) => {
-                          const subOptionId = `sub-${subOption.id}`;
-                          const isSubChecked = savedPaymentMethods.has(
-                            subOption.id
-                          );
-                          return (
-                            <div
-                              key={subOption.id}
-                              className="flex items-center space-x-3"
-                            >
-                              <Checkbox
-                                id={subOptionId}
-                                checked={isSubChecked}
-                                onCheckedChange={(checked) =>
-                                  updateStore(subOption.id, checked === true)
-                                }
-                              />
-                              <Label
-                                htmlFor={subOptionId}
-                                className="text-sm font-normal"
+              return (
+                <div key={bank.id} className="flex items-stretch space-x-3">
+                  <Checkbox
+                    id={bankId}
+                    checked={isBankChecked}
+                    onCheckedChange={(checked) =>
+                      updateStore(bank.id, checked === true)
+                    }
+                    className="mt-1"
+                  />
+                  <div className="grid flex-grow gap-1.5">
+                    <Label
+                      htmlFor={bankId}
+                      className="flex items-center gap-2 font-medium"
+                    >
+                      {bank.id in WALLET_ICONS && (
+                        <img
+                          src={
+                            WALLET_ICONS[bank.id as keyof typeof WALLET_ICONS]
+                          }
+                          alt={bank.name}
+                          className="h-6 w-auto rounded-sm"
+                        />
+                      )}
+                      <span className="flex-grow leading-relaxed">
+                        {bank.name}
+                      </span>
+                    </Label>
+                    {isBankChecked &&
+                      bank.subOptions &&
+                      bank.subOptions.length > 0 && (
+                        <div className="mt-2 space-y-3 pl-6">
+                          {bank.subOptions.map((subOption) => {
+                            const subOptionId = `sub-${subOption.id}`;
+                            const isSubChecked = savedPaymentMethods.has(
+                              subOption.id
+                            );
+                            return (
+                              <div
+                                key={subOption.id}
+                                className="flex items-center space-x-3"
                               >
-                                {subOption.question}
-                              </Label>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
+                                <Checkbox
+                                  id={subOptionId}
+                                  checked={isSubChecked}
+                                  onCheckedChange={(checked) =>
+                                    updateStore(subOption.id, checked === true)
+                                  }
+                                />
+                                <Label
+                                  htmlFor={subOptionId}
+                                  className="text-sm font-normal"
+                                >
+                                  {subOption.question}
+                                </Label>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+          <div className="flex items-center space-x-3 mt-8 mb-6">
+            <Switch
+              id="mostrar-en-descuentos"
+              checked={showingPaymentMethodsInDiscountCard}
+              onCheckedChange={(checked) =>
+                setShowingPaymentMethodsInDiscountCard(checked === true)
+              }
+            />
+            <Label htmlFor="mostrar-en-descuentos" className="">
+              Mostrar medios de pago en descuentos
+            </Label>
+          </div>
         </div>
-        <div className="flex items-center space-x-3 mt-8 mb-6">
-          <Switch
-            id="mostrar-en-descuentos"
-            checked={showingPaymentMethodsInDiscountCard}
-            onCheckedChange={(checked) =>
-              setShowingPaymentMethodsInDiscountCard(checked === true)
-            }
-          />
-          <Label htmlFor="mostrar-en-descuentos" className="">
-            Mostrar medios de pago en descuentos
-          </Label>
+        <div className="mt-2 flex justify-end sticky bottom-0 border-t p-4 bg-background">
+          <Button variant="default" asChild>
+            <Link
+              to="/"
+              replace
+              preload="intent"
+              className="w-full max-w-sm mx-auto"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Guardar y volver a descuentos
+            </Link>
+          </Button>
         </div>
       </div>
-      <div className="mt-2 flex justify-end sticky bottom-0 border-t p-4 bg-background">
-        <Button variant="default" asChild>
-          <Link
-            to="/"
-            replace
-            preload="intent"
-            className="w-full max-w-sm mx-auto"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Guardar y volver a descuentos
-          </Link>
-        </Button>
-      </div>
-    </div>
+      <Footer />
+    </>
   );
 }

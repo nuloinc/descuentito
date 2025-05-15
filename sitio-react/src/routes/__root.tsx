@@ -89,6 +89,19 @@ function RootComponent() {
   );
 }
 
+export function Footer({ children }: { children?: React.ReactNode }) {
+  return (
+    <footer className="mb-24 mt-8 flex flex-col items-center justify-center gap-3 px-2 py-4 text-center text-sidebar-foreground/60">
+      {children}
+      <p>
+        Los resultados mostrados son generados automaticamente. Siempre verifica
+        la información en la fuente original.
+      </p>
+      <p>Marcas registradas pertenecen a sus respectivos dueños.</p>
+    </footer>
+  );
+}
+
 function RootDocument({ children }: { children: React.ReactNode }) {
   React.useEffect(() => {
     const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -127,14 +140,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
-
-        <footer className="mb-24 mt-8 flex flex-col items-center justify-center gap-3 px-2 py-4 text-center text-sidebar-foreground/60">
-          <p>
-            Los resultados mostrados son generados automaticamente. Siempre
-            verifica la información en la fuente original.
-          </p>
-          <p>Marcas registradas pertenecen a sus respectivos dueños.</p>
-        </footer>
 
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />

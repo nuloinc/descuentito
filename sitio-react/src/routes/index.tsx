@@ -53,6 +53,7 @@ import { Dialog } from "@/components/ui/dialog";
 import { FeedbackForm } from "@/components/feedback-form";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { useIsClient } from "@/lib/utils";
+import { Footer } from "./__root";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -326,74 +327,6 @@ function Promotions({
           </motion.div>
         )}
       </div>
-      <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2">
-        <div className="mt-2 flex flex-col items-stretch p-2 border border-dashed border-secondary rounded-lg gap-2 mb-2 max-w-md mx-auto">
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                variant="outline"
-                className="text-lg py-6 rounded-full"
-                size="lg"
-              >
-                <MessageCircleWarning className="size-5" />
-                Reportar un problema
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Reportar un problema</DialogTitle>
-                <DialogDescription>
-                  ¿Encontraste un error o algo incorrecto en la página? Por
-                  favor, contanos qué viste.
-                </DialogDescription>
-              </DialogHeader>
-              <FeedbackForm />
-              <DialogFooter>
-                <DialogClose asChild>
-                  <Button variant="outline">Cerrar</Button>
-                </DialogClose>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-
-          <Button
-            variant="outline"
-            className="text-lg py-6 rounded-full"
-            size="lg"
-            onClick={async () => {
-              const promotionsText = currentPromotions
-                .map((promotion) => {
-                  const source =
-                    SUPERMARKET_NAMES[promotion.source] || promotion.source;
-                  const discountType =
-                    promotion.discount.type === "cuotas sin intereses"
-                      ? "CSI"
-                      : "%";
-                  const paymentMethodsText =
-                    promotion.paymentMethods &&
-                    promotion.paymentMethods.length > 0
-                      ? ` con ${promotion.paymentMethods.flat().slice(0, 2).join(", ")}${promotion.paymentMethods.flat().length > 2 ? "..." : ""}`
-                      : "";
-                  return `* ${promotion.discount.value}${discountType} en ${source}${paymentMethodsText}`;
-                })
-                .join("\n");
-              const text = `Mira estos descuentos en supermercados para ${formattedWeekDates[currentTabIndex]?.display || "hoy"}:\n${promotionsText}\n\nEncontrá más descuentos en descuentito.ar`;
-
-              if (navigator.share) {
-                await navigator.share({
-                  text,
-                });
-              } else {
-                navigator.clipboard.writeText(text);
-                alert("Link copiado al portapapeles");
-              }
-            }}
-          >
-            <Share2 className="size-5" />
-            Compartir
-          </Button>
-        </div>
-      </div>
     </>
   );
 }
@@ -478,321 +411,393 @@ function Home() {
   const isClient = useIsClient();
 
   return (
-    <div className="site-container bg-backgrounder relative min-h-screen flex flex-col">
-      <motion.div
-        className="bg-sidebar"
-        layout="size"
-        transition={{ duration: 0.3 }}
-      >
-        {/* Static Title Block */}
+    <>
+      <div className="site-container bg-backgrounder relative min-h-[70vh] flex flex-col">
         <motion.div
-          className="container mx-auto max-w-3xl px-4 pt-4 bg-sidebar"
-          layout="position"
+          className="bg-sidebar"
+          layout="size"
           transition={{ duration: 0.3 }}
         >
-          <div>
-            <h1 className="flex items-center gap-2 text-3xl font-bold">
-              descuentito.ar
-              <Badge variant="destructive">beta :)</Badge>
-            </h1>
-            <h2 className="text-lg font-medium">
-              Descuentos en supermercados de CABA
-            </h2>
+          {/* Static Title Block */}
+          <motion.div
+            className="container mx-auto max-w-3xl px-4 pt-4 bg-sidebar"
+            layout="position"
+            transition={{ duration: 0.3 }}
+          >
+            <div>
+              <h1 className="flex items-center gap-2 text-3xl font-bold">
+                descuentito.ar
+                <Badge variant="destructive">beta :)</Badge>
+              </h1>
+              <h2 className="text-lg font-medium">
+                Descuentos en supermercados de CABA
+              </h2>
+            </div>
+          </motion.div>
+
+          {/* Conditional Content Block (Separate Sibling) */}
+          <div className="container mx-auto max-w-3xl px-4 bg-sidebar">
+            <motion.div className="flex flex-col justify-center">
+              <AnimatePresence mode="popLayout">
+                {!isClient ? (
+                  <motion.div
+                    key="skeleton"
+                    layout
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="mt-2 flex w-full items-center gap-2 rounded-md border bg-sidebar px-3 py-5"
+                  >
+                    <Skeleton className="h-8 w-8 rounded-full" />
+                    <Skeleton className="h-4 flex-1" />
+                    <Skeleton className="h-4 w-4" />
+                  </motion.div>
+                ) : savedPaymentMethods.size > 0 ? (
+                  <motion.div
+                    key="saved-payments"
+                    layout
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Link
+                      to="/configuracion/medios"
+                      className="mt-2 flex flex-col w-full space-x-2 rounded-md border p-3 text-sm ring-1 ring-secondary transition-all gap-1"
+                    >
+                      <div className="flex-grow flex items-center justify-between">
+                        <span className="flex-grow font-medium">
+                          Configurá tus medios de pago guardados
+                        </span>
+                        <span>→</span>
+                      </div>
+                      <div className="flex items-center gap-1 flex-wrap">
+                        {Array.from(savedPaymentMethods).map((pm) => (
+                          <PaymentMethodLogo key={pm} method={pm} small />
+                        ))}
+                      </div>
+                    </Link>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    className="my-2"
+                    key="welcome-message"
+                    layout
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <motion.div className="flex flex-col w-full rounded-md border border-green-300 bg-green-50 dark:border-green-800 dark:bg-green-950/40 p-4 shadow-sm gap-3">
+                      <div className="flex gap-3 items-start">
+                        <motion.div
+                          className="h-10 w-10 flex-shrink-0 flex items-center justify-center"
+                          initial={{ scale: 0.8 }}
+                          animate={{ scale: 1 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 260,
+                            damping: 20,
+                            delay: 0.2,
+                          }}
+                        >
+                          <img
+                            src="/descuentin.svg"
+                            alt="Descuentin"
+                            className="size-16"
+                          />
+                        </motion.div>
+                        <div className="flex-1">
+                          <motion.p
+                            className="font-medium text-green-800 dark:text-green-300"
+                            initial={{ opacity: 0, x: -5 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.3, duration: 0.3 }}
+                          >
+                            ¡Hola! Soy Descuentin y te voy a ayudar a encontrar
+                            los mejores descuentos
+                          </motion.p>
+                          <motion.p
+                            className="mt-1 text-sm text-green-700 dark:text-green-400"
+                            initial={{ opacity: 0, x: -5 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.5, duration: 0.3 }}
+                          >
+                            Configurá tus medios de pago para ver solo los
+                            descuentos que te sirven a vos
+                          </motion.p>
+                        </div>
+                      </div>
+                      <motion.div
+                        className="flex gap-2 justify-end"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.7, duration: 0.3 }}
+                      >
+                        <Link
+                          to="/configuracion/medios/wizard/$step"
+                          params={{ step: "welcome" }}
+                        >
+                          <Button
+                            variant="default"
+                            size="sm"
+                            className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
+                          >
+                            Configurá ahora
+                            <CreditCard className="ml-2 h-4 w-4" />
+                          </Button>
+                        </Link>
+                      </motion.div>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           </div>
         </motion.div>
 
-        {/* Conditional Content Block (Separate Sibling) */}
-        <div className="container mx-auto max-w-3xl px-4 bg-sidebar">
-          <motion.div className="flex flex-col justify-center">
-            <AnimatePresence mode="popLayout">
-              {!isClient ? (
-                <motion.div
-                  key="skeleton"
-                  layout
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="mt-2 flex w-full items-center gap-2 rounded-md border bg-sidebar px-3 py-5"
-                >
-                  <Skeleton className="h-8 w-8 rounded-full" />
-                  <Skeleton className="h-4 flex-1" />
-                  <Skeleton className="h-4 w-4" />
-                </motion.div>
-              ) : savedPaymentMethods.size > 0 ? (
-                <motion.div
-                  key="saved-payments"
-                  layout
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Link
-                    to="/configuracion/medios"
-                    className="mt-2 flex flex-col w-full space-x-2 rounded-md border p-3 text-sm ring-1 ring-secondary transition-all gap-1"
-                  >
-                    <div className="flex-grow flex items-center justify-between">
-                      <span className="flex-grow font-medium">
-                        Configurá tus medios de pago guardados
-                      </span>
-                      <span>→</span>
-                    </div>
-                    <div className="flex items-center gap-1 flex-wrap">
-                      {Array.from(savedPaymentMethods).map((pm) => (
-                        <PaymentMethodLogo key={pm} method={pm} small />
-                      ))}
-                    </div>
-                  </Link>
-                </motion.div>
-              ) : (
-                <motion.div
-                  className="my-2"
-                  key="welcome-message"
-                  layout
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <motion.div className="flex flex-col w-full rounded-md border border-green-300 bg-green-50 dark:border-green-800 dark:bg-green-950/40 p-4 shadow-sm gap-3">
-                    <div className="flex gap-3 items-start">
-                      <motion.div
-                        className="h-10 w-10 flex-shrink-0 flex items-center justify-center"
-                        initial={{ scale: 0.8 }}
-                        animate={{ scale: 1 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 260,
-                          damping: 20,
-                          delay: 0.2,
-                        }}
-                      >
-                        <img
-                          src="/descuentin.svg"
-                          alt="Descuentin"
-                          className="size-16"
-                        />
-                      </motion.div>
-                      <div className="flex-1">
-                        <motion.p
-                          className="font-medium text-green-800 dark:text-green-300"
-                          initial={{ opacity: 0, x: -5 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.3, duration: 0.3 }}
-                        >
-                          ¡Hola! Soy Descuentin y te voy a ayudar a encontrar
-                          los mejores descuentos
-                        </motion.p>
-                        <motion.p
-                          className="mt-1 text-sm text-green-700 dark:text-green-400"
-                          initial={{ opacity: 0, x: -5 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.5, duration: 0.3 }}
-                        >
-                          Configurá tus medios de pago para ver solo los
-                          descuentos que te sirven a vos
-                        </motion.p>
-                      </div>
-                    </div>
-                    <motion.div
-                      className="flex gap-2 justify-end"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.7, duration: 0.3 }}
+        <div className="h-[env(safe-area-inset-top)] fixed top-0 left-0 right-0 z-40 bg-sidebar/90 backdrop-blur"></div>
+
+        <motion.header
+          layout
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className="sticky top-[env(safe-area-inset-top)] z-40 w-full bg-sidebar/90 shadow-md backdrop-blur"
+        >
+          <div className="mx-auto w-full my-2">
+            <div className="flex items-center justify-center px-2">
+              <Tabs
+                value={selectedTabId}
+                onValueChange={(value: string) => setSelectedTabId(value)}
+                className="mb-0"
+              >
+                <TabsList className="flex md:gap-1 overflow-x-auto scrollbar-hide">
+                  {formattedWeekDates.map((weekDateInfo) => (
+                    <TabsTrigger
+                      key={weekDateInfo.id}
+                      value={weekDateInfo.id}
+                      className="xs:px-4 px-2"
                     >
-                      <Link
-                        to="/configuracion/medios/wizard/$step"
-                        params={{ step: "welcome" }}
-                      >
-                        <Button
-                          variant="default"
-                          size="sm"
-                          className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
-                        >
-                          Configurá ahora
-                          <CreditCard className="ml-2 h-4 w-4" />
-                        </Button>
-                      </Link>
-                    </motion.div>
-                  </motion.div>
-                </motion.div>
+                      <span className="hidden lg:block">
+                        {weekDateInfo.display}
+                      </span>
+                      <span className="block lg:hidden">
+                        {weekDateInfo.shortDisplay}
+                      </span>
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </Tabs>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setIsFilterDrawerOpen(true)}
+                className="ml-2 flex-shrink-0 relative"
+                aria-label="Filtros"
+              >
+                <Filter className="h-4 w-4" />
+                {(selectedSupermarket ||
+                  selectedPromotionType !== "Todos" ||
+                  selectedType !== "Online" ||
+                  shouldFilterByPaymentMethods) && (
+                  <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+                  </span>
+                )}
+              </Button>
+            </div>
+          </div>
+        </motion.header>
+
+        <motion.div className="flex-grow pt-3 relative pb-3">
+          <LayoutGroup>
+            <AnimatePresence initial={false} mode="wait">
+              {!isClient ? (
+                <PromotionsSkeleton
+                  key={`skeleton-${selectedTabId}`}
+                  tabId={selectedTabId}
+                />
+              ) : (
+                <Await
+                  promise={promotions}
+                  fallback={
+                    <PromotionsSkeleton
+                      key={`skeleton-fallback-${selectedTabId}`}
+                      tabId={selectedTabId}
+                    />
+                  }
+                >
+                  {(data) => (
+                    <Promotions
+                      key={`promotions-${selectedTabId}`}
+                      promotionsData={data}
+                      selectedType={selectedType}
+                      selectedSupermarket={selectedSupermarket}
+                      selectedPromotionType={selectedPromotionType}
+                      formattedWeekDates={formattedWeekDates}
+                      selectedTabId={selectedTabId}
+                      currentTabIndex={currentTabIndex}
+                      setSelectedSupermarket={setSelectedSupermarket}
+                    />
+                  )}
+                </Await>
               )}
             </AnimatePresence>
-          </motion.div>
-        </div>
-      </motion.div>
+          </LayoutGroup>
+        </motion.div>
 
-      <div className="h-[env(safe-area-inset-top)] fixed top-0 left-0 right-0 z-40 bg-sidebar/90 backdrop-blur"></div>
-
-      <motion.header
-        layout
-        transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="sticky top-[env(safe-area-inset-top)] z-40 w-full bg-sidebar/90 shadow-md backdrop-blur"
-      >
-        <div className="mx-auto w-full my-2">
-          <div className="flex items-center justify-center px-2">
-            <Tabs
-              value={selectedTabId}
-              onValueChange={(value: string) => setSelectedTabId(value)}
-              className="mb-0"
-            >
-              <TabsList className="flex md:gap-1 overflow-x-auto scrollbar-hide">
-                {formattedWeekDates.map((weekDateInfo) => (
-                  <TabsTrigger
-                    key={weekDateInfo.id}
-                    value={weekDateInfo.id}
-                    className="xs:px-4 px-2"
+        <Drawer
+          open={isFilterDrawerOpen}
+          onOpenChange={setIsFilterDrawerOpen}
+          repositionInputs={false}
+        >
+          <DrawerContent>
+            <div className="mx-auto w-full max-w-sm overflow-y-auto">
+              <DrawerHeader className="pb-0 text-xl">
+                <DrawerTitle>Filtros</DrawerTitle>
+              </DrawerHeader>
+              <div className="p-4">
+                <div className="mb-4">
+                  <h3 className="mb-2 font-medium">Tipo de compra</h3>
+                  <Tabs
+                    value={selectedType}
+                    onValueChange={(value) =>
+                      setSelectedType(value as "Presencial" | "Online")
+                    }
+                    className="mb-4"
                   >
-                    <span className="hidden lg:block">
-                      {weekDateInfo.display}
-                    </span>
-                    <span className="block lg:hidden">
-                      {weekDateInfo.shortDisplay}
-                    </span>
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </Tabs>
+                    <TabsList className="grid w-full grid-cols-2 rounded-full py-1 h-auto">
+                      {["Presencial", "Online"].map((type) => (
+                        <TabsTrigger
+                          key={type}
+                          value={type}
+                          className="rounded-full px-4 text-base data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                        >
+                          {type}
+                        </TabsTrigger>
+                      ))}
+                    </TabsList>
+                  </Tabs>
+                </div>
+
+                {/* Supermarket Filter */}
+                <div className="mb-4">
+                  <h3 className="mb-2 font-medium">Supermercado</h3>
+                  <SupermarketFilter
+                    selectedSupermarket={selectedSupermarket}
+                    onSelect={(supermarket: string | null) => {
+                      setSelectedSupermarket(supermarket);
+                    }}
+                  />
+                </div>
+
+                {/* Promotion Type Filter */}
+                <div className="mb-4">
+                  <h3 className="mb-2 font-medium">Tipo de promoción</h3>
+                  <Tabs
+                    value={selectedPromotionType}
+                    onValueChange={(value) =>
+                      setSelectedPromotionType(
+                        value as "Todos" | "Descuentos" | "Cuotas"
+                      )
+                    }
+                    className="mb-4"
+                  >
+                    <TabsList className="grid w-full grid-cols-3 rounded-full py-1 h-auto">
+                      {["Todos", "Descuentos", "Cuotas"].map((type) => (
+                        <TabsTrigger
+                          key={type}
+                          value={type}
+                          className="flex-1 rounded-full px-4 text-base data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                        >
+                          {type}
+                        </TabsTrigger>
+                      ))}
+                    </TabsList>
+                  </Tabs>
+                </div>
+                <FilterByPaymentMethodsButton className="mt-2" />
+              </div>
+            </div>
+            <DrawerFooter className="border-t sticky bottom-0 pb-[calc(env(safe-area-inset-bottom)+.5rem)] bg-sidebar">
+              <DrawerClose asChild>
+                <Button variant="default" className="max-w-sm mx-auto w-full">
+                  Aplicar filtros
+                </Button>
+              </DrawerClose>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+      </div>
+      <Footer>
+        <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2">
+          <div className="mt-2 flex flex-col items-stretch p-2 border-secondary rounded-lg gap-2 mb-2 max-w-md mx-auto">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="text-lg py-6 rounded-full"
+                  size="lg"
+                >
+                  <MessageCircleWarning className="size-5" />
+                  Reportar un problema
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Reportar un problema</DialogTitle>
+                  <DialogDescription>
+                    ¿Encontraste un error o algo incorrecto en la página? Por
+                    favor, contanos qué viste.
+                  </DialogDescription>
+                </DialogHeader>
+                <FeedbackForm />
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button variant="outline">Cerrar</Button>
+                  </DialogClose>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+
             <Button
               variant="outline"
-              size="icon"
-              onClick={() => setIsFilterDrawerOpen(true)}
-              className="ml-2 flex-shrink-0 relative"
-              aria-label="Filtros"
+              className="text-lg py-6 rounded-full"
+              size="lg"
+              onClick={async () => {
+                const promotionsText = currentPromotions
+                  .map((promotion) => {
+                    const source =
+                      SUPERMARKET_NAMES[promotion.source] || promotion.source;
+                    const discountType =
+                      promotion.discount.type === "cuotas sin intereses"
+                        ? "CSI"
+                        : "%";
+                    const paymentMethodsText =
+                      promotion.paymentMethods &&
+                      promotion.paymentMethods.length > 0
+                        ? ` con ${promotion.paymentMethods.flat().slice(0, 2).join(", ")}${promotion.paymentMethods.flat().length > 2 ? "..." : ""}`
+                        : "";
+                    return `* ${promotion.discount.value}${discountType} en ${source}${paymentMethodsText}`;
+                  })
+                  .join("\n");
+                const text = `Mira estos descuentos en supermercados para ${formattedWeekDates[currentTabIndex]?.display || "hoy"}:\n${promotionsText}\n\nEncontrá más descuentos en descuentito.ar`;
+
+                if (navigator.share) {
+                  await navigator.share({
+                    text,
+                  });
+                } else {
+                  navigator.clipboard.writeText(text);
+                  alert("Link copiado al portapapeles");
+                }
+              }}
             >
-              <Filter className="h-4 w-4" />
-              {(selectedSupermarket ||
-                selectedPromotionType !== "Todos" ||
-                selectedType !== "Online" ||
-                shouldFilterByPaymentMethods) && (
-                <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
-                </span>
-              )}
+              <Share2 className="size-5" />
+              Compartir
             </Button>
           </div>
         </div>
-      </motion.header>
-
-      <motion.div className="flex-grow pt-3 relative pb-16">
-        <LayoutGroup>
-          <AnimatePresence initial={false} mode="wait">
-            {!isClient ? (
-              <PromotionsSkeleton
-                key={`skeleton-${selectedTabId}`}
-                tabId={selectedTabId}
-              />
-            ) : (
-              <Await
-                promise={promotions}
-                fallback={
-                  <PromotionsSkeleton
-                    key={`skeleton-fallback-${selectedTabId}`}
-                    tabId={selectedTabId}
-                  />
-                }
-              >
-                {(data) => (
-                  <Promotions
-                    key={`promotions-${selectedTabId}`}
-                    promotionsData={data}
-                    selectedType={selectedType}
-                    selectedSupermarket={selectedSupermarket}
-                    selectedPromotionType={selectedPromotionType}
-                    formattedWeekDates={formattedWeekDates}
-                    selectedTabId={selectedTabId}
-                    currentTabIndex={currentTabIndex}
-                    setSelectedSupermarket={setSelectedSupermarket}
-                  />
-                )}
-              </Await>
-            )}
-          </AnimatePresence>
-        </LayoutGroup>
-      </motion.div>
-
-      <Drawer
-        open={isFilterDrawerOpen}
-        onOpenChange={setIsFilterDrawerOpen}
-        repositionInputs={false}
-      >
-        <DrawerContent>
-          <div className="mx-auto w-full max-w-sm overflow-y-auto">
-            <DrawerHeader className="pb-0 text-xl">
-              <DrawerTitle>Filtros</DrawerTitle>
-            </DrawerHeader>
-            <div className="p-4">
-              <div className="mb-4">
-                <h3 className="mb-2 font-medium">Tipo de compra</h3>
-                <Tabs
-                  value={selectedType}
-                  onValueChange={(value) =>
-                    setSelectedType(value as "Presencial" | "Online")
-                  }
-                  className="mb-4"
-                >
-                  <TabsList className="grid w-full grid-cols-2 rounded-full py-1 h-auto">
-                    {["Presencial", "Online"].map((type) => (
-                      <TabsTrigger
-                        key={type}
-                        value={type}
-                        className="rounded-full px-4 text-base data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-                      >
-                        {type}
-                      </TabsTrigger>
-                    ))}
-                  </TabsList>
-                </Tabs>
-              </div>
-
-              {/* Supermarket Filter */}
-              <div className="mb-4">
-                <h3 className="mb-2 font-medium">Supermercado</h3>
-                <SupermarketFilter
-                  selectedSupermarket={selectedSupermarket}
-                  onSelect={(supermarket: string | null) => {
-                    setSelectedSupermarket(supermarket);
-                  }}
-                />
-              </div>
-
-              {/* Promotion Type Filter */}
-              <div className="mb-4">
-                <h3 className="mb-2 font-medium">Tipo de promoción</h3>
-                <Tabs
-                  value={selectedPromotionType}
-                  onValueChange={(value) =>
-                    setSelectedPromotionType(
-                      value as "Todos" | "Descuentos" | "Cuotas"
-                    )
-                  }
-                  className="mb-4"
-                >
-                  <TabsList className="grid w-full grid-cols-3 rounded-full py-1 h-auto">
-                    {["Todos", "Descuentos", "Cuotas"].map((type) => (
-                      <TabsTrigger
-                        key={type}
-                        value={type}
-                        className="flex-1 rounded-full px-4 text-base data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-                      >
-                        {type}
-                      </TabsTrigger>
-                    ))}
-                  </TabsList>
-                </Tabs>
-              </div>
-              <FilterByPaymentMethodsButton className="mt-2" />
-            </div>
-          </div>
-          <DrawerFooter className="border-t sticky bottom-0 pb-[calc(env(safe-area-inset-bottom)+.5rem)] bg-sidebar">
-            <DrawerClose asChild>
-              <Button variant="default" className="max-w-sm mx-auto w-full">
-                Aplicar filtros
-              </Button>
-            </DrawerClose>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-    </div>
+      </Footer>
+    </>
   );
 }
