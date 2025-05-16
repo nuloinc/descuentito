@@ -533,19 +533,20 @@ function Home() {
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.7, duration: 0.3 }}
                       >
-                        <Link
-                          to="/configuracion/medios/wizard/$step"
-                          params={{ step: "welcome" }}
+                        <Button
+                          variant="default"
+                          size="sm"
+                          className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
+                          asChild
                         >
-                          <Button
-                            variant="default"
-                            size="sm"
-                            className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
+                          <Link
+                            to="/configuracion/medios/wizard/$step"
+                            params={{ step: "welcome" }}
                           >
                             Configurá ahora
                             <CreditCard className="ml-2 h-4 w-4" />
-                          </Button>
-                        </Link>
+                          </Link>
+                        </Button>
                       </motion.div>
                     </motion.div>
                   </motion.div>
