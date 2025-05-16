@@ -1,5 +1,3 @@
-import logger from "../lib/logger";
-import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import { streamObject } from "ai";
 import {
@@ -14,6 +12,7 @@ import {
 import assert from "assert";
 import { createPlaywrightSession } from "../../lib";
 import { cleanDiscounts } from "../../lib/clean";
+import { openrouter } from "@openrouter/ai-sdk-provider";
 
 const DiscountSchema = BasicDiscountSchema.extend({
   where: z.array(z.enum(["Makro"])),
@@ -54,7 +53,7 @@ export async function scrapeMakro() {
       .replaceAll("\t", "");
 
     const { elementStream } = await streamObject({
-      model: google("gemini-2.0-flash"),
+      model: openrouter.chat("google/gemini-2.5-flash-preview"),
       output: "array",
       schema: DiscountSchema,
       temperature: 0,

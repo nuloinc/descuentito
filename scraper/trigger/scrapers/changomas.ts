@@ -1,5 +1,3 @@
-import logger from "../lib/logger";
-import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import { streamObject } from "ai";
 import {
@@ -13,6 +11,7 @@ import {
 } from "promos-db/schema";
 import assert from "assert";
 import { createPlaywrightSession } from "../../lib";
+import { openrouter } from "@openrouter/ai-sdk-provider";
 
 const DiscountSchema = BasicDiscountSchema.extend({
   where: z.array(z.enum(["ChangoMas", "Online"])),
@@ -49,7 +48,7 @@ export async function scrapeChangoMas() {
     const html = await element.evaluate((el: Element) => el.outerHTML);
 
     const { elementStream } = await streamObject({
-      model: google("gemini-2.0-flash"),
+      model: openrouter.chat("google/gemini-2.5-flash-preview"),
       output: "array",
       schema: DiscountSchema,
       temperature: 0,

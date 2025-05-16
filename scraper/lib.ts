@@ -1,31 +1,12 @@
-import puppeteer, { Page } from "puppeteer";
-import type * as puppeteerr from "puppeteer";
-import ProxyChain from "proxy-chain";
 import { s3, BUCKET_NAME } from "./fetch-cacher";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { format } from "date-fns";
 import logger from "./trigger/lib/logger";
-import { google } from "@ai-sdk/google";
-import * as pw from "playwright";
-import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import { chromium, Page, Browser } from "playwright-core";
 
-async function createProxyServer() {
-  const server = new ProxyChain.Server({
-    port: 8000,
-    host: "localhost",
-    prepareRequestFunction: ({}) => {
-      return {
-        upstreamProxyUrl: `${process.env.PROXY_URI}`,
-      };
-    },
-  });
-  await new Promise((resolve) =>
-    server.listen(() => {
-      resolve(true);
-    })
-  );
-  return server;
-}
+const PROXY_URL = process.env.PROXY_URI
+  ? new URL(process.env.PROXY_URI)
+  : undefined;
 
 const BCAT_URL = "wss://api.browsercat.com/connect";
 const LOCAL_BROWSER = process.env.LOCAL_BROWSER
@@ -33,60 +14,26 @@ const LOCAL_BROWSER = process.env.LOCAL_BROWSER
   : true;
 const HEADLESS = process.env.HEADLESS === "false" ? false : true;
 
-export async function createBrowserSession() {
-  const server = await createProxyServer();
-  let browser: puppeteerr.Browser;
+export async function createPlaywrightSession({
+  useProxy = false,
+}: {
+  useProxy?: boolean;
+} = {}) {
+  let browser: Browser;
+
   if (LOCAL_BROWSER) {
-    browser = await puppeteer.launch({
-      args: [`--proxy-server=localhost:8000`],
+    browser = await chromium.launch({
       headless: HEADLESS,
+      proxy: useProxy
+        ? {
+            server: `${PROXY_URL?.protocol}//${PROXY_URL?.host}`,
+            username: PROXY_URL?.username,
+            password: PROXY_URL?.password,
+          }
+        : undefined,
     });
   } else {
-    browser = await puppeteer.connect({
-      browserWSEndpoint: BCAT_URL,
-      headers: { "api-key": process.env.BROWSERCAT_API_KEY! },
-    });
-  }
-
-  const page = await browser.newPage();
-  await page.setUserAgent(
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
-  );
-
-  await page.goto("https://api.ipify.org?format=json");
-  const ip = await page.evaluate(() => {
-    // @ts-ignore DOM
-    return JSON.parse(document.body.textContent).ip;
-  });
-  console.info("Current IP address:", { ip });
-
-  return {
-    [Symbol.asyncDispose]: async () => {
-      try {
-        await browser.close();
-      } catch (error) {
-        logger.error("Error closing browser", { error });
-        throw error;
-      }
-      try {
-        await server.close(true);
-      } catch (error) {
-        logger.warn("Error closing server", { error });
-      }
-    },
-    browser,
-    page,
-  };
-}
-
-export async function createPlaywrightSession() {
-  let browser: pw.Browser;
-  if (LOCAL_BROWSER) {
-    browser = await pw.chromium.launch({
-      headless: HEADLESS,
-    });
-  } else {
-    browser = await pw.chromium.connect(BCAT_URL, {
+    browser = await chromium.connect(BCAT_URL, {
       headers: { "Api-Key": process.env.BROWSERCAT_API_KEY! },
     });
   }
@@ -126,7 +73,7 @@ export async function storeCacheData(
  * Reduces nested divs to a single div representation.
  */
 export async function generateElementDescription(
-  page: Page | pw.Page,
+  page: Page,
   selector: string
 ): Promise<string> {
   const evalFn = (selector: string) => {
@@ -194,12 +141,5 @@ export async function generateElementDescription(
     return generateElementDescriptionInner(element);
   };
 
-  if (page instanceof Page) {
-    return await page.evaluate(evalFn, selector);
-  }
   return await page.evaluate(evalFn, selector);
 }
-
-export const openrouter = createOpenRouter({
-  apiKey: process.env.OPENROUTER_API_KEY!,
-});

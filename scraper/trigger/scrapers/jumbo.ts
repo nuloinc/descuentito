@@ -1,7 +1,6 @@
 import logger from "../lib/logger";
-import { google } from "@ai-sdk/google";
 import { z } from "zod";
-import { generateObject, streamObject } from "ai";
+import { streamObject } from "ai";
 import {
   BANKS_OR_WALLETS,
   BasicDiscountSchema,
@@ -15,6 +14,13 @@ import {
 } from "promos-db/schema";
 import { createPlaywrightSession, generateElementDescription } from "../../lib";
 import { cleanDiscounts } from "../../lib/clean";
+import { openrouter } from "@openrouter/ai-sdk-provider";
+
+interface ScrapedPromotion {
+  screenshot: Buffer;
+  text: string;
+  weekdayIndex: number;
+}
 
 export async function scrapeJumbo() {
   await using sessions = await createPlaywrightSession();
@@ -31,10 +37,11 @@ export async function scrapeJumbo() {
 
   const buttons = await container.$$("button");
 
-  const discounts: JumboDiscount[] = [];
+  // Step 1: Scrape all promotions first
+  const scrapedPromotions: ScrapedPromotion[] = [];
 
-  for (const button of buttons) {
-    const previousDaysDiscounts = [...discounts];
+  for (let weekdayIndex = 0; weekdayIndex < buttons.length; weekdayIndex++) {
+    const button = buttons[weekdayIndex];
     await button.click();
     await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -52,7 +59,7 @@ export async function scrapeJumbo() {
 
       const text = await generateElementDescription(
         page,
-        await promotionEl.evaluate((el: Element, i: number) => {
+        await promotionEl.evaluate((el: Element) => {
           const allSimilar = document.querySelectorAll(
             `${el.tagName.toLowerCase()}${Array.from(el.attributes)
               .map((attr) => `[${attr.name}="${attr.value}"]`)
@@ -65,8 +72,26 @@ export async function scrapeJumbo() {
         })
       );
 
+      scrapedPromotions.push({
+        screenshot,
+        text,
+        weekdayIndex,
+      });
+    }
+  }
+
+  logger.info(
+    `Scraped ${scrapedPromotions.length} promotions, now processing with LLM`
+  );
+
+  // Step 2: Process with LLM in parallel
+  const discountsMap = new Map<number, JumboDiscount[]>();
+  await Promise.all(
+    scrapedPromotions.map(async (promotion) => {
+      const { screenshot, text, weekdayIndex } = promotion;
+
       const { elementStream } = streamObject({
-        model: google("gemini-2.0-flash"),
+        model: openrouter.chat("google/gemini-2.5-flash-preview"),
         output: "array",
         schema: BasicDiscountSchema.extend({
           where: z.array(z.enum(["Jumbo", "Online"])),
@@ -102,7 +127,16 @@ ${LIMITS_PROMPT}
         ],
       });
 
+      // Create array for this weekday if it doesn't exist
+      if (!discountsMap.has(weekdayIndex)) {
+        discountsMap.set(weekdayIndex, []);
+      }
+
       for await (const generatedDiscount of elementStream) {
+        const previousDaysDiscounts = Array.from(discountsMap.values())
+          .slice(0, weekdayIndex)
+          .flat();
+
         // hack porque iteramos por cada dia de semana, entonces los descuentos que estan en varios dias de semana se repiten
         // lo hacemos sobre un array de los descuentos de los dias anteriores para no tener falsos positivos sobre descuentos del mismo banco pero de distinto tipo
         const existingDiscount = previousDaysDiscounts.find(
@@ -130,16 +164,20 @@ ${LIMITS_PROMPT}
           continue;
         }
 
-        discounts.push({
+        const newDiscount: JumboDiscount = {
           ...generatedDiscount,
-          source: "jumbo",
+          source: "jumbo" as const,
           url,
-        });
-      }
-    }
-  }
+        };
 
-  return cleanDiscounts(discounts);
+        discountsMap.get(weekdayIndex)?.push(newDiscount);
+      }
+    })
+  );
+
+  // Combine all discounts from all weekdays
+  const allDiscounts = Array.from(discountsMap.values()).flat();
+  return cleanDiscounts(allDiscounts);
 }
 
 function getBankOrWallet(paymentMethodss: PaymentMethod[][]) {

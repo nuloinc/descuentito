@@ -1,5 +1,4 @@
 import logger from "../lib/logger";
-import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import { streamObject } from "ai";
 import {
@@ -12,6 +11,7 @@ import {
 } from "promos-db/schema";
 import { createPlaywrightSession, storeCacheData } from "../../lib";
 import assert from "node:assert";
+import { openrouter } from "@openrouter/ai-sdk-provider";
 
 export async function scrapeDia() {
   await using sessions = await createPlaywrightSession();
@@ -66,13 +66,12 @@ export async function scrapeDia() {
         await page.$(".diaio-custom-bank-promotions-0-x-bank-modal__text")
       )?.textContent()) || "";
     if (!legalesText) throw new Error("No legal text found");
-    logger.info("Legal text", { legalesText });
 
     await closeModal();
     /////////////////
 
     const { elementStream } = streamObject({
-      model: google("gemini-2.0-flash"),
+      model: openrouter.chat("google/gemini-2.5-flash-preview"),
       schema: BasicDiscountSchema.extend({
         where: z.array(z.enum(["Dia", "Online"])),
       }),

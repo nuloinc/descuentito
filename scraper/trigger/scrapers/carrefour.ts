@@ -1,18 +1,15 @@
-import logger from "../lib/logger";
-import { google } from "@ai-sdk/google";
 import { z } from "zod";
-import { NoObjectGeneratedError, streamObject } from "ai";
+import { generateObject } from "ai";
 import {
   BasicDiscountSchema,
-  CarrefourDiscount,
   genStartPrompt,
   LIMITS_PROMPT,
-  PAYMENT_METHODS,
   PAYMENT_METHODS_PROMPT,
   RESTRICTIONS_PROMPT,
 } from "promos-db/schema";
-import { fetchPageData } from "../lib/fetch-page";
-import assert from "assert";
+import { waitForSelectorOrFail } from "../lib/fetch-page";
+import { openrouter } from "@openrouter/ai-sdk-provider";
+import { createPlaywrightSession, generateElementDescription } from "../../lib";
 
 const DiscountSchema = BasicDiscountSchema.extend({
   where: z.array(z.enum(["Carrefour", "Maxi", "Market", "Express", "Online"])),
@@ -20,33 +17,47 @@ const DiscountSchema = BasicDiscountSchema.extend({
 });
 
 export async function scrapeCarrefour() {
-  const { domDescription } = await fetchPageData(
-    "carrefour",
-    "https://www.carrefour.com.ar/descuentos-bancarios",
-    {
-      selector: ".vtex-tabs__content",
-      waitForSelector:
-        ".valtech-carrefourar-bank-promotions-0-x-ColRightTittle",
-    }
+  await using session = await createPlaywrightSession({ useProxy: true });
+  const { page } = session;
+
+  await page.goto("https://www.carrefour.com.ar/descuentos-bancarios", {
+    waitUntil: "domcontentloaded",
+  });
+  await waitForSelectorOrFail(
+    page,
+    ".valtech-carrefourar-bank-promotions-0-x-ColRightTittle",
+    "carrefour"
   );
 
-  let promotions = [];
-  for await (const promotion of extractDiscounts({ domDescription }))
-    promotions.push(promotion);
+  const numberOfPromotions = await page.evaluate(() => {
+    return document.querySelectorAll(
+      ".valtech-carrefourar-bank-promotions-0-x-cardBox"
+    ).length;
+  });
 
-  assert(promotions.length > 0, "No promotions found");
+  const promotionsDomDescriptions = await Promise.all(
+    Array.from(
+      { length: numberOfPromotions },
+      async (_, i) =>
+        await generateElementDescription(
+          page,
+          `.valtech-carrefourar-bank-promotions-0-x-cardBox:nth-child(${i + 1})`
+        )
+    )
+  );
+
+  const promotions = await Promise.all(
+    promotionsDomDescriptions.map(async (domDescription) =>
+      extractDiscount({ domDescription })
+    )
+  );
 
   return promotions;
 }
 
-async function* extractDiscounts({
-  domDescription,
-}: {
-  domDescription: string;
-}) {
-  const { elementStream } = streamObject({
-    model: google("gemini-2.0-flash"),
-    output: "array",
+async function extractDiscount({ domDescription }: { domDescription: string }) {
+  const { object } = await generateObject({
+    model: openrouter.chat("google/gemini-2.5-flash-preview"),
     schema: DiscountSchema,
     temperature: 0,
     system: `${genStartPrompt("Carrefour")}
@@ -70,7 +81,7 @@ ${LIMITS_PROMPT}
           {
             type: "text",
             text:
-              "Extract the promotions from the following pseudo-html: \n\n" +
+              "Extract the discount from the following pseudo-html: \n\n" +
               domDescription,
           },
         ],
@@ -78,11 +89,9 @@ ${LIMITS_PROMPT}
     ],
   });
 
-  for await (const element of elementStream) {
-    yield {
-      ...element,
-      url: "https://www.carrefour.com.ar/descuentos-bancarios",
-      source: "carrefour",
-    };
-  }
+  return {
+    ...object,
+    url: "https://www.carrefour.com.ar/descuentos-bancarios",
+    source: "carrefour",
+  };
 }
