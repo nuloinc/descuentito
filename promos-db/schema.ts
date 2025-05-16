@@ -249,7 +249,7 @@ Group payment methods into valid combinations that work together for a discount.
    - If "todos los medios de pago" or similar is mentioned, return null to indicate all payment methods are accepted.
    - Return null ONLY if no payment methods are mentioned or "todos los medios de pago" is present.
    - For generic VISA/Mastercard: use "Tarjeta de crédito VISA"/"Tarjeta de crédito Mastercard"
-   - Handle bank-specific variations carefully (e.g. "Banco Galicia Más" ≠ "Banco Galicia")
+   - Handle bank-specific variations carefully (e.g. "Banco Galicia Más" is NOT "Banco Galicia")
    - Account for special account types like "Plan Sueldo" when explicitly mentioned
 
 3. **Structure & Ordering**
