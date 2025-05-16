@@ -30,20 +30,17 @@ export async function scrapeJumbo() {
     throw new Error("Could not find container with weekday buttons");
 
   const buttons = await container.$$("button");
-  logger.info("Found weekday buttons", { count: buttons.length });
 
   const discounts: JumboDiscount[] = [];
 
   for (const button of buttons) {
     const previousDaysDiscounts = [...discounts];
-    logger.info("Button text", { text: await button.textContent() });
     await button.click();
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     const promotionEls = await page.$$(
       ".vtex-render__container-id-discounts-financing div:nth-of-type(3) ul li"
     );
-    logger.info("Found promotion elements", { count: promotionEls.length });
 
     for (const promotionEl of promotionEls) {
       const verMasBtn = await promotionEl.$('div:has-text("Ver más") button');
@@ -67,7 +64,6 @@ export async function scrapeJumbo() {
             .join("")}:nth-of-type(${index + 1})`;
         })
       );
-      logger.info("Text", { text });
 
       const { elementStream } = streamObject({
         model: google("gemini-2.0-flash"),
@@ -107,7 +103,6 @@ ${LIMITS_PROMPT}
       });
 
       for await (const generatedDiscount of elementStream) {
-        logger.info("Object", { object: generatedDiscount });
         // hack porque iteramos por cada dia de semana, entonces los descuentos que estan en varios dias de semana se repiten
         // lo hacemos sobre un array de los descuentos de los dias anteriores para no tener falsos positivos sobre descuentos del mismo banco pero de distinto tipo
         const existingDiscount = previousDaysDiscounts.find(

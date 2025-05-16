@@ -30,7 +30,6 @@ export async function scrapeCarrefour() {
     }
   );
 
-  logger.info("DOM Description", { domDescription });
   let promotions = [];
   for await (const promotion of extractDiscounts({ domDescription }))
     promotions.push(promotion);
@@ -85,6 +84,5 @@ ${LIMITS_PROMPT}
       url: "https://www.carrefour.com.ar/descuentos-bancarios",
       source: "carrefour",
     };
-    logger.info("Element", { element });
   }
 }

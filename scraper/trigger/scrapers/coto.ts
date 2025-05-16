@@ -59,7 +59,6 @@ export async function scrapeCoto() {
     const { browser } = session;
     return await Promise.all([getLegales(browser), getDiscountData(browser)]);
   })();
-  console.log("discountData", discountData.size);
   const discounts: CotoDiscount[] = await Promise.all(
     Array.from(discountData.values())
       .filter(
@@ -82,7 +81,6 @@ async function getDiscount({
   domDescription: string;
   id: string;
 }): Promise<CotoDiscount> {
-  console.log("getting discount", domDescription);
   const text = `Your primary task is to extract the discount information from the screenshot image, which shows a single valid promotion. The screenshot is your PRIMARY source of truth.
 
 The legal text that follows is ONLY for supplementing specific details not visible in the screenshot:
@@ -106,7 +104,6 @@ ${domDescription}
     messages: [{ role: "user", content: [{ type: "text", text }] }],
     system: SYSTEM_PROMPT,
   });
-  console.log("scrapped", result.object);
   return {
     ...result.object,
     source: "coto",

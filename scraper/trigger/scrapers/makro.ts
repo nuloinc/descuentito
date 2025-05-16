@@ -52,7 +52,6 @@ export async function scrapeMakro() {
     const text = (await element.evaluate((el: Element) => el.textContent))
       ?.trim()
       .replaceAll("\t", "");
-    logger.info("text", { text });
 
     const { elementStream } = await streamObject({
       model: google("gemini-2.0-flash"),
@@ -95,7 +94,6 @@ ${LIMITS_PROMPT}
     });
 
     for await (const element of elementStream) {
-      logger.info("obj", { element });
       promotions.push({
         ...element,
         url: URL,

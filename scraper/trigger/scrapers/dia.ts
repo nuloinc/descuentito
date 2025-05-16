@@ -105,7 +105,6 @@ ${LIMITS_PROMPT}
       ],
     });
     for await (const object of elementStream) {
-      logger.info("Object", { object });
       promotions.push({
         ...object,
         source: "dia",

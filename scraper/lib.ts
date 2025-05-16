@@ -30,7 +30,7 @@ async function createProxyServer() {
 const BCAT_URL = "wss://api.browsercat.com/connect";
 const LOCAL_BROWSER = process.env.LOCAL_BROWSER
   ? process.env.LOCAL_BROWSER === "true"
-  : process.env.NODE_ENV === "development";
+  : true;
 const HEADLESS = process.env.HEADLESS === "false" ? false : true;
 
 export async function createBrowserSession() {

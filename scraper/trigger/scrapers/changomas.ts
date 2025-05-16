@@ -27,6 +27,7 @@ export async function scrapeChangoMas() {
   await page.goto(URL, {
     waitUntil: "domcontentloaded",
   });
+  await new Promise((resolve) => setTimeout(resolve, 500));
 
   await page.waitForSelector("li a.valtech-gdn-banks-promotions-0-x-menuItem");
   const menuItem = await page.locator(
@@ -83,7 +84,6 @@ ${LIMITS_PROMPT}
     });
 
     for await (const element of elementStream) {
-      logger.info("Element", { element });
       promotions.push({
         ...element,
         url: URL,
