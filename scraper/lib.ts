@@ -8,11 +8,16 @@ const PROXY_URL = process.env.PROXY_URI
   ? new URL(process.env.PROXY_URI)
   : undefined;
 
+if (PROXY_URL) console.log(`--> Using proxy at ${PROXY_URL.hostname}`);
+
 const BCAT_URL = "wss://api.browsercat.com/connect";
 const LOCAL_BROWSER = process.env.LOCAL_BROWSER
   ? process.env.LOCAL_BROWSER === "true"
   : true;
+console.log(`--> Using ${LOCAL_BROWSER ? "LOCAL" : "REMOTE"} browser`);
 const HEADLESS = process.env.HEADLESS === "false" ? false : true;
+if (LOCAL_BROWSER)
+  console.log(`--> Running ${HEADLESS ? "HEADLESSLY" : "HEADFULLY"}`);
 
 export async function createPlaywrightSession({
   useProxy = false,
