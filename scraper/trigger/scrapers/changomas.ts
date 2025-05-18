@@ -29,15 +29,18 @@ export async function scrapeChangoMas() {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
   await page.waitForSelector("li a.valtech-gdn-banks-promotions-0-x-menuItem");
-  const menuItem = await page.locator(
+  const menuItem = page.locator(
     "li a.valtech-gdn-banks-promotions-0-x-menuItem",
     {
       hasText: "Por Banco/Tarjeta",
     }
   );
+  await new Promise((resolve) => setTimeout(resolve, 500));
   await menuItem.click();
 
-  await page.waitForSelector(".valtech-gdn-banks-promotions-0-x-dateText");
+  await page.waitForSelector(".valtech-gdn-banks-promotions-0-x-dateText", {
+    timeout: 5000,
+  });
 
   const elements = await page.$$(".valtech-gdn-banks-promotions-0-x-cardBox");
 
