@@ -44,20 +44,15 @@ async function main() {
   }
 
   if (scraperName === "all") {
-    const results = await Promise.all(
-      Object.entries(scrapers).map(async ([name, scraper]) => {
-        try {
-          console.log(`Running ${name} scraper...`);
-          const results = await scraper();
-          await processScraperResults(name, results, saveFlag);
-          return { name, results };
-        } catch (error) {
-          console.error(`Error running ${name} scraper:`, error);
-          return { name, error };
-        }
-      })
-    );
-    console.log(results);
+    for (const [name, scraper] of Object.entries(scrapers)) {
+      try {
+        console.log(`Running ${name} scraper...`);
+        const results = await scraper();
+        await processScraperResults(name, results, saveFlag);
+      } catch (error) {
+        console.error(`Error running ${name} scraper:`, error);
+      }
+    }
     return;
   }
 
