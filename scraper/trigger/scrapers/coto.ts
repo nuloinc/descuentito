@@ -15,6 +15,7 @@ import { cleanDiscounts } from "../../lib/clean";
 import { openrouter } from "@openrouter/ai-sdk-provider";
 import { customAlphabet } from "nanoid";
 import { Browser } from "playwright-core";
+import { Tracker } from "../lib/tracker";
 
 const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz");
 
@@ -26,13 +27,6 @@ const promotionSchema = BasicDiscountSchema.extend({
 const URL = "https://www.coto.com.ar/descuentos/index.asp";
 
 const SYSTEM_PROMPT = `${genStartPrompt("Coto")} 
-
-IMPORTANT: The screenshot image is your PRIMARY source for accurate, current discounts. The legal text provided is secondary and may be outdated - use it ONLY to supplement details not visible in the image.
-
-For each discount visible in the screenshot:
-1. Extract all details shown in the image
-2. Where image information is incomplete, carefully supplement with legal text details
-3. If there's a contradiction between image and legal text, the image takes precedence
 
 Important fields to extract from legal text:
 - excludesProducts: Always check the legal text for product exclusions (like "Vinos, Harina", "Marca Coca Cola, Alcohol")
@@ -46,7 +40,7 @@ ${RESTRICTIONS_PROMPT}
 
 WHERE
 
-"Coto" means the promotion is valid in physical stores, "Online" means it's valid in cotodigital.com.ar.
+"Coto" means the discount is valid in physical stores, "Online" means it's valid in cotodigital.com.ar.
 
 ${PRODUCTS_PROMPT}
 
@@ -54,12 +48,16 @@ ${LIMITS_PROMPT}
 `;
 
 export async function scrapeCoto() {
-  const [legales, discountData] = await (async () => {
+  using tracker = new Tracker("coto");
+  const { legales, discountData } = await (async () => {
     await using session = await createPlaywrightSession();
     const { browser } = session;
-    return await Promise.all([getLegales(browser), getDiscountData(browser)]);
+    return await tracker.runAll({
+      legales: getLegales(browser),
+      discountData: getDiscountData(browser),
+    });
   })();
-  const discounts: CotoDiscount[] = await Promise.all(
+  const discounts: CotoDiscount[] = await tracker.runArray(
     Array.from(discountData.values())
       .filter(
         ({ txt }) =>
@@ -81,24 +79,20 @@ async function getDiscount({
   domDescription: string;
   id: string;
 }): Promise<CotoDiscount> {
-  const text = `Your primary task is to extract the discount information from the screenshot image, which shows a single valid promotion. The screenshot is your PRIMARY source of truth.
-
-The legal text that follows is ONLY for supplementing specific details not visible in the screenshot:
+  const text = `
+The legal text that follows is ONLY for supplementing specific details not explained in the discount text/DOM:
 1. Most importantly, use it to identify excluded products (excludesProducts field). Look for sections marked with **NO INCLUYE** in the legal text.
 2. Look for restrictions and limitations
-3. Check for validity periods if not clear in the image
+3. Check for validity periods if not clear in the discount text
 
-The screenshot contains the accurate and current promotion information. If there's a contradiction between the image and legal text, the image ALWAYS takes precedence.
-
-For the "where" field, look for visual indicators in the image that specify if the discount applies to physical stores (mark as "Coto"), online (mark as "Online"), or both. By default, assume discounts apply to physical stores unless explicitly stated otherwise.
+Here is the description of the discount, use it as the main source of truth:
+${domDescription}
 
 Legal text for reference (use ONLY to supplement missing details, particularly for excludesProducts): \n\n${legales}
-
-Here is the description of the DOM:
-${domDescription}
 `;
   const result = await generateObject({
-    model: openrouter.chat("google/gemini-2.5-flash-preview:thinking"),
+    model: openrouter.chat("google/gemini-2.5-flash-preview"),
+    // model: openrouter.chat("google/gemini-2.5-flash-preview:thinking"),
     schema: promotionSchema,
     temperature: 0,
     messages: [{ role: "user", content: [{ type: "text", text }] }],

@@ -215,6 +215,13 @@ export const BasicDiscountSchema = z.object({
     .describe("e.g. 'Vinos, Harina', 'Marca Coca Cola, Alcohol', etc.")
     .optional(),
   paymentMethods: z.array(z.array(z.enum(PAYMENT_METHODS))).optional(),
+  paymentRails: z
+    .object({
+      pagoConQR: z.boolean(),
+      telefonoContactless: z.boolean(),
+      contactless: z.boolean(),
+    })
+    .optional(),
   unknownPaymentMethods: z.array(z.string()),
   appliesOnlyTo: z
     .object({
@@ -271,10 +278,11 @@ Group payment methods into valid combinations that work together for a discount.
    - Specify exact percentage for each combination including COMBINED totals
    - Example: 10% base discount + 15% total (10% base + 5% payment method/membership bonus)
 
-6. **Platform Clarifications**
-   - Apple Pay/Google Pay/NFC are NOT payment methods
-   - "MODO" should always be included when mentioned
-   - Prefer generic network names over specific card variants
+6. **Payment Rails**
+  - If there's specific payment rails mentioned such as "pago con QR", "contactless", etc specify them in the paymentRails field.
+  - If "MODO contactless", "Apple Pay", "Google Pay", "NFC" are mentioned, "phoneContactless" should be true.
+  - If physical cards are mentioned, "contactless" should be true.
+  - If "pago con QR" or "with bank app" is mentioned, "pagoConQR" should be true.
 
 7. **Deduplication**
    - Before finalizing, check for and remove any duplicate payment method arrays

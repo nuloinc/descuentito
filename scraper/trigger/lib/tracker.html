@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Task Status Tracker</title>
+	<style>
+		body {
+			font-family: system-ui, sans-serif;
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+
+		.status {
+			padding: 4px 8px;
+			border-radius: 4px;
+			display: inline-block;
+			font-size: 14px;
+		}
+
+		.running {
+			background: #fff3cd;
+		}
+
+		.success {
+			background: #d4edda;
+		}
+
+		.error {
+			background: #f8d7da;
+		}
+
+		.task {
+			margin: 8px 0;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Task Status</h1>
+	<div id="tasks"></div>
+
+	<script>
+		const tasks = document.getElementById('tasks');
+		const ws = new WebSocket(`ws://${location.host}/socket`);
+
+		function updateStatus(name, status) {
+			let taskEl = document.getElementById(name);
+			if (!taskEl) {
+				taskEl = document.createElement('div');
+				taskEl.id = name;
+				taskEl.className = 'task';
+				tasks.appendChild(taskEl);
+			}
+			taskEl.innerHTML = `
+        <div>${name}</div>
+        <div class="status ${status}">${status}</div>
+      `;
+		}
+
+		ws.onmessage = (event) => {
+			const data = JSON.parse(event.data);
+			if (data.statii) {
+				Object.entries(data.statii).forEach(([name, status]) => {
+					updateStatus(name, status);
+				});
+			}
+			if (data.newStatus) {
+				updateStatus(data.newStatus.name, data.newStatus.status);
+			}
+		};
+	</script>
+</body>
+
+</html>

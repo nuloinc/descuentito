@@ -11,7 +11,7 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "checkJs": true,
-    "types": ["node"],
+    "types": ["node", "bun"],
     "lib": ["ES2022", "dom"]
   }
 }
