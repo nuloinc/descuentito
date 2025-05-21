@@ -41,6 +41,11 @@ export interface GenericDiscount {
     maxDiscount?: number;
     explicitlyHasNoLimit?: boolean;
   };
+  paymentRails?: {
+    pagoConQR?: boolean;
+    telefonoContactless?: boolean;
+    contactless?: boolean;
+  };
 }
 
 export interface GaliciaDiscount extends GenericDiscount {

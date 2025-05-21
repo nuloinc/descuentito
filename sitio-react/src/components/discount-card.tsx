@@ -7,6 +7,9 @@ import {
   StarsIcon,
   WalletCards,
   XIcon,
+  QrCodeIcon,
+  SmartphoneNfcIcon,
+  CreditCardIcon,
 } from "lucide-react";
 import {
   Drawer,
@@ -485,6 +488,35 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                           ) : (
                             <PaymentMethodLogo key={idx} method={methods} />
                           )
+                      )}
+                    </div>
+                  </div>
+                )}
+
+              {discount.paymentRails &&
+                (discount.paymentRails.pagoConQR ||
+                  discount.paymentRails.telefonoContactless ||
+                  discount.paymentRails.contactless) && (
+                  <div>
+                    <h4 className="font-medium mb-1">Tecnologías de pago:</h4>
+                    <div className="mt-1 flex flex-col gap-2">
+                      {discount.paymentRails.pagoConQR && (
+                        <div className="flex items-center gap-2 text-sm">
+                          <QrCodeIcon className="h-5 w-5 text-primary" />
+                          <span>Pago con QR</span>
+                        </div>
+                      )}
+                      {discount.paymentRails.telefonoContactless && (
+                        <div className="flex items-center gap-2 text-sm">
+                          <SmartphoneNfcIcon className="h-5 w-5 text-primary" />
+                          <span>Contactless con Celular (NFC)</span>
+                        </div>
+                      )}
+                      {discount.paymentRails.contactless && (
+                        <div className="flex items-center gap-2 text-sm">
+                          <CreditCardIcon className="h-5 w-5 text-primary" />
+                          <span>Contactless con Tarjeta</span>
+                        </div>
                       )}
                     </div>
                   </div>
