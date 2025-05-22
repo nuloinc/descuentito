@@ -93,3 +93,10 @@ export class Tracker {
 }
 
 console.log(`Server running at ${server.url}`);
+
+const interval = setInterval(() => {
+  if (trackerN === 0) {
+    server.stop();
+    clearInterval(interval);
+  }
+}, 1000);
