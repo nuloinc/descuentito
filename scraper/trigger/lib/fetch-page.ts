@@ -1,9 +1,9 @@
-import logger from "./logger";
+import logger from "./logger.ts";
 import {
   createPlaywrightSession,
   generateElementDescription,
   storeCacheData,
-} from "../../lib.js";
+} from "../../lib.ts";
 import type { Page } from "playwright";
 
 export interface PageData {

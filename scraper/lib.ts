@@ -1,7 +1,7 @@
-import { s3, BUCKET_NAME } from "./fetch-cacher";
+import { s3, BUCKET_NAME } from "./fetch-cacher.ts";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { format } from "date-fns";
-import logger from "./trigger/lib/logger";
+import logger from "./trigger/lib/logger.ts";
 import { chromium, Page, Browser } from "playwright-core";
 
 const PROXY_URL = process.env.PROXY_URI
