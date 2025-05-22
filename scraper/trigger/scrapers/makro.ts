@@ -19,8 +19,9 @@ const DiscountSchema = BasicDiscountSchema.extend({
   membership: z.array(z.enum(["Club +Simple"])).optional(),
 });
 
-export async function scrapeMakro() {
-  const URL = "https://makro.com.ar/beneficios-bancarios/";
+const URL = "https://makro.com.ar/beneficios-bancarios/";
+
+export async function scrapeMakroContent() {
   await using sessions = await createPlaywrightSession();
   const { page } = sessions;
 
@@ -43,7 +44,7 @@ export async function scrapeMakro() {
     ".et_builder_inner_content .section-promos-bancarias .et_pb_blurb_content:has(.et_pb_module_header)"
   );
 
-  let promotions: MakroDiscount[] = [];
+  const scrapedData = [];
   for (const element of elements) {
     const isVisible = await element.isVisible();
     if (!isVisible) continue;
@@ -52,6 +53,18 @@ export async function scrapeMakro() {
       ?.trim()
       .replaceAll("\t", "");
 
+    scrapedData.push({ screenshot, text });
+  }
+
+  return scrapedData;
+}
+
+export async function extractMakroDiscounts(
+  scrapedData: { screenshot: Buffer; text: string }[]
+) {
+  let promotions: MakroDiscount[] = [];
+
+  for (const { screenshot, text } of scrapedData) {
     const { elementStream } = await streamObject({
       model: openrouter.chat("google/gemini-2.5-flash-preview"),
       output: "array",
@@ -112,4 +125,15 @@ ${LIMITS_PROMPT}
   assert(promotions.length > 6, "No promotions found");
 
   return cleanDiscounts(promotions);
+}
+
+// Backward compatibility function
+export async function scrapeMakro() {
+  const contentData = await scrapeMakroContent();
+  // Ensure text is always a string before passing to extractMakroDiscounts
+  const fixedContentData = contentData.map((item) => ({
+    ...item,
+    text: item.text || "",
+  }));
+  return await extractMakroDiscounts(fixedContentData);
 }

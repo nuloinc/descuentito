@@ -17,17 +17,17 @@ import { cleanDiscounts } from "../../lib/clean";
 import { openrouter } from "@openrouter/ai-sdk-provider";
 
 interface ScrapedPromotion {
-  screenshot: Buffer;
   text: string;
   weekdayIndex: number;
 }
 
-export async function scrapeJumbo() {
+const URL = "https://www.jumbo.com.ar/descuentos-del-dia?type=por-dia&day=1";
+
+export async function scrapeJumboContent() {
   await using sessions = await createPlaywrightSession();
   const { page } = sessions;
-  const url = "https://www.jumbo.com.ar/descuentos-del-dia?type=por-dia&day=1";
 
-  await page.goto(url, {
+  await page.goto(URL, {
     waitUntil: "domcontentloaded",
   });
 
@@ -55,8 +55,6 @@ export async function scrapeJumbo() {
       await verMasBtn.click();
       await new Promise((resolve) => setTimeout(resolve, 500));
 
-      const screenshot = await promotionEl.screenshot();
-
       const text = await generateElementDescription(
         page,
         await promotionEl.evaluate((el: Element) => {
@@ -73,7 +71,6 @@ export async function scrapeJumbo() {
       );
 
       scrapedPromotions.push({
-        screenshot,
         text,
         weekdayIndex,
       });
@@ -84,11 +81,21 @@ export async function scrapeJumbo() {
     `Scraped ${scrapedPromotions.length} promotions, now processing with LLM`
   );
 
+  return scrapedPromotions;
+}
+
+export async function extractJumboDiscounts(
+  scrapedPromotions: ScrapedPromotion[]
+) {
+  logger.info(
+    `Processing ${scrapedPromotions.length} scraped promotions with LLM`
+  );
+
   // Step 2: Process with LLM in parallel
   const discountsMap = new Map<number, JumboDiscount[]>();
   await Promise.all(
     scrapedPromotions.map(async (promotion) => {
-      const { screenshot, text, weekdayIndex } = promotion;
+      const { text, weekdayIndex } = promotion;
 
       const { elementStream } = streamObject({
         model: openrouter.chat("google/gemini-2.5-flash-preview"),
@@ -118,10 +125,8 @@ ${LIMITS_PROMPT}
               {
                 type: "text",
                 text:
-                  "Extract the discounts from the following screenshot, and the following text: \n\n" +
-                  text,
+                  "Extract the discounts from the following text: \n\n" + text,
               },
-              { type: "image", image: screenshot },
             ],
           },
         ],
@@ -167,7 +172,7 @@ ${LIMITS_PROMPT}
         const newDiscount: JumboDiscount = {
           ...generatedDiscount,
           source: "jumbo" as const,
-          url,
+          url: URL,
         };
 
         discountsMap.get(weekdayIndex)?.push(newDiscount);
@@ -188,4 +193,10 @@ function getBankOrWallet(paymentMethodss: PaymentMethod[][]) {
       }
     }
   }
+}
+
+// Backward compatibility function
+export async function scrapeJumbo() {
+  const contentData = await scrapeJumboContent();
+  return await extractJumboDiscounts(contentData);
 }

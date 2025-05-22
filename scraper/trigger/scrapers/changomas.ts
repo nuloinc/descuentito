@@ -18,8 +18,9 @@ const DiscountSchema = BasicDiscountSchema.extend({
   membership: z.array(z.enum(["MasClub"])).optional(),
 });
 
-export async function scrapeChangoMas() {
-  const URL = "https://www.masonline.com.ar/promociones-bancarias";
+const URL = "https://www.masonline.com.ar/promociones-bancarias";
+
+export async function scrapeChangoMasContent() {
   await using sessions = await createPlaywrightSession();
   const { page } = sessions;
 
@@ -44,12 +45,22 @@ export async function scrapeChangoMas() {
 
   const elements = await page.$$(".valtech-gdn-banks-promotions-0-x-cardBox");
 
-  let promotions: ChangoMasDiscount[] = [];
-
+  const scrapedData = [];
   for (const element of elements) {
     const screenshot = await element.screenshot();
     const html = await element.evaluate((el: Element) => el.outerHTML);
+    scrapedData.push({ html, screenshot });
+  }
+  return scrapedData;
+}
 
+export async function extractChangoMasDiscounts(
+  scrapedData: { html: string; screenshot: Buffer }[]
+) {
+  let promotions: ChangoMasDiscount[] = [];
+
+  for (const data of scrapedData) {
+    const { html, screenshot } = data;
     const { elementStream } = await streamObject({
       model: openrouter.chat("google/gemini-2.5-flash-preview"),
       output: "array",
@@ -97,4 +108,10 @@ ${LIMITS_PROMPT}
   assert(promotions.length > 10, "No promotions found");
 
   return promotions;
+}
+
+// Backward compatibility function
+export async function scrapeChangoMas() {
+  const contentData = await scrapeChangoMasContent();
+  return await extractChangoMasDiscounts(contentData);
 }

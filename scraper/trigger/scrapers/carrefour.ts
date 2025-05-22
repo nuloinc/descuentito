@@ -16,7 +16,7 @@ const DiscountSchema = BasicDiscountSchema.extend({
   membership: z.array(z.enum(["Mi Carrefour"])).optional(),
 });
 
-export async function scrapeCarrefour() {
+export async function scrapeCarrefourContent() {
   await using session = await createPlaywrightSession({ useProxy: true });
   const { page } = session;
 
@@ -46,10 +46,16 @@ export async function scrapeCarrefour() {
     )
   );
 
+  return promotionsDomDescriptions.map((domDescription) => ({
+    domDescription,
+  }));
+}
+
+export async function extractCarrefourDiscounts(
+  promotionsData: { domDescription: string }[]
+) {
   const promotions = await Promise.all(
-    promotionsDomDescriptions.map(async (domDescription) =>
-      extractDiscount({ domDescription })
-    )
+    promotionsData.map(async (data) => extractDiscount(data))
   );
 
   return promotions;
@@ -81,7 +87,7 @@ ${LIMITS_PROMPT}
           {
             type: "text",
             text:
-              "Extract the discount from the following pseudo-html: \n\n" +
+              "Extract the discount from the following pseudo-html: \\n\\n" +
               domDescription,
           },
         ],
@@ -94,4 +100,10 @@ ${LIMITS_PROMPT}
     url: "https://www.carrefour.com.ar/descuentos-bancarios",
     source: "carrefour",
   };
+}
+
+// Backward compatibility function
+export async function scrapeCarrefour() {
+  const contentData = await scrapeCarrefourContent();
+  return await extractCarrefourDiscounts(contentData);
 }

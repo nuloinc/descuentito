@@ -47,7 +47,7 @@ ${PRODUCTS_PROMPT}
 ${LIMITS_PROMPT}
 `;
 
-export async function scrapeCoto() {
+export async function scrapeCotoContent() {
   using tracker = new Tracker("coto");
   const { legales, discountData } = await (async () => {
     await using session = await createPlaywrightSession();
@@ -57,14 +57,24 @@ export async function scrapeCoto() {
       discountData: getDiscountData(browser),
     });
   })();
+  return {
+    legales,
+    discountData: Array.from(discountData.values()).filter(
+      ({ txt }) =>
+        !txt.includes("EXCLUSIVO SUCURSALES") &&
+        !txt.includes("descuentos del fin de semana")
+    ),
+  };
+}
+
+export async function extractCotoDiscounts(data: {
+  legales: string;
+  discountData: { id: string; txt: string; domDescription: string }[];
+}) {
+  const { legales, discountData } = data;
+  using tracker = new Tracker("coto");
   const discounts: CotoDiscount[] = await tracker.runArray(
-    Array.from(discountData.values())
-      .filter(
-        ({ txt }) =>
-          !txt.includes("EXCLUSIVO SUCURSALES") &&
-          !txt.includes("descuentos del fin de semana")
-      )
-      .map((data) => getDiscount({ legales, ...data }))
+    discountData.map((d) => getDiscount({ legales, ...d }))
   );
   assert(discounts.length > 4, "Not enough discounts found");
   return cleanDiscounts(discounts);
@@ -203,4 +213,10 @@ async function getDiscountData(browser: Browser) {
     });
   }
   return discountData;
+}
+
+// Backward compatibility function
+export async function scrapeCoto() {
+  const contentData = await scrapeCotoContent();
+  return await extractCotoDiscounts(contentData);
 }

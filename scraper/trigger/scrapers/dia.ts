@@ -13,9 +13,17 @@ import { createPlaywrightSession, storeCacheData } from "../../lib";
 import assert from "node:assert";
 import { openrouter } from "@openrouter/ai-sdk-provider";
 
-export async function scrapeDia() {
+const URL =
+  "https://diaonline.supermercadosdia.com.ar/medios-de-pago-y-promociones";
+
+interface ScrapedDiaPromotion {
+  screenshot: Buffer;
+  legalesText: string;
+}
+
+export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
   await using sessions = await createPlaywrightSession();
-  const { browser, page } = sessions;
+  const { page } = sessions; // Removed browser as it's not used directly here
 
   // desactivar popup de club dia
   await page.context().addCookies([
@@ -30,19 +38,16 @@ export async function scrapeDia() {
     },
   ]);
 
-  await page.goto(
-    "https://diaonline.supermercadosdia.com.ar/medios-de-pago-y-promociones",
-    {
-      waitUntil: "domcontentloaded",
-    }
-  );
+  await page.goto(URL, {
+    waitUntil: "domcontentloaded",
+  });
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const elements = await page.$$(
     ".diaio-custom-bank-promotions-0-x-list-by-days__item"
   );
 
-  let promotions: DiaDiscount[] = [];
+  const scrapedPromotions: ScrapedDiaPromotion[] = [];
 
   const closeModal = async () => {
     await (await page.$(".vtex-modal__close-icon"))?.click();
@@ -69,7 +74,17 @@ export async function scrapeDia() {
 
     await closeModal();
     /////////////////
+    scrapedPromotions.push({ screenshot, legalesText });
+    i++;
+  }
+  return scrapedPromotions;
+}
 
+export async function extractDiaDiscounts(
+  scrapedPromotions: ScrapedDiaPromotion[]
+) {
+  let promotions: DiaDiscount[] = [];
+  for (const { screenshot, legalesText } of scrapedPromotions) {
     const { elementStream } = streamObject({
       model: openrouter.chat("google/gemini-2.5-flash-preview"),
       schema: BasicDiscountSchema.extend({
@@ -107,14 +122,18 @@ ${LIMITS_PROMPT}
       promotions.push({
         ...object,
         source: "dia",
-        url: "https://diaonline.supermercadosdia.com.ar/medios-de-pago-y-promociones",
+        url: URL,
       });
     }
-
-    i++;
   }
 
   assert(promotions.length > 0, "No promotions found");
 
   return promotions;
+}
+
+// Backward compatibility function
+export async function scrapeDia() {
+  const contentData = await scrapeDiaContent();
+  return await extractDiaDiscounts(contentData);
 }
