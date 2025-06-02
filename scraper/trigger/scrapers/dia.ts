@@ -1,4 +1,3 @@
-import logger from "../lib/logger";
 import { z } from "zod";
 import { streamObject } from "ai";
 import {
@@ -9,7 +8,10 @@ import {
   PAYMENT_METHODS_PROMPT,
   RESTRICTIONS_PROMPT,
 } from "promos-db/schema";
-import { createPlaywrightSession, storeCacheData } from "../../lib";
+import {
+  createPlaywrightSession,
+  generateElementDescriptionFromElement,
+} from "../../lib";
 import assert from "node:assert";
 import { openrouter } from "@openrouter/ai-sdk-provider";
 
@@ -17,7 +19,7 @@ const URL =
   "https://diaonline.supermercadosdia.com.ar/medios-de-pago-y-promociones";
 
 interface ScrapedDiaPromotion {
-  screenshot: Buffer;
+  domDescription: string;
   legalesText: string;
 }
 
@@ -41,8 +43,11 @@ export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
   await page.goto(URL, {
     waitUntil: "domcontentloaded",
   });
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await new Promise((resolve) => setTimeout(resolve, 500));
 
+  await page.waitForSelector(
+    ".diaio-custom-bank-promotions-0-x-list-by-days__item"
+  );
   const elements = await page.$$(
     ".diaio-custom-bank-promotions-0-x-list-by-days__item"
   );
@@ -56,8 +61,10 @@ export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
   let i = 0;
   for (const element of elements) {
     await closeModal();
-    const screenshot = await element.screenshot();
-    await storeCacheData("dia", `-element${i}.png`, screenshot);
+    const domDescription = await generateElementDescriptionFromElement(
+      page,
+      element
+    );
 
     const legalBtn = await element.$(
       ".diaio-custom-bank-promotions-0-x-bank-modal__button"
@@ -74,7 +81,7 @@ export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
 
     await closeModal();
     /////////////////
-    scrapedPromotions.push({ screenshot, legalesText });
+    scrapedPromotions.push({ domDescription, legalesText });
     i++;
   }
   return scrapedPromotions;
@@ -84,7 +91,7 @@ export async function extractDiaDiscounts(
   scrapedPromotions: ScrapedDiaPromotion[]
 ) {
   let promotions: DiaDiscount[] = [];
-  for (const { screenshot, legalesText } of scrapedPromotions) {
+  for (const { domDescription, legalesText } of scrapedPromotions) {
     const { elementStream } = streamObject({
       model: openrouter.chat("google/gemini-2.5-flash-preview"),
       schema: BasicDiscountSchema.extend({
@@ -111,10 +118,12 @@ ${LIMITS_PROMPT}
             {
               type: "text",
               text:
-                "Extract the promotions from the following screenshot, and the following legal text: \n\n" +
+                "Extract the promotions from the following DOM description, and the following legal text: \n\n" +
+                "DOM Description:\n" +
+                domDescription +
+                "\n\nLegal Text:\n" +
                 legalesText,
             },
-            { type: "image", image: screenshot },
           ],
         },
       ],

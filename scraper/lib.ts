@@ -2,7 +2,8 @@ import { s3, BUCKET_NAME } from "./fetch-cacher.ts";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { format } from "date-fns";
 import logger from "./trigger/lib/logger.ts";
-import { chromium, Page, Browser } from "playwright-core";
+import { chromium, Page, Browser, ElementHandle } from "playwright-core";
+import { nanoid } from "nanoid";
 
 const PROXY_URL = process.env.PROXY_URI
   ? new URL(process.env.PROXY_URI)
@@ -147,4 +148,15 @@ export async function generateElementDescription(
   };
 
   return await page.evaluate(evalFn, selector);
+}
+
+export async function generateElementDescriptionFromElement(
+  page: Page,
+  element: ElementHandle<HTMLElement | SVGElement>
+): Promise<string> {
+  const id = nanoid();
+  await element.evaluate((element, id) => {
+    element.setAttribute("data-id", id);
+  }, id);
+  return await generateElementDescription(page, `[data-id="${id}"]`);
 }
