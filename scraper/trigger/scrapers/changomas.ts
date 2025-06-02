@@ -18,7 +18,7 @@ const DiscountSchema = BasicDiscountSchema.extend({
   membership: z.array(z.enum(["MasClub"])).optional(),
 });
 
-const URL = "https://www.masonline.com.ar/promociones-bancarias";
+const URL = "https://www.masonline.com.ar/promociones-bancarias?banco=Todas";
 
 export async function scrapeChangoMasContent() {
   await using sessions = await createPlaywrightSession();
@@ -36,11 +36,18 @@ export async function scrapeChangoMasContent() {
       hasText: "Por Banco/Tarjeta",
     }
   );
-  await new Promise((resolve) => setTimeout(resolve, 500));
   await menuItem.click();
 
+  const todasButton = page.locator(
+    ".valtech-gdn-banks-promotions-0-x-bankButton",
+    {
+      hasText: "Todas",
+    }
+  );
+  await todasButton.click();
+
   await page.waitForSelector(".valtech-gdn-banks-promotions-0-x-dateText", {
-    timeout: 5000,
+    timeout: 15000,
   });
 
   const elements = await page.$$(".valtech-gdn-banks-promotions-0-x-cardBox");

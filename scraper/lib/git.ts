@@ -6,6 +6,7 @@ import { Octokit } from "@octokit/rest";
 import { format } from "date-fns";
 import { execa } from "execa";
 import { nanoid } from "nanoid";
+import { logger } from "../trigger/lib/logger";
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN!;
 const GITHUB_OWNER = process.env.GITHUB_OWNER!;
 const GITHUB_REPO = process.env.GITHUB_REPO!;
@@ -67,11 +68,11 @@ export async function useCommit(source: string) {
       force: true,
     });
   } catch (error) {
-    console.warn("Could not checkout main, creating from current HEAD");
+    logger.warn("Could not checkout main, creating from current HEAD");
     if (isProd) {
       throw new Error(`Failed to checkout main branch in prod: ${error}`);
     }
-    console.warn(
+    logger.warn(
       "Proceeding to create branch from current HEAD for non-prod env."
     );
   }
@@ -95,7 +96,7 @@ export async function useCommit(source: string) {
         ([_file, _head, workdir, _stage]) => workdir !== 1
       );
       if (!hasChanges) {
-        console.warn("No changes detected, skipping commit");
+        logger.warn("No changes detected, skipping commit");
         return;
       }
 
@@ -115,15 +116,15 @@ export async function useCommit(source: string) {
 
       // Push directly to main if in prod, otherwise push branch and create PR
       if (isProd) {
-        console.info(
+        logger.info(
           `Prod env detected. Pushing changes directly to main branch.`
         );
         await execa("git", ["push", remote, "main"], {
           cwd: dir,
         });
-        console.info(`Successfully pushed changes to main for ${source}.`);
+        logger.info(`Successfully pushed changes to main for ${source}.`);
       } else {
-        console.info(
+        logger.info(
           `Non-prod env detected. Pushing to branch ${branchName} and creating PR.`
         );
         await execa("git", ["push", remote, branchName], {
@@ -138,7 +139,7 @@ export async function useCommit(source: string) {
           base: "main",
           body: `Automated PR to update ${source} promotions for ${date}`,
         });
-        console.info(`Created PR #${prResponse.data.number} for ${source}`);
+        logger.info(`Created PR #${prResponse.data.number} for ${source}`);
 
         // Automatically merge the pull request
         await octokit.pulls.merge({
@@ -148,7 +149,7 @@ export async function useCommit(source: string) {
           commit_title: `${`Update ${source} promotions for ${date}`} (#${prResponse.data.number})`,
           merge_method: "squash",
         });
-        console.info(`Merged PR #${prResponse.data.number} for ${source}`);
+        logger.info(`Merged PR #${prResponse.data.number} for ${source}`);
       }
 
       await repo[Symbol.asyncDispose]();
