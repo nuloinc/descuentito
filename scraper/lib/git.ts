@@ -50,12 +50,8 @@ export async function initGitRepo() {
   };
 }
 
-export async function savePromotions(
-  ctx: undefined,
-  source: string,
-  promotions: any[]
-) {
-  await using repo = await initGitRepo();
+export async function useCommit(source: string) {
+  const repo = await initGitRepo();
   const { dir } = repo;
 
   const date = format(new Date(), "yyyy-MM-dd");
@@ -91,65 +87,85 @@ export async function savePromotions(
     });
   }
 
-  const filepath = `${source}.json`;
-  fs.writeFileSync(`${dir}/${filepath}`, JSON.stringify(promotions, null, 2));
-
-  const status = await git.statusMatrix({ fs, dir, filepaths: [filepath] });
-  const hasChanges = status.some(
-    ([_file, _head, workdir, _stage]) => workdir !== 1
-  );
-  if (!hasChanges) {
-    console.warn("No changes detected, skipping commit");
-    return;
-  }
-
-  await git.add({ fs, dir, filepath });
-
-  await git.commit({
-    fs,
+  return {
     dir,
-    message: `Update ${source} promotions for ${date}`,
-    author: {
-      name: "Promotions Bot",
-      email: "bot@nulo.lol",
+    [Symbol.asyncDispose]: async () => {
+      const status = await git.statusMatrix({ fs, dir, filepaths: ["."] });
+      const hasChanges = status.some(
+        ([_file, _head, workdir, _stage]) => workdir !== 1
+      );
+      if (!hasChanges) {
+        console.warn("No changes detected, skipping commit");
+        return;
+      }
+
+      await git.add({ fs, dir, filepath: "." });
+
+      await git.commit({
+        fs,
+        dir,
+        message: `Update ${source} promotions for ${date}`,
+        author: {
+          name: "Promotions Bot",
+          email: "bot@nulo.lol",
+        },
+      });
+
+      const remote = `https://catdevnull-bot:${GITHUB_TOKEN}@github.com/${GITHUB_OWNER}/${GITHUB_REPO}.git`;
+
+      // Push directly to main if in prod, otherwise push branch and create PR
+      if (isProd) {
+        console.info(
+          `Prod env detected. Pushing changes directly to main branch.`
+        );
+        await execa("git", ["push", remote, "main"], {
+          cwd: dir,
+        });
+        console.info(`Successfully pushed changes to main for ${source}.`);
+      } else {
+        console.info(
+          `Non-prod env detected. Pushing to branch ${branchName} and creating PR.`
+        );
+        await execa("git", ["push", remote, branchName], {
+          cwd: dir,
+        });
+
+        const prResponse = await octokit.pulls.create({
+          owner: GITHUB_OWNER,
+          repo: GITHUB_REPO,
+          title: `Update ${source} promotions for ${date}`,
+          head: branchName,
+          base: "main",
+          body: `Automated PR to update ${source} promotions for ${date}`,
+        });
+        console.info(`Created PR #${prResponse.data.number} for ${source}`);
+
+        // Automatically merge the pull request
+        await octokit.pulls.merge({
+          owner: GITHUB_OWNER,
+          repo: GITHUB_REPO,
+          pull_number: prResponse.data.number,
+          commit_title: `${`Update ${source} promotions for ${date}`} (#${prResponse.data.number})`,
+          merge_method: "squash",
+        });
+        console.info(`Merged PR #${prResponse.data.number} for ${source}`);
+      }
+
+      await repo[Symbol.asyncDispose]();
     },
-  });
+  };
+}
 
-  const remote = `https://catdevnull-bot:${GITHUB_TOKEN}@github.com/${GITHUB_OWNER}/${GITHUB_REPO}.git`;
+export async function savePromotions(
+  ctx: undefined,
+  source: string,
+  promotions: any[]
+) {
+  await using commit = await useCommit(source);
 
-  // Push directly to main if in prod, otherwise push branch and create PR
-  if (isProd) {
-    console.info(`Prod env detected. Pushing changes directly to main branch.`);
-    await execa("git", ["push", remote, "main"], {
-      cwd: dir,
-    });
-    console.info(`Successfully pushed changes to main for ${source}.`);
-  } else {
-    console.info(
-      `Non-prod env detected. Pushing to branch ${branchName} and creating PR.`
-    );
-    await execa("git", ["push", remote, branchName], {
-      cwd: dir,
-    });
-
-    const prResponse = await octokit.pulls.create({
-      owner: GITHUB_OWNER,
-      repo: GITHUB_REPO,
-      title: `Update ${source} promotions for ${date}`,
-      head: branchName,
-      base: "main",
-      body: `Automated PR to update ${source} promotions for ${date}`,
-    });
-    console.info(`Created PR #${prResponse.data.number} for ${source}`);
-
-    // Automatically merge the pull request
-    await octokit.pulls.merge({
-      owner: GITHUB_OWNER,
-      repo: GITHUB_REPO,
-      pull_number: prResponse.data.number,
-      commit_title: `${`Update ${source} promotions for ${date}`} (#${prResponse.data.number})`,
-      merge_method: "squash",
-    });
-    console.info(`Merged PR #${prResponse.data.number} for ${source}`);
-  }
+  const filepath = `${source}.json`;
+  fs.writeFileSync(
+    `${commit.dir}/${filepath}`,
+    JSON.stringify(promotions, null, 2)
+  );
 }
