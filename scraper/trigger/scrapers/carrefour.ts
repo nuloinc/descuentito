@@ -66,6 +66,7 @@ async function extractDiscount({ domDescription }: { domDescription: string }) {
     model: openrouter.chat("google/gemini-2.5-flash-preview"),
     schema: DiscountSchema,
     temperature: 0,
+    experimental_telemetry: { isEnabled: true },
     system: `${genStartPrompt("Carrefour")}
 
 ${PAYMENT_METHODS_PROMPT}

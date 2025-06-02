@@ -66,6 +66,7 @@ export async function extractChangoMasDiscounts(
       output: "array",
       schema: DiscountSchema,
       temperature: 0,
+      experimental_telemetry: { isEnabled: true },
       system: `${genStartPrompt("ChangoMas")}
 
 ${PAYMENT_METHODS_PROMPT}

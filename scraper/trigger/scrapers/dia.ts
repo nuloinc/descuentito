@@ -91,6 +91,7 @@ export async function extractDiaDiscounts(
         where: z.array(z.enum(["Dia", "Online"])),
       }),
       output: "array",
+      experimental_telemetry: { isEnabled: true },
       system: `${genStartPrompt("dia")}
 
 ${PAYMENT_METHODS_PROMPT}

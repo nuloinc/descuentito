@@ -104,6 +104,7 @@ export async function extractJumboDiscounts(
           where: z.array(z.enum(["Jumbo", "Online"])),
           membership: z.array(z.enum(["Clarin 365"])).optional(),
         }),
+        experimental_telemetry: { isEnabled: true },
         system: `${genStartPrompt("Jumbo")} Jumbo is part of the Cencosud group.
 
 ${PAYMENT_METHODS_PROMPT}

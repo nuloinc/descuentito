@@ -105,6 +105,7 @@ Legal text for reference (use ONLY to supplement missing details, particularly f
     // model: openrouter.chat("google/gemini-2.5-flash-preview:thinking"),
     schema: promotionSchema,
     temperature: 0,
+    experimental_telemetry: { isEnabled: true },
     messages: [{ role: "user", content: [{ type: "text", text }] }],
     system: SYSTEM_PROMPT,
   });

@@ -70,6 +70,7 @@ export async function extractMakroDiscounts(
       output: "array",
       schema: DiscountSchema,
       temperature: 0,
+      experimental_telemetry: { isEnabled: true },
       system: `${genStartPrompt("Makro")}
 
 ${PAYMENT_METHODS_PROMPT}
