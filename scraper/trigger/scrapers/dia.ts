@@ -93,7 +93,7 @@ export async function extractDiaDiscounts(
   let promotions: DiaDiscount[] = [];
   for (const { domDescription, legalesText } of scrapedPromotions) {
     const { elementStream } = streamObject({
-      model: openrouter.chat("google/gemini-2.5-flash-preview"),
+      model: openrouter.chat("google/gemini-2.5-flash-preview-05-20"),
       schema: BasicDiscountSchema.extend({
         where: z.array(z.enum(["Dia", "Online"])),
       }),

@@ -98,7 +98,7 @@ export async function extractJumboDiscounts(
       const { text, weekdayIndex } = promotion;
 
       const { elementStream } = streamObject({
-        model: openrouter.chat("google/gemini-2.5-flash-preview"),
+        model: openrouter.chat("google/gemini-2.5-flash-preview-05-20"),
         output: "array",
         schema: BasicDiscountSchema.extend({
           where: z.array(z.enum(["Jumbo", "Online"])),

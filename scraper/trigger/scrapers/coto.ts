@@ -26,7 +26,7 @@ const promotionSchema = BasicDiscountSchema.extend({
 
 const URL = "https://www.coto.com.ar/descuentos/index.asp";
 
-const SYSTEM_PROMPT = `${genStartPrompt("Coto")} 
+const SYSTEM_PROMPT = `${genStartPrompt("Coto")}
 
 Important fields to extract from legal text:
 - excludesProducts: Always check the legal text for product exclusions (like "Vinos, Harina", "Marca Coca Cola, Alcohol")
@@ -101,8 +101,8 @@ ${domDescription}
 Legal text for reference (use ONLY to supplement missing details, particularly for excludesProducts): \n\n${legales}
 `;
   const result = await generateObject({
-    model: openrouter.chat("google/gemini-2.5-flash-preview"),
-    // model: openrouter.chat("google/gemini-2.5-flash-preview:thinking"),
+    model: openrouter.chat("google/gemini-2.5-flash-preview-05-20"),
+    // model: openrouter.chat("google/gemini-2.5-flash-preview-05-20:thinking"),
     schema: promotionSchema,
     temperature: 0,
     experimental_telemetry: { isEnabled: true },

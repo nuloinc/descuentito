@@ -66,7 +66,7 @@ export async function extractMakroDiscounts(
 
   for (const { screenshot, text } of scrapedData) {
     const { elementStream } = await streamObject({
-      model: openrouter.chat("google/gemini-2.5-flash-preview"),
+      model: openrouter.chat("google/gemini-2.5-flash-preview-05-20"),
       output: "array",
       schema: DiscountSchema,
       temperature: 0,
