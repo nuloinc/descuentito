@@ -23,44 +23,84 @@ export const sendFeedback = createServerFn({
   })
   .handler(async (req) => {
     try {
-      const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-      const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+      const LINEAR_API_KEY = process.env.LINEAR_API_KEY;
+      const LINEAR_TEAM_ID = process.env.LINEAR_TEAM_ID;
 
-      if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+      if (!LINEAR_API_KEY || !LINEAR_TEAM_ID) {
         throw new Error(
-          "TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID deben estar configurados en las variables de entorno."
+          "LINEAR_API_KEY y LINEAR_TEAM_ID deben estar configurados en las variables de entorno."
         );
       }
 
       const { feedback, replayUrl, config, discount } = req.data;
 
-      const message = `
-<b>Nuevo feedback recibido</b>
-<b>Feedback:</b> ${feedback}
-${replayUrl ? `<b>Replay:</b> <a href="${replayUrl}">${replayUrl}</a>` : ""}
-<b>Configuración:</b> ${JSON.stringify(config, null, 2)}
-${discount ? `<b>Descuento:</b> ${JSON.stringify(discount, null, 2)}` : ""}
-`;
+      // Build issue description with structured data
+      let description = `## Feedback del usuario\n\n${feedback}\n\n`;
+      
+      if (replayUrl) {
+        description += `## PostHog Session Replay\n[Ver sesión](${replayUrl})\n\n`;
+      }
+      
+      description += `## Configuración del usuario\n\`\`\`json\n${JSON.stringify(config, null, 2)}\n\`\`\`\n\n`;
+      
+      if (discount) {
+        description += `## Descuento relacionado\n\`\`\`json\n${JSON.stringify(discount, null, 2)}\n\`\`\`\n\n`;
+      }
 
-      const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+      const mutation = `
+        mutation IssueCreate($input: IssueCreateInput!) {
+          issueCreate(input: $input) {
+            success
+            issue {
+              id
+              identifier
+              title
+            }
+          }
+        }
+      `;
 
-      const tgRes = await fetch(telegramUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const variables = {
+        input: {
+          teamId: LINEAR_TEAM_ID,
+          title: `Feedback: ${feedback.substring(0, 60)}${feedback.length > 60 ? '...' : ''}`,
+          description: description,
+          priority: 3, // Medium priority
+          labelIds: ["b88de206-309c-47f1-98af-f202ed33428f"], // "feedback" label
+        }
+      };
+
+      const linearRes = await fetch('https://api.linear.app/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': LINEAR_API_KEY,
+        },
         body: JSON.stringify({
-          chat_id: TELEGRAM_CHAT_ID,
-          text: message,
-          parse_mode: "HTML",
-          disable_web_page_preview: true,
+          query: mutation,
+          variables: variables,
         }),
       });
 
-      if (!tgRes.ok) {
-        const errorText = await tgRes.text();
-        throw new Error(errorText);
+      if (!linearRes.ok) {
+        const errorText = await linearRes.text();
+        throw new Error(`Linear API error: ${errorText}`);
       }
 
-      return { success: true };
+      const linearData = await linearRes.json();
+      
+      if (linearData.errors) {
+        throw new Error(`Linear GraphQL errors: ${JSON.stringify(linearData.errors)}`);
+      }
+
+      if (!linearData.data?.issueCreate?.success) {
+        throw new Error('Failed to create Linear issue');
+      }
+
+      return { 
+        success: true, 
+        issueId: linearData.data.issueCreate.issue.identifier 
+      };
     } catch (err) {
       console.error(err);
       throw new Error(
