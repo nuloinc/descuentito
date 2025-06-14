@@ -67,7 +67,7 @@ export class TelegramNotifier {
     const status = result.success ? "Completed" : "Failed";
 
     let message = `${emoji} *Scraping ${status}*\n\n`;
-    message += `🏪 *Scraper:* ${result.scraper}\n`;
+    message += `🏪 *Scraper:* ${this.escapeMarkdown(result.scraper)}\n`;
 
     if (result.success) {
       if (result.discountsFound !== undefined) {
@@ -84,7 +84,7 @@ export class TelegramNotifier {
       }
     } else {
       if (result.error) {
-        message += `💥 *Error:* ${result.error}\n`;
+        message += `💥 *Error:* ${this.escapeMarkdown(result.error)}\n`;
       }
       if (result.stackTrace) {
         // Truncate stack trace to avoid Telegram message limits (4096 chars)
@@ -117,7 +117,7 @@ export class TelegramNotifier {
     if (successful.length > 0) {
       message += `*Successful Scrapers:*\n`;
       for (const result of successful) {
-        message += `• ${result.scraper}`;
+        message += `• ${this.escapeMarkdown(result.scraper)}`;
         if (result.discountsFound !== undefined) {
           message += ` (${result.discountsFound} discounts)`;
         }
@@ -131,16 +131,22 @@ export class TelegramNotifier {
     if (failed.length > 0) {
       message += `\n*Failed Scrapers:*\n`;
       for (const result of failed) {
-        message += `• ${result.scraper}: ${result.error || "Unknown error"}\n`;
+        message += `• ${this.escapeMarkdown(result.scraper)}: ${this.escapeMarkdown(result.error || "Unknown error")}\n`;
         if (result.stackTrace) {
           // Add first few lines of stack trace for batch view
           const stackLines = result.stackTrace.split("\n").slice(0, 3);
-          message += `  \`${stackLines.join("\\n")}\`\n`;
+          const escapedStackLines = stackLines.map(line => this.escapeMarkdown(line));
+          message += `  \`${escapedStackLines.join("\\n")}\`\n`;
         }
       }
     }
 
     return message;
+  }
+
+  private escapeMarkdown(text: string): string {
+    // Escape special Markdown characters that can break Telegram parsing
+    return text.replace(/([_*[\]()~`>#+\-=|{}.!\\])/g, '\\$1');
   }
 
   private async sendMessage(text: string): Promise<void> {
