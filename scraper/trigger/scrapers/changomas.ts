@@ -38,12 +38,17 @@ export async function scrapeChangoMasContent() {
   );
   await menuItem.click();
 
+  // Wait for the bank buttons to load first
+  await page.waitForSelector(".valtech-gdn-banks-promotions-0-x-bankButton", {
+    timeout: 45000,
+  });
+
   const todasButton = page.locator(
-    ".valtech-gdn-banks-promotions-0-x-bankButton",
-    {
-      hasText: "Todas",
-    }
-  );
+    ".valtech-gdn-banks-promotions-0-x-bankButton"
+  ).filter({ hasText: "Todas" });
+  
+  // Wait for the button to be visible and clickable
+  await todasButton.waitFor({ state: "visible", timeout: 45000 });
   await todasButton.click();
 
   await page.waitForSelector(".valtech-gdn-banks-promotions-0-x-dateText", {

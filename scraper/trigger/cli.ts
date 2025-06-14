@@ -152,7 +152,11 @@ async function main() {
 
     // Send batch notification if saving is enabled
     if (saveFlag) {
-      await telegramNotifier.sendBatchComplete(batchResults);
+      try {
+        await telegramNotifier.sendBatchComplete(batchResults);
+      } catch (error) {
+        console.error("Failed to send batch Telegram notification:", error);
+      }
     }
     return;
   }
