@@ -46,7 +46,7 @@ export async function scrapeJumboContent() {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     const promotionEls = await page.$$(
-      ".vtex-render__container-id-discounts-financing div:nth-of-type(3) ul li"
+      ".vtex-render__container-id-discounts-financing div:nth-of-type(3) ul li",
     );
 
     for (const promotionEl of promotionEls) {
@@ -61,13 +61,13 @@ export async function scrapeJumboContent() {
           const allSimilar = document.querySelectorAll(
             `${el.tagName.toLowerCase()}${Array.from(el.attributes)
               .map((attr) => `[${attr.name}="${attr.value}"]`)
-              .join("")}`
+              .join("")}`,
           );
           const index = Array.from(allSimilar).indexOf(el);
           return `${el.tagName.toLowerCase()}${Array.from(el.attributes)
             .map((attr) => `[${attr.name}="${attr.value}"]`)
             .join("")}:nth-of-type(${index + 1})`;
-        })
+        }),
       );
 
       scrapedPromotions.push({
@@ -78,17 +78,17 @@ export async function scrapeJumboContent() {
   }
 
   logger.info(
-    `Scraped ${scrapedPromotions.length} promotions, now processing with LLM`
+    `Scraped ${scrapedPromotions.length} promotions, now processing with LLM`,
   );
 
   return scrapedPromotions;
 }
 
 export async function extractJumboDiscounts(
-  scrapedPromotions: ScrapedPromotion[]
+  scrapedPromotions: ScrapedPromotion[],
 ) {
   logger.info(
-    `Processing ${scrapedPromotions.length} scraped promotions with LLM`
+    `Processing ${scrapedPromotions.length} scraped promotions with LLM`,
   );
 
   // Step 2: Process with LLM in parallel
@@ -149,18 +149,18 @@ ${LIMITS_PROMPT}
           (p) =>
             (p.weekdays
               ? p.weekdays.every((day) =>
-                  generatedDiscount.weekdays?.includes(day)
+                  generatedDiscount.weekdays?.includes(day),
                 )
               : !generatedDiscount.weekdays) &&
             p.where?.every((where) =>
-              generatedDiscount.where?.includes(where)
+              generatedDiscount.where?.includes(where),
             ) &&
             p.limits?.maxDiscount === generatedDiscount.limits?.maxDiscount &&
             p.discount.value === generatedDiscount.discount.value &&
             p.paymentMethods &&
             generatedDiscount.paymentMethods &&
             getBankOrWallet(p.paymentMethods) ===
-              getBankOrWallet(generatedDiscount.paymentMethods)
+              getBankOrWallet(generatedDiscount.paymentMethods),
         );
 
         if (existingDiscount) {
@@ -178,7 +178,7 @@ ${LIMITS_PROMPT}
 
         discountsMap.get(weekdayIndex)?.push(newDiscount);
       }
-    })
+    }),
   );
 
   // Combine all discounts from all weekdays

@@ -16,7 +16,7 @@ export interface PageData {
 export async function waitForSelectorOrFail(
   page: Page,
   selector: string,
-  source: string
+  source: string,
 ) {
   try {
     await page.waitForSelector(selector);
@@ -28,7 +28,7 @@ export async function waitForSelectorOrFail(
     await storeCacheData(
       source,
       "-failed.png",
-      await page.screenshot({ fullPage: true })
+      await page.screenshot({ fullPage: true }),
     );
     await storeCacheData(source, "-failed.html", (await getHtml(page)) || "");
     throw error;

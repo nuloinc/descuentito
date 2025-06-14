@@ -52,7 +52,10 @@ export async function initGitRepo() {
   };
 }
 
-export async function useCommit(source: string, initialMetadata?: { executionStartTime?: number }) {
+export async function useCommit(
+  source: string,
+  initialMetadata?: { executionStartTime?: number },
+) {
   const repo = await initGitRepo();
   const { dir } = repo;
 
@@ -60,7 +63,7 @@ export async function useCommit(source: string, initialMetadata?: { executionSta
   // Determine production mode
   const isProd = process.env.NODE_ENV === "production";
   let branchName = "main";
-  
+
   // Store metadata that can be updated later
   let metadata = { ...initialMetadata, discountsFound: 0 };
 
@@ -77,7 +80,7 @@ export async function useCommit(source: string, initialMetadata?: { executionSta
       throw new Error(`Failed to checkout main branch in prod: ${error}`);
     }
     logger.warn(
-      "Proceeding to create branch from current HEAD for non-prod env."
+      "Proceeding to create branch from current HEAD for non-prod env.",
     );
   }
 
@@ -100,7 +103,7 @@ export async function useCommit(source: string, initialMetadata?: { executionSta
     [Symbol.asyncDispose]: async () => {
       const status = await git.statusMatrix({ fs, dir, filepaths: ["."] });
       const hasChanges = status.some(
-        ([_file, _head, workdir, _stage]) => workdir !== 1
+        ([_file, _head, workdir, _stage]) => workdir !== 1,
       );
       if (!hasChanges) {
         logger.warn("No changes detected, skipping commit");
@@ -126,26 +129,28 @@ export async function useCommit(source: string, initialMetadata?: { executionSta
       // Push directly to main if in prod, otherwise push branch and create PR
       if (isProd) {
         logger.info(
-          `Prod env detected. Pushing changes directly to main branch.`
+          `Prod env detected. Pushing changes directly to main branch.`,
         );
         await execa("git", ["push", remote, "main"], {
           cwd: dir,
         });
         logger.info(`Successfully pushed changes to main for ${source}.`);
         commitUrl = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/commit/${commitHash}`;
-        
+
         // Send Telegram notification for production
         await telegramNotifier.sendScrapingComplete({
           scraper: source,
           success: true,
           discountsFound: metadata.discountsFound,
-          executionTime: metadata.executionStartTime ? Date.now() - metadata.executionStartTime : undefined,
+          executionTime: metadata.executionStartTime
+            ? Date.now() - metadata.executionStartTime
+            : undefined,
           commitUrl,
           commitHash,
         });
       } else {
         logger.info(
-          `Non-prod env detected. Pushing to branch ${branchName} and creating PR.`
+          `Non-prod env detected. Pushing to branch ${branchName} and creating PR.`,
         );
         await execa("git", ["push", remote, branchName], {
           cwd: dir,
@@ -171,13 +176,15 @@ export async function useCommit(source: string, initialMetadata?: { executionSta
         });
         logger.info(`Merged PR #${prResponse.data.number} for ${source}`);
         commitUrl = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/pull/${prResponse.data.number}`;
-        
+
         // Send Telegram notification for non-production
         await telegramNotifier.sendScrapingComplete({
           scraper: source,
           success: true,
           discountsFound: metadata.discountsFound,
-          executionTime: metadata.executionStartTime ? Date.now() - metadata.executionStartTime : undefined,
+          executionTime: metadata.executionStartTime
+            ? Date.now() - metadata.executionStartTime
+            : undefined,
           commitUrl,
           commitHash,
         });
@@ -191,13 +198,13 @@ export async function useCommit(source: string, initialMetadata?: { executionSta
 export async function savePromotions(
   ctx: undefined,
   source: string,
-  promotions: any[]
+  promotions: any[],
 ) {
   await using commit = await useCommit(source);
 
   const filepath = `${source}.json`;
   fs.writeFileSync(
     `${commit.dir}/${filepath}`,
-    JSON.stringify(promotions, null, 2)
+    JSON.stringify(promotions, null, 2),
   );
 }

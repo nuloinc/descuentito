@@ -33,7 +33,7 @@ export async function scrapeMakroContent() {
 
   const x = await page.evaluate(() => {
     const elements = document.querySelectorAll(
-      ".et_builder_inner_content .section-promos-bancarias .et_pb_blurb_content:has(.et_pb_module_header)"
+      ".et_builder_inner_content .section-promos-bancarias .et_pb_blurb_content:has(.et_pb_module_header)",
     );
     return elements;
   });
@@ -41,7 +41,7 @@ export async function scrapeMakroContent() {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
   const elements = await page.$$(
-    ".et_builder_inner_content .section-promos-bancarias .et_pb_blurb_content:has(.et_pb_module_header)"
+    ".et_builder_inner_content .section-promos-bancarias .et_pb_blurb_content:has(.et_pb_module_header)",
   );
 
   const scrapedData = [];
@@ -60,7 +60,7 @@ export async function scrapeMakroContent() {
 }
 
 export async function extractMakroDiscounts(
-  scrapedData: { screenshot: Buffer; text: string }[]
+  scrapedData: { screenshot: Buffer; text: string }[],
 ) {
   let promotions: MakroDiscount[] = [];
 

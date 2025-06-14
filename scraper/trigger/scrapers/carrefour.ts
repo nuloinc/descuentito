@@ -26,12 +26,12 @@ export async function scrapeCarrefourContent() {
   await waitForSelectorOrFail(
     page,
     ".valtech-carrefourar-bank-promotions-0-x-ColRightTittle",
-    "carrefour"
+    "carrefour",
   );
 
   const numberOfPromotions = await page.evaluate(() => {
     return document.querySelectorAll(
-      ".valtech-carrefourar-bank-promotions-0-x-cardBox"
+      ".valtech-carrefourar-bank-promotions-0-x-cardBox",
     ).length;
   });
 
@@ -41,9 +41,9 @@ export async function scrapeCarrefourContent() {
       async (_, i) =>
         await generateElementDescription(
           page,
-          `.valtech-carrefourar-bank-promotions-0-x-cardBox:nth-child(${i + 1})`
-        )
-    )
+          `.valtech-carrefourar-bank-promotions-0-x-cardBox:nth-child(${i + 1})`,
+        ),
+    ),
   );
 
   return promotionsDomDescriptions.map((domDescription) => ({
@@ -52,10 +52,10 @@ export async function scrapeCarrefourContent() {
 }
 
 export async function extractCarrefourDiscounts(
-  promotionsData: { domDescription: string }[]
+  promotionsData: { domDescription: string }[],
 ) {
   const promotions = await Promise.all(
-    promotionsData.map(async (data) => extractDiscount(data))
+    promotionsData.map(async (data) => extractDiscount(data)),
   );
 
   return promotions;

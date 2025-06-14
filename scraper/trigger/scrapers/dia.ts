@@ -46,10 +46,10 @@ export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
   await page.waitForSelector(
-    ".diaio-custom-bank-promotions-0-x-list-by-days__item"
+    ".diaio-custom-bank-promotions-0-x-list-by-days__item",
   );
   const elements = await page.$$(
-    ".diaio-custom-bank-promotions-0-x-list-by-days__item"
+    ".diaio-custom-bank-promotions-0-x-list-by-days__item",
   );
 
   const scrapedPromotions: ScrapedDiaPromotion[] = [];
@@ -63,11 +63,11 @@ export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
     await closeModal();
     const domDescription = await generateElementDescriptionFromElement(
       page,
-      element
+      element,
     );
 
     const legalBtn = await element.$(
-      ".diaio-custom-bank-promotions-0-x-bank-modal__button"
+      ".diaio-custom-bank-promotions-0-x-bank-modal__button",
     );
     if (!legalBtn) throw new Error("No legal button found");
     await legalBtn.click();
@@ -88,7 +88,7 @@ export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
 }
 
 export async function extractDiaDiscounts(
-  scrapedPromotions: ScrapedDiaPromotion[]
+  scrapedPromotions: ScrapedDiaPromotion[],
 ) {
   let promotions: DiaDiscount[] = [];
   for (const { domDescription, legalesText } of scrapedPromotions) {

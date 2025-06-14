@@ -94,7 +94,7 @@ export class FetchCacher {
       Body: Buffer;
       ContentType: string;
     },
-    retryCount = 0
+    retryCount = 0,
   ): Promise<void> {
     try {
       await this.s3.send(
@@ -103,16 +103,16 @@ export class FetchCacher {
           Key: params.Key,
           Body: params.Body,
           ContentType: params.ContentType,
-        })
+        }),
       );
     } catch (error: any) {
       if (retryCount < this.maxRetries) {
         console.warn(
           `S3 upload error, retrying (${retryCount + 1}/${this.maxRetries})`,
-          error
+          error,
         );
         await new Promise((resolve) =>
-          setTimeout(resolve, RETRY_DELAY_MS * Math.pow(2, retryCount))
+          setTimeout(resolve, RETRY_DELAY_MS * Math.pow(2, retryCount)),
         );
         return this.retryS3Upload(params, retryCount + 1);
       }

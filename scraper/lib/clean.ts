@@ -15,7 +15,7 @@ export function cleanDiscounts<T extends GenericDiscount>(discounts: T[]): T[] {
     if (newDiscount.excludesProducts) {
       if (
         INVALID_RESTRICTIONS.includes(
-          newDiscount.excludesProducts.toLowerCase()
+          newDiscount.excludesProducts.toLowerCase(),
         )
       ) {
         newDiscount.excludesProducts = undefined;

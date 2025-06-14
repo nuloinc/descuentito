@@ -69,20 +69,20 @@ export class Tracker {
   }
 
   async runAll<T extends Record<string, Promise<any>>>(
-    tasks: T
+    tasks: T,
   ): Promise<{ [K in keyof T]: Awaited<T[K]> }> {
     for (const [key, promise] of Object.entries(tasks)) this.run(key, promise);
     const results = await Promise.all(Object.values(tasks));
     return Object.fromEntries(
-      Object.entries(tasks).map(([key, task], index) => [key, results[index]])
+      Object.entries(tasks).map(([key, task], index) => [key, results[index]]),
     ) as { [K in keyof T]: Awaited<T[K]> };
   }
 
   async runArray<T>(tasks: Promise<T>[]): Promise<T[]> {
     return Object.values(
       await this.runAll(
-        Object.fromEntries(tasks.map((task, index) => [index + "", task]))
-      )
+        Object.fromEntries(tasks.map((task, index) => [index + "", task])),
+      ),
     );
   }
   [Symbol.dispose]() {

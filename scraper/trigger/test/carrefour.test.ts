@@ -4,7 +4,7 @@ import { extractDiscounts } from "../carrefour";
 
 const domDescription = await readFile(
   "./trigger/test/snapshots/carrefour/dom-description.txt",
-  "utf-8"
+  "utf-8",
 );
 
 it.concurrent(
@@ -30,5 +30,5 @@ it.concurrent(
       }
     }
     if (!found) throw new Error("Couldn't find discount");
-  }
+  },
 );

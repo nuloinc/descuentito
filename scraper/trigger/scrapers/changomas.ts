@@ -34,7 +34,7 @@ export async function scrapeChangoMasContent() {
     "li a.valtech-gdn-banks-promotions-0-x-menuItem",
     {
       hasText: "Por Banco/Tarjeta",
-    }
+    },
   );
   await menuItem.click();
 
@@ -43,10 +43,10 @@ export async function scrapeChangoMasContent() {
     timeout: 45000,
   });
 
-  const todasButton = page.locator(
-    ".valtech-gdn-banks-promotions-0-x-bankButton"
-  ).filter({ hasText: "Todas" });
-  
+  const todasButton = page
+    .locator(".valtech-gdn-banks-promotions-0-x-bankButton")
+    .filter({ hasText: "Todas" });
+
   // Wait for the button to be visible and clickable
   await todasButton.waitFor({ state: "visible", timeout: 45000 });
   await todasButton.click();
@@ -67,7 +67,7 @@ export async function scrapeChangoMasContent() {
 }
 
 export async function extractChangoMasDiscounts(
-  scrapedData: { html: string; screenshot: Buffer }[]
+  scrapedData: { html: string; screenshot: Buffer }[],
 ) {
   let promotions: ChangoMasDiscount[] = [];
 

@@ -62,7 +62,7 @@ export async function scrapeCotoContent() {
     discountData: Array.from(discountData.values()).filter(
       ({ txt }) =>
         !txt.includes("EXCLUSIVO SUCURSALES") &&
-        !txt.includes("descuentos del fin de semana")
+        !txt.includes("descuentos del fin de semana"),
     ),
   };
 }
@@ -74,7 +74,7 @@ export async function extractCotoDiscounts(data: {
   const { legales, discountData } = data;
   using tracker = new Tracker("coto");
   const discounts: CotoDiscount[] = await tracker.runArray(
-    discountData.map((d) => getDiscount({ legales, ...d }))
+    discountData.map((d) => getDiscount({ legales, ...d })),
   );
   assert(discounts.length > 4, "Not enough discounts found");
   return cleanDiscounts(discounts);
@@ -155,8 +155,8 @@ async function getLegales(browser: Browser) {
         !c.includes("DEVOLUCION O CAMBIO DE PRODUCTOS") &&
         !c.includes("ANSES **") &&
         !c.includes(
-          "PARA TODAS LAS PROMOCIONES BANCARIAS Y/O ENTIDADES. VER EXCLUSIONES ESPECÍFICAS DE CADA PROMOCIÓN BUSCANDO POR SECCIÓN,"
-        )
+          "PARA TODAS LAS PROMOCIONES BANCARIAS Y/O ENTIDADES. VER EXCLUSIONES ESPECÍFICAS DE CADA PROMOCIÓN BUSCANDO POR SECCIÓN,",
+        ),
     )
     .join("\n\n");
   const exclusionPatterns = [

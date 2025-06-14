@@ -61,7 +61,7 @@ const skipExtracting = process.argv.includes("--skip-extract");
 
 async function runSingleScraper(
   scraperName: string,
-  scraper: ScraperFunctions
+  scraper: ScraperFunctions,
 ) {
   const executionStartTime = Date.now();
 
@@ -76,7 +76,7 @@ async function runSingleScraper(
       mkdirSync(`${commit.dir}/scrapped`, { recursive: true });
       writeFileSync(
         `${commit.dir}/scrapped/${scraperName}.json`,
-        JSON.stringify(scrapedContent, null, 2)
+        JSON.stringify(scrapedContent, null, 2),
       );
     } else {
       console.log(JSON.stringify(scrapedContent, null, 2));
@@ -85,12 +85,12 @@ async function runSingleScraper(
     if (!skipExtracting) {
       console.log(`[${scraperName}] Extracting promotions using LLM...`);
       const results = await scraper.extractDiscounts(scrapedContent);
-      
+
       if (commit) {
         commit.updateDiscountsCount(results.length);
         writeFileSync(
           `${commit.dir}/${scraperName}.json`,
-          JSON.stringify(results, null, 2)
+          JSON.stringify(results, null, 2),
         );
       } else {
         console.log(JSON.stringify(results, null, 2));

@@ -58,7 +58,7 @@ export async function createPlaywrightSession({
 export async function storeCacheData(
   key: string,
   suffix: string,
-  data: string | Buffer | Uint8Array
+  data: string | Buffer | Uint8Array,
 ) {
   logger.debug("Storing cache data", { key, suffix });
   await s3.send(
@@ -66,10 +66,10 @@ export async function storeCacheData(
       Bucket: BUCKET_NAME,
       Key: `${format(
         new Date(),
-        "yyyy-MM-dd"
+        "yyyy-MM-dd",
       )}/${key}/${new Date().toISOString()}${suffix}`,
       Body: data,
-    })
+    }),
   );
 }
 
@@ -80,7 +80,7 @@ export async function storeCacheData(
  */
 export async function generateElementDescription(
   page: Page,
-  selector: string
+  selector: string,
 ): Promise<string> {
   const evalFn = (selector: string) => {
     function generateElementDescriptionInner(element: Element): string {
@@ -93,7 +93,7 @@ export async function generateElementDescription(
         .map((node) =>
           node.textContent
             ?.trim()
-            .replace(/[\u00A0\u2000-\u200F\u2028-\u202F\u205F-\u206F]/g, " ")
+            .replace(/[\u00A0\u2000-\u200F\u2028-\u202F\u205F-\u206F]/g, " "),
         )
         .filter((text) => text && text.length > 0);
 
@@ -152,7 +152,7 @@ export async function generateElementDescription(
 
 export async function generateElementDescriptionFromElement(
   page: Page,
-  element: ElementHandle<HTMLElement | SVGElement>
+  element: ElementHandle<HTMLElement | SVGElement>,
 ): Promise<string> {
   const id = nanoid();
   await element.evaluate((element, id) => {
