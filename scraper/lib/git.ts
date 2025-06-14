@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { execa } from "execa";
 import { nanoid } from "nanoid";
 import { logger } from "../trigger/lib/logger";
+import { telegramNotifier } from "./telegram.js";
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN!;
 const GITHUB_OWNER = process.env.GITHUB_OWNER!;
 const GITHUB_REPO = process.env.GITHUB_REPO!;
@@ -51,7 +52,7 @@ export async function initGitRepo() {
   };
 }
 
-export async function useCommit(source: string) {
+export async function useCommit(source: string, initialMetadata?: { executionStartTime?: number }) {
   const repo = await initGitRepo();
   const { dir } = repo;
 
@@ -59,6 +60,9 @@ export async function useCommit(source: string) {
   // Determine production mode
   const isProd = process.env.NODE_ENV === "production";
   let branchName = "main";
+  
+  // Store metadata that can be updated later
+  let metadata = { ...initialMetadata, discountsFound: 0 };
 
   try {
     await git.checkout({
@@ -90,6 +94,9 @@ export async function useCommit(source: string) {
 
   return {
     dir,
+    updateDiscountsCount: (count: number) => {
+      metadata.discountsFound = count;
+    },
     [Symbol.asyncDispose]: async () => {
       const status = await git.statusMatrix({ fs, dir, filepaths: ["."] });
       const hasChanges = status.some(
@@ -102,7 +109,7 @@ export async function useCommit(source: string) {
 
       await git.add({ fs, dir, filepath: "." });
 
-      await git.commit({
+      const commitResult = await git.commit({
         fs,
         dir,
         message: `Update ${source} promotions for ${date}`,
@@ -113,6 +120,8 @@ export async function useCommit(source: string) {
       });
 
       const remote = `https://catdevnull-bot:${GITHUB_TOKEN}@github.com/${GITHUB_OWNER}/${GITHUB_REPO}.git`;
+      let commitUrl = "";
+      let commitHash = commitResult;
 
       // Push directly to main if in prod, otherwise push branch and create PR
       if (isProd) {
@@ -123,6 +132,17 @@ export async function useCommit(source: string) {
           cwd: dir,
         });
         logger.info(`Successfully pushed changes to main for ${source}.`);
+        commitUrl = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/commit/${commitHash}`;
+        
+        // Send Telegram notification for production
+        await telegramNotifier.sendScrapingComplete({
+          scraper: source,
+          success: true,
+          discountsFound: metadata.discountsFound,
+          executionTime: metadata.executionStartTime ? Date.now() - metadata.executionStartTime : undefined,
+          commitUrl,
+          commitHash,
+        });
       } else {
         logger.info(
           `Non-prod env detected. Pushing to branch ${branchName} and creating PR.`
@@ -150,6 +170,17 @@ export async function useCommit(source: string) {
           merge_method: "squash",
         });
         logger.info(`Merged PR #${prResponse.data.number} for ${source}`);
+        commitUrl = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/pull/${prResponse.data.number}`;
+        
+        // Send Telegram notification for non-production
+        await telegramNotifier.sendScrapingComplete({
+          scraper: source,
+          success: true,
+          discountsFound: metadata.discountsFound,
+          executionTime: metadata.executionStartTime ? Date.now() - metadata.executionStartTime : undefined,
+          commitUrl,
+          commitHash,
+        });
       }
 
       await repo[Symbol.asyncDispose]();
