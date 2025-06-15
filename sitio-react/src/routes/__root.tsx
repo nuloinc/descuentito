@@ -11,6 +11,7 @@ import * as React from "react";
 import type { QueryClient } from "@tanstack/react-query";
 import { DefaultCatchBoundary } from "src/components/DefaultCatchBoundary";
 import { NotFound } from "src/components/NotFound";
+import { DisclaimerPopup } from "src/components/disclaimer-popup";
 import appCss from "@/styles/app.css?url";
 import { seo } from "src/utils/seo";
 
@@ -148,6 +149,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
+        <DisclaimerPopup />
 
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />
