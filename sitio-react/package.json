@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "dotenv run ./node_modules/.bin/vinxi dev",
     "build": "vinxi build",
-    "start": "wrangler --cwd dist/ pages dev"
+    "start": "wrangler --cwd dist/ pages dev",
+    "test": "bun test"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.4",
@@ -48,6 +49,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250513.0",
+    "@types/bun": "^1.2.16",
     "@types/node": "^22.5.4",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",

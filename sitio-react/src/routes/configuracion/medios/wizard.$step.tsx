@@ -10,7 +10,7 @@ import { motion, AnimatePresence, MotionProps, m } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { PaymentMethod } from "promos-db/schema";
-import { PAYMENT_METHODS, JOIN_GROUPS } from "promos-db/schema";
+import { PAYMENT_METHODS, JOIN_GROUPS, BANKS_OR_WALLETS, PAYMENT_RAILS } from "promos-db/schema";
 import { WALLET_ICONS } from "@/lib/logos";
 import { usePaymentMethodsStore } from "@/lib/state";
 import {
@@ -93,7 +93,7 @@ function buildHierarchy(methods: PaymentMethod[]): HierarchicalMethod[] {
 }
 
 const CATEGORY_FILTERS = {
-  banks: (m: PaymentMethod) => m.startsWith("Banco") || m === "Sidecreer",
+  banks: (m: PaymentMethod) => m.startsWith("Banco") || m === "Sidecreer" || m === "BanCo (Banco de Corrientes)",
   cards: (m: PaymentMethod) =>
     m.startsWith("Tarjeta") || ["MODO", "Tarjeta American Express"].includes(m),
   digitalWallets: (m: PaymentMethod) =>
@@ -102,13 +102,19 @@ const CATEGORY_FILTERS = {
       "Uala",
       "Cuenta DNI",
       "Personal Pay",
+      "Personal Pay - Nivel 1",
+      "Personal Pay - Nivel 2", 
+      "Personal Pay - Nivel 3",
       ".Reba",
+      ".Reba - Black",
       "Prex",
       "Yoy",
       "Cencopay",
       "Uilo",
+      "NaranjaX",
     ].includes(m),
 } as const;
+
 
 const HIERARCHY = Object.fromEntries(
   (["banks", "cards", "digitalWallets"] as const).map((step) => [
