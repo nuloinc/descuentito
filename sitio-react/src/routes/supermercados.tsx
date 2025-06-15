@@ -76,7 +76,6 @@ export const Route = createFileRoute("/supermercados")({
 });
 
 function SupermarketLinksPage() {
-
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       const supermarket = supermarkets.find(
@@ -97,7 +96,7 @@ function SupermarketLinksPage() {
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-4">
             <Button variant="ghost" size="sm" asChild>
-              <Link to="/" search={{ supermarket: null }}>
+              <Link to="/" search={{ supermarket: undefined }}>
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Volver
               </Link>
@@ -105,8 +104,8 @@ function SupermarketLinksPage() {
           </div>
           <h1 className="text-3xl font-bold mb-2">Supermercados</h1>
           <p className="text-muted-foreground">
-            Visitá las páginas de promociones de cada supermercado. Presioná una tecla
-            para ir directamente.
+            Visitá las páginas de promociones de cada supermercado. Presioná una
+            tecla para ir directamente.
           </p>
         </div>
 
@@ -156,7 +155,8 @@ function SupermarketLinksPage() {
 
         <div className="mt-12 text-center">
           <p className="text-sm text-muted-foreground">
-            Hacé clic o presioná la tecla correspondiente para ir a las páginas de promociones
+            Hacé clic o presioná la tecla correspondiente para ir a las páginas
+            de promociones
           </p>
         </div>
       </div>

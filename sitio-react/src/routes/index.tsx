@@ -97,7 +97,7 @@ export const Route = createFileRoute("/")({
   },
   validateSearch: (search: Record<string, unknown>) => {
     return {
-      supermarket: (search.supermarket as string) || null,
+      supermarket: search.supermarket as string | undefined,
     };
   },
   staleTime: 1000 * 60 * 10,
@@ -354,12 +354,9 @@ function ShareButton({
             const source =
               SUPERMARKET_NAMES[promotion.source] || promotion.source;
             const discountType =
-              promotion.discount.type === "cuotas sin intereses"
-                ? "CSI"
-                : "%";
+              promotion.discount.type === "cuotas sin intereses" ? "CSI" : "%";
             const paymentMethodsText =
-              promotion.paymentMethods &&
-              promotion.paymentMethods.length > 0
+              promotion.paymentMethods && promotion.paymentMethods.length > 0
                 ? ` con ${promotion.paymentMethods.flat().slice(0, 2).join(", ")}${promotion.paymentMethods.flat().length > 2 ? "..." : ""}`
                 : "";
             return `* ${promotion.discount.value}${discountType} en ${source}${paymentMethodsText}`;
@@ -437,7 +434,7 @@ function Home() {
     "Presencial"
   );
   const [selectedSupermarket, setSelectedSupermarket] = useState<string | null>(
-    initialSupermarket
+    initialSupermarket || null
   );
   const [selectedPromotionType, setSelectedPromotionType] = useState<
     "Todos" | "Descuentos" | "Cuotas"
