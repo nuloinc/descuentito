@@ -17,7 +17,7 @@ import { useCommit } from "../lib/git";
 import { GenericDiscount } from "promos-db/schema.ts";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { telegramNotifier } from "../lib/telegram.js";
-import { runCasharComparison } from "../lib/cashar-comparison.js";
+import { runCasharComparison } from "../lib/cashar-comparison.ts";
 
 // Generic interface for scraper functions with flexible content and result types
 interface ScraperFunctions<TContent = any> {

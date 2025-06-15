@@ -95,7 +95,10 @@ export class TelegramNotifier {
       await this.sendMessage(message);
       logger.info("Telegram Cashar comparison notification sent successfully");
     } catch (error) {
-      logger.error("Failed to send Telegram Cashar comparison notification:", error);
+      logger.error(
+        "Failed to send Telegram Cashar comparison notification:",
+        error,
+      );
     }
   }
 
@@ -172,7 +175,9 @@ export class TelegramNotifier {
         if (result.stackTrace) {
           // Add first few lines of stack trace for batch view
           const stackLines = result.stackTrace.split("\n").slice(0, 3);
-          const escapedStackLines = stackLines.map(line => this.escapeMarkdown(line));
+          const escapedStackLines = stackLines.map((line) =>
+            this.escapeMarkdown(line),
+          );
           message += `  \`${escapedStackLines.join("\\n")}\`\n`;
         }
       }
@@ -181,15 +186,17 @@ export class TelegramNotifier {
     return message;
   }
 
-  private formatCasharComparisonMessage(result: CasharComparisonResult): string {
-    let message = `🔍 *Cashar.pro Comparison*\n\n`;
-    
+  private formatCasharComparisonMessage(
+    result: CasharComparisonResult,
+  ): string {
+    let message = `🔍 *cashar.pro/cashback Comparison*\n\n`;
+
     message += `📊 *Coverage Overview:*\n`;
     message += `• Cashar discounts: ${result.casharTotal}\n`;
     message += `• Our discounts: ${result.ourTotal}\n`;
     message += `• Missing: ${result.missing}\n`;
     message += `• Flexible matches: ${result.flexibleMatches}\n\n`;
-    
+
     if (result.missingHighValue.length > 0) {
       message += `🎯 *High-Value Missing (25%+):*\n`;
       const highValueCount = Math.min(result.missingHighValue.length, 5);
@@ -203,7 +210,7 @@ export class TelegramNotifier {
       }
       message += `\n`;
     }
-    
+
     if (result.topMissing.length > 0) {
       message += `🔴 *Top Missing Opportunities:*\n`;
       const topCount = Math.min(result.topMissing.length, 5);
@@ -213,7 +220,7 @@ export class TelegramNotifier {
         message += `   ${this.escapeMarkdown(missing.paymentMethod)}\n`;
       }
     }
-    
+
     // Add summary
     if (result.missing === 0) {
       message += `\n✅ *Excellent coverage!* No missing opportunities detected.`;
@@ -222,13 +229,13 @@ export class TelegramNotifier {
     } else {
       message += `\n🟠 *Room for improvement* - consider reviewing missing opportunities.`;
     }
-    
+
     return message;
   }
 
   private escapeMarkdown(text: string): string {
     // Only escape characters that can break Telegram parsing in variable text
-    return text.replace(/([_*[\]`~])/g, '\\$1');
+    return text.replace(/([_*[\]`~])/g, "\\$1");
   }
 
   private async sendMessage(text: string): Promise<void> {
