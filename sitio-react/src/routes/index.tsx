@@ -322,7 +322,64 @@ function Promotions({
           </motion.div>
         )}
       </div>
+      <div className="mt-2 flex flex-col items-stretch p-2 border-secondary rounded-lg gap-2 mb-2 max-w-md mx-auto">
+        <FeedbackForm />
+        <ShareButton
+          currentPromotions={currentPromotions}
+          formattedWeekDates={formattedWeekDates}
+          currentTabIndex={currentTabIndex}
+        />
+      </div>
     </>
+  );
+}
+
+function ShareButton({
+  currentPromotions,
+  formattedWeekDates,
+  currentTabIndex,
+}: {
+  currentPromotions: Discount[];
+  formattedWeekDates: ReturnType<typeof getFormattedWeekDates>;
+  currentTabIndex: number;
+}) {
+  return (
+    <Button
+      variant="outline"
+      className="text-lg py-6 rounded-full"
+      size="lg"
+      onClick={async () => {
+        const promotionsText = currentPromotions
+          .map((promotion) => {
+            const source =
+              SUPERMARKET_NAMES[promotion.source] || promotion.source;
+            const discountType =
+              promotion.discount.type === "cuotas sin intereses"
+                ? "CSI"
+                : "%";
+            const paymentMethodsText =
+              promotion.paymentMethods &&
+              promotion.paymentMethods.length > 0
+                ? ` con ${promotion.paymentMethods.flat().slice(0, 2).join(", ")}${promotion.paymentMethods.flat().length > 2 ? "..." : ""}`
+                : "";
+            return `* ${promotion.discount.value}${discountType} en ${source}${paymentMethodsText}`;
+          })
+          .join("\n");
+        const text = `Mira estos descuentos en supermercados para ${formattedWeekDates[currentTabIndex]?.display || "hoy"}:\n${promotionsText}\n\nEncontrá más descuentos en descuentito.ar`;
+
+        if (navigator.share) {
+          await navigator.share({
+            text,
+          });
+        } else {
+          navigator.clipboard.writeText(text);
+          alert("Link copiado al portapapeles");
+        }
+      }}
+    >
+      <Share2 className="size-5" />
+      Compartir
+    </Button>
   );
 }
 
@@ -725,50 +782,6 @@ function Home() {
           </DrawerContent>
         </Drawer>
       </div>
-      <Footer>
-        <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2">
-          <div className="mt-2 flex flex-col items-stretch p-2 border-secondary rounded-lg gap-2 mb-2 max-w-md mx-auto">
-            <FeedbackForm />
-
-            <Button
-              variant="outline"
-              className="text-lg py-6 rounded-full"
-              size="lg"
-              onClick={async () => {
-                const promotionsText = currentPromotions
-                  .map((promotion) => {
-                    const source =
-                      SUPERMARKET_NAMES[promotion.source] || promotion.source;
-                    const discountType =
-                      promotion.discount.type === "cuotas sin intereses"
-                        ? "CSI"
-                        : "%";
-                    const paymentMethodsText =
-                      promotion.paymentMethods &&
-                      promotion.paymentMethods.length > 0
-                        ? ` con ${promotion.paymentMethods.flat().slice(0, 2).join(", ")}${promotion.paymentMethods.flat().length > 2 ? "..." : ""}`
-                        : "";
-                    return `* ${promotion.discount.value}${discountType} en ${source}${paymentMethodsText}`;
-                  })
-                  .join("\n");
-                const text = `Mira estos descuentos en supermercados para ${formattedWeekDates[currentTabIndex]?.display || "hoy"}:\n${promotionsText}\n\nEncontrá más descuentos en descuentito.ar`;
-
-                if (navigator.share) {
-                  await navigator.share({
-                    text,
-                  });
-                } else {
-                  navigator.clipboard.writeText(text);
-                  alert("Link copiado al portapapeles");
-                }
-              }}
-            >
-              <Share2 className="size-5" />
-              Compartir
-            </Button>
-          </div>
-        </div>
-      </Footer>
     </>
   );
 }
