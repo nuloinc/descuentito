@@ -1,5 +1,4 @@
 #!/usr/bin/env bun
-import { sdk } from "./lib/instrumentation.ts";
 import {
   scrapeJumboContent,
   extractJumboDiscounts,
@@ -177,7 +176,5 @@ async function main() {
 }
 
 if ((import.meta as any).main) {
-  main().finally(() => {
-    sdk.shutdown();
-  });
+  main();
 }

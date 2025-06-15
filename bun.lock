@@ -26,7 +26,6 @@
         "execa": "^9.5.2",
         "isomorphic-git": "^1.29.0",
         "jszip": "^3.10.1",
-        "langfuse-vercel": "^3.37.2",
         "nanoid": "^5.1.0",
         "openai": "^4.85.3",
         "p-queue": "^8.1.0",
@@ -1798,12 +1797,6 @@
     "kuler": ["kuler@2.0.0", "", {}, "sha512-Xq9nH7KlWZmXAtodXDDRE7vs6DU1gTU8zYDHDiWLSip45Egwq3plLHzPn27NgvzL2r1LMPC1vdqh98sQxtqj4A=="],
 
     "lambda-local": ["lambda-local@2.2.0", "", { "dependencies": { "commander": "^10.0.1", "dotenv": "^16.3.1", "winston": "^3.10.0" }, "bin": { "lambda-local": "build/cli.js" } }, "sha512-bPcgpIXbHnVGfI/omZIlgucDqlf4LrsunwoKue5JdZeGybt8L6KyJz2Zu19ffuZwIwLj2NAI2ZyaqNT6/cetcg=="],
-
-    "langfuse": ["langfuse@3.37.2", "", { "dependencies": { "langfuse-core": "^3.37.2" } }, "sha512-C4P56hJDNk8vWNJR102JhgyCYXbt3HG19PY0brurlrU4dh5pq91JPt44jyiT5RzUs+NFew//gCkgFEcQd3RogA=="],
-
-    "langfuse-core": ["langfuse-core@3.37.2", "", { "dependencies": { "mustache": "^4.2.0" } }, "sha512-3iFz1UZzKDi9GEjIRRSSqcKbusmB17uR9qYxMR1BHQYuBkQv2wIV+HI793hWh3tmc6q2pmqPMjtJdoFVBhucDA=="],
-
-    "langfuse-vercel": ["langfuse-vercel@3.37.2", "", { "dependencies": { "langfuse": "^3.37.2", "langfuse-core": "^3.37.2" }, "peerDependencies": { "ai": ">=3.2.44" } }, "sha512-27ZTdti+1U3Q2iXOitj149ZmBhpc+2FMnZW69/IzJSKKzijpH+es5cFvXnYQRF4es1MmsTViwc7Qtyw9rUiuZw=="],
 
     "lazystream": ["lazystream@1.0.1", "", { "dependencies": { "readable-stream": "^2.0.5" } }, "sha512-b94GiNHQNy6JNTrt5w6zNyffMrNkXZb3KTkCZJb2V1xaEGCk093vkZ2jk3tpaeP33/OiXC+WvK9AxUebnf5nbw=="],
 

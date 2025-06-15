@@ -19,7 +19,6 @@
     "execa": "^9.5.2",
     "isomorphic-git": "^1.29.0",
     "jszip": "^3.10.1",
-    "langfuse-vercel": "^3.37.2",
     "nanoid": "^5.1.0",
     "openai": "^4.85.3",
     "p-queue": "^8.1.0",
