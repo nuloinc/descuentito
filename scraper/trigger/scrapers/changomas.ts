@@ -27,42 +27,36 @@ export async function scrapeChangoMasContent() {
   await page.goto(URL, {
     waitUntil: "domcontentloaded",
   });
-  await new Promise((resolve) => setTimeout(resolve, 500));
+  await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  await page.waitForSelector("li a.valtech-gdn-banks-promotions-0-x-menuItem");
-  const menuItem = page.locator(
-    "li a.valtech-gdn-banks-promotions-0-x-menuItem",
-    {
-      hasText: "Por Banco/Tarjeta",
-    },
-  );
-  await menuItem.click();
+  // Click "Por Banco/Tarjeta" if it exists
+  try {
+    await page.waitForSelector("li a.valtech-gdn-banks-promotions-0-x-menuItem", { timeout: 5000 });
+    const menuItem = page.locator("li a.valtech-gdn-banks-promotions-0-x-menuItem", { hasText: "Por Banco/Tarjeta" });
+    await menuItem.click();
+  } catch {}
 
-  // Wait for the bank buttons to load first
-  await page.waitForSelector(".valtech-gdn-banks-promotions-0-x-bankButton", {
-    timeout: 45000,
-  });
-
-  const todasButton = page
-    .locator(".valtech-gdn-banks-promotions-0-x-bankButton")
-    .filter({ hasText: "Todas" });
-
-  // Wait for the button to be visible and clickable
-  await todasButton.waitFor({ state: "visible", timeout: 45000 });
+  // Click "Todas" button - try the working selector we found
+  await page.waitForSelector("[class*='promotion']", { timeout: 15000 });
+  const todasButton = page.locator("[class*='promotion']").filter({ hasText: "Todas" }).first();
   await todasButton.click();
 
-  await page.waitForSelector(".valtech-gdn-banks-promotions-0-x-dateText", {
-    timeout: 15000,
-  });
-
-  const elements = await page.$$(".valtech-gdn-banks-promotions-0-x-cardBox");
+  // Get promotion cards - use the working selector we found  
+  await page.waitForSelector("[class*='promo']", { timeout: 15000 });
+  const elements = await page.$$("[class*='promo']");
 
   const scrapedData = [];
   for (const element of elements) {
-    const screenshot = await element.screenshot();
-    const html = await element.evaluate((el: Element) => el.outerHTML);
-    scrapedData.push({ html, screenshot });
+    try {
+      await element.scrollIntoViewIfNeeded();
+      const screenshot = await element.screenshot();
+      const html = await element.evaluate((el: Element) => el.outerHTML);
+      scrapedData.push({ html, screenshot });
+    } catch {
+      // Skip elements that can't be processed
+    }
   }
+  
   return scrapedData;
 }
 
