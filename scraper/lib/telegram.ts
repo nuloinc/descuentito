@@ -16,6 +16,28 @@ interface ScrapingResult {
   commitHash?: string;
 }
 
+interface CasharComparisonResult {
+  casharTotal: number;
+  ourTotal: number;
+  missing: number;
+  extra: number;
+  flexibleMatches: number;
+  missingHighValue: Array<{
+    store: string;
+    percentage: number;
+    weekday: string;
+    paymentMethod: string;
+    source: string;
+  }>;
+  topMissing: Array<{
+    store: string;
+    percentage: number;
+    weekday: string;
+    paymentMethod: string;
+    source: string;
+  }>;
+}
+
 export class TelegramNotifier {
   private config: TelegramConfig | null = null;
 
@@ -59,6 +81,21 @@ export class TelegramNotifier {
       logger.info("Telegram batch notification sent successfully");
     } catch (error) {
       logger.error("Failed to send Telegram batch notification:", error);
+    }
+  }
+
+  async sendCasharComparison(result: CasharComparisonResult): Promise<void> {
+    if (!this.config) {
+      logger.debug("Skipping Telegram notification - not configured");
+      return;
+    }
+
+    try {
+      const message = this.formatCasharComparisonMessage(result);
+      await this.sendMessage(message);
+      logger.info("Telegram Cashar comparison notification sent successfully");
+    } catch (error) {
+      logger.error("Failed to send Telegram Cashar comparison notification:", error);
     }
   }
 
@@ -144,9 +181,54 @@ export class TelegramNotifier {
     return message;
   }
 
+  private formatCasharComparisonMessage(result: CasharComparisonResult): string {
+    let message = `🔍 *Cashar.pro Comparison*\n\n`;
+    
+    message += `📊 *Coverage Overview:*\n`;
+    message += `• Cashar discounts: ${result.casharTotal}\n`;
+    message += `• Our discounts: ${result.ourTotal}\n`;
+    message += `• Missing: ${result.missing}\n`;
+    message += `• Flexible matches: ${result.flexibleMatches}\n\n`;
+    
+    if (result.missingHighValue.length > 0) {
+      message += `🎯 *High-Value Missing (25%+):*\n`;
+      const highValueCount = Math.min(result.missingHighValue.length, 5);
+      for (let i = 0; i < highValueCount; i++) {
+        const missing = result.missingHighValue[i];
+        message += `• ${missing.store.toUpperCase()} ${missing.percentage}% (${missing.weekday})\n`;
+        message += `  ${this.escapeMarkdown(missing.paymentMethod)}\n`;
+      }
+      if (result.missingHighValue.length > 5) {
+        message += `  ...and ${result.missingHighValue.length - 5} more\n`;
+      }
+      message += `\n`;
+    }
+    
+    if (result.topMissing.length > 0) {
+      message += `🔴 *Top Missing Opportunities:*\n`;
+      const topCount = Math.min(result.topMissing.length, 5);
+      for (let i = 0; i < topCount; i++) {
+        const missing = result.topMissing[i];
+        message += `${i + 1}. ${missing.store.toUpperCase()} ${missing.percentage}% on ${missing.weekday}\n`;
+        message += `   ${this.escapeMarkdown(missing.paymentMethod)}\n`;
+      }
+    }
+    
+    // Add summary
+    if (result.missing === 0) {
+      message += `\n✅ *Excellent coverage!* No missing opportunities detected.`;
+    } else if (result.missing <= 10) {
+      message += `\n🟡 *Good coverage* with minor gaps.`;
+    } else {
+      message += `\n🟠 *Room for improvement* - consider reviewing missing opportunities.`;
+    }
+    
+    return message;
+  }
+
   private escapeMarkdown(text: string): string {
-    // Escape special Markdown characters that can break Telegram parsing
-    return text.replace(/([_*[\]()~`>#+\-=|{}.!\\])/g, '\\$1');
+    // Only escape characters that can break Telegram parsing in variable text
+    return text.replace(/([_*[\]`~])/g, '\\$1');
   }
 
   private async sendMessage(text: string): Promise<void> {

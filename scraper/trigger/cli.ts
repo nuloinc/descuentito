@@ -17,6 +17,7 @@ import { useCommit } from "../lib/git";
 import { GenericDiscount } from "promos-db/schema.ts";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { telegramNotifier } from "../lib/telegram.js";
+import { runCasharComparison } from "../lib/cashar-comparison.js";
 
 // Generic interface for scraper functions with flexible content and result types
 interface ScraperFunctions<TContent = any> {
@@ -54,9 +55,10 @@ const scrapers: Record<string, ScraperFunctions> = {
 
 type ScraperName = keyof typeof scrapers;
 
-const scraperName = process.argv[2] as ScraperName | "all";
+const command = process.argv[2] as ScraperName | "all" | "compare-cashar";
 const saveFlag = process.argv.includes("--save");
 const skipExtracting = process.argv.includes("--skip-extract");
+const telegramFlag = process.argv.includes("--telegram");
 
 async function runSingleScraper(
   scraperName: string,
@@ -110,14 +112,70 @@ async function runSingleScraper(
   }
 }
 
+async function runCasharComparisonCommand() {
+  console.log('🔍 Running Cashar.pro comparison...\n');
+  
+  try {
+    const result = await runCasharComparison();
+    
+    console.log('📊 COMPARISON RESULTS:');
+    console.log(`Cashar discounts: ${result.casharTotal}`);
+    console.log(`Our discounts: ${result.ourTotal}`);
+    console.log(`Missing: ${result.missing}`);
+    console.log(`Flexible matches: ${result.flexibleMatches}`);
+    
+    if (result.missingHighValue.length > 0) {
+      console.log('\n🎯 HIGH-VALUE MISSING (25%+):');
+      result.missingHighValue.slice(0, 10).forEach((missing, i) => {
+        console.log(`${i + 1}. ${missing.store.toUpperCase()} ${missing.percentage}% on ${missing.weekday}`);
+        console.log(`   Payment: ${missing.paymentMethod}`);
+        console.log(`   Source: "${missing.source}"`);
+      });
+    }
+    
+    if (result.topMissing.length > 0) {
+      console.log('\n🔴 TOP MISSING OPPORTUNITIES:');
+      result.topMissing.slice(0, 10).forEach((missing, i) => {
+        console.log(`${i + 1}. ${missing.store.toUpperCase()} ${missing.percentage}% on ${missing.weekday}`);
+        console.log(`   Payment: ${missing.paymentMethod}`);
+        console.log(`   Source: "${missing.source}"`);
+      });
+    }
+    
+    // Send to Telegram if requested
+    if (telegramFlag) {
+      console.log('\n📱 Sending results to Telegram...');
+      try {
+        await telegramNotifier.sendCasharComparison(result);
+        console.log('✅ Telegram notification sent successfully');
+      } catch (error) {
+        console.error('❌ Failed to send Telegram notification:', error);
+      }
+    }
+    
+    console.log('\n✅ Comparison complete!');
+    
+  } catch (error) {
+    console.error('❌ Error running comparison:', error);
+    process.exit(1);
+  }
+}
+
 async function main() {
-  if (!scraperName) {
-    console.error("Please provide a scraper name");
-    console.error("Available scrapers:", Object.keys(scrapers).join(", "));
+  if (!command) {
+    console.error("Please provide a command");
+    console.error("Available commands:");
+    console.error("  Scrapers:", Object.keys(scrapers).join(", "));
+    console.error("  Other: all, compare-cashar");
     process.exit(1);
   }
 
-  if (scraperName === "all") {
+  if (command === "compare-cashar") {
+    await runCasharComparisonCommand();
+    return;
+  }
+
+  if (command === "all") {
     const batchResults: Array<{
       scraper: string;
       success: boolean;
@@ -153,6 +211,17 @@ async function main() {
     if (saveFlag) {
       try {
         await telegramNotifier.sendBatchComplete(batchResults);
+        
+        // Run Cashar comparison after successful batch scraping
+        if (batchResults.some(r => r.success)) {
+          console.log('Running Cashar.pro comparison...');
+          try {
+            const comparisonResult = await runCasharComparison();
+            await telegramNotifier.sendCasharComparison(comparisonResult);
+          } catch (error) {
+            console.error("Failed to run Cashar comparison:", error);
+          }
+        }
       } catch (error) {
         console.error("Failed to send batch Telegram notification:", error);
       }
@@ -160,15 +229,28 @@ async function main() {
     return;
   }
 
-  const scraper = scrapers[scraperName];
+  const scraper = scrapers[command];
   if (!scraper) {
-    console.error(`Unknown scraper: ${scraperName}`);
-    console.error("Available scrapers:", Object.keys(scrapers).join(", "));
+    console.error(`Unknown command: ${command}`);
+    console.error("Available commands:");
+    console.error("  Scrapers:", Object.keys(scrapers).join(", "));
+    console.error("  Other: all, compare-cashar");
     process.exit(1);
   }
 
   try {
-    await runSingleScraper(scraperName, scraper);
+    await runSingleScraper(command, scraper);
+    
+    // Run Cashar comparison after successful single scraping (if saving)
+    if (saveFlag) {
+      console.log('Running Cashar.pro comparison...');
+      try {
+        const comparisonResult = await runCasharComparison();
+        await telegramNotifier.sendCasharComparison(comparisonResult);
+      } catch (error) {
+        console.error("Failed to run Cashar comparison:", error);
+      }
+    }
   } catch (error) {
     console.error("Error running scraper:", error);
     process.exit(1);
