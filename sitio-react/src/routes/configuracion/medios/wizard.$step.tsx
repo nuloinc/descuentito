@@ -214,6 +214,7 @@ export const Route = createFileRoute("/configuracion/medios/wizard/$step")({
 });
 
 function WizardStepComponent() {
+  const posthog = usePostHog();
   const params = Route.useParams();
   const navigate = useNavigate({ from: Route.fullPath });
   const isClient = useIsClient();
@@ -236,6 +237,7 @@ function WizardStepComponent() {
     : "welcome";
 
   useEffect(() => {
+    posthog.capture("wizard_step", { step });
     if (params.step !== step) {
       navigate({
         to: "/configuracion/medios/wizard/$step",
@@ -616,6 +618,7 @@ function WizardStepComponent() {
                   <Button
                     onClick={() => {
                       localStorage.setItem("descuentito_wizard_seen", "true");
+                      posthog.capture("wizard_complete");
                       navigate({ to: "/", search: { supermarket: undefined } });
                     }}
                     className="bg-green-600 hover:bg-green-700 transition-all"
