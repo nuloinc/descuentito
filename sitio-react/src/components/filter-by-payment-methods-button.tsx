@@ -35,7 +35,7 @@ const FilterByPaymentMethodsButton: React.FC<
           ? "border-green-400 dark:border-green-500 bg-green-400/10 dark:bg-green-500/10"
           : "border-red-400 dark:border-red-500 bg-red-400/10 dark:bg-red-500/10",
         hasSavedPaymentMethods ? "" : "opacity-50 pointer-events-none",
-        className
+        className,
       )}
       onClick={handleToggle}
       onKeyDown={(e) => {

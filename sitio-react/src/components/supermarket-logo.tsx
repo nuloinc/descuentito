@@ -56,7 +56,7 @@ const SupermarketLogo: React.FC<SupermarketLogoProps> = ({
       <div
         className={cn(
           "flex h-5 w-5 items-center justify-center rounded bg-gray-300",
-          containerClassName
+          containerClassName,
         )}
       >
         <span className="text-xs font-bold">
@@ -74,7 +74,7 @@ const SupermarketLogo: React.FC<SupermarketLogoProps> = ({
         className={cn(
           "h-5 object-contain",
           needsLightBg && "rounded-sm bg-white p-0.5",
-          className
+          className,
         )}
       />
     </div>

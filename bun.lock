@@ -74,6 +74,7 @@
         "lucide-react": "^0.487.0",
         "p-memoize": "^7.1.1",
         "posthog-js": "^1.229.5",
+        "prettier": "^3.5.3",
         "promos-db": "workspace:^",
         "react": "^19.1.0",
         "react-dom": "^19.1.0",

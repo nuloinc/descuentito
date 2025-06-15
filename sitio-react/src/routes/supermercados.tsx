@@ -79,7 +79,7 @@ function SupermarketLinksPage() {
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       const supermarket = supermarkets.find(
-        (s) => s.keyBinding.toLowerCase() === event.key.toLowerCase()
+        (s) => s.keyBinding.toLowerCase() === event.key.toLowerCase(),
       );
       if (supermarket) {
         window.open(supermarket.url, "_blank", "noopener,noreferrer");

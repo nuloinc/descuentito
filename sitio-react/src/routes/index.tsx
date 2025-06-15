@@ -55,7 +55,7 @@ const timeZone = "America/Argentina/Buenos_Aires";
 const getFormattedWeekDates = () => {
   const weekStartDate = dayjs().tz(timeZone).startOf("day");
   const weekDates = Array.from({ length: 7 }, (_, i) =>
-    weekStartDate.add(i, "day")
+    weekStartDate.add(i, "day"),
   );
 
   const weekdayFormatter = new Intl.DateTimeFormat("es", {
@@ -133,7 +133,7 @@ function Promotions({
         if (source === "carrefour") {
           return promotions.filter(
             (promotion) =>
-              !(promotion.where.length === 1 && promotion.where[0] === "Maxi")
+              !(promotion.where.length === 1 && promotion.where[0] === "Maxi"),
           );
         }
         return promotions;
@@ -179,7 +179,7 @@ function Promotions({
                 .map((pm) => (Array.isArray(pm) ? pm : [pm]))
                 .every(
                   (pm) =>
-                    pm.length === 1 && PAYMENT_RAILS.includes(pm[0] as any)
+                    pm.length === 1 && PAYMENT_RAILS.includes(pm[0] as any),
                 ) &&
               promotion.paymentMethods
                 .flat()
@@ -194,7 +194,7 @@ function Promotions({
                 return pms.some(
                   (pm2) =>
                     !PAYMENT_RAILS.includes(pm2 as any) &&
-                    savedPaymentMethods.has(pm2 as any)
+                    savedPaymentMethods.has(pm2 as any),
                 );
               })
             ) {
@@ -421,20 +421,20 @@ function Home() {
   const todayIndex = useMemo(
     () =>
       formattedWeekDates.findIndex((date) =>
-        date.dayjs.isSame(dayjs().tz(timeZone), "day")
+        date.dayjs.isSame(dayjs().tz(timeZone), "day"),
       ),
-    [formattedWeekDates]
+    [formattedWeekDates],
   );
 
   const [selectedTabId, setSelectedTabId] = useState<string>(
-    dayjs().tz(timeZone).format("YYYY-MM-DD")
+    dayjs().tz(timeZone).format("YYYY-MM-DD"),
   );
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
   const [selectedType, setSelectedType] = useState<"Presencial" | "Online">(
-    "Presencial"
+    "Presencial",
   );
   const [selectedSupermarket, setSelectedSupermarket] = useState<string | null>(
-    initialSupermarket || null
+    initialSupermarket || null,
   );
   const [selectedPromotionType, setSelectedPromotionType] = useState<
     "Todos" | "Descuentos" | "Cuotas"
@@ -455,7 +455,7 @@ function Home() {
   }, [selectedTabId, formattedWeekDates, todayIndex]);
 
   const currentTabIndex = formattedWeekDates.findIndex(
-    (d) => d.id === selectedTabId
+    (d) => d.id === selectedTabId,
   );
 
   const isClient = useIsClient();
@@ -748,7 +748,7 @@ function Home() {
                     value={selectedPromotionType}
                     onValueChange={(value) =>
                       setSelectedPromotionType(
-                        value as "Todos" | "Descuentos" | "Cuotas"
+                        value as "Todos" | "Descuentos" | "Cuotas",
                       )
                     }
                     className="mb-4"

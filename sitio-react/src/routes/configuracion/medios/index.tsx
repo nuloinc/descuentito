@@ -25,7 +25,7 @@ type BankOptionDisplay = {
 
 function buildDisplayOptions(
   allMethods: readonly PaymentMethod[],
-  groups: ReadonlyArray<readonly PaymentMethod[]>
+  groups: ReadonlyArray<readonly PaymentMethod[]>,
 ): BankOptionDisplay[] {
   const optionsMap = new Map<PaymentMethod, BankOptionDisplay>();
   const allGroupChildren = new Set<PaymentMethod>();
@@ -71,7 +71,7 @@ function buildDisplayOptions(
 
   // Filter out children that are already included as sub-options
   const finalOptions = Array.from(optionsMap.values()).filter(
-    (opt) => !allGroupChildren.has(opt.id)
+    (opt) => !allGroupChildren.has(opt.id),
   );
 
   return finalOptions;
@@ -220,7 +220,7 @@ function PaymentMethodsConfig() {
                           {bank.subOptions.map((subOption) => {
                             const subOptionId = `sub-${subOption.id}`;
                             const isSubChecked = savedPaymentMethods.has(
-                              subOption.id
+                              subOption.id,
                             );
                             return (
                               <div

@@ -69,12 +69,12 @@ export const usePaymentMethodsStore = create<PaymentMethodsState>()(
         if (state) {
           // Convert the array back to a Set after rehydration
           state.savedPaymentMethods = arrayToSet(
-            state.savedPaymentMethods as unknown as PaymentMethod[]
+            state.savedPaymentMethods as unknown as PaymentMethod[],
           );
         }
       },
-    }
-  )
+    },
+  ),
 );
 
 export const useShouldFilterByPaymentMethods = () => {

@@ -66,7 +66,7 @@ export const getPromotions = createServerFn({
         console.error(`Error parsing data for ${source}:`, error);
         return [source, []];
       }
-    })
+    }),
   );
 
   return Object.fromEntries(dataEntries) as PromotionData;

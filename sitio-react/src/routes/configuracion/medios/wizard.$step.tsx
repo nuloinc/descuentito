@@ -10,7 +10,12 @@ import { motion, AnimatePresence, MotionProps, m } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { PaymentMethod } from "promos-db/schema";
-import { PAYMENT_METHODS, JOIN_GROUPS, BANKS_OR_WALLETS, PAYMENT_RAILS } from "promos-db/schema";
+import {
+  PAYMENT_METHODS,
+  JOIN_GROUPS,
+  BANKS_OR_WALLETS,
+  PAYMENT_RAILS,
+} from "promos-db/schema";
 import { WALLET_ICONS } from "@/lib/logos";
 import { usePaymentMethodsStore } from "@/lib/state";
 import {
@@ -93,7 +98,10 @@ function buildHierarchy(methods: PaymentMethod[]): HierarchicalMethod[] {
 }
 
 const CATEGORY_FILTERS = {
-  banks: (m: PaymentMethod) => m.startsWith("Banco") || m === "Sidecreer" || m === "BanCo (Banco de Corrientes)",
+  banks: (m: PaymentMethod) =>
+    m.startsWith("Banco") ||
+    m === "Sidecreer" ||
+    m === "BanCo (Banco de Corrientes)",
   cards: (m: PaymentMethod) =>
     m.startsWith("Tarjeta") || ["MODO", "Tarjeta American Express"].includes(m),
   digitalWallets: (m: PaymentMethod) =>
@@ -103,7 +111,7 @@ const CATEGORY_FILTERS = {
       "Cuenta DNI",
       "Personal Pay",
       "Personal Pay - Nivel 1",
-      "Personal Pay - Nivel 2", 
+      "Personal Pay - Nivel 2",
       "Personal Pay - Nivel 3",
       ".Reba",
       ".Reba - Black",
@@ -115,12 +123,11 @@ const CATEGORY_FILTERS = {
     ].includes(m),
 } as const;
 
-
 const HIERARCHY = Object.fromEntries(
   (["banks", "cards", "digitalWallets"] as const).map((step) => [
     step,
     buildHierarchy(PAYMENT_METHODS.filter(CATEGORY_FILTERS[step])),
-  ])
+  ]),
 ) as Record<"banks" | "cards" | "digitalWallets", HierarchicalMethod[]>;
 
 const chatMessages: Record<
@@ -189,7 +196,7 @@ const chatMessages: Record<
 
 const getAdjacentStep = (
   currentStep: WizardStepId,
-  direction: "next" | "prev"
+  direction: "next" | "prev",
 ): WizardStepId | null => {
   const currentIndex = WIZARD_STEP_ORDER.indexOf(currentStep);
   if (currentIndex === -1) return null;
@@ -223,7 +230,7 @@ function WizardStepComponent() {
   const hierarchicalMethodsMap = HIERARCHY;
 
   const step: WizardStepId = WIZARD_STEP_ORDER.includes(
-    params.step as WizardStepId
+    params.step as WizardStepId,
   )
     ? (params.step as WizardStepId)
     : "welcome";
@@ -268,7 +275,7 @@ function WizardStepComponent() {
               variant={buttonVariant}
               className={cn(
                 "flex items-center justify-start gap-2 p-3 h-auto w-full border whitespace-normal",
-                isParent && "font-medium"
+                isParent && "font-medium",
               )}
               onClick={() => {
                 if (isParent) {
@@ -311,7 +318,7 @@ function WizardStepComponent() {
                 <ChevronRight
                   className={cn(
                     "h-5 w-5 transition-transform duration-200",
-                    isExpanded && "rotate-90"
+                    isExpanded && "rotate-90",
                   )}
                 />
               )}
@@ -408,7 +415,7 @@ function WizardStepComponent() {
                   onClick={() =>
                     setSavedCondition(
                       key as keyof typeof savedConditions,
-                      !savedConditions[key as keyof typeof savedConditions]
+                      !savedConditions[key as keyof typeof savedConditions],
                     )
                   }
                 >
@@ -432,7 +439,7 @@ function WizardStepComponent() {
             {Array.from(savedPaymentMethods)
               .filter((method) => method in WALLET_ICONS)
               .map(
-                (method) => WALLET_ICONS[method as keyof typeof WALLET_ICONS]
+                (method) => WALLET_ICONS[method as keyof typeof WALLET_ICONS],
               )
               .filter((logo, index, array) => array.indexOf(logo) === index)
               .map((logo, i) => (
@@ -469,7 +476,7 @@ function WizardStepComponent() {
             transition={{ duration: 0.3, delay: 0.2 * index }}
             className={cn(
               "flex items-start gap-2",
-              message.isUser ? "justify-end" : "justify-start"
+              message.isUser ? "justify-end" : "justify-start",
             )}
           >
             {!message.isUser && (
@@ -486,7 +493,7 @@ function WizardStepComponent() {
                 "rounded-lg px-3 py-2 max-w-[85%] relative",
                 message.isUser
                   ? "bg-primary text-primary-foreground"
-                  : "bg-muted before:content-[''] before:absolute before:left-[-8px] before:top-0 before:w-4 before:h-4 before:bg-muted before:rounded-bl-lg before:[clip-path:polygon(0_0,100%_100%,100%_0)]"
+                  : "bg-muted before:content-[''] before:absolute before:left-[-8px] before:top-0 before:w-4 before:h-4 before:bg-muted before:rounded-bl-lg before:[clip-path:polygon(0_0,100%_100%,100%_0)]",
               )}
             >
               {message.text}

@@ -1,16 +1,15 @@
 import * as React from "react";
 import { motion } from "framer-motion";
-import {
-  Dialog,
-  DialogContent,
-} from "./ui/dialog";
+import { Dialog, DialogContent } from "./ui/dialog";
 import { Button } from "./ui/button";
 
 export function DisclaimerPopup() {
   const [isOpen, setIsOpen] = React.useState(false);
 
   React.useEffect(() => {
-    const hasSeenDisclaimer = localStorage.getItem("descuentito-disclaimer-seen");
+    const hasSeenDisclaimer = localStorage.getItem(
+      "descuentito-disclaimer-seen",
+    );
     if (!hasSeenDisclaimer) {
       setIsOpen(true);
     }
@@ -39,22 +38,22 @@ export function DisclaimerPopup() {
           </div>
           <div className="bg-muted rounded-lg px-4 py-3 relative before:content-[''] before:absolute before:left-[-8px] before:top-3 before:w-4 before:h-4 before:bg-muted before:rounded-bl-lg before:[clip-path:polygon(0_0,100%_100%,100%_0)]">
             <p className="mb-3">
-              ¡Hola! Soy Descuentín 🛒 Te ayudo a encontrar descuentos, pero mis datos son automáticos...
+              ¡Hola! Soy Descuentín 🛒 Te ayudo a encontrar descuentos, pero mis
+              datos son automáticos...
             </p>
             <p className="mb-3">
               Por favor siempre verificá en la web oficial:
             </p>
             <p className="mb-3">
-              ✓ Vigencia del descuento<br/>
-              ✓ Términos y condiciones<br/>
-              ✓ Tu medio de pago aplica
+              ✓ Vigencia del descuento
+              <br />
+              ✓ Términos y condiciones
+              <br />✓ Tu medio de pago aplica
             </p>
-            <p>
-              ¡Verificar nunca está de más! 😊
-            </p>
+            <p>¡Verificar nunca está de más! 😊</p>
           </div>
         </motion.div>
-        
+
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

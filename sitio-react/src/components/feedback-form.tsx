@@ -122,21 +122,21 @@ export const FeedbackForm: React.FC<{
     </Button>
   );
 
-  const dialogTitle = title || (discount 
-    ? "Reportar un problema en este descuento"
-    : "Reportar un problema"
-  );
+  const dialogTitle =
+    title ||
+    (discount
+      ? "Reportar un problema en este descuento"
+      : "Reportar un problema");
 
-  const dialogDescription = description || (discount
-    ? "¿Encontraste un error o algo incorrecto en este descuento? Por favor, contanos qué viste."
-    : "¿Encontraste un error o algo incorrecto en la página? Por favor, contanos qué viste."
-  );
+  const dialogDescription =
+    description ||
+    (discount
+      ? "¿Encontraste un error o algo incorrecto en este descuento? Por favor, contanos qué viste."
+      : "¿Encontraste un error o algo incorrecto en la página? Por favor, contanos qué viste.");
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        {trigger || defaultTrigger}
-      </DialogTrigger>
+      <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{dialogTitle}</DialogTitle>
@@ -205,7 +205,8 @@ export const FeedbackForm: React.FC<{
 
             {feedbackMutation.isError && (
               <div className="text-red-600 text-xs mt-1">
-                {feedbackMutation.error?.message || "Error al enviar el reporte"}
+                {feedbackMutation.error?.message ||
+                  "Error al enviar el reporte"}
               </div>
             )}
           </form>

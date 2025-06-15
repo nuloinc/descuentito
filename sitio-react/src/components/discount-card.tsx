@@ -76,7 +76,7 @@ export const PaymentMethodLogo = ({
             src={WALLET_ICONS[method.split(" - ")[0]]}
             alt={method}
             className={cn(
-              "h-6 w-6 rounded-sm object-contain ring-1 ring-yellow-400"
+              "h-6 w-6 rounded-sm object-contain ring-1 ring-yellow-400",
             )}
           />
         </div>
@@ -107,7 +107,7 @@ export const PaymentMethodLogo = ({
 
 const getRestrictionSummary = async (
   text: string,
-  long = false
+  long = false,
 ): Promise<string> => {
   if (!text) return "";
   const upperText = text
@@ -188,7 +188,7 @@ export const ExcludesProductsSummary: React.FC<{
   const { summary: excludesProductsSummary, isLoading: isLoadingExcludes } =
     useRestrictionSummary(
       isDrawerOpen ? discount.excludesProducts : undefined,
-      true
+      true,
     );
   const summarySucks =
     excludesProductsSummary.length > 0 &&
@@ -257,12 +257,12 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
     return (
       discount.paymentMethods
         ?.flatMap((method: string | string[]) =>
-          Array.isArray(method) ? method : [method]
+          Array.isArray(method) ? method : [method],
         )
         .filter((method) => WALLET_ICONS[method.split(" - ")[0]])
         .filter(
           (v, i, a) =>
-            a.findIndex((v2) => WALLET_ICONS[v2] === WALLET_ICONS[v]) === i
+            a.findIndex((v2) => WALLET_ICONS[v2] === WALLET_ICONS[v]) === i,
         )
         .filter((method) => {
           if (!shouldFilterByPaymentMethods) return true;
@@ -392,7 +392,7 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                 <div
                   className={cn(
                     "grid flex-shrink-0 gap-1 ml-2",
-                    getPaymentMethodGridCols(paymentMethodIcons.length)
+                    getPaymentMethodGridCols(paymentMethodIcons.length),
                   )}
                 >
                   {" "}
@@ -478,7 +478,7 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                             </div>
                           ) : (
                             <PaymentMethodLogo key={idx} method={methods} />
-                          )
+                          ),
                       )}
                     </div>
                   </div>
@@ -539,7 +539,7 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                     {discount.restrictions.map(
                       (restriction: string, idx: number) => (
                         <li key={idx}>{restriction}</li>
-                      )
+                      ),
                     )}
                   </ul>
                 </div>

@@ -16,5 +16,5 @@ hydrateRoot(
     }}
   >
     <StartClient router={router} />
-  </PostHogProvider>
+  </PostHogProvider>,
 );
