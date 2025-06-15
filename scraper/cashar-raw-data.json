@@ -1,0 +1,759 @@
+[
+  {
+    "source": "cashar.pro",
+    "store": "ChangoMas, MasOnline, Vital, Jumbo/Disco/Vea",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "DIA + online",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "COTO online",
+    "paymentMethod": "Reba Crédito AmEx",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Reba Crédito AmEx Black",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "COTO",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Credicoop Cabal + MODO",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "TCI (кредитка COTO)",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Carrefour Express",
+    "paymentMethod": "Mastercard",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "🔥Mastercard + NFC",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Carrefour Maxi",
+    "paymentMethod": "Mercado Pago QR",
+    "discount": "5%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Carrefour Online",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "ChangoMas/MasOnline",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "ChangoMas/Online",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Vea",
+    "paymentMethod": "🔥Mercado Pago QR",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Diarco",
+    "paymentMethod": "Comafi + MODO",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Maxiconsumo",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Mercado Pago QR",
+    "discount": "5%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "ChangoMas, Diarco, Makro, Jumbo/Disco/Vea, и др",
+    "paymentMethod": "🔥Hipotecario Visa + MODO",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Hipotecario Visa + MODO(з/п счет, пенсионеры и др)",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "COTO, Jumbo/Disco/Vea, ChangoMas, Toledo и др",
+    "paymentMethod": "Supervielle + MODO",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Supervielle(з/п счет) + MODO",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "DIA/DIA online, Carrefour, Changomas, Jumbo/Vea/Disco, La Anónima и др.",
+    "paymentMethod": "🔥Santa Fe Crédito + MODO",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "DIA online",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "DIA + Online",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Banco Del Sol Débito",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Carrefour + Online",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "ChangoMas / MasOnline",
+    "paymentMethod": "Comafi + MODO",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "🔥Mercado Pago QR",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Jumbo/Vea/Disco",
+    "paymentMethod": "Mastercard",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Mastercard + NFC",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Jumbo/Vea/Disco Online",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Diarco",
+    "paymentMethod": "Comafi + MODO",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Maxiconsumo",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Mercado Pago QR",
+    "discount": "5%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "🔥Nación Crédito + MODO",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Carrefour, Diarco, Makro, Vital,ChangoMas/MasOnline",
+    "paymentMethod": "Macro Crédito + MODO",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Macro Crédito PLATINUM + MODO",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Macro Crédito SELECTA + MODO",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "DIA",
+    "paymentMethod": "🔥Mercado Pago QR",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "DIA + Online",
+    "paymentMethod": "🔥Santander Visa Sorpresa + MODO",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "COTO",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Carrefour",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Carrefour Online",
+    "paymentMethod": "🔥Santander Visa Crédito",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Macro Crédito PLATINUM + MODO",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Macro Crédito SELECTA + MODO",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "30%",
+    "store": "🔴Не суммируется со скидками магазина. Не включает бытовую технику, электронику, телефоны, свежее мясо и товары марки Carrefour"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Jumbo/Disco/Vea",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Jumbo/Disco/Vea Online",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Diarco",
+    "paymentMethod": "Comafi + MODO",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Santa Fe Crédito + MODO",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Santa Cruz Crédito + MODO",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "ChangoMas",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "San Juan Crédito + MODO",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Banco de Corrientes + MODO",
+    "discount": "🟡Суммирование скидок под вопросом+5% безлимитный кэшбэк"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Makro, Vital",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Maxiconsumo",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "DIA/DIA OnlineCarrefourJumbo/Disco/Vea ChangoMas/MasOnline и др.",
+    "paymentMethod": "Entre Ríos Crédito + MODO",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "DIA",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "35%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "DIA Online",
+    "paymentMethod": "🔥Galicia Visa + MODO",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "🔥Galicia Éminent + MODO",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "COTO",
+    "paymentMethod": "Columbia Visa Débito",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Columbia Visa/MC Crédito",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "🔥Comafi Visa Débito",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "🔥ICBC Visa Débito",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Carrefour",
+    "paymentMethod": "🔥Mercado Pago QR",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Carrefour online",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Mastercard Crédito",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "🔴Не суммируется со скидками магазина, не действует в VEA/DISCO EXPRESS*только на определенные категории товаров",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "🔥Galicia Visa + MODO",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "🔥Galicia Éminent + MODO",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Jumbo/Disco/VeaOnline",
+    "paymentMethod": "AmEx",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "AmEx Platinum",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Maxiconsumo, Macro, Diarco, Vital",
+    "paymentMethod": "Credicoop Cabal + MODO",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Credicoop Cabal (з/п счет) + MODO",
+    "discount": "35%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Diarco",
+    "paymentMethod": "Comafi + MODO",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Makro, Vital",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Maxiconsumo",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "ChangoMas/MasOnline",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "🔥ICBC + MODO",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "ICBC (з/п счет) + MODO",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "🔥YoY + MODO",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Patagonia Crédito + MODO",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Patagonia Crédito Singular + MODO",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Credicoop Cabal Crédito + MODO",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Banco de Entre Ríos + MODO",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Banco de Corrientes + MODO",
+    "discount": "🟡Суммирование скидок под вопросом+5% безлимитный кэшбэк"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Diarco, La AnonimaVital, Makro",
+    "paymentMethod": "🔥MODO+Galicia, Ciudad, YOY, Buepp, Nacion, Macro и др банки.",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "DIA + Online",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "COTO",
+    "paymentMethod": "🔥Mercado Pago QR",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Carrefour",
+    "paymentMethod": "🔥Santander Visa + MODO",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Carrefour Maxi",
+    "paymentMethod": "🔥Mercado Pago QR",
+    "discount": "10%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Carrefour Online",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Diarco",
+    "paymentMethod": "Comafi + MODO",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "ChangoMas/ MasOnline",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Santa Cruz Crédito + MODO",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Galicia Éminent Crédito + MODO",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Galicia Crédito + MODO",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Maxiconsumo",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Diarco, Vital,La Anonima, Makro",
+    "paymentMethod": "🔥MODO+Galicia, Ciudad, YOY, Buepp, Nacion, Macro и др банки.",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "DIA+online",
+    "paymentMethod": "🔥MODO+Galicia, Ciudad, YOY, Buepp, Nacion, Macro и др банки.",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "COTO",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "🔥Mercado Pago QR",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "🔥Nación Crédito + MODO",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Jumbo/Vea/Disco",
+    "paymentMethod": "🔥Patagonia Crédito + MODO",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Carrefour Maxi",
+    "paymentMethod": "Mercado Pago QR",
+    "discount": "5%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Carrefour",
+    "paymentMethod": "BBVA Crédito(з/п счет) + MODO",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Carrefour Online",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Diarco",
+    "paymentMethod": "Comafi + MODO",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "🔥Mercado Pago QR",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "ChangoMas/MasOnline",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Maxiconsumo",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "5%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "COTO",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "🔥Mercado Pago QR",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "🔥Nación Crédito + MODO",
+    "discount": "30%"
+  },
+  {
+    "source": "cashar.pro",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Carrefour Online",
+    "discount": "15%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Carrefour Maxi",
+    "paymentMethod": "Mercado Pago QR",
+    "discount": "5%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "ChangoMas/MasOnline",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "ChangoMas",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Diarco",
+    "paymentMethod": "🔥Comafi + MODO",
+    "discount": "20%"
+  },
+  {
+    "source": "cashar.pro",
+    "store": "Maxiconsumo",
+    "discount": "25%"
+  },
+  {
+    "source": "cashar.pro",
+    "paymentMethod": "Mercado Pago QR",
+    "discount": "5%"
+  }
+]

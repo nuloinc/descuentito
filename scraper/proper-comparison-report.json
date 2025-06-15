@@ -1,0 +1,4419 @@
+{
+  "timestamp": "2025-06-15T14:54:40.133Z",
+  "casharByDay": {
+    "Monday": [
+      {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "20%",
+        "store": "ChangoMas, MasOnline, Vital, Jumbo/Disco/Vea",
+        "paymentMethod": "Ciudad Crédito"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "20%",
+        "store": "DIA + online",
+        "paymentMethod": "Columbia Crédito"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "25%",
+        "store": "COTO online",
+        "paymentMethod": "Reba Crédito AmEx"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "25%",
+        "store": "COTO",
+        "paymentMethod": "Ciudad Crédito"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "20%",
+        "store": "TCI (кредитка COTO)"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "15%",
+        "store": "Carrefour Express",
+        "paymentMethod": "Mastercard"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "5%",
+        "store": "Carrefour Maxi",
+        "paymentMethod": "Mercado Pago QR"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "15%",
+        "store": "Carrefour Online",
+        "paymentMethod": "MiCarrefour Prepaga/Crédito"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "20%",
+        "store": "ChangoMas/MasOnline"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "15%",
+        "store": "ChangoMas/Online"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "20%",
+        "store": "Vea",
+        "paymentMethod": "🔥Mercado Pago QR"
+      }
+    ],
+    "Tuesday": [
+      {
+        "source": "cashar.pro",
+        "day": "Tuesday",
+        "discount": "25%",
+        "store": "ChangoMas, Diarco, Makro, Jumbo/Disco/Vea, и др",
+        "paymentMethod": "🔥Hipotecario Visa + MODO"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Tuesday",
+        "discount": "20%",
+        "store": "COTO, Jumbo/Disco/Vea, ChangoMas, Toledo и др",
+        "paymentMethod": "Supervielle + MODO"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Tuesday",
+        "discount": "30%",
+        "store": "DIA/DIA online, Carrefour, Changomas, Jumbo/Vea/Disco, La Anónima и др.",
+        "paymentMethod": "🔥Santa Fe Crédito + MODO"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Tuesday",
+        "discount": "25%",
+        "store": "DIA online",
+        "paymentMethod": "🔥Naranja X Crédito"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Tuesday",
+        "discount": "20%",
+        "store": "DIA + Online"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Tuesday",
+        "discount": "20%",
+        "store": "Carrefour + Online",
+        "paymentMethod": "🔥MiCarrefour Prepaga/Crédito"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Tuesday",
+        "discount": "20%",
+        "store": "ChangoMas / MasOnline",
+        "paymentMethod": "Comafi + MODO"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Tuesday",
+        "discount": "15%",
+        "store": "Jumbo/Vea/Disco",
+        "paymentMethod": "Mastercard"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Tuesday",
+        "discount": "25%",
+        "store": "Jumbo/Vea/Disco Online",
+        "paymentMethod": "Naranja X Crédito*"
+      }
+    ],
+    "Wednesday": [
+      {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "20%",
+        "store": "Carrefour, Diarco, Makro, Vital,ChangoMas/MasOnline",
+        "paymentMethod": "Macro Crédito + MODO"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "15%",
+        "store": "DIA",
+        "paymentMethod": "🔥Mercado Pago QR"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "25%",
+        "store": "DIA + Online",
+        "paymentMethod": "🔥Santander Visa Sorpresa + MODO"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "15%",
+        "store": "COTO"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "15%",
+        "store": "Carrefour",
+        "paymentMethod": "Patagonia"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "25%",
+        "store": "Carrefour Online",
+        "paymentMethod": "🔥Santander Visa Crédito"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "30%",
+        "store": "🔴Не суммируется со скидками магазина. Не включает бытовую технику, электронику, телефоны, свежее мясо и товары марки Carrefour",
+        "paymentMethod": "Patagonia Crédito SINGULAR"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "30%",
+        "store": "Jumbo/Disco/Vea",
+        "paymentMethod": "Santander (Black, Platinum, з/п счет)"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "20%",
+        "store": "Jumbo/Disco/Vea Online",
+        "paymentMethod": "🔥Cencopay Crédito"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "25%",
+        "store": "ChangoMas"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "25%",
+        "store": "Makro, Vital"
+      }
+    ],
+    "Thursday": [
+      {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "30%",
+        "store": "DIA/DIA OnlineCarrefourJumbo/Disco/Vea ChangoMas/MasOnline и др.",
+        "paymentMethod": "Entre Ríos Crédito + MODO"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "25%",
+        "store": "DIA"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "20%",
+        "store": "DIA Online",
+        "paymentMethod": "🔥Galicia Visa + MODO"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "20%",
+        "store": "COTO",
+        "paymentMethod": "Columbia Visa Débito"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "15%",
+        "store": "Carrefour",
+        "paymentMethod": "🔥Mercado Pago QR"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "20%",
+        "store": "Carrefour online",
+        "paymentMethod": "🔥MiCarrefourPrepaga/Crédito"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "25%",
+        "store": "Jumbo/Disco/Vea",
+        "paymentMethod": "🔥CencoPay Crédito*"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "25%",
+        "store": "Jumbo/Disco/VeaOnline",
+        "paymentMethod": "AmEx"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "25%",
+        "store": "Makro, Vital"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "25%",
+        "store": "ChangoMas/MasOnline"
+      }
+    ],
+    "Friday": [
+      {
+        "source": "cashar.pro",
+        "day": "Friday",
+        "discount": "25%",
+        "store": "Diarco, La AnonimaVital, Makro",
+        "paymentMethod": "🔥MODO+Galicia, Ciudad, YOY, Buepp, Nacion, Macro и др банки."
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Friday",
+        "discount": "20%",
+        "store": "DIA + Online",
+        "paymentMethod": "Columbia Crédito"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Friday",
+        "discount": "25%",
+        "store": "COTO",
+        "paymentMethod": "🔥Mercado Pago QR"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Friday",
+        "discount": "25%",
+        "store": "Carrefour",
+        "paymentMethod": "🔥Santander Visa + MODO"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Friday",
+        "discount": "10%",
+        "store": "Carrefour Maxi",
+        "paymentMethod": "🔥Mercado Pago QR"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Friday",
+        "discount": "15%",
+        "store": "Carrefour Online",
+        "paymentMethod": "MiCarrefour Prepaga/Crédito"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Friday",
+        "discount": "20%",
+        "store": "ChangoMas/ MasOnline"
+      }
+    ],
+    "Saturday": [
+      {
+        "source": "cashar.pro",
+        "day": "Saturday",
+        "discount": "25%",
+        "store": "Diarco, Vital,La Anonima, Makro",
+        "paymentMethod": "🔥MODO+Galicia, Ciudad, YOY, Buepp, Nacion, Macro и др банки."
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Saturday",
+        "discount": "20%",
+        "store": "DIA+online",
+        "paymentMethod": "🔥MODO+Galicia, Ciudad, YOY, Buepp, Nacion, Macro и др банки."
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Saturday",
+        "discount": "20%",
+        "store": "COTO"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Saturday",
+        "discount": "20%",
+        "store": "Jumbo/Vea/Disco",
+        "paymentMethod": "🔥Patagonia Crédito + MODO"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Saturday",
+        "discount": "5%",
+        "store": "Carrefour Maxi",
+        "paymentMethod": "Mercado Pago QR"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Saturday",
+        "discount": "25%",
+        "store": "Carrefour",
+        "paymentMethod": "BBVA Crédito(з/п счет) + MODO"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Saturday",
+        "discount": "15%",
+        "store": "Carrefour Online",
+        "paymentMethod": "MiCarrefour Prepaga/Crédito"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Saturday",
+        "discount": "20%",
+        "store": "ChangoMas/MasOnline"
+      }
+    ],
+    "Sunday": [
+      {
+        "source": "cashar.pro",
+        "day": "Sunday",
+        "discount": "20%",
+        "store": "COTO"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Sunday",
+        "discount": "15%",
+        "store": "Carrefour Online",
+        "paymentMethod": "MiCarrefour Prepaga/Crédito"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Sunday",
+        "discount": "5%",
+        "store": "Carrefour Maxi",
+        "paymentMethod": "Mercado Pago QR"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Sunday",
+        "discount": "20%",
+        "store": "ChangoMas/MasOnline"
+      },
+      {
+        "source": "cashar.pro",
+        "day": "Sunday",
+        "discount": "20%",
+        "store": "ChangoMas",
+        "paymentMethod": "Naranja X Crédito"
+      }
+    ]
+  },
+  "casharStructured": [
+    {
+      "store": "jumbo",
+      "percentage": 20,
+      "paymentMethod": "ciudadcred",
+      "weekday": "lunes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "20%",
+        "store": "ChangoMas, MasOnline, Vital, Jumbo/Disco/Vea",
+        "paymentMethod": "Ciudad Crédito"
+      }
+    },
+    {
+      "store": "dia",
+      "percentage": 20,
+      "paymentMethod": "columbiacred",
+      "weekday": "lunes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "20%",
+        "store": "DIA + online",
+        "paymentMethod": "Columbia Crédito"
+      }
+    },
+    {
+      "store": "coto",
+      "percentage": 25,
+      "paymentMethod": "amex",
+      "weekday": "lunes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "25%",
+        "store": "COTO online",
+        "paymentMethod": "Reba Crédito AmEx"
+      }
+    },
+    {
+      "store": "coto",
+      "percentage": 25,
+      "paymentMethod": "ciudadcred",
+      "weekday": "lunes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "25%",
+        "store": "COTO",
+        "paymentMethod": "Ciudad Crédito"
+      }
+    },
+    {
+      "store": "coto",
+      "percentage": 20,
+      "paymentMethod": "any",
+      "weekday": "lunes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "20%",
+        "store": "TCI (кредитка COTO)"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "master",
+      "weekday": "lunes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "15%",
+        "store": "Carrefour Express",
+        "paymentMethod": "Mastercard"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 5,
+      "paymentMethod": "mercadopago",
+      "weekday": "lunes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "5%",
+        "store": "Carrefour Maxi",
+        "paymentMethod": "Mercado Pago QR"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "micarrefourprepaga/cred",
+      "weekday": "lunes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "15%",
+        "store": "Carrefour Online",
+        "paymentMethod": "MiCarrefour Prepaga/Crédito"
+      }
+    },
+    {
+      "store": "changomas",
+      "percentage": 20,
+      "paymentMethod": "any",
+      "weekday": "lunes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "20%",
+        "store": "ChangoMas/MasOnline"
+      }
+    },
+    {
+      "store": "changomas",
+      "percentage": 15,
+      "paymentMethod": "any",
+      "weekday": "lunes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Monday",
+        "discount": "15%",
+        "store": "ChangoMas/Online"
+      }
+    },
+    {
+      "store": "dia",
+      "percentage": 25,
+      "paymentMethod": "visa",
+      "weekday": "martes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Tuesday",
+        "discount": "25%",
+        "store": "ChangoMas, Diarco, Makro, Jumbo/Disco/Vea, и др",
+        "paymentMethod": "🔥Hipotecario Visa + MODO"
+      }
+    },
+    {
+      "store": "coto",
+      "percentage": 20,
+      "paymentMethod": "modo",
+      "weekday": "martes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Tuesday",
+        "discount": "20%",
+        "store": "COTO, Jumbo/Disco/Vea, ChangoMas, Toledo и др",
+        "paymentMethod": "Supervielle + MODO"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 30,
+      "paymentMethod": "modo",
+      "weekday": "martes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Tuesday",
+        "discount": "30%",
+        "store": "DIA/DIA online, Carrefour, Changomas, Jumbo/Vea/Disco, La Anónima и др.",
+        "paymentMethod": "🔥Santa Fe Crédito + MODO"
+      }
+    },
+    {
+      "store": "dia",
+      "percentage": 25,
+      "paymentMethod": "naranjaxcred",
+      "weekday": "martes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Tuesday",
+        "discount": "25%",
+        "store": "DIA online",
+        "paymentMethod": "🔥Naranja X Crédito"
+      }
+    },
+    {
+      "store": "dia",
+      "percentage": 20,
+      "paymentMethod": "any",
+      "weekday": "martes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Tuesday",
+        "discount": "20%",
+        "store": "DIA + Online"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 20,
+      "paymentMethod": "micarrefourprepaga/cred",
+      "weekday": "martes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Tuesday",
+        "discount": "20%",
+        "store": "Carrefour + Online",
+        "paymentMethod": "🔥MiCarrefour Prepaga/Crédito"
+      }
+    },
+    {
+      "store": "changomas",
+      "percentage": 20,
+      "paymentMethod": "modo",
+      "weekday": "martes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Tuesday",
+        "discount": "20%",
+        "store": "ChangoMas / MasOnline",
+        "paymentMethod": "Comafi + MODO"
+      }
+    },
+    {
+      "store": "jumbo",
+      "percentage": 15,
+      "paymentMethod": "master",
+      "weekday": "martes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Tuesday",
+        "discount": "15%",
+        "store": "Jumbo/Vea/Disco",
+        "paymentMethod": "Mastercard"
+      }
+    },
+    {
+      "store": "jumbo",
+      "percentage": 25,
+      "paymentMethod": "naranjaxcred*",
+      "weekday": "martes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Tuesday",
+        "discount": "25%",
+        "store": "Jumbo/Vea/Disco Online",
+        "paymentMethod": "Naranja X Crédito*"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 20,
+      "paymentMethod": "modo",
+      "weekday": "miercoles",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "20%",
+        "store": "Carrefour, Diarco, Makro, Vital,ChangoMas/MasOnline",
+        "paymentMethod": "Macro Crédito + MODO"
+      }
+    },
+    {
+      "store": "dia",
+      "percentage": 15,
+      "paymentMethod": "mercadopago",
+      "weekday": "miercoles",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "15%",
+        "store": "DIA",
+        "paymentMethod": "🔥Mercado Pago QR"
+      }
+    },
+    {
+      "store": "dia",
+      "percentage": 25,
+      "paymentMethod": "visa",
+      "weekday": "miercoles",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "25%",
+        "store": "DIA + Online",
+        "paymentMethod": "🔥Santander Visa Sorpresa + MODO"
+      }
+    },
+    {
+      "store": "coto",
+      "percentage": 15,
+      "paymentMethod": "any",
+      "weekday": "miercoles",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "15%",
+        "store": "COTO"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "patagonia",
+      "weekday": "miercoles",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "15%",
+        "store": "Carrefour",
+        "paymentMethod": "Patagonia"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 25,
+      "paymentMethod": "visa",
+      "weekday": "miercoles",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "25%",
+        "store": "Carrefour Online",
+        "paymentMethod": "🔥Santander Visa Crédito"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 30,
+      "paymentMethod": "patagoniacredsingular",
+      "weekday": "miercoles",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "30%",
+        "store": "🔴Не суммируется со скидками магазина. Не включает бытовую технику, электронику, телефоны, свежее мясо и товары марки Carrefour",
+        "paymentMethod": "Patagonia Crédito SINGULAR"
+      }
+    },
+    {
+      "store": "jumbo",
+      "percentage": 30,
+      "paymentMethod": "santanr(black,platinum,з/псчет)",
+      "weekday": "miercoles",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "30%",
+        "store": "Jumbo/Disco/Vea",
+        "paymentMethod": "Santander (Black, Platinum, з/п счет)"
+      }
+    },
+    {
+      "store": "jumbo",
+      "percentage": 20,
+      "paymentMethod": "cencopaycred",
+      "weekday": "miercoles",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "20%",
+        "store": "Jumbo/Disco/Vea Online",
+        "paymentMethod": "🔥Cencopay Crédito"
+      }
+    },
+    {
+      "store": "changomas",
+      "percentage": 25,
+      "paymentMethod": "any",
+      "weekday": "miercoles",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "25%",
+        "store": "ChangoMas"
+      }
+    },
+    {
+      "store": "makro",
+      "percentage": 25,
+      "paymentMethod": "any",
+      "weekday": "miercoles",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Wednesday",
+        "discount": "25%",
+        "store": "Makro, Vital"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 30,
+      "paymentMethod": "modo",
+      "weekday": "jueves",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "30%",
+        "store": "DIA/DIA OnlineCarrefourJumbo/Disco/Vea ChangoMas/MasOnline и др.",
+        "paymentMethod": "Entre Ríos Crédito + MODO"
+      }
+    },
+    {
+      "store": "dia",
+      "percentage": 25,
+      "paymentMethod": "any",
+      "weekday": "jueves",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "25%",
+        "store": "DIA"
+      }
+    },
+    {
+      "store": "dia",
+      "percentage": 20,
+      "paymentMethod": "visa",
+      "weekday": "jueves",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "20%",
+        "store": "DIA Online",
+        "paymentMethod": "🔥Galicia Visa + MODO"
+      }
+    },
+    {
+      "store": "coto",
+      "percentage": 20,
+      "paymentMethod": "visa",
+      "weekday": "jueves",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "20%",
+        "store": "COTO",
+        "paymentMethod": "Columbia Visa Débito"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "mercadopago",
+      "weekday": "jueves",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "15%",
+        "store": "Carrefour",
+        "paymentMethod": "🔥Mercado Pago QR"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 20,
+      "paymentMethod": "micarrefourprepaga/cred",
+      "weekday": "jueves",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "20%",
+        "store": "Carrefour online",
+        "paymentMethod": "🔥MiCarrefourPrepaga/Crédito"
+      }
+    },
+    {
+      "store": "jumbo",
+      "percentage": 25,
+      "paymentMethod": "cencopaycred*",
+      "weekday": "jueves",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "25%",
+        "store": "Jumbo/Disco/Vea",
+        "paymentMethod": "🔥CencoPay Crédito*"
+      }
+    },
+    {
+      "store": "jumbo",
+      "percentage": 25,
+      "paymentMethod": "amex",
+      "weekday": "jueves",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "25%",
+        "store": "Jumbo/Disco/VeaOnline",
+        "paymentMethod": "AmEx"
+      }
+    },
+    {
+      "store": "makro",
+      "percentage": 25,
+      "paymentMethod": "any",
+      "weekday": "jueves",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "25%",
+        "store": "Makro, Vital"
+      }
+    },
+    {
+      "store": "changomas",
+      "percentage": 25,
+      "paymentMethod": "any",
+      "weekday": "jueves",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Thursday",
+        "discount": "25%",
+        "store": "ChangoMas/MasOnline"
+      }
+    },
+    {
+      "store": "dia",
+      "percentage": 25,
+      "paymentMethod": "modo",
+      "weekday": "viernes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Friday",
+        "discount": "25%",
+        "store": "Diarco, La AnonimaVital, Makro",
+        "paymentMethod": "🔥MODO+Galicia, Ciudad, YOY, Buepp, Nacion, Macro и др банки."
+      }
+    },
+    {
+      "store": "dia",
+      "percentage": 20,
+      "paymentMethod": "columbiacred",
+      "weekday": "viernes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Friday",
+        "discount": "20%",
+        "store": "DIA + Online",
+        "paymentMethod": "Columbia Crédito"
+      }
+    },
+    {
+      "store": "coto",
+      "percentage": 25,
+      "paymentMethod": "mercadopago",
+      "weekday": "viernes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Friday",
+        "discount": "25%",
+        "store": "COTO",
+        "paymentMethod": "🔥Mercado Pago QR"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 25,
+      "paymentMethod": "visa",
+      "weekday": "viernes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Friday",
+        "discount": "25%",
+        "store": "Carrefour",
+        "paymentMethod": "🔥Santander Visa + MODO"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 10,
+      "paymentMethod": "mercadopago",
+      "weekday": "viernes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Friday",
+        "discount": "10%",
+        "store": "Carrefour Maxi",
+        "paymentMethod": "🔥Mercado Pago QR"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "micarrefourprepaga/cred",
+      "weekday": "viernes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Friday",
+        "discount": "15%",
+        "store": "Carrefour Online",
+        "paymentMethod": "MiCarrefour Prepaga/Crédito"
+      }
+    },
+    {
+      "store": "changomas",
+      "percentage": 20,
+      "paymentMethod": "any",
+      "weekday": "viernes",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Friday",
+        "discount": "20%",
+        "store": "ChangoMas/ MasOnline"
+      }
+    },
+    {
+      "store": "dia",
+      "percentage": 25,
+      "paymentMethod": "modo",
+      "weekday": "sabado",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Saturday",
+        "discount": "25%",
+        "store": "Diarco, Vital,La Anonima, Makro",
+        "paymentMethod": "🔥MODO+Galicia, Ciudad, YOY, Buepp, Nacion, Macro и др банки."
+      }
+    },
+    {
+      "store": "dia",
+      "percentage": 20,
+      "paymentMethod": "modo",
+      "weekday": "sabado",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Saturday",
+        "discount": "20%",
+        "store": "DIA+online",
+        "paymentMethod": "🔥MODO+Galicia, Ciudad, YOY, Buepp, Nacion, Macro и др банки."
+      }
+    },
+    {
+      "store": "coto",
+      "percentage": 20,
+      "paymentMethod": "any",
+      "weekday": "sabado",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Saturday",
+        "discount": "20%",
+        "store": "COTO"
+      }
+    },
+    {
+      "store": "jumbo",
+      "percentage": 20,
+      "paymentMethod": "modo",
+      "weekday": "sabado",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Saturday",
+        "discount": "20%",
+        "store": "Jumbo/Vea/Disco",
+        "paymentMethod": "🔥Patagonia Crédito + MODO"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 5,
+      "paymentMethod": "mercadopago",
+      "weekday": "sabado",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Saturday",
+        "discount": "5%",
+        "store": "Carrefour Maxi",
+        "paymentMethod": "Mercado Pago QR"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 25,
+      "paymentMethod": "modo",
+      "weekday": "sabado",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Saturday",
+        "discount": "25%",
+        "store": "Carrefour",
+        "paymentMethod": "BBVA Crédito(з/п счет) + MODO"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "micarrefourprepaga/cred",
+      "weekday": "sabado",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Saturday",
+        "discount": "15%",
+        "store": "Carrefour Online",
+        "paymentMethod": "MiCarrefour Prepaga/Crédito"
+      }
+    },
+    {
+      "store": "changomas",
+      "percentage": 20,
+      "paymentMethod": "any",
+      "weekday": "sabado",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Saturday",
+        "discount": "20%",
+        "store": "ChangoMas/MasOnline"
+      }
+    },
+    {
+      "store": "coto",
+      "percentage": 20,
+      "paymentMethod": "any",
+      "weekday": "domingo",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Sunday",
+        "discount": "20%",
+        "store": "COTO"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "micarrefourprepaga/cred",
+      "weekday": "domingo",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Sunday",
+        "discount": "15%",
+        "store": "Carrefour Online",
+        "paymentMethod": "MiCarrefour Prepaga/Crédito"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 5,
+      "paymentMethod": "mercadopago",
+      "weekday": "domingo",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Sunday",
+        "discount": "5%",
+        "store": "Carrefour Maxi",
+        "paymentMethod": "Mercado Pago QR"
+      }
+    },
+    {
+      "store": "changomas",
+      "percentage": 20,
+      "paymentMethod": "any",
+      "weekday": "domingo",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Sunday",
+        "discount": "20%",
+        "store": "ChangoMas/MasOnline"
+      }
+    },
+    {
+      "store": "changomas",
+      "percentage": 20,
+      "paymentMethod": "naranjaxcred",
+      "weekday": "domingo",
+      "source": "cashar",
+      "originalData": {
+        "source": "cashar.pro",
+        "day": "Sunday",
+        "discount": "20%",
+        "store": "ChangoMas",
+        "paymentMethod": "Naranja X Crédito"
+      }
+    }
+  ],
+  "ourStructured": [
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "master",
+      "weekday": "jueves",
+      "restrictions": "No válido para compras en cuotas.; No acumulable con otras promociones vigentes.; No válido para productos entregados ni vendidos por el fabricante.; No válido para pagos con 2 (dos) tarjetas.; No es acumulable con cupones de ticket más bajo.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 15
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Jueves"
+        ],
+        "restrictions": [
+          "No válido para compras en cuotas.",
+          "No acumulable con otras promociones vigentes.",
+          "No válido para productos entregados ni vendidos por el fabricante.",
+          "No válido para pagos con 2 (dos) tarjetas.",
+          "No es acumulable con cupones de ticket más bajo."
+        ],
+        "excludesProducts": "Bodegas Chandon, Leoncio Arizu, Terraza de los Andes, Trumpeter, La Rural, Rutini Wines, Bodega 33 Sur, Catena Zapata y Grupo Clos de los 7, Productos de la canasta de Precios Cuidados, Leches infantiles y maternizadas etapa 1 y 2, Electrodomésticos, Celulares, Productos de carnicería: carne vacuna, pollo, cerdo y embutidos ni conservadoras de cerveza.",
+        "paymentMethods": [
+          [
+            "Tarjeta de crédito Mastercard"
+          ],
+          [
+            "Tarjeta de débito Mastercard"
+          ],
+          [
+            "Tarjeta Prepaga Mastercard"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "explicitlyHasNoLimit": true
+        },
+        "where": [
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "master",
+      "weekday": "jueves",
+      "restrictions": "No válido para compras en cuotas.; No acumulable con otras promociones vigentes.; No válido para productos entregados ni vendidos por el fabricante.; No válido para pagos con 2 (dos) tarjetas.; No es acumulable con cupones de ticket más bajo.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 15
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Jueves"
+        ],
+        "restrictions": [
+          "No válido para compras en cuotas.",
+          "No acumulable con otras promociones vigentes.",
+          "No válido para productos entregados ni vendidos por el fabricante.",
+          "No válido para pagos con 2 (dos) tarjetas.",
+          "No es acumulable con cupones de ticket más bajo."
+        ],
+        "excludesProducts": "Bodegas Chandon, Leoncio Arizu, Terraza de los Andes, Trumpeter, La Rural, Rutini Wines, Bodega 33 Sur, Catena Zapata y Grupo Clos de los 7, Productos de la canasta de Precios Cuidados, Leches infantiles y maternizadas etapa 1 y 2, Electrodomésticos, Celulares, Productos de carnicería: carne vacuna, pollo, cerdo y embutidos ni conservadoras de cerveza.",
+        "paymentMethods": [
+          [
+            "Tarjeta de crédito Mastercard"
+          ],
+          [
+            "Tarjeta de débito Mastercard"
+          ],
+          [
+            "Tarjeta Prepaga Mastercard"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "explicitlyHasNoLimit": true
+        },
+        "where": [
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "master",
+      "weekday": "jueves",
+      "restrictions": "No válido para compras en cuotas.; No acumulable con otras promociones vigentes.; No válido para productos entregados ni vendidos por el fabricante.; No válido para pagos con 2 (dos) tarjetas.; No es acumulable con cupones de ticket más bajo.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 15
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Jueves"
+        ],
+        "restrictions": [
+          "No válido para compras en cuotas.",
+          "No acumulable con otras promociones vigentes.",
+          "No válido para productos entregados ni vendidos por el fabricante.",
+          "No válido para pagos con 2 (dos) tarjetas.",
+          "No es acumulable con cupones de ticket más bajo."
+        ],
+        "excludesProducts": "Bodegas Chandon, Leoncio Arizu, Terraza de los Andes, Trumpeter, La Rural, Rutini Wines, Bodega 33 Sur, Catena Zapata y Grupo Clos de los 7, Productos de la canasta de Precios Cuidados, Leches infantiles y maternizadas etapa 1 y 2, Electrodomésticos, Celulares, Productos de carnicería: carne vacuna, pollo, cerdo y embutidos ni conservadoras de cerveza.",
+        "paymentMethods": [
+          [
+            "Tarjeta de crédito Mastercard"
+          ],
+          [
+            "Tarjeta de débito Mastercard"
+          ],
+          [
+            "Tarjeta Prepaga Mastercard"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "explicitlyHasNoLimit": true
+        },
+        "where": [
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 20,
+      "paymentMethod": "master",
+      "weekday": "jueves",
+      "restrictions": "No acumulable con otras promociones vigentes.; No aplica a pagos a través de billeteras virtuales y/o plataformas de pago online (por ejemplo, PayPal, Todo Pago, Mercado Pago, Ualá, etc.) ni tarjetas de crédito corporativas y recargables.; No válida para pagos con 2 (dos) tarjetas.; No es acumulable con cupones de ticket más bajo.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 20
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Jueves"
+        ],
+        "restrictions": [
+          "No acumulable con otras promociones vigentes.",
+          "No aplica a pagos a través de billeteras virtuales y/o plataformas de pago online (por ejemplo, PayPal, Todo Pago, Mercado Pago, Ualá, etc.) ni tarjetas de crédito corporativas y recargables.",
+          "No válida para pagos con 2 (dos) tarjetas.",
+          "No es acumulable con cupones de ticket más bajo."
+        ],
+        "excludesProducts": "Electrodomésticos, telefonía, fotografía, informática, imagen, sonido, productos de Bodegas Chandon, Trumpeter, Leoncio Arizu, La Rural, Rutini Wines, Bodega 33° Sur, Catena Zapata, Terrazas de los Andes, Saint Felicien, Grupo Clos de los 7, leches infantiles y maternizadas etapas 1 y 2, carnicería (carne vacuna, pollo, cerdo y embutidos) y conservadoras de cerveza.",
+        "paymentMethods": [
+          [
+            "Tarjeta Carrefour Prepaga",
+            "Tarjeta de crédito Mastercard"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "explicitlyHasNoLimit": true
+        },
+        "where": [
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 20,
+      "paymentMethod": "master",
+      "weekday": "jueves",
+      "restrictions": "No acumulable con otras promociones vigentes.; No acumulable con cupones de ticket más bajo.; No válida para pagos con 2 (dos) tarjetas.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 20
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Jueves"
+        ],
+        "restrictions": [
+          "No acumulable con otras promociones vigentes.",
+          "No acumulable con cupones de ticket más bajo.",
+          "No válida para pagos con 2 (dos) tarjetas."
+        ],
+        "excludesProducts": "Electrodomésticos, telefonía, fotografía, informática, imagen, sonido, productos de bodegas Chandon, Trumpeter, Leoncio Arizu, La Rural, Rutini Wines, Bodega 33° Sur, Catena Zapata, Terrazas de los Andes, Saint Felicien, Grupo Clos de los 7, leches infantiles y maternizadas etapas 1 y 2, carnicería (carne vacuna, pollo, cerdo y embutidos) y conservadoras de cerveza.",
+        "paymentMethods": [
+          [
+            "Tarjeta Carrefour Crédito",
+            "Tarjeta de crédito Mastercard"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "explicitlyHasNoLimit": true
+        },
+        "where": [
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 25,
+      "paymentMethod": "visa",
+      "weekday": "miercoles",
+      "restrictions": "Promoción válida programando la entrega de tu compra para los días Miércoles de Junio de 2025.; Tope de $20.000 por mes y por cuenta.; No acumulable con otras promociones vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 25
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Miercoles"
+        ],
+        "restrictions": [
+          "Promoción válida programando la entrega de tu compra para los días Miércoles de Junio de 2025.",
+          "Tope de $20.000 por mes y por cuenta.",
+          "No acumulable con otras promociones vigentes."
+        ],
+        "excludesProducts": "Motos, cuatriciclos, bicicletas motorizadas, tractores, Bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Bodegas 33 Sur, Clos de los Siete, Catena Zapata, leches infantiles y maternizadas etapa 1 y 2, carnicería: carne vacuna, pollo, cortes de cerdos y embutidos, productos de la marca Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza.",
+        "paymentMethods": [
+          [
+            "Banco Santander",
+            "Tarjeta de crédito VISA"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 20000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 25,
+      "paymentMethod": "visa",
+      "weekday": "miercoles",
+      "restrictions": "Promoción válida programando la entrega de tu pedido para los días Miércoles de Junio de 2025.; No acumulable con otras promociones vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 25
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Miercoles"
+        ],
+        "restrictions": [
+          "Promoción válida programando la entrega de tu pedido para los días Miércoles de Junio de 2025.",
+          "No acumulable con otras promociones vigentes."
+        ],
+        "excludesProducts": "Motos, cuatriciclos, bicicletas motorizadas, tractores, bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Latitud 33, Clos de los Siete, Catena Zapata, productos de convenio de Precios Cuidados, leches infantiles y maternizadas etapa 1 y 2, carnicería: carne vacuna, pollo, cortes de cerdos y embutidos, productos de la marca Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza, electrodomésticos.",
+        "paymentMethods": [
+          [
+            "Banco Macro",
+            "Tarjeta de crédito VISA"
+          ],
+          [
+            "Banco Macro",
+            "Tarjeta de crédito Mastercard"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 10000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Online",
+          "Carrefour",
+          "Market",
+          "Express"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 25,
+      "paymentMethod": "master",
+      "weekday": "miercoles",
+      "restrictions": "Promoción válida programando la entrega de tu pedido para los días Miércoles de Junio de 2025.; No acumulable con otras promociones vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 25
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Miercoles"
+        ],
+        "restrictions": [
+          "Promoción válida programando la entrega de tu pedido para los días Miércoles de Junio de 2025.",
+          "No acumulable con otras promociones vigentes."
+        ],
+        "excludesProducts": "Motos, cuatriciclos, bicicletas motorizadas, tractores, bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Latitud 33, Clos de los Siete, Catena Zapata, productos de convenio de Precios Cuidados, leches infantiles y maternizadas etapa 1 y 2, carnicería: carne vacuna, pollo, cortes de cerdos y embutidos, productos de la marca Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza, electrodomésticos.",
+        "paymentMethods": [
+          [
+            "Banco Macro",
+            "Tarjeta de crédito VISA"
+          ],
+          [
+            "Banco Macro",
+            "Tarjeta de crédito Mastercard"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 10000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Online",
+          "Carrefour",
+          "Market",
+          "Express"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "visa",
+      "weekday": "miercoles",
+      "restrictions": "No acumulable con otras promociones vigentes; No incluye electrodomésticos, telefonía, fotografía, informática, imagen y sonido, motos, cuatriciclos, bicicletas motorizadas, tractores; No incluye las siguientes bodegas y marcas: Altaland, Araucana, Aruma, Caro, Casa de Herrero, Chandon, Cuchillo de Palo, El Enemigo, Laposta, Las Perdices, Luca, Malbec Argentino, Nicolás Catena, Ojo de Buen Cubero, Rutini, San Felipe y Valmont; No incluye leches infantiles y maternizadas etapa 1 y 2; No incluye carnicería: carne vacuna, pollo, cortes de cerdos y embutidos; No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 15
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Miercoles"
+        ],
+        "restrictions": [
+          "No acumulable con otras promociones vigentes",
+          "No incluye electrodomésticos, telefonía, fotografía, informática, imagen y sonido, motos, cuatriciclos, bicicletas motorizadas, tractores",
+          "No incluye las siguientes bodegas y marcas: Altaland, Araucana, Aruma, Caro, Casa de Herrero, Chandon, Cuchillo de Palo, El Enemigo, Laposta, Las Perdices, Luca, Malbec Argentino, Nicolás Catena, Ojo de Buen Cubero, Rutini, San Felipe y Valmont",
+          "No incluye leches infantiles y maternizadas etapa 1 y 2",
+          "No incluye carnicería: carne vacuna, pollo, cortes de cerdos y embutidos",
+          "No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza"
+        ],
+        "paymentMethods": [
+          [
+            "Banco Patagonia",
+            "Tarjeta de crédito VISA"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta de crédito Mastercard"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta American Express"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta de débito VISA"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta de débito Mastercard"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 10000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "master",
+      "weekday": "miercoles",
+      "restrictions": "No acumulable con otras promociones vigentes; No incluye electrodomésticos, telefonía, fotografía, informática, imagen y sonido, motos, cuatriciclos, bicicletas motorizadas, tractores; No incluye las siguientes bodegas y marcas: Altaland, Araucana, Aruma, Caro, Casa de Herrero, Chandon, Cuchillo de Palo, El Enemigo, Laposta, Las Perdices, Luca, Malbec Argentino, Nicolás Catena, Ojo de Buen Cubero, Rutini, San Felipe y Valmont; No incluye leches infantiles y maternizadas etapa 1 y 2; No incluye carnicería: carne vacuna, pollo, cortes de cerdos y embutidos; No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 15
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Miercoles"
+        ],
+        "restrictions": [
+          "No acumulable con otras promociones vigentes",
+          "No incluye electrodomésticos, telefonía, fotografía, informática, imagen y sonido, motos, cuatriciclos, bicicletas motorizadas, tractores",
+          "No incluye las siguientes bodegas y marcas: Altaland, Araucana, Aruma, Caro, Casa de Herrero, Chandon, Cuchillo de Palo, El Enemigo, Laposta, Las Perdices, Luca, Malbec Argentino, Nicolás Catena, Ojo de Buen Cubero, Rutini, San Felipe y Valmont",
+          "No incluye leches infantiles y maternizadas etapa 1 y 2",
+          "No incluye carnicería: carne vacuna, pollo, cortes de cerdos y embutidos",
+          "No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza"
+        ],
+        "paymentMethods": [
+          [
+            "Banco Patagonia",
+            "Tarjeta de crédito VISA"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta de crédito Mastercard"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta American Express"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta de débito VISA"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta de débito Mastercard"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 10000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "amex",
+      "weekday": "miercoles",
+      "restrictions": "No acumulable con otras promociones vigentes; No incluye electrodomésticos, telefonía, fotografía, informática, imagen y sonido, motos, cuatriciclos, bicicletas motorizadas, tractores; No incluye las siguientes bodegas y marcas: Altaland, Araucana, Aruma, Caro, Casa de Herrero, Chandon, Cuchillo de Palo, El Enemigo, Laposta, Las Perdices, Luca, Malbec Argentino, Nicolás Catena, Ojo de Buen Cubero, Rutini, San Felipe y Valmont; No incluye leches infantiles y maternizadas etapa 1 y 2; No incluye carnicería: carne vacuna, pollo, cortes de cerdos y embutidos; No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 15
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Miercoles"
+        ],
+        "restrictions": [
+          "No acumulable con otras promociones vigentes",
+          "No incluye electrodomésticos, telefonía, fotografía, informática, imagen y sonido, motos, cuatriciclos, bicicletas motorizadas, tractores",
+          "No incluye las siguientes bodegas y marcas: Altaland, Araucana, Aruma, Caro, Casa de Herrero, Chandon, Cuchillo de Palo, El Enemigo, Laposta, Las Perdices, Luca, Malbec Argentino, Nicolás Catena, Ojo de Buen Cubero, Rutini, San Felipe y Valmont",
+          "No incluye leches infantiles y maternizadas etapa 1 y 2",
+          "No incluye carnicería: carne vacuna, pollo, cortes de cerdos y embutidos",
+          "No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza"
+        ],
+        "paymentMethods": [
+          [
+            "Banco Patagonia",
+            "Tarjeta de crédito VISA"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta de crédito Mastercard"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta American Express"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta de débito VISA"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta de débito Mastercard"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 10000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "visa",
+      "weekday": "miercoles",
+      "restrictions": "No acumulable con otras promociones vigentes; No incluye electrodomésticos, telefonía, fotografía, informática, imagen y sonido, motos, cuatriciclos, bicicletas motorizadas, tractores; No incluye las siguientes bodegas y marcas: Altaland, Araucana, Aruma, Caro, Casa de Herrero, Chandon, Cuchillo de Palo, El Enemigo, Laposta, Las Perdices, Luca, Malbec Argentino, Nicolás Catena, Ojo de Buen Cubero, Rutini, San Felipe y Valmont; No incluye leches infantiles y maternizadas etapa 1 y 2; No incluye carnicería: carne vacuna, pollo, cortes de cerdos y embutidos; No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 15
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Miercoles"
+        ],
+        "restrictions": [
+          "No acumulable con otras promociones vigentes",
+          "No incluye electrodomésticos, telefonía, fotografía, informática, imagen y sonido, motos, cuatriciclos, bicicletas motorizadas, tractores",
+          "No incluye las siguientes bodegas y marcas: Altaland, Araucana, Aruma, Caro, Casa de Herrero, Chandon, Cuchillo de Palo, El Enemigo, Laposta, Las Perdices, Luca, Malbec Argentino, Nicolás Catena, Ojo de Buen Cubero, Rutini, San Felipe y Valmont",
+          "No incluye leches infantiles y maternizadas etapa 1 y 2",
+          "No incluye carnicería: carne vacuna, pollo, cortes de cerdos y embutidos",
+          "No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza"
+        ],
+        "paymentMethods": [
+          [
+            "Banco Patagonia",
+            "Tarjeta de crédito VISA"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta de crédito Mastercard"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta American Express"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta de débito VISA"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta de débito Mastercard"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 10000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "master",
+      "weekday": "miercoles",
+      "restrictions": "No acumulable con otras promociones vigentes; No incluye electrodomésticos, telefonía, fotografía, informática, imagen y sonido, motos, cuatriciclos, bicicletas motorizadas, tractores; No incluye las siguientes bodegas y marcas: Altaland, Araucana, Aruma, Caro, Casa de Herrero, Chandon, Cuchillo de Palo, El Enemigo, Laposta, Las Perdices, Luca, Malbec Argentino, Nicolás Catena, Ojo de Buen Cubero, Rutini, San Felipe y Valmont; No incluye leches infantiles y maternizadas etapa 1 y 2; No incluye carnicería: carne vacuna, pollo, cortes de cerdos y embutidos; No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 15
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Miercoles"
+        ],
+        "restrictions": [
+          "No acumulable con otras promociones vigentes",
+          "No incluye electrodomésticos, telefonía, fotografía, informática, imagen y sonido, motos, cuatriciclos, bicicletas motorizadas, tractores",
+          "No incluye las siguientes bodegas y marcas: Altaland, Araucana, Aruma, Caro, Casa de Herrero, Chandon, Cuchillo de Palo, El Enemigo, Laposta, Las Perdices, Luca, Malbec Argentino, Nicolás Catena, Ojo de Buen Cubero, Rutini, San Felipe y Valmont",
+          "No incluye leches infantiles y maternizadas etapa 1 y 2",
+          "No incluye carnicería: carne vacuna, pollo, cortes de cerdos y embutidos",
+          "No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza"
+        ],
+        "paymentMethods": [
+          [
+            "Banco Patagonia",
+            "Tarjeta de crédito VISA"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta de crédito Mastercard"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta American Express"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta de débito VISA"
+          ],
+          [
+            "Banco Patagonia",
+            "Tarjeta de débito Mastercard"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 10000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 10,
+      "paymentMethod": "carrefourprepaga",
+      "weekday": "lunes",
+      "restrictions": "Válido para clientes de Tarjeta Mi Carrefour Prepaga y Tarjeta Mi Carrefour Crédito entre 18 y 24 años.; No acumulable con otras promociones y/o descuentos vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 10
+        },
+        "validFrom": "2025-01-01",
+        "validUntil": "2025-12-31",
+        "weekdays": [
+          "Lunes",
+          "Martes",
+          "Miercoles",
+          "Jueves"
+        ],
+        "restrictions": [
+          "Válido para clientes de Tarjeta Mi Carrefour Prepaga y Tarjeta Mi Carrefour Crédito entre 18 y 24 años.",
+          "No acumulable con otras promociones y/o descuentos vigentes."
+        ],
+        "excludesProducts": "Motos, cuatriciclos, bicicletas motorizadas, tractores, bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Catena Zapata, Bodegas 33 Sur, Saint Felicien, Clos de los Siete, productos de convenio de Precios Justos, leches infantiles y maternizadas etapa 1 y 2, carnicería: carne vacuna, pollo, cortes de cerdos y embutidos.",
+        "paymentMethods": [
+          [
+            "Tarjeta Carrefour Prepaga"
+          ],
+          [
+            "Tarjeta Carrefour Crédito"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "appliesOnlyTo": {
+          "anses": false,
+          "jubilados": false,
+          "programaCiudadaniaPorteña": false
+        },
+        "limits": {
+          "maxDiscount": 10000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi",
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 10,
+      "paymentMethod": "carrefourcred",
+      "weekday": "lunes",
+      "restrictions": "Válido para clientes de Tarjeta Mi Carrefour Prepaga y Tarjeta Mi Carrefour Crédito entre 18 y 24 años.; No acumulable con otras promociones y/o descuentos vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 10
+        },
+        "validFrom": "2025-01-01",
+        "validUntil": "2025-12-31",
+        "weekdays": [
+          "Lunes",
+          "Martes",
+          "Miercoles",
+          "Jueves"
+        ],
+        "restrictions": [
+          "Válido para clientes de Tarjeta Mi Carrefour Prepaga y Tarjeta Mi Carrefour Crédito entre 18 y 24 años.",
+          "No acumulable con otras promociones y/o descuentos vigentes."
+        ],
+        "excludesProducts": "Motos, cuatriciclos, bicicletas motorizadas, tractores, bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Catena Zapata, Bodegas 33 Sur, Saint Felicien, Clos de los Siete, productos de convenio de Precios Justos, leches infantiles y maternizadas etapa 1 y 2, carnicería: carne vacuna, pollo, cortes de cerdos y embutidos.",
+        "paymentMethods": [
+          [
+            "Tarjeta Carrefour Prepaga"
+          ],
+          [
+            "Tarjeta Carrefour Crédito"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "appliesOnlyTo": {
+          "anses": false,
+          "jubilados": false,
+          "programaCiudadaniaPorteña": false
+        },
+        "limits": {
+          "maxDiscount": 10000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi",
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 10,
+      "paymentMethod": "carrefourprepaga",
+      "weekday": "martes",
+      "restrictions": "Válido para clientes de Tarjeta Mi Carrefour Prepaga y Tarjeta Mi Carrefour Crédito entre 18 y 24 años.; No acumulable con otras promociones y/o descuentos vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 10
+        },
+        "validFrom": "2025-01-01",
+        "validUntil": "2025-12-31",
+        "weekdays": [
+          "Lunes",
+          "Martes",
+          "Miercoles",
+          "Jueves"
+        ],
+        "restrictions": [
+          "Válido para clientes de Tarjeta Mi Carrefour Prepaga y Tarjeta Mi Carrefour Crédito entre 18 y 24 años.",
+          "No acumulable con otras promociones y/o descuentos vigentes."
+        ],
+        "excludesProducts": "Motos, cuatriciclos, bicicletas motorizadas, tractores, bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Catena Zapata, Bodegas 33 Sur, Saint Felicien, Clos de los Siete, productos de convenio de Precios Justos, leches infantiles y maternizadas etapa 1 y 2, carnicería: carne vacuna, pollo, cortes de cerdos y embutidos.",
+        "paymentMethods": [
+          [
+            "Tarjeta Carrefour Prepaga"
+          ],
+          [
+            "Tarjeta Carrefour Crédito"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "appliesOnlyTo": {
+          "anses": false,
+          "jubilados": false,
+          "programaCiudadaniaPorteña": false
+        },
+        "limits": {
+          "maxDiscount": 10000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi",
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 10,
+      "paymentMethod": "carrefourcred",
+      "weekday": "martes",
+      "restrictions": "Válido para clientes de Tarjeta Mi Carrefour Prepaga y Tarjeta Mi Carrefour Crédito entre 18 y 24 años.; No acumulable con otras promociones y/o descuentos vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 10
+        },
+        "validFrom": "2025-01-01",
+        "validUntil": "2025-12-31",
+        "weekdays": [
+          "Lunes",
+          "Martes",
+          "Miercoles",
+          "Jueves"
+        ],
+        "restrictions": [
+          "Válido para clientes de Tarjeta Mi Carrefour Prepaga y Tarjeta Mi Carrefour Crédito entre 18 y 24 años.",
+          "No acumulable con otras promociones y/o descuentos vigentes."
+        ],
+        "excludesProducts": "Motos, cuatriciclos, bicicletas motorizadas, tractores, bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Catena Zapata, Bodegas 33 Sur, Saint Felicien, Clos de los Siete, productos de convenio de Precios Justos, leches infantiles y maternizadas etapa 1 y 2, carnicería: carne vacuna, pollo, cortes de cerdos y embutidos.",
+        "paymentMethods": [
+          [
+            "Tarjeta Carrefour Prepaga"
+          ],
+          [
+            "Tarjeta Carrefour Crédito"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "appliesOnlyTo": {
+          "anses": false,
+          "jubilados": false,
+          "programaCiudadaniaPorteña": false
+        },
+        "limits": {
+          "maxDiscount": 10000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi",
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 10,
+      "paymentMethod": "carrefourprepaga",
+      "weekday": "miercoles",
+      "restrictions": "Válido para clientes de Tarjeta Mi Carrefour Prepaga y Tarjeta Mi Carrefour Crédito entre 18 y 24 años.; No acumulable con otras promociones y/o descuentos vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 10
+        },
+        "validFrom": "2025-01-01",
+        "validUntil": "2025-12-31",
+        "weekdays": [
+          "Lunes",
+          "Martes",
+          "Miercoles",
+          "Jueves"
+        ],
+        "restrictions": [
+          "Válido para clientes de Tarjeta Mi Carrefour Prepaga y Tarjeta Mi Carrefour Crédito entre 18 y 24 años.",
+          "No acumulable con otras promociones y/o descuentos vigentes."
+        ],
+        "excludesProducts": "Motos, cuatriciclos, bicicletas motorizadas, tractores, bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Catena Zapata, Bodegas 33 Sur, Saint Felicien, Clos de los Siete, productos de convenio de Precios Justos, leches infantiles y maternizadas etapa 1 y 2, carnicería: carne vacuna, pollo, cortes de cerdos y embutidos.",
+        "paymentMethods": [
+          [
+            "Tarjeta Carrefour Prepaga"
+          ],
+          [
+            "Tarjeta Carrefour Crédito"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "appliesOnlyTo": {
+          "anses": false,
+          "jubilados": false,
+          "programaCiudadaniaPorteña": false
+        },
+        "limits": {
+          "maxDiscount": 10000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi",
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 10,
+      "paymentMethod": "carrefourcred",
+      "weekday": "miercoles",
+      "restrictions": "Válido para clientes de Tarjeta Mi Carrefour Prepaga y Tarjeta Mi Carrefour Crédito entre 18 y 24 años.; No acumulable con otras promociones y/o descuentos vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 10
+        },
+        "validFrom": "2025-01-01",
+        "validUntil": "2025-12-31",
+        "weekdays": [
+          "Lunes",
+          "Martes",
+          "Miercoles",
+          "Jueves"
+        ],
+        "restrictions": [
+          "Válido para clientes de Tarjeta Mi Carrefour Prepaga y Tarjeta Mi Carrefour Crédito entre 18 y 24 años.",
+          "No acumulable con otras promociones y/o descuentos vigentes."
+        ],
+        "excludesProducts": "Motos, cuatriciclos, bicicletas motorizadas, tractores, bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Catena Zapata, Bodegas 33 Sur, Saint Felicien, Clos de los Siete, productos de convenio de Precios Justos, leches infantiles y maternizadas etapa 1 y 2, carnicería: carne vacuna, pollo, cortes de cerdos y embutidos.",
+        "paymentMethods": [
+          [
+            "Tarjeta Carrefour Prepaga"
+          ],
+          [
+            "Tarjeta Carrefour Crédito"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "appliesOnlyTo": {
+          "anses": false,
+          "jubilados": false,
+          "programaCiudadaniaPorteña": false
+        },
+        "limits": {
+          "maxDiscount": 10000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi",
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 10,
+      "paymentMethod": "carrefourprepaga",
+      "weekday": "jueves",
+      "restrictions": "Válido para clientes de Tarjeta Mi Carrefour Prepaga y Tarjeta Mi Carrefour Crédito entre 18 y 24 años.; No acumulable con otras promociones y/o descuentos vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 10
+        },
+        "validFrom": "2025-01-01",
+        "validUntil": "2025-12-31",
+        "weekdays": [
+          "Lunes",
+          "Martes",
+          "Miercoles",
+          "Jueves"
+        ],
+        "restrictions": [
+          "Válido para clientes de Tarjeta Mi Carrefour Prepaga y Tarjeta Mi Carrefour Crédito entre 18 y 24 años.",
+          "No acumulable con otras promociones y/o descuentos vigentes."
+        ],
+        "excludesProducts": "Motos, cuatriciclos, bicicletas motorizadas, tractores, bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Catena Zapata, Bodegas 33 Sur, Saint Felicien, Clos de los Siete, productos de convenio de Precios Justos, leches infantiles y maternizadas etapa 1 y 2, carnicería: carne vacuna, pollo, cortes de cerdos y embutidos.",
+        "paymentMethods": [
+          [
+            "Tarjeta Carrefour Prepaga"
+          ],
+          [
+            "Tarjeta Carrefour Crédito"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "appliesOnlyTo": {
+          "anses": false,
+          "jubilados": false,
+          "programaCiudadaniaPorteña": false
+        },
+        "limits": {
+          "maxDiscount": 10000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi",
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 10,
+      "paymentMethod": "carrefourcred",
+      "weekday": "jueves",
+      "restrictions": "Válido para clientes de Tarjeta Mi Carrefour Prepaga y Tarjeta Mi Carrefour Crédito entre 18 y 24 años.; No acumulable con otras promociones y/o descuentos vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 10
+        },
+        "validFrom": "2025-01-01",
+        "validUntil": "2025-12-31",
+        "weekdays": [
+          "Lunes",
+          "Martes",
+          "Miercoles",
+          "Jueves"
+        ],
+        "restrictions": [
+          "Válido para clientes de Tarjeta Mi Carrefour Prepaga y Tarjeta Mi Carrefour Crédito entre 18 y 24 años.",
+          "No acumulable con otras promociones y/o descuentos vigentes."
+        ],
+        "excludesProducts": "Motos, cuatriciclos, bicicletas motorizadas, tractores, bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Catena Zapata, Bodegas 33 Sur, Saint Felicien, Clos de los Siete, productos de convenio de Precios Justos, leches infantiles y maternizadas etapa 1 y 2, carnicería: carne vacuna, pollo, cortes de cerdos y embutidos.",
+        "paymentMethods": [
+          [
+            "Tarjeta Carrefour Prepaga"
+          ],
+          [
+            "Tarjeta Carrefour Crédito"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "appliesOnlyTo": {
+          "anses": false,
+          "jubilados": false,
+          "programaCiudadaniaPorteña": false
+        },
+        "limits": {
+          "maxDiscount": 10000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi",
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 10,
+      "paymentMethod": "any",
+      "weekday": "lunes",
+      "restrictions": "Válido con Mi Carrefour para mayores de 60 años o ANSES.; Beneficio no acumulable con otras promociones.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 10
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Lunes",
+          "Martes",
+          "Miercoles",
+          "Jueves",
+          "Viernes"
+        ],
+        "restrictions": [
+          "Válido con Mi Carrefour para mayores de 60 años o ANSES.",
+          "Beneficio no acumulable con otras promociones."
+        ],
+        "excludesProducts": "Electro, motos, cuatriciclos, bicicletas motorizadas, tractores, Bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Catena Zapata, Bodegas 33 Sur, Saint Felicien, Clos de los Siete, productos de convenio de Precios Justos, leches infantiles y maternizadas etapa 1 y 2, carnicería: carne vacuna, pollo, cortes de cerdos y embutidos.",
+        "unknownPaymentMethods": [],
+        "appliesOnlyTo": {
+          "anses": true,
+          "jubilados": true,
+          "programaCiudadaniaPorteña": false
+        },
+        "limits": {
+          "maxDiscount": 20000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Online",
+          "Maxi"
+        ],
+        "membership": [
+          "Mi Carrefour"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 10,
+      "paymentMethod": "any",
+      "weekday": "martes",
+      "restrictions": "Válido con Mi Carrefour para mayores de 60 años o ANSES.; Beneficio no acumulable con otras promociones.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 10
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Lunes",
+          "Martes",
+          "Miercoles",
+          "Jueves",
+          "Viernes"
+        ],
+        "restrictions": [
+          "Válido con Mi Carrefour para mayores de 60 años o ANSES.",
+          "Beneficio no acumulable con otras promociones."
+        ],
+        "excludesProducts": "Electro, motos, cuatriciclos, bicicletas motorizadas, tractores, Bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Catena Zapata, Bodegas 33 Sur, Saint Felicien, Clos de los Siete, productos de convenio de Precios Justos, leches infantiles y maternizadas etapa 1 y 2, carnicería: carne vacuna, pollo, cortes de cerdos y embutidos.",
+        "unknownPaymentMethods": [],
+        "appliesOnlyTo": {
+          "anses": true,
+          "jubilados": true,
+          "programaCiudadaniaPorteña": false
+        },
+        "limits": {
+          "maxDiscount": 20000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Online",
+          "Maxi"
+        ],
+        "membership": [
+          "Mi Carrefour"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 10,
+      "paymentMethod": "any",
+      "weekday": "miercoles",
+      "restrictions": "Válido con Mi Carrefour para mayores de 60 años o ANSES.; Beneficio no acumulable con otras promociones.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 10
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Lunes",
+          "Martes",
+          "Miercoles",
+          "Jueves",
+          "Viernes"
+        ],
+        "restrictions": [
+          "Válido con Mi Carrefour para mayores de 60 años o ANSES.",
+          "Beneficio no acumulable con otras promociones."
+        ],
+        "excludesProducts": "Electro, motos, cuatriciclos, bicicletas motorizadas, tractores, Bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Catena Zapata, Bodegas 33 Sur, Saint Felicien, Clos de los Siete, productos de convenio de Precios Justos, leches infantiles y maternizadas etapa 1 y 2, carnicería: carne vacuna, pollo, cortes de cerdos y embutidos.",
+        "unknownPaymentMethods": [],
+        "appliesOnlyTo": {
+          "anses": true,
+          "jubilados": true,
+          "programaCiudadaniaPorteña": false
+        },
+        "limits": {
+          "maxDiscount": 20000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Online",
+          "Maxi"
+        ],
+        "membership": [
+          "Mi Carrefour"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 10,
+      "paymentMethod": "any",
+      "weekday": "jueves",
+      "restrictions": "Válido con Mi Carrefour para mayores de 60 años o ANSES.; Beneficio no acumulable con otras promociones.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 10
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Lunes",
+          "Martes",
+          "Miercoles",
+          "Jueves",
+          "Viernes"
+        ],
+        "restrictions": [
+          "Válido con Mi Carrefour para mayores de 60 años o ANSES.",
+          "Beneficio no acumulable con otras promociones."
+        ],
+        "excludesProducts": "Electro, motos, cuatriciclos, bicicletas motorizadas, tractores, Bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Catena Zapata, Bodegas 33 Sur, Saint Felicien, Clos de los Siete, productos de convenio de Precios Justos, leches infantiles y maternizadas etapa 1 y 2, carnicería: carne vacuna, pollo, cortes de cerdos y embutidos.",
+        "unknownPaymentMethods": [],
+        "appliesOnlyTo": {
+          "anses": true,
+          "jubilados": true,
+          "programaCiudadaniaPorteña": false
+        },
+        "limits": {
+          "maxDiscount": 20000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Online",
+          "Maxi"
+        ],
+        "membership": [
+          "Mi Carrefour"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 10,
+      "paymentMethod": "any",
+      "weekday": "viernes",
+      "restrictions": "Válido con Mi Carrefour para mayores de 60 años o ANSES.; Beneficio no acumulable con otras promociones.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 10
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Lunes",
+          "Martes",
+          "Miercoles",
+          "Jueves",
+          "Viernes"
+        ],
+        "restrictions": [
+          "Válido con Mi Carrefour para mayores de 60 años o ANSES.",
+          "Beneficio no acumulable con otras promociones."
+        ],
+        "excludesProducts": "Electro, motos, cuatriciclos, bicicletas motorizadas, tractores, Bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Catena Zapata, Bodegas 33 Sur, Saint Felicien, Clos de los Siete, productos de convenio de Precios Justos, leches infantiles y maternizadas etapa 1 y 2, carnicería: carne vacuna, pollo, cortes de cerdos y embutidos.",
+        "unknownPaymentMethods": [],
+        "appliesOnlyTo": {
+          "anses": true,
+          "jubilados": true,
+          "programaCiudadaniaPorteña": false
+        },
+        "limits": {
+          "maxDiscount": 20000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Online",
+          "Maxi"
+        ],
+        "membership": [
+          "Mi Carrefour"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "mercadopago",
+      "weekday": "sabado",
+      "restrictions": "Válido para beneficiarios de Anses que acrediten sus haberes a través de Mercado Pago y paguen a través del servicio de procesamiento de pagos de Mercado Pago operado por Mercado Libre S.R.L. “Mercado Pago” a través del escaneo del código QR con la app de Mercado Pago.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 15
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Sabado",
+          "Domingo"
+        ],
+        "restrictions": [
+          "Válido para beneficiarios de Anses que acrediten sus haberes a través de Mercado Pago y paguen a través del servicio de procesamiento de pagos de Mercado Pago operado por Mercado Libre S.R.L. “Mercado Pago” a través del escaneo del código QR con la app de Mercado Pago."
+        ],
+        "paymentMethods": [
+          [
+            "Mercado Pago"
+          ]
+        ],
+        "paymentRails": {
+          "pagoConQR": true,
+          "telefonoContactless": false,
+          "contactless": false
+        },
+        "unknownPaymentMethods": [],
+        "appliesOnlyTo": {
+          "anses": true,
+          "jubilados": false,
+          "programaCiudadaniaPorteña": false
+        },
+        "limits": {
+          "maxDiscount": 20000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "mercadopago",
+      "weekday": "domingo",
+      "restrictions": "Válido para beneficiarios de Anses que acrediten sus haberes a través de Mercado Pago y paguen a través del servicio de procesamiento de pagos de Mercado Pago operado por Mercado Libre S.R.L. “Mercado Pago” a través del escaneo del código QR con la app de Mercado Pago.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 15
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Sabado",
+          "Domingo"
+        ],
+        "restrictions": [
+          "Válido para beneficiarios de Anses que acrediten sus haberes a través de Mercado Pago y paguen a través del servicio de procesamiento de pagos de Mercado Pago operado por Mercado Libre S.R.L. “Mercado Pago” a través del escaneo del código QR con la app de Mercado Pago."
+        ],
+        "paymentMethods": [
+          [
+            "Mercado Pago"
+          ]
+        ],
+        "paymentRails": {
+          "pagoConQR": true,
+          "telefonoContactless": false,
+          "contactless": false
+        },
+        "unknownPaymentMethods": [],
+        "appliesOnlyTo": {
+          "anses": true,
+          "jubilados": false,
+          "programaCiudadaniaPorteña": false
+        },
+        "limits": {
+          "maxDiscount": 20000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 25,
+      "paymentMethod": "visa",
+      "weekday": "viernes",
+      "restrictions": "No incluye productos de Electrodomésticos, electrónica, telefonía celular, ni carnicería; No incluye motos, cuatriciclos, bicicletas motorizadas, tractores; No incluye bodegas Alamos, Altaland, Angélica Zapata, Aruma, Caro, Casa de Herrero, Chandon (*), Cuchillo de Palo, D. V. Catena, El Enemigo, La Posta, Luca, Luigi Bosca de Sangre, Nicasia, Ojo de Buen Cubero, Rutini, Saint Felicien, San Felipe y Valmont; No incluye leches infantiles y maternizadas etapa 1 y 2; No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza; No acumulable con otras promociones vigentes",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 25
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Viernes"
+        ],
+        "restrictions": [
+          "No incluye productos de Electrodomésticos, electrónica, telefonía celular, ni carnicería",
+          "No incluye motos, cuatriciclos, bicicletas motorizadas, tractores",
+          "No incluye bodegas Alamos, Altaland, Angélica Zapata, Aruma, Caro, Casa de Herrero, Chandon (*), Cuchillo de Palo, D. V. Catena, El Enemigo, La Posta, Luca, Luigi Bosca de Sangre, Nicasia, Ojo de Buen Cubero, Rutini, Saint Felicien, San Felipe y Valmont",
+          "No incluye leches infantiles y maternizadas etapa 1 y 2",
+          "No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza",
+          "No acumulable con otras promociones vigentes"
+        ],
+        "paymentMethods": [
+          [
+            "Banco Santander",
+            "MODO",
+            "Tarjeta de débito VISA"
+          ],
+          [
+            "Banco Santander",
+            "MODO",
+            "Tarjeta de crédito VISA"
+          ],
+          [
+            "Banco Santander",
+            "MODO",
+            "Tarjeta Prepaga Mastercard"
+          ]
+        ],
+        "paymentRails": {
+          "pagoConQR": true,
+          "telefonoContactless": false,
+          "contactless": false
+        },
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 20000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 25,
+      "paymentMethod": "visa",
+      "weekday": "viernes",
+      "restrictions": "No incluye productos de Electrodomésticos, electrónica, telefonía celular, ni carnicería; No incluye motos, cuatriciclos, bicicletas motorizadas, tractores; No incluye bodegas Alamos, Altaland, Angélica Zapata, Aruma, Caro, Casa de Herrero, Chandon (*), Cuchillo de Palo, D. V. Catena, El Enemigo, La Posta, Luca, Luigi Bosca de Sangre, Nicasia, Ojo de Buen Cubero, Rutini, Saint Felicien, San Felipe y Valmont; No incluye leches infantiles y maternizadas etapa 1 y 2; No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza; No acumulable con otras promociones vigentes",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 25
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Viernes"
+        ],
+        "restrictions": [
+          "No incluye productos de Electrodomésticos, electrónica, telefonía celular, ni carnicería",
+          "No incluye motos, cuatriciclos, bicicletas motorizadas, tractores",
+          "No incluye bodegas Alamos, Altaland, Angélica Zapata, Aruma, Caro, Casa de Herrero, Chandon (*), Cuchillo de Palo, D. V. Catena, El Enemigo, La Posta, Luca, Luigi Bosca de Sangre, Nicasia, Ojo de Buen Cubero, Rutini, Saint Felicien, San Felipe y Valmont",
+          "No incluye leches infantiles y maternizadas etapa 1 y 2",
+          "No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza",
+          "No acumulable con otras promociones vigentes"
+        ],
+        "paymentMethods": [
+          [
+            "Banco Santander",
+            "MODO",
+            "Tarjeta de débito VISA"
+          ],
+          [
+            "Banco Santander",
+            "MODO",
+            "Tarjeta de crédito VISA"
+          ],
+          [
+            "Banco Santander",
+            "MODO",
+            "Tarjeta Prepaga Mastercard"
+          ]
+        ],
+        "paymentRails": {
+          "pagoConQR": true,
+          "telefonoContactless": false,
+          "contactless": false
+        },
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 20000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 25,
+      "paymentMethod": "master",
+      "weekday": "viernes",
+      "restrictions": "No incluye productos de Electrodomésticos, electrónica, telefonía celular, ni carnicería; No incluye motos, cuatriciclos, bicicletas motorizadas, tractores; No incluye bodegas Alamos, Altaland, Angélica Zapata, Aruma, Caro, Casa de Herrero, Chandon (*), Cuchillo de Palo, D. V. Catena, El Enemigo, La Posta, Luca, Luigi Bosca de Sangre, Nicasia, Ojo de Buen Cubero, Rutini, Saint Felicien, San Felipe y Valmont; No incluye leches infantiles y maternizadas etapa 1 y 2; No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza; No acumulable con otras promociones vigentes",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 25
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Viernes"
+        ],
+        "restrictions": [
+          "No incluye productos de Electrodomésticos, electrónica, telefonía celular, ni carnicería",
+          "No incluye motos, cuatriciclos, bicicletas motorizadas, tractores",
+          "No incluye bodegas Alamos, Altaland, Angélica Zapata, Aruma, Caro, Casa de Herrero, Chandon (*), Cuchillo de Palo, D. V. Catena, El Enemigo, La Posta, Luca, Luigi Bosca de Sangre, Nicasia, Ojo de Buen Cubero, Rutini, Saint Felicien, San Felipe y Valmont",
+          "No incluye leches infantiles y maternizadas etapa 1 y 2",
+          "No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza",
+          "No acumulable con otras promociones vigentes"
+        ],
+        "paymentMethods": [
+          [
+            "Banco Santander",
+            "MODO",
+            "Tarjeta de débito VISA"
+          ],
+          [
+            "Banco Santander",
+            "MODO",
+            "Tarjeta de crédito VISA"
+          ],
+          [
+            "Banco Santander",
+            "MODO",
+            "Tarjeta Prepaga Mastercard"
+          ]
+        ],
+        "paymentRails": {
+          "pagoConQR": true,
+          "telefonoContactless": false,
+          "contactless": false
+        },
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 20000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "carrefourprepaga",
+      "weekday": "martes",
+      "restrictions": "No válido abonando a través de plataformas digitales de pago.; No acumulable con otras promociones vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 15
+        },
+        "validFrom": "2025-01-01",
+        "validUntil": "2025-12-31",
+        "weekdays": [
+          "Martes"
+        ],
+        "restrictions": [
+          "No válido abonando a través de plataformas digitales de pago.",
+          "No acumulable con otras promociones vigentes."
+        ],
+        "excludesProducts": "Electrodomésticos, telefonía, fotografía, informática, imagen, sonido, productos de las siguientes bodegas y marcas: Álamos, Altaland, Angélica Zapata, Aruma, Caro, Casa de Herrero, Cuchillo de Palo, D.V. Catena, El Enemigo, La Posta, Luca, Luigi Bosca, Nicasia, Ojo de Buen Cubero, Rutini, Saint Felicien, San Felipe y Valmont, leches infantiles y maternizadas etapas 1 y 2, carnicería (carne vacuna, pollo, cerdo y embutidos) y conservadoras de cerveza.",
+        "paymentMethods": [
+          [
+            "Tarjeta Carrefour Prepaga"
+          ],
+          [
+            "Tarjeta Carrefour Crédito"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "explicitlyHasNoLimit": true
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "carrefourcred",
+      "weekday": "martes",
+      "restrictions": "No válido abonando a través de plataformas digitales de pago.; No acumulable con otras promociones vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 15
+        },
+        "validFrom": "2025-01-01",
+        "validUntil": "2025-12-31",
+        "weekdays": [
+          "Martes"
+        ],
+        "restrictions": [
+          "No válido abonando a través de plataformas digitales de pago.",
+          "No acumulable con otras promociones vigentes."
+        ],
+        "excludesProducts": "Electrodomésticos, telefonía, fotografía, informática, imagen, sonido, productos de las siguientes bodegas y marcas: Álamos, Altaland, Angélica Zapata, Aruma, Caro, Casa de Herrero, Cuchillo de Palo, D.V. Catena, El Enemigo, La Posta, Luca, Luigi Bosca, Nicasia, Ojo de Buen Cubero, Rutini, Saint Felicien, San Felipe y Valmont, leches infantiles y maternizadas etapas 1 y 2, carnicería (carne vacuna, pollo, cerdo y embutidos) y conservadoras de cerveza.",
+        "paymentMethods": [
+          [
+            "Tarjeta Carrefour Prepaga"
+          ],
+          [
+            "Tarjeta Carrefour Crédito"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "explicitlyHasNoLimit": true
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "mercadopago",
+      "weekday": "jueves",
+      "restrictions": "No válido para compras en cuotas con tarjetas de crédito emitidas en el exterior; No válido para tarjetas de compra y/u orden de compra y/o similares emitidas por Carrefour Argentina; No válido para compras abonadas en euros, dólares ni tickets o con la aplicación de Mercado Pago ni tarjetas de programas de ayuda social.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 15
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Jueves"
+        ],
+        "restrictions": [
+          "No válido para compras en cuotas con tarjetas de crédito emitidas en el exterior",
+          "No válido para tarjetas de compra y/u orden de compra y/o similares emitidas por Carrefour Argentina",
+          "No válido para compras abonadas en euros, dólares ni tickets o con la aplicación de Mercado Pago ni tarjetas de programas de ayuda social."
+        ],
+        "paymentMethods": [
+          [
+            "Mercado Pago"
+          ]
+        ],
+        "paymentRails": {
+          "pagoConQR": true,
+          "telefonoContactless": false,
+          "contactless": false
+        },
+        "unknownPaymentMethods": [],
+        "limits": {
+          "explicitlyHasNoLimit": true
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 25,
+      "paymentMethod": "visa",
+      "weekday": "sabado",
+      "restrictions": "Válido para clientes con cuenta sueldo.; Tope de descuento mensual $20.000 por cliente.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 25
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Sabado"
+        ],
+        "restrictions": [
+          "Válido para clientes con cuenta sueldo.",
+          "Tope de descuento mensual $20.000 por cliente."
+        ],
+        "excludesProducts": "Motos, cuatriciclos, bicicletas motorizadas, tractores, electrodomésticos, electrónica, telefonía celular, bodegas Alamos, Altaland, Angélica Zapata, Aruma, Caro, Casa de Herrero, Chandon, Cuchillo de Palo, D. V. Catena, El Enemigo, La Posta, Luca, Luigi Bosca de Sangre, Nicasia, Ojo de Buen Cubero, Rutini, Saint Felicien, San Felipe y Valmont, leches infantiles y maternizadas etapa 1 y 2, carnicería: carne vacuna, pollo, cortes de cerdos y embutidos, productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza.",
+        "paymentMethods": [
+          [
+            "Banco BBVA",
+            "MODO",
+            "Tarjeta de crédito VISA"
+          ],
+          [
+            "Banco BBVA",
+            "MODO",
+            "Tarjeta de crédito Mastercard"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 20000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 25,
+      "paymentMethod": "master",
+      "weekday": "sabado",
+      "restrictions": "Válido para clientes con cuenta sueldo.; Tope de descuento mensual $20.000 por cliente.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 25
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Sabado"
+        ],
+        "restrictions": [
+          "Válido para clientes con cuenta sueldo.",
+          "Tope de descuento mensual $20.000 por cliente."
+        ],
+        "excludesProducts": "Motos, cuatriciclos, bicicletas motorizadas, tractores, electrodomésticos, electrónica, telefonía celular, bodegas Alamos, Altaland, Angélica Zapata, Aruma, Caro, Casa de Herrero, Chandon, Cuchillo de Palo, D. V. Catena, El Enemigo, La Posta, Luca, Luigi Bosca de Sangre, Nicasia, Ojo de Buen Cubero, Rutini, Saint Felicien, San Felipe y Valmont, leches infantiles y maternizadas etapa 1 y 2, carnicería: carne vacuna, pollo, cortes de cerdos y embutidos, productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza.",
+        "paymentMethods": [
+          [
+            "Banco BBVA",
+            "MODO",
+            "Tarjeta de crédito VISA"
+          ],
+          [
+            "Banco BBVA",
+            "MODO",
+            "Tarjeta de crédito Mastercard"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 20000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "visa",
+      "weekday": "miercoles",
+      "restrictions": "Exclusivo para clientes con Cuenta Clásica y Plus.; No incluye motos, cuatriciclos, bicicletas motorizadas, tractores, bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Bodegas 33 Sur, Clos de los Siete, Catena Zapata.; No incluye productos de convenio de Precios Cuidados, leches infantiles y maternizadas etapa 1 y 2.; No incluye carnicería: carne vacuna, pollo, cortes de cerdos y embutidos.; No incluye productos de la marca Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza.; No incluye electrodomésticos.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 15
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Miercoles"
+        ],
+        "restrictions": [
+          "Exclusivo para clientes con Cuenta Clásica y Plus.",
+          "No incluye motos, cuatriciclos, bicicletas motorizadas, tractores, bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Bodegas 33 Sur, Clos de los Siete, Catena Zapata.",
+          "No incluye productos de convenio de Precios Cuidados, leches infantiles y maternizadas etapa 1 y 2.",
+          "No incluye carnicería: carne vacuna, pollo, cortes de cerdos y embutidos.",
+          "No incluye productos de la marca Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza.",
+          "No incluye electrodomésticos."
+        ],
+        "paymentMethods": [
+          [
+            "Banco Patagonia",
+            "Tarjeta de crédito VISA"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 10000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 10,
+      "paymentMethod": "mercadopago",
+      "weekday": "viernes",
+      "restrictions": "No válido para compras en cuotas con tarjetas de crédito emitidas en el exterior, tarjetas de compra y/u orden de compra y/o similares emitidas por Carrefour Argentina, compras abonadas en euros, dólares ni tickets o con la aplicación de Mercado Pago ni tarjetas de programas de ayuda social.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 10
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Viernes"
+        ],
+        "restrictions": [
+          "No válido para compras en cuotas con tarjetas de crédito emitidas en el exterior, tarjetas de compra y/u orden de compra y/o similares emitidas por Carrefour Argentina, compras abonadas en euros, dólares ni tickets o con la aplicación de Mercado Pago ni tarjetas de programas de ayuda social."
+        ],
+        "paymentMethods": [
+          [
+            "Mercado Pago"
+          ]
+        ],
+        "paymentRails": {
+          "pagoConQR": true,
+          "telefonoContactless": false,
+          "contactless": false
+        },
+        "unknownPaymentMethods": [],
+        "limits": {
+          "explicitlyHasNoLimit": true
+        },
+        "where": [
+          "Maxi"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 20,
+      "paymentMethod": "visa",
+      "weekday": "miercoles",
+      "restrictions": "Exclusivo para clientes con Plan Sueldo.; No incluye motos, cuatriciclos, bicicletas motorizadas, tractores, bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Bodegas 33 Sur, Clos de los Siete, Catena Zapata.; No incluye productos de convenio de Precios Cuidados, leches infantiles y maternizadas etapa 1 y 2.; No incluye carnicería: carne vacuna, pollo, cortes de cerdos y embutidos.; No incluye productos de la marca Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza.; No incluye electrodomésticos.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 20
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Miercoles"
+        ],
+        "restrictions": [
+          "Exclusivo para clientes con Plan Sueldo.",
+          "No incluye motos, cuatriciclos, bicicletas motorizadas, tractores, bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Bodegas 33 Sur, Clos de los Siete, Catena Zapata.",
+          "No incluye productos de convenio de Precios Cuidados, leches infantiles y maternizadas etapa 1 y 2.",
+          "No incluye carnicería: carne vacuna, pollo, cortes de cerdos y embutidos.",
+          "No incluye productos de la marca Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza.",
+          "No incluye electrodomésticos."
+        ],
+        "paymentMethods": [
+          [
+            "Banco Patagonia",
+            "Tarjeta de crédito VISA"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 12000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 5,
+      "paymentMethod": "mercadopago",
+      "weekday": "sabado",
+      "restrictions": "No válido para compras en cuotas con tarjetas de crédito emitidas en el exterior, tarjetas de compra y/u orden de compra y/o similares emitidas por Carrefour Argentina, compras abonadas en euros, dólares ni tickets o con la aplicación de Mercado Pago ni tarjetas de programas de ayuda social.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 5
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Sabado",
+          "Domingo",
+          "Lunes"
+        ],
+        "restrictions": [
+          "No válido para compras en cuotas con tarjetas de crédito emitidas en el exterior, tarjetas de compra y/u orden de compra y/o similares emitidas por Carrefour Argentina, compras abonadas en euros, dólares ni tickets o con la aplicación de Mercado Pago ni tarjetas de programas de ayuda social."
+        ],
+        "paymentMethods": [
+          [
+            "Mercado Pago"
+          ]
+        ],
+        "paymentRails": {
+          "pagoConQR": true,
+          "telefonoContactless": false,
+          "contactless": false
+        },
+        "unknownPaymentMethods": [],
+        "limits": {
+          "explicitlyHasNoLimit": true
+        },
+        "where": [
+          "Maxi"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 5,
+      "paymentMethod": "mercadopago",
+      "weekday": "domingo",
+      "restrictions": "No válido para compras en cuotas con tarjetas de crédito emitidas en el exterior, tarjetas de compra y/u orden de compra y/o similares emitidas por Carrefour Argentina, compras abonadas en euros, dólares ni tickets o con la aplicación de Mercado Pago ni tarjetas de programas de ayuda social.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 5
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Sabado",
+          "Domingo",
+          "Lunes"
+        ],
+        "restrictions": [
+          "No válido para compras en cuotas con tarjetas de crédito emitidas en el exterior, tarjetas de compra y/u orden de compra y/o similares emitidas por Carrefour Argentina, compras abonadas en euros, dólares ni tickets o con la aplicación de Mercado Pago ni tarjetas de programas de ayuda social."
+        ],
+        "paymentMethods": [
+          [
+            "Mercado Pago"
+          ]
+        ],
+        "paymentRails": {
+          "pagoConQR": true,
+          "telefonoContactless": false,
+          "contactless": false
+        },
+        "unknownPaymentMethods": [],
+        "limits": {
+          "explicitlyHasNoLimit": true
+        },
+        "where": [
+          "Maxi"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 5,
+      "paymentMethod": "mercadopago",
+      "weekday": "lunes",
+      "restrictions": "No válido para compras en cuotas con tarjetas de crédito emitidas en el exterior, tarjetas de compra y/u orden de compra y/o similares emitidas por Carrefour Argentina, compras abonadas en euros, dólares ni tickets o con la aplicación de Mercado Pago ni tarjetas de programas de ayuda social.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 5
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Sabado",
+          "Domingo",
+          "Lunes"
+        ],
+        "restrictions": [
+          "No válido para compras en cuotas con tarjetas de crédito emitidas en el exterior, tarjetas de compra y/u orden de compra y/o similares emitidas por Carrefour Argentina, compras abonadas en euros, dólares ni tickets o con la aplicación de Mercado Pago ni tarjetas de programas de ayuda social."
+        ],
+        "paymentMethods": [
+          [
+            "Mercado Pago"
+          ]
+        ],
+        "paymentRails": {
+          "pagoConQR": true,
+          "telefonoContactless": false,
+          "contactless": false
+        },
+        "unknownPaymentMethods": [],
+        "limits": {
+          "explicitlyHasNoLimit": true
+        },
+        "where": [
+          "Maxi"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 30,
+      "paymentMethod": "master",
+      "weekday": "miercoles",
+      "restrictions": "Válido para la primera compra programada de cada miércoles por cliente.; No válido para pagos con saldo en cuenta.; Exclusivo cartera de consumo.; Excluye versiones corporativas.; No acumulable con otras promociones vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 30
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Miercoles"
+        ],
+        "restrictions": [
+          "Válido para la primera compra programada de cada miércoles por cliente.",
+          "No válido para pagos con saldo en cuenta.",
+          "Exclusivo cartera de consumo.",
+          "Excluye versiones corporativas.",
+          "No acumulable con otras promociones vigentes."
+        ],
+        "excludesProducts": "Motos, cuatriciclos, bicicletas motorizadas, tractores, Bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Bodegas 33 Sur, Clos de los Siete, Catena Zapata, productos de convenio de Precios Cuidados, leches infantiles y maternizadas etapa 1 y 2, carnicería (carne vacuna, pollo, cortes de cerdos y embutidos), productos de la marca Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza, electrodomésticos.",
+        "paymentMethods": [
+          [
+            "Banco Nación",
+            "Tarjeta de crédito Mastercard"
+          ],
+          [
+            "Banco Nación",
+            "Tarjeta de crédito VISA"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 12000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 30,
+      "paymentMethod": "visa",
+      "weekday": "miercoles",
+      "restrictions": "Válido para la primera compra programada de cada miércoles por cliente.; No válido para pagos con saldo en cuenta.; Exclusivo cartera de consumo.; Excluye versiones corporativas.; No acumulable con otras promociones vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 30
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Miercoles"
+        ],
+        "restrictions": [
+          "Válido para la primera compra programada de cada miércoles por cliente.",
+          "No válido para pagos con saldo en cuenta.",
+          "Exclusivo cartera de consumo.",
+          "Excluye versiones corporativas.",
+          "No acumulable con otras promociones vigentes."
+        ],
+        "excludesProducts": "Motos, cuatriciclos, bicicletas motorizadas, tractores, Bodegas Chandon, Leoncio Arizu, Terrazas de los Andes, Trumpeter, La Rural, Rutini Wines, Bodegas 33 Sur, Clos de los Siete, Catena Zapata, productos de convenio de Precios Cuidados, leches infantiles y maternizadas etapa 1 y 2, carnicería (carne vacuna, pollo, cortes de cerdos y embutidos), productos de la marca Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza, electrodomésticos.",
+        "paymentMethods": [
+          [
+            "Banco Nación",
+            "Tarjeta de crédito Mastercard"
+          ],
+          [
+            "Banco Nación",
+            "Tarjeta de crédito VISA"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 12000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 20,
+      "paymentMethod": "visa",
+      "weekday": "miercoles",
+      "restrictions": "Promoción válida para compras realizadas en 1 pago con Tarjetas de Crédito emitidas por Banco BMA SAU (Macro BMA) a través de MODO.; Tope de devolución por cuenta.; La aplicación del descuento se verá reflejado como un ajuste de crédito en la cuenta asociada hasta 30 días posteriores la compra.; No válido para compras en www.carrefour.com.ar.; No acumulable con otras promociones vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 20
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Miercoles"
+        ],
+        "restrictions": [
+          "Promoción válida para compras realizadas en 1 pago con Tarjetas de Crédito emitidas por Banco BMA SAU (Macro BMA) a través de MODO.",
+          "Tope de devolución por cuenta.",
+          "La aplicación del descuento se verá reflejado como un ajuste de crédito en la cuenta asociada hasta 30 días posteriores la compra.",
+          "No válido para compras en www.carrefour.com.ar.",
+          "No acumulable con otras promociones vigentes."
+        ],
+        "excludesProducts": "Motos, Cuatriciclos, Bicicletas Motorizadas, Tractores, Alamos, Altaland, Angélica Zapata, Aruma, Caro, Casa de Herrero, Chandon, Cuchillo de Palo, D. V. Catena, El Enemigo, La Posta, Luca, Luigi Bosca (de Sangre), Nicasia, Ojo de Buen Cubero, Rutini, Saint Felicien, San Felipe y Valmont, Leches infantiles y maternizadas etapa 1 y 2, Carnicería: Carne vacuna, Pollo, Cortes de cerdos y Embutidos, Productos Carrefour de alimentos, Lácteos, Quesos, Fiambres, Bebidas, Perfumería y Limpieza.",
+        "paymentMethods": [
+          [
+            "Banco Macro",
+            "MODO",
+            "Tarjeta de crédito VISA"
+          ],
+          [
+            "Banco Macro",
+            "MODO",
+            "Tarjeta de crédito Mastercard"
+          ]
+        ],
+        "paymentRails": {
+          "pagoConQR": true,
+          "telefonoContactless": false,
+          "contactless": false
+        },
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 8000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 20,
+      "paymentMethod": "master",
+      "weekday": "miercoles",
+      "restrictions": "Promoción válida para compras realizadas en 1 pago con Tarjetas de Crédito emitidas por Banco BMA SAU (Macro BMA) a través de MODO.; Tope de devolución por cuenta.; La aplicación del descuento se verá reflejado como un ajuste de crédito en la cuenta asociada hasta 30 días posteriores la compra.; No válido para compras en www.carrefour.com.ar.; No acumulable con otras promociones vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 20
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Miercoles"
+        ],
+        "restrictions": [
+          "Promoción válida para compras realizadas en 1 pago con Tarjetas de Crédito emitidas por Banco BMA SAU (Macro BMA) a través de MODO.",
+          "Tope de devolución por cuenta.",
+          "La aplicación del descuento se verá reflejado como un ajuste de crédito en la cuenta asociada hasta 30 días posteriores la compra.",
+          "No válido para compras en www.carrefour.com.ar.",
+          "No acumulable con otras promociones vigentes."
+        ],
+        "excludesProducts": "Motos, Cuatriciclos, Bicicletas Motorizadas, Tractores, Alamos, Altaland, Angélica Zapata, Aruma, Caro, Casa de Herrero, Chandon, Cuchillo de Palo, D. V. Catena, El Enemigo, La Posta, Luca, Luigi Bosca (de Sangre), Nicasia, Ojo de Buen Cubero, Rutini, Saint Felicien, San Felipe y Valmont, Leches infantiles y maternizadas etapa 1 y 2, Carnicería: Carne vacuna, Pollo, Cortes de cerdos y Embutidos, Productos Carrefour de alimentos, Lácteos, Quesos, Fiambres, Bebidas, Perfumería y Limpieza.",
+        "paymentMethods": [
+          [
+            "Banco Macro",
+            "MODO",
+            "Tarjeta de crédito VISA"
+          ],
+          [
+            "Banco Macro",
+            "MODO",
+            "Tarjeta de crédito Mastercard"
+          ]
+        ],
+        "paymentRails": {
+          "pagoConQR": true,
+          "telefonoContactless": false,
+          "contactless": false
+        },
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 8000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 30,
+      "paymentMethod": "master",
+      "weekday": "miercoles",
+      "restrictions": "No incluye motos, cuatriciclos, bicicletas motorizadas, tractores.; No incluye bodegas Alamos, Altaland, Angélica Zapata, Aruma, Caro, Casa de Herrero, Chandon (*), Cuchillo de Palo, D. V. Catena, El Enemigo, La Posta, Luca, Luigi Bosca (De Sangre), Nicasia, Ojo de Buen Cubero, Rutini, Saint Felicien, San Felipe y Valmont.; No incluye leches infantiles y maternizadas etapa 1 y 2.; No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza.; No acumulable con otras promociones vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 30
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Miercoles"
+        ],
+        "restrictions": [
+          "No incluye motos, cuatriciclos, bicicletas motorizadas, tractores.",
+          "No incluye bodegas Alamos, Altaland, Angélica Zapata, Aruma, Caro, Casa de Herrero, Chandon (*), Cuchillo de Palo, D. V. Catena, El Enemigo, La Posta, Luca, Luigi Bosca (De Sangre), Nicasia, Ojo de Buen Cubero, Rutini, Saint Felicien, San Felipe y Valmont.",
+          "No incluye leches infantiles y maternizadas etapa 1 y 2.",
+          "No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza.",
+          "No acumulable con otras promociones vigentes."
+        ],
+        "excludesProducts": "electrodomésticos, electrónica, telefonía celular, carnicería (carne vacuna, pollo, cortes de cerdos y embutidos)",
+        "paymentMethods": [
+          [
+            "Banco Nación",
+            "MODO",
+            "Tarjeta de crédito Mastercard"
+          ],
+          [
+            "Banco Nación",
+            "MODO",
+            "Tarjeta de crédito VISA"
+          ]
+        ],
+        "paymentRails": {
+          "pagoConQR": true,
+          "telefonoContactless": false,
+          "contactless": false
+        },
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 12000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 30,
+      "paymentMethod": "visa",
+      "weekday": "miercoles",
+      "restrictions": "No incluye motos, cuatriciclos, bicicletas motorizadas, tractores.; No incluye bodegas Alamos, Altaland, Angélica Zapata, Aruma, Caro, Casa de Herrero, Chandon (*), Cuchillo de Palo, D. V. Catena, El Enemigo, La Posta, Luca, Luigi Bosca (De Sangre), Nicasia, Ojo de Buen Cubero, Rutini, Saint Felicien, San Felipe y Valmont.; No incluye leches infantiles y maternizadas etapa 1 y 2.; No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza.; No acumulable con otras promociones vigentes.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 30
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Miercoles"
+        ],
+        "restrictions": [
+          "No incluye motos, cuatriciclos, bicicletas motorizadas, tractores.",
+          "No incluye bodegas Alamos, Altaland, Angélica Zapata, Aruma, Caro, Casa de Herrero, Chandon (*), Cuchillo de Palo, D. V. Catena, El Enemigo, La Posta, Luca, Luigi Bosca (De Sangre), Nicasia, Ojo de Buen Cubero, Rutini, Saint Felicien, San Felipe y Valmont.",
+          "No incluye leches infantiles y maternizadas etapa 1 y 2.",
+          "No incluye productos Carrefour de alimentos, lácteos, quesos, fiambres, bebidas, perfumería y limpieza.",
+          "No acumulable con otras promociones vigentes."
+        ],
+        "excludesProducts": "electrodomésticos, electrónica, telefonía celular, carnicería (carne vacuna, pollo, cortes de cerdos y embutidos)",
+        "paymentMethods": [
+          [
+            "Banco Nación",
+            "MODO",
+            "Tarjeta de crédito Mastercard"
+          ],
+          [
+            "Banco Nación",
+            "MODO",
+            "Tarjeta de crédito VISA"
+          ]
+        ],
+        "paymentRails": {
+          "pagoConQR": true,
+          "telefonoContactless": false,
+          "contactless": false
+        },
+        "unknownPaymentMethods": [],
+        "limits": {
+          "maxDiscount": 12000,
+          "explicitlyHasNoLimit": false
+        },
+        "where": [
+          "Carrefour",
+          "Market",
+          "Express",
+          "Maxi"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "carrefourprepaga",
+      "weekday": "viernes",
+      "restrictions": "No acumulable con otras promociones vigentes.; No acumulable con cupones de ticket más bajo.; Sujeto a condiciones de otorgamiento y/o aprobación crediticia.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 15
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Viernes",
+          "Sabado",
+          "Domingo",
+          "Lunes",
+          "Martes",
+          "Miercoles"
+        ],
+        "restrictions": [
+          "No acumulable con otras promociones vigentes.",
+          "No acumulable con cupones de ticket más bajo.",
+          "Sujeto a condiciones de otorgamiento y/o aprobación crediticia."
+        ],
+        "excludesProducts": "Electrodomésticos, Telefonía, Fotografía, Informática, Imagen, Sonido, Productos de bodegas Chandon, Trumpeter, Leoncio Arizu, La Rural, Rutini Wines, Bodega 33° Sur, Catena Zapata, Terrazas de los Andes, Saint Felicien, Grupo Clos de los 7, Leches infantiles y maternizadas etapas 1 y 2, Carniceria (carne vacuna, pollo, cerdo y embutidos) y Conservadoras de cerveza.",
+        "paymentMethods": [
+          [
+            "Tarjeta Carrefour Prepaga"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "explicitlyHasNoLimit": true
+        },
+        "where": [
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    },
+    {
+      "store": "carrefour",
+      "percentage": 15,
+      "paymentMethod": "carrefourprepaga",
+      "weekday": "sabado",
+      "restrictions": "No acumulable con otras promociones vigentes.; No acumulable con cupones de ticket más bajo.; Sujeto a condiciones de otorgamiento y/o aprobación crediticia.",
+      "source": "our",
+      "originalData": {
+        "discount": {
+          "type": "porcentaje",
+          "value": 15
+        },
+        "validFrom": "2025-06-01",
+        "validUntil": "2025-06-30",
+        "weekdays": [
+          "Viernes",
+          "Sabado",
+          "Domingo",
+          "Lunes",
+          "Martes",
+          "Miercoles"
+        ],
+        "restrictions": [
+          "No acumulable con otras promociones vigentes.",
+          "No acumulable con cupones de ticket más bajo.",
+          "Sujeto a condiciones de otorgamiento y/o aprobación crediticia."
+        ],
+        "excludesProducts": "Electrodomésticos, Telefonía, Fotografía, Informática, Imagen, Sonido, Productos de bodegas Chandon, Trumpeter, Leoncio Arizu, La Rural, Rutini Wines, Bodega 33° Sur, Catena Zapata, Terrazas de los Andes, Saint Felicien, Grupo Clos de los 7, Leches infantiles y maternizadas etapas 1 y 2, Carniceria (carne vacuna, pollo, cerdo y embutidos) y Conservadoras de cerveza.",
+        "paymentMethods": [
+          [
+            "Tarjeta Carrefour Prepaga"
+          ]
+        ],
+        "unknownPaymentMethods": [],
+        "limits": {
+          "explicitlyHasNoLimit": true
+        },
+        "where": [
+          "Online"
+        ],
+        "url": "https://www.carrefour.com.ar/descuentos-bancarios",
+        "source": "carrefour"
+      }
+    }
+  ],
+  "comparison": {
+    "casharTotal": 60,
+    "ourTotal": 801,
+    "missing": 45,
+    "extra": 776,
+    "missingDetails": [
+      {
+        "store": "carrefour",
+        "percentage": 30,
+        "paymentMethod": "modo",
+        "weekday": "martes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Tuesday",
+          "discount": "30%",
+          "store": "DIA/DIA online, Carrefour, Changomas, Jumbo/Vea/Disco, La Anónima и др.",
+          "paymentMethod": "🔥Santa Fe Crédito + MODO"
+        }
+      },
+      {
+        "store": "carrefour",
+        "percentage": 30,
+        "paymentMethod": "patagoniacredsingular",
+        "weekday": "miercoles",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Wednesday",
+          "discount": "30%",
+          "store": "🔴Не суммируется со скидками магазина. Не включает бытовую технику, электронику, телефоны, свежее мясо и товары марки Carrefour",
+          "paymentMethod": "Patagonia Crédito SINGULAR"
+        }
+      },
+      {
+        "store": "jumbo",
+        "percentage": 30,
+        "paymentMethod": "santanr(black,platinum,з/псчет)",
+        "weekday": "miercoles",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Wednesday",
+          "discount": "30%",
+          "store": "Jumbo/Disco/Vea",
+          "paymentMethod": "Santander (Black, Platinum, з/п счет)"
+        }
+      },
+      {
+        "store": "carrefour",
+        "percentage": 30,
+        "paymentMethod": "modo",
+        "weekday": "jueves",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Thursday",
+          "discount": "30%",
+          "store": "DIA/DIA OnlineCarrefourJumbo/Disco/Vea ChangoMas/MasOnline и др.",
+          "paymentMethod": "Entre Ríos Crédito + MODO"
+        }
+      },
+      {
+        "store": "coto",
+        "percentage": 25,
+        "paymentMethod": "amex",
+        "weekday": "lunes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Monday",
+          "discount": "25%",
+          "store": "COTO online",
+          "paymentMethod": "Reba Crédito AmEx"
+        }
+      },
+      {
+        "store": "coto",
+        "percentage": 25,
+        "paymentMethod": "ciudadcred",
+        "weekday": "lunes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Monday",
+          "discount": "25%",
+          "store": "COTO",
+          "paymentMethod": "Ciudad Crédito"
+        }
+      },
+      {
+        "store": "dia",
+        "percentage": 25,
+        "paymentMethod": "naranjaxcred",
+        "weekday": "martes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Tuesday",
+          "discount": "25%",
+          "store": "DIA online",
+          "paymentMethod": "🔥Naranja X Crédito"
+        }
+      },
+      {
+        "store": "jumbo",
+        "percentage": 25,
+        "paymentMethod": "naranjaxcred*",
+        "weekday": "martes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Tuesday",
+          "discount": "25%",
+          "store": "Jumbo/Vea/Disco Online",
+          "paymentMethod": "Naranja X Crédito*"
+        }
+      },
+      {
+        "store": "changomas",
+        "percentage": 25,
+        "paymentMethod": "any",
+        "weekday": "miercoles",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Wednesday",
+          "discount": "25%",
+          "store": "ChangoMas"
+        }
+      },
+      {
+        "store": "makro",
+        "percentage": 25,
+        "paymentMethod": "any",
+        "weekday": "miercoles",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Wednesday",
+          "discount": "25%",
+          "store": "Makro, Vital"
+        }
+      },
+      {
+        "store": "dia",
+        "percentage": 25,
+        "paymentMethod": "any",
+        "weekday": "jueves",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Thursday",
+          "discount": "25%",
+          "store": "DIA"
+        }
+      },
+      {
+        "store": "jumbo",
+        "percentage": 25,
+        "paymentMethod": "cencopaycred*",
+        "weekday": "jueves",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Thursday",
+          "discount": "25%",
+          "store": "Jumbo/Disco/Vea",
+          "paymentMethod": "🔥CencoPay Crédito*"
+        }
+      },
+      {
+        "store": "makro",
+        "percentage": 25,
+        "paymentMethod": "any",
+        "weekday": "jueves",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Thursday",
+          "discount": "25%",
+          "store": "Makro, Vital"
+        }
+      },
+      {
+        "store": "changomas",
+        "percentage": 25,
+        "paymentMethod": "any",
+        "weekday": "jueves",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Thursday",
+          "discount": "25%",
+          "store": "ChangoMas/MasOnline"
+        }
+      },
+      {
+        "store": "dia",
+        "percentage": 25,
+        "paymentMethod": "modo",
+        "weekday": "viernes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Friday",
+          "discount": "25%",
+          "store": "Diarco, La AnonimaVital, Makro",
+          "paymentMethod": "🔥MODO+Galicia, Ciudad, YOY, Buepp, Nacion, Macro и др банки."
+        }
+      },
+      {
+        "store": "coto",
+        "percentage": 25,
+        "paymentMethod": "mercadopago",
+        "weekday": "viernes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Friday",
+          "discount": "25%",
+          "store": "COTO",
+          "paymentMethod": "🔥Mercado Pago QR"
+        }
+      },
+      {
+        "store": "dia",
+        "percentage": 25,
+        "paymentMethod": "modo",
+        "weekday": "sabado",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Saturday",
+          "discount": "25%",
+          "store": "Diarco, Vital,La Anonima, Makro",
+          "paymentMethod": "🔥MODO+Galicia, Ciudad, YOY, Buepp, Nacion, Macro и др банки."
+        }
+      },
+      {
+        "store": "carrefour",
+        "percentage": 25,
+        "paymentMethod": "modo",
+        "weekday": "sabado",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Saturday",
+          "discount": "25%",
+          "store": "Carrefour",
+          "paymentMethod": "BBVA Crédito(з/п счет) + MODO"
+        }
+      },
+      {
+        "store": "jumbo",
+        "percentage": 20,
+        "paymentMethod": "ciudadcred",
+        "weekday": "lunes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Monday",
+          "discount": "20%",
+          "store": "ChangoMas, MasOnline, Vital, Jumbo/Disco/Vea",
+          "paymentMethod": "Ciudad Crédito"
+        }
+      },
+      {
+        "store": "dia",
+        "percentage": 20,
+        "paymentMethod": "columbiacred",
+        "weekday": "lunes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Monday",
+          "discount": "20%",
+          "store": "DIA + online",
+          "paymentMethod": "Columbia Crédito"
+        }
+      },
+      {
+        "store": "coto",
+        "percentage": 20,
+        "paymentMethod": "any",
+        "weekday": "lunes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Monday",
+          "discount": "20%",
+          "store": "TCI (кредитка COTO)"
+        }
+      },
+      {
+        "store": "changomas",
+        "percentage": 20,
+        "paymentMethod": "any",
+        "weekday": "lunes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Monday",
+          "discount": "20%",
+          "store": "ChangoMas/MasOnline"
+        }
+      },
+      {
+        "store": "coto",
+        "percentage": 20,
+        "paymentMethod": "modo",
+        "weekday": "martes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Tuesday",
+          "discount": "20%",
+          "store": "COTO, Jumbo/Disco/Vea, ChangoMas, Toledo и др",
+          "paymentMethod": "Supervielle + MODO"
+        }
+      },
+      {
+        "store": "dia",
+        "percentage": 20,
+        "paymentMethod": "any",
+        "weekday": "martes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Tuesday",
+          "discount": "20%",
+          "store": "DIA + Online"
+        }
+      },
+      {
+        "store": "carrefour",
+        "percentage": 20,
+        "paymentMethod": "micarrefourprepaga/cred",
+        "weekday": "martes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Tuesday",
+          "discount": "20%",
+          "store": "Carrefour + Online",
+          "paymentMethod": "🔥MiCarrefour Prepaga/Crédito"
+        }
+      },
+      {
+        "store": "changomas",
+        "percentage": 20,
+        "paymentMethod": "modo",
+        "weekday": "martes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Tuesday",
+          "discount": "20%",
+          "store": "ChangoMas / MasOnline",
+          "paymentMethod": "Comafi + MODO"
+        }
+      },
+      {
+        "store": "carrefour",
+        "percentage": 20,
+        "paymentMethod": "modo",
+        "weekday": "miercoles",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Wednesday",
+          "discount": "20%",
+          "store": "Carrefour, Diarco, Makro, Vital,ChangoMas/MasOnline",
+          "paymentMethod": "Macro Crédito + MODO"
+        }
+      },
+      {
+        "store": "jumbo",
+        "percentage": 20,
+        "paymentMethod": "cencopaycred",
+        "weekday": "miercoles",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Wednesday",
+          "discount": "20%",
+          "store": "Jumbo/Disco/Vea Online",
+          "paymentMethod": "🔥Cencopay Crédito"
+        }
+      },
+      {
+        "store": "carrefour",
+        "percentage": 20,
+        "paymentMethod": "micarrefourprepaga/cred",
+        "weekday": "jueves",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Thursday",
+          "discount": "20%",
+          "store": "Carrefour online",
+          "paymentMethod": "🔥MiCarrefourPrepaga/Crédito"
+        }
+      },
+      {
+        "store": "dia",
+        "percentage": 20,
+        "paymentMethod": "columbiacred",
+        "weekday": "viernes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Friday",
+          "discount": "20%",
+          "store": "DIA + Online",
+          "paymentMethod": "Columbia Crédito"
+        }
+      },
+      {
+        "store": "changomas",
+        "percentage": 20,
+        "paymentMethod": "any",
+        "weekday": "viernes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Friday",
+          "discount": "20%",
+          "store": "ChangoMas/ MasOnline"
+        }
+      },
+      {
+        "store": "dia",
+        "percentage": 20,
+        "paymentMethod": "modo",
+        "weekday": "sabado",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Saturday",
+          "discount": "20%",
+          "store": "DIA+online",
+          "paymentMethod": "🔥MODO+Galicia, Ciudad, YOY, Buepp, Nacion, Macro и др банки."
+        }
+      },
+      {
+        "store": "coto",
+        "percentage": 20,
+        "paymentMethod": "any",
+        "weekday": "sabado",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Saturday",
+          "discount": "20%",
+          "store": "COTO"
+        }
+      },
+      {
+        "store": "jumbo",
+        "percentage": 20,
+        "paymentMethod": "modo",
+        "weekday": "sabado",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Saturday",
+          "discount": "20%",
+          "store": "Jumbo/Vea/Disco",
+          "paymentMethod": "🔥Patagonia Crédito + MODO"
+        }
+      },
+      {
+        "store": "changomas",
+        "percentage": 20,
+        "paymentMethod": "any",
+        "weekday": "sabado",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Saturday",
+          "discount": "20%",
+          "store": "ChangoMas/MasOnline"
+        }
+      },
+      {
+        "store": "coto",
+        "percentage": 20,
+        "paymentMethod": "any",
+        "weekday": "domingo",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Sunday",
+          "discount": "20%",
+          "store": "COTO"
+        }
+      },
+      {
+        "store": "changomas",
+        "percentage": 20,
+        "paymentMethod": "any",
+        "weekday": "domingo",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Sunday",
+          "discount": "20%",
+          "store": "ChangoMas/MasOnline"
+        }
+      },
+      {
+        "store": "changomas",
+        "percentage": 20,
+        "paymentMethod": "naranjaxcred",
+        "weekday": "domingo",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Sunday",
+          "discount": "20%",
+          "store": "ChangoMas",
+          "paymentMethod": "Naranja X Crédito"
+        }
+      },
+      {
+        "store": "carrefour",
+        "percentage": 15,
+        "paymentMethod": "micarrefourprepaga/cred",
+        "weekday": "lunes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Monday",
+          "discount": "15%",
+          "store": "Carrefour Online",
+          "paymentMethod": "MiCarrefour Prepaga/Crédito"
+        }
+      },
+      {
+        "store": "jumbo",
+        "percentage": 15,
+        "paymentMethod": "master",
+        "weekday": "martes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Tuesday",
+          "discount": "15%",
+          "store": "Jumbo/Vea/Disco",
+          "paymentMethod": "Mastercard"
+        }
+      },
+      {
+        "store": "coto",
+        "percentage": 15,
+        "paymentMethod": "any",
+        "weekday": "miercoles",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Wednesday",
+          "discount": "15%",
+          "store": "COTO"
+        }
+      },
+      {
+        "store": "carrefour",
+        "percentage": 15,
+        "paymentMethod": "patagonia",
+        "weekday": "miercoles",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Wednesday",
+          "discount": "15%",
+          "store": "Carrefour",
+          "paymentMethod": "Patagonia"
+        }
+      },
+      {
+        "store": "carrefour",
+        "percentage": 15,
+        "paymentMethod": "micarrefourprepaga/cred",
+        "weekday": "viernes",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Friday",
+          "discount": "15%",
+          "store": "Carrefour Online",
+          "paymentMethod": "MiCarrefour Prepaga/Crédito"
+        }
+      },
+      {
+        "store": "carrefour",
+        "percentage": 15,
+        "paymentMethod": "micarrefourprepaga/cred",
+        "weekday": "sabado",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Saturday",
+          "discount": "15%",
+          "store": "Carrefour Online",
+          "paymentMethod": "MiCarrefour Prepaga/Crédito"
+        }
+      },
+      {
+        "store": "carrefour",
+        "percentage": 15,
+        "paymentMethod": "micarrefourprepaga/cred",
+        "weekday": "domingo",
+        "source": "cashar",
+        "originalData": {
+          "source": "cashar.pro",
+          "day": "Sunday",
+          "discount": "15%",
+          "store": "Carrefour Online",
+          "paymentMethod": "MiCarrefour Prepaga/Crédito"
+        }
+      }
+    ]
+  },
+  "recommendations": [
+    "Review missing discount opportunities above",
+    "Verify if these represent actual gaps in our scrapers",
+    "Consider if these are one-time promotions vs recurring offers"
+  ]
+}

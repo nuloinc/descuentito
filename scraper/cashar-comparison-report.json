@@ -1,0 +1,162 @@
+{
+  "timestamp": "2025-06-15T14:29:11.001Z",
+  "casharDataCount": 150,
+  "ourDataCount": 181,
+  "missingStores": [
+    "vea",
+    "maxiconsumo",
+    "🔴несуммируетсясоскидкамимагазина,недействуетвvea/discoexpress*тольконаопределенныекатегориитоваров"
+  ],
+  "extraStores": [],
+  "casharStores": [
+    "changomas,masonline,vital,jumbo/disco/vea",
+    "dia+online",
+    "cotoonline",
+    "coto",
+    "tci(кредиткаcoto)",
+    "carrefourexpress",
+    "carrefourmaxi",
+    "carrefouronline",
+    "changomas/masonline",
+    "changomas/online",
+    "vea",
+    "diarco",
+    "maxiconsumo",
+    "changomas,diarco,makro,jumbo/disco/vea,идр",
+    "coto,jumbo/disco/vea,changomas,toledoидр",
+    "dia/diaonline,carrefour,changomas,jumbo/vea/disco,laanonimaидр.",
+    "diaonline",
+    "carrefour+online",
+    "jumbo/vea/disco",
+    "jumbo/vea/discoonline",
+    "carrefour,diarco,makro,vital,changomas/masonline",
+    "dia",
+    "carrefour",
+    "🔴несуммируетсясоскидкамимагазина.невключаетбытовуютехнику,электронику,телефоны,свежеемясоитоварымаркиcarrefour",
+    "jumbo/disco/vea",
+    "jumbo/disco/veaonline",
+    "changomas",
+    "makro,vital",
+    "dia/diaonlinecarrefourjumbo/disco/veachangomas/masonlineидр.",
+    "🔴несуммируетсясоскидкамимагазина,недействуетвvea/discoexpress*тольконаопределенныекатегориитоваров",
+    "maxiconsumo,macro,diarco,vital",
+    "diarco,laanonimavital,makro",
+    "diarco,vital,laanonima,makro"
+  ],
+  "ourStores": [
+    "makro",
+    "dia",
+    "carrefour",
+    "jumbo",
+    "changomas",
+    "coto"
+  ],
+  "casharSamples": [
+    {
+      "source": "cashar.pro",
+      "store": "ChangoMas, MasOnline, Vital, Jumbo/Disco/Vea",
+      "discount": "20%"
+    },
+    {
+      "source": "cashar.pro",
+      "discount": "30%"
+    },
+    {
+      "source": "cashar.pro",
+      "store": "DIA + online",
+      "discount": "20%"
+    },
+    {
+      "source": "cashar.pro",
+      "store": "COTO online",
+      "paymentMethod": "Reba Crédito AmEx",
+      "discount": "25%"
+    },
+    {
+      "source": "cashar.pro",
+      "paymentMethod": "Reba Crédito AmEx Black",
+      "discount": "30%"
+    },
+    {
+      "source": "cashar.pro",
+      "store": "COTO",
+      "discount": "25%"
+    },
+    {
+      "source": "cashar.pro",
+      "discount": "25%"
+    },
+    {
+      "source": "cashar.pro",
+      "discount": "25%"
+    },
+    {
+      "source": "cashar.pro",
+      "paymentMethod": "Credicoop Cabal + MODO",
+      "discount": "30%"
+    },
+    {
+      "source": "cashar.pro",
+      "store": "TCI (кредитка COTO)",
+      "discount": "20%"
+    },
+    {
+      "source": "cashar.pro",
+      "discount": "20%"
+    },
+    {
+      "source": "cashar.pro",
+      "store": "Carrefour Express",
+      "paymentMethod": "Mastercard",
+      "discount": "15%"
+    },
+    {
+      "source": "cashar.pro",
+      "paymentMethod": "🔥Mastercard + NFC",
+      "discount": "25%"
+    },
+    {
+      "source": "cashar.pro",
+      "store": "Carrefour Maxi",
+      "paymentMethod": "Mercado Pago QR",
+      "discount": "5%"
+    },
+    {
+      "source": "cashar.pro",
+      "store": "Carrefour Online",
+      "discount": "15%"
+    },
+    {
+      "source": "cashar.pro",
+      "store": "ChangoMas/MasOnline",
+      "discount": "20%"
+    },
+    {
+      "source": "cashar.pro",
+      "store": "ChangoMas/Online",
+      "discount": "15%"
+    },
+    {
+      "source": "cashar.pro",
+      "store": "Vea",
+      "paymentMethod": "🔥Mercado Pago QR",
+      "discount": "20%"
+    },
+    {
+      "source": "cashar.pro",
+      "store": "Diarco",
+      "paymentMethod": "Comafi + MODO",
+      "discount": "20%"
+    },
+    {
+      "source": "cashar.pro",
+      "store": "Maxiconsumo",
+      "discount": "25%"
+    }
+  ],
+  "recommendations": [
+    "Consider adding scraper for: vea",
+    "Consider adding scraper for: maxiconsumo",
+    "Consider adding scraper for: 🔴несуммируетсясоскидкамимагазина,недействуетвvea/discoexpress*тольконаопределенныекатегориитоваров"
+  ]
+}
