@@ -31,6 +31,7 @@ import {
 } from "lucide-react";
 import { useIsClient } from "@/lib/utils";
 import { PaymentMethodLogo } from "@/components/discount-card";
+import { usePostHog } from "posthog-js/react";
 
 type WizardStepId =
   | "welcome"
