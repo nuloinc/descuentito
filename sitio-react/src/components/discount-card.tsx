@@ -34,17 +34,8 @@ import { useShouldFilterByPaymentMethods } from "@/lib/state";
 import { usePaymentMethodsStore } from "@/lib/state";
 import { useQuery } from "@tanstack/react-query";
 import { FeedbackForm } from "./feedback-form";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogDescription,
-} from "./ui/dialog";
 import { motion } from "framer-motion";
+import { DialogHeader, DialogTitle } from "./ui/dialog";
 
 export const PaymentMethodLogo = ({
   method,
@@ -556,33 +547,7 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
             </div>
           </div>
 
-          <Dialog>
-            <DialogTrigger asChild>
-              <div className="flex justify-center">
-                <Button variant="outline" className="mx-auto my-2">
-                  <MessageCircleWarning className="size-5" />
-                  Reportar un problema
-                </Button>
-              </div>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>
-                  Reportar un problema en este descuento
-                </DialogTitle>
-                <DialogDescription>
-                  ¿Encontraste un error o algo incorrecto en este descuento? Por
-                  favor, contanos qué viste.
-                </DialogDescription>
-              </DialogHeader>
-              <FeedbackForm discount={discount} />
-              <DialogFooter>
-                <DialogClose asChild>
-                  <Button variant="outline">Cerrar</Button>
-                </DialogClose>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+          <FeedbackForm discount={discount} />
         </div>
         <DrawerFooter className="border-t sticky bottom-0 bg-background py-2 pb-[calc(env(safe-area-inset-bottom)+.5rem)]">
           <p className="text-sm text-center text-amber-500">

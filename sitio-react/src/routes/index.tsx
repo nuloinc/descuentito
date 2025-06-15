@@ -40,16 +40,6 @@ import { getPromotions, PromotionData } from "src/server/promotions";
 import { BRAND_LOGOS_SMALL } from "@/lib/logos";
 import SupermarketLogo from "@/components/supermarket-logo";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Dialog } from "@/components/ui/dialog";
 import { FeedbackForm } from "@/components/feedback-form";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { useIsClient } from "@/lib/utils";
@@ -284,7 +274,7 @@ function Promotions({
   }, [basePromotions, formattedWeekDates]);
 
   const currentPromotions =
-    currentTabIndex >= 0 ? promotionsByWeekday?.[currentTabIndex] ?? [] : [];
+    currentTabIndex >= 0 ? (promotionsByWeekday?.[currentTabIndex] ?? []) : [];
 
   return (
     <>
@@ -738,33 +728,7 @@ function Home() {
       <Footer>
         <div className="mx-auto max-w-screen-md grid grid-cols-1 gap-2 px-2">
           <div className="mt-2 flex flex-col items-stretch p-2 border-secondary rounded-lg gap-2 mb-2 max-w-md mx-auto">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="text-lg py-6 rounded-full"
-                  size="lg"
-                >
-                  <MessageCircleWarning className="size-5" />
-                  Reportar un problema
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Reportar un problema</DialogTitle>
-                  <DialogDescription>
-                    ¿Encontraste un error o algo incorrecto en la página? Por
-                    favor, contanos qué viste.
-                  </DialogDescription>
-                </DialogHeader>
-                <FeedbackForm />
-                <DialogFooter>
-                  <DialogClose asChild>
-                    <Button variant="outline">Cerrar</Button>
-                  </DialogClose>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
+            <FeedbackForm />
 
             <Button
               variant="outline"
