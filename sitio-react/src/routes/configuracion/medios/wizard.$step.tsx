@@ -616,7 +616,7 @@ function WizardStepComponent() {
                   <Button
                     onClick={() => {
                       localStorage.setItem("descuentito_wizard_seen", "true");
-                      navigate({ to: "/", replace: true });
+                      navigate({ to: "/", search: { supermarket: undefined } });
                     }}
                     className="bg-green-600 hover:bg-green-700 transition-all"
                   >
