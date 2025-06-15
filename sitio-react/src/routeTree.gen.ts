@@ -11,11 +11,18 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as SupermercadosImport } from './routes/supermercados'
 import { Route as IndexImport } from './routes/index'
 import { Route as ConfiguracionMediosIndexImport } from './routes/configuracion/medios/index'
 import { Route as ConfiguracionMediosWizardStepImport } from './routes/configuracion/medios/wizard.$step'
 
 // Create/Update Routes
+
+const SupermercadosRoute = SupermercadosImport.update({
+  id: '/supermercados',
+  path: '/supermercados',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -47,6 +54,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/supermercados': {
+      id: '/supermercados'
+      path: '/supermercados'
+      fullPath: '/supermercados'
+      preLoaderRoute: typeof SupermercadosImport
+      parentRoute: typeof rootRoute
+    }
     '/configuracion/medios/': {
       id: '/configuracion/medios/'
       path: '/configuracion/medios'
@@ -68,12 +82,14 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/supermercados': typeof SupermercadosRoute
   '/configuracion/medios': typeof ConfiguracionMediosIndexRoute
   '/configuracion/medios/wizard/$step': typeof ConfiguracionMediosWizardStepRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/supermercados': typeof SupermercadosRoute
   '/configuracion/medios': typeof ConfiguracionMediosIndexRoute
   '/configuracion/medios/wizard/$step': typeof ConfiguracionMediosWizardStepRoute
 }
@@ -81,6 +97,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/supermercados': typeof SupermercadosRoute
   '/configuracion/medios/': typeof ConfiguracionMediosIndexRoute
   '/configuracion/medios/wizard/$step': typeof ConfiguracionMediosWizardStepRoute
 }
@@ -89,13 +106,19 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/supermercados'
     | '/configuracion/medios'
     | '/configuracion/medios/wizard/$step'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/configuracion/medios' | '/configuracion/medios/wizard/$step'
+  to:
+    | '/'
+    | '/supermercados'
+    | '/configuracion/medios'
+    | '/configuracion/medios/wizard/$step'
   id:
     | '__root__'
     | '/'
+    | '/supermercados'
     | '/configuracion/medios/'
     | '/configuracion/medios/wizard/$step'
   fileRoutesById: FileRoutesById
@@ -103,12 +126,14 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SupermercadosRoute: typeof SupermercadosRoute
   ConfiguracionMediosIndexRoute: typeof ConfiguracionMediosIndexRoute
   ConfiguracionMediosWizardStepRoute: typeof ConfiguracionMediosWizardStepRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SupermercadosRoute: SupermercadosRoute,
   ConfiguracionMediosIndexRoute: ConfiguracionMediosIndexRoute,
   ConfiguracionMediosWizardStepRoute: ConfiguracionMediosWizardStepRoute,
 }
@@ -124,12 +149,16 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/supermercados",
         "/configuracion/medios/",
         "/configuracion/medios/wizard/$step"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/supermercados": {
+      "filePath": "supermercados.tsx"
     },
     "/configuracion/medios/": {
       "filePath": "configuracion/medios/index.tsx"

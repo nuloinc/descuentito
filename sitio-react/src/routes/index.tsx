@@ -105,6 +105,11 @@ export const Route = createFileRoute("/")({
       promotions: getPromotions(),
     };
   },
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      supermarket: (search.supermarket as string) || null,
+    };
+  },
   staleTime: 1000 * 60 * 10,
 });
 
@@ -279,7 +284,7 @@ function Promotions({
   }, [basePromotions, formattedWeekDates]);
 
   const currentPromotions =
-    currentTabIndex >= 0 ? promotionsByWeekday[currentTabIndex] : [];
+    currentTabIndex >= 0 ? promotionsByWeekday?.[currentTabIndex] ?? [] : [];
 
   return (
     <>
@@ -366,6 +371,7 @@ function PromotionsSkeleton({ tabId }: { tabId: string }) {
 
 function Home() {
   const { promotions } = Route.useLoaderData();
+  const { supermarket: initialSupermarket } = Route.useSearch();
 
   const formattedWeekDates = useMemo(getFormattedWeekDates, []);
   const todayIndex = useMemo(
@@ -384,7 +390,7 @@ function Home() {
     "Presencial"
   );
   const [selectedSupermarket, setSelectedSupermarket] = useState<string | null>(
-    null
+    initialSupermarket
   );
   const [selectedPromotionType, setSelectedPromotionType] = useState<
     "Todos" | "Descuentos" | "Cuotas"
