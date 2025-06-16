@@ -329,6 +329,18 @@ function Promotions({
           formattedWeekDates={formattedWeekDates}
           currentTabIndex={currentTabIndex}
         />
+        <a
+          href="https://cafecito.app/descuentito"
+          rel="noopener"
+          target="_blank"
+          className="mx-auto"
+        >
+          <img
+            srcSet="https://cdn.cafecito.app/imgs/buttons/button_2.png 1x, https://cdn.cafecito.app/imgs/buttons/button_2_2x.png 2x, https://cdn.cafecito.app/imgs/buttons/button_2_3.75x.png 3.75x"
+            src="https://cdn.cafecito.app/imgs/buttons/button_2.png"
+            alt="Invitame un café en cafecito.app"
+          />
+        </a>
       </div>
     </>
   );
@@ -487,7 +499,7 @@ function Home() {
 
           {/* Conditional Content Block (Separate Sibling) */}
           <div className="container mx-auto max-w-3xl px-4 bg-sidebar">
-            <motion.div className="flex flex-col justify-center">
+            <motion.div className="flex flex-col justify-center pb-2">
               <AnimatePresence mode="popLayout">
                 {!isClient ? (
                   <motion.div
@@ -529,7 +541,7 @@ function Home() {
                   </motion.div>
                 ) : (
                   <motion.div
-                    className="my-2"
+                    className="mt-2"
                     key="welcome-message"
                     layout
                     initial={{ opacity: 0 }}
