@@ -1,0 +1,10 @@
+{
+  "modelName": "gemini-2.5-flash",
+  "source": "coto",
+  "extractedDiscounts": [],
+  "errors": [
+    "scrapedData.map is not a function. (In 'scrapedData.map(async (data) => {\n      try {\n        const { object } = await generateObject({\n          model: model.model,\n          schema: DiscountSchema,\n          temperature: 0,\n          system: `${genStartPrompt(source)}\n\n${PAYMENT_METHODS_PROMPT}\n\n${RESTRICTIONS_PROMPT}\n\n${LIMITS_PROMPT}`,\n          messages: [\n            {\n              role: \"user\",\n              content: [\n                {\n                  type: \"text\",\n                  text: \"Extract the discount from the following pseudo-html: \\\\n\\\\n\" + data.domDescription\n                }\n              ]\n            }\n          ]\n        });\n        return {\n          ...object,\n          url: `https://www.${source}.com.ar/descuentos-bancarios`,\n          source\n        };\n      } catch (error) {\n        console.warn(`Failed to extract discount with ${model.name}:`, error);\n        return null;\n      }\n    })', 'scrapedData.map' is undefined)"
+  ],
+  "executionTimeMs": 3,
+  "timestamp": "2025-06-16T00:35:29.434Z"
+}

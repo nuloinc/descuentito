@@ -1,0 +1,10 @@
+{
+  "modelName": "gpt-4o-mini",
+  "source": "makro",
+  "extractedDiscounts": [],
+  "errors": [
+    "No object generated: response did not match schema."
+  ],
+  "executionTimeMs": 1282,
+  "timestamp": "2025-06-16T00:38:25.444Z"
+}

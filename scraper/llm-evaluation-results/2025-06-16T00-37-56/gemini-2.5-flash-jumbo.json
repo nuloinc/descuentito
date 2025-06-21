@@ -1,0 +1,1681 @@
+{
+  "modelName": "gemini-2.5-flash",
+  "source": "jumbo",
+  "extractedDiscounts": [
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-15",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Jumbo",
+        "Online"
+      ],
+      "url": "https://www.jumbo.com.ar/",
+      "source": "jumbo"
+    }
+  ],
+  "errors": [],
+  "executionTimeMs": 5978,
+  "timestamp": "2025-06-16T00:38:13.143Z"
+}

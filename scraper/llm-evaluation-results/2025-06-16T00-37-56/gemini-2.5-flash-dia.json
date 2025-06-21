@@ -1,0 +1,505 @@
+{
+  "modelName": "gemini-2.5-flash",
+  "source": "dia",
+  "extractedDiscounts": [
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 25
+      },
+      "validFrom": "2025-04-01",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "maxDiscount": 10000,
+        "explicitlyHasNoLimit": false
+      },
+      "where": [
+        "Online"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 20
+      },
+      "validFrom": "2024-11-01",
+      "validUntil": "2025-09-30",
+      "weekdays": [
+        "Jueves"
+      ],
+      "restrictions": [],
+      "paymentMethods": [
+        [
+          "Tarjeta de crédito VISA",
+          "MODO"
+        ],
+        [
+          "Tarjeta de débito VISA",
+          "MODO"
+        ]
+      ],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "maxDiscount": 15000,
+        "explicitlyHasNoLimit": false
+      },
+      "where": [
+        "Online"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 25
+      },
+      "validFrom": "2024-11-01",
+      "validUntil": "2025-09-30",
+      "weekdays": [
+        "Jueves"
+      ],
+      "restrictions": [],
+      "paymentMethods": [
+        [
+          "Banco Galicia - Eminent",
+          "Tarjeta de crédito VISA",
+          "MODO"
+        ],
+        [
+          "Banco Galicia - Eminent",
+          "Tarjeta de débito VISA",
+          "MODO"
+        ]
+      ],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "maxDiscount": 20000,
+        "explicitlyHasNoLimit": false
+      },
+      "where": [
+        "Online"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 25
+      },
+      "validFrom": "2025-06-03",
+      "validUntil": "2025-06-17",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "maxDiscount": 10000,
+        "explicitlyHasNoLimit": false
+      },
+      "where": [
+        "Online"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-18",
+      "validUntil": "2025-06-25",
+      "weekdays": [
+        "Miercoles"
+      ],
+      "restrictions": [
+        "Monto mínimo de compra de $30.000"
+      ],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "maxDiscount": 10000,
+        "explicitlyHasNoLimit": false
+      },
+      "where": [
+        "Online"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 25
+      },
+      "validFrom": "2025-06-11",
+      "validUntil": "2025-06-30",
+      "restrictions": [
+        "Exclusivo clientes SORPRESA!"
+      ],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "maxDiscount": 20000,
+        "explicitlyHasNoLimit": false
+      },
+      "where": [
+        "Dia",
+        "Online"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 20
+      },
+      "validFrom": "2025-06-14",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "maxDiscount": 20000,
+        "explicitlyHasNoLimit": false
+      },
+      "where": [
+        "Dia",
+        "Online"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 30
+      },
+      "validFrom": "2025-03-01",
+      "validUntil": "2025-09-30",
+      "weekdays": [
+        "Miercoles"
+      ],
+      "restrictions": [
+        "Comprando con crédito vía MODO"
+      ],
+      "paymentMethods": [
+        [
+          "MODO",
+          "Tarjeta de crédito VISA"
+        ],
+        [
+          "MODO",
+          "Tarjeta de crédito Mastercard"
+        ]
+      ],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "maxDiscount": 12000,
+        "explicitlyHasNoLimit": false
+      },
+      "where": [
+        "Dia",
+        "Online"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 20
+      },
+      "validFrom": "2025-04-01",
+      "validUntil": "2025-09-30",
+      "weekdays": [
+        "Lunes",
+        "Viernes"
+      ],
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "maxDiscount": 9000,
+        "explicitlyHasNoLimit": false
+      },
+      "where": [
+        "Dia",
+        "Online"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 25
+      },
+      "validFrom": "2025-01-01",
+      "validUntil": "2025-09-30",
+      "restrictions": [],
+      "paymentMethods": [
+        [
+          "Tarjeta de débito VISA"
+        ],
+        [
+          "Tarjeta de débito Mastercard"
+        ],
+        [
+          "Tarjeta de débito Cabal"
+        ]
+      ],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "maxDiscount": 5000,
+        "explicitlyHasNoLimit": false
+      },
+      "where": [
+        "Dia",
+        "Online"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    },
+    {
+      "discount": {
+        "type": "cuotas sin intereses",
+        "value": 3
+      },
+      "validFrom": "2024-09-05",
+      "validUntil": "2025-09-30",
+      "restrictions": [
+        "Promoción válida para compras realizadas con tarjetas de crédito Visa y Mastercard."
+      ],
+      "paymentMethods": [
+        [
+          "Tarjeta de crédito VISA",
+          "Tarjeta de crédito Mastercard"
+        ]
+      ],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Dia",
+        "Online"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 30
+      },
+      "validFrom": "2024-12-17",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "paymentMethods": [
+        [
+          "MODO",
+          "Tarjeta de crédito VISA"
+        ],
+        [
+          "MODO",
+          "Tarjeta de crédito Mastercard"
+        ]
+      ],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "maxDiscount": 16000,
+        "explicitlyHasNoLimit": false
+      },
+      "where": [
+        "Dia",
+        "Online"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 30
+      },
+      "validFrom": "2024-12-17",
+      "validUntil": "2025-06-30",
+      "restrictions": [
+        "Tope: $16.000 por semana"
+      ],
+      "paymentMethods": [
+        [
+          "MODO",
+          "Tarjeta de crédito VISA"
+        ],
+        [
+          "MODO",
+          "Tarjeta de crédito Mastercard"
+        ],
+        [
+          "MODO",
+          "Tarjeta de crédito Cabal"
+        ]
+      ],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "maxDiscount": 16000,
+        "explicitlyHasNoLimit": false
+      },
+      "where": [
+        "Dia",
+        "Online"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 15
+      },
+      "validFrom": "2025-06-04",
+      "validUntil": "2025-06-11",
+      "weekdays": [
+        "Miercoles"
+      ],
+      "restrictions": [
+        "Sin mínimo de compra"
+      ],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Dia"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 25
+      },
+      "validFrom": "2025-03-01",
+      "validUntil": "2025-12-31",
+      "restrictions": [
+        "Tope semanal"
+      ],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "maxDiscount": 16000,
+        "explicitlyHasNoLimit": false
+      },
+      "where": [
+        "Dia"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 25
+      },
+      "validFrom": "2025-06-12",
+      "validUntil": "2025-06-12",
+      "restrictions": [],
+      "paymentRails": {
+        "pagoConQR": false,
+        "telefonoContactless": true,
+        "contactless": true
+      },
+      "unknownPaymentMethods": [],
+      "limits": {
+        "maxDiscount": 12000,
+        "explicitlyHasNoLimit": false
+      },
+      "where": [
+        "Dia"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 10
+      },
+      "validFrom": "2025-02-01",
+      "validUntil": "2025-06-30",
+      "restrictions": [
+        "Por transacción"
+      ],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "maxDiscount": 1000,
+        "explicitlyHasNoLimit": false
+      },
+      "where": [
+        "Dia"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    },
+    {
+      "discount": {
+        "type": "porcentaje",
+        "value": 10
+      },
+      "validFrom": "2025-01-01",
+      "validUntil": "2025-06-30",
+      "restrictions": [],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "maxDiscount": 1500,
+        "explicitlyHasNoLimit": false
+      },
+      "where": [
+        "Dia"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    },
+    {
+      "discount": {
+        "type": "cuotas sin intereses",
+        "value": 3
+      },
+      "validFrom": "2025-02-01",
+      "validUntil": "2025-06-30",
+      "weekdays": [
+        "Sabado"
+      ],
+      "restrictions": [],
+      "paymentMethods": [
+        [
+          "Tarjeta de crédito VISA"
+        ],
+        [
+          "Tarjeta de crédito Mastercard"
+        ],
+        [
+          "Tarjeta American Express"
+        ],
+        [
+          "Tarjeta de crédito Cabal"
+        ]
+      ],
+      "unknownPaymentMethods": [],
+      "limits": {
+        "explicitlyHasNoLimit": true
+      },
+      "where": [
+        "Dia"
+      ],
+      "url": "https://diaonline.supermercadosdia.com.ar/beneficios",
+      "source": "dia"
+    }
+  ],
+  "errors": [],
+  "executionTimeMs": 2260,
+  "timestamp": "2025-06-16T00:38:07.164Z"
+}

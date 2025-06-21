@@ -1,0 +1,10 @@
+{
+  "modelName": "gemini-2.0-flash",
+  "source": "jumbo",
+  "extractedDiscounts": [],
+  "errors": [
+    "Bad Request"
+  ],
+  "executionTimeMs": 211,
+  "timestamp": "2025-06-16T00:38:17.407Z"
+}

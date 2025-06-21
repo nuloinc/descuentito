@@ -1,0 +1,2412 @@
+[
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 10
+    },
+    "validFrom": "2025-06-01",
+    "validUntil": "2025-06-30",
+    "weekdays": [
+      "Lunes",
+      "Martes",
+      "Miercoles",
+      "Jueves",
+      "Viernes",
+      "Sabado",
+      "Domingo"
+    ],
+    "restrictions": [
+      "Tope de reintegro $15.000 total por mes",
+      "No acumula con otras promociones vigentes",
+      "Solo disponible para compras en 1 (un) pago",
+      "Descuento personal e intransferible, para validar el descuento y acreditar que el cliente debe presentar el DNI, el mismo debe presentarse personalmente y exhibir su DNI"
+    ],
+    "onlyForProducts": "Conserva de tomates, Pastas secas y refrigeradas, Arroz, Aderezos, Salchichas, Leche UAT, Café, Té, Endulzantes, Almacén sin TACC, Leche fresca, Leches maternas, Conserva de vegetales, Cacao, Sal, Cereales, Dulce de leche, Leches, Vegetales, Conservas de pescados, Galletitas dulces, Galletitas saladas, Harinas y premezclas, Nutrición infantil, Leche en polvo, Jugos, Culinarios, Salsas listas, Horneables y gelificables, Manteca, Margarina, Snacks, Aguas saborizadas, Amargos, Gaseosas, Aguas plenas, Dulces sólidos, Quesos al peso, Milanesas vegetales, Papas congeladas, Fiambres feteados, Fiambres en mini pieza, Grasa refrigerada, Vegetales congelados, Prefritos congelados, Pizzas congeladas, Levadura, Hamburguesas y medallones, Tapas refrigeradas, Legumbres y granos secos, Jabones de tocador, Desodorantes, Higiene del bebé, Cuidado del cabello, Cuidado oral, Higiene femenina, Papeles higiénicos, Rollo de cocina, Toallitas húmedas",
+    "excludesProducts": "Jugos refrigerados",
+    "paymentMethods": [],
+    "unknownPaymentMethods": [],
+    "appliesOnlyTo": {
+      "anses": true,
+      "jubilados": false,
+      "programaCiudadaniaPorteña": false
+    },
+    "limits": {
+      "maxDiscount": 1000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 25
+    },
+    "validFrom": "2025-04-01",
+    "validUntil": "2025-06-30",
+    "weekdays": [
+      "Martes"
+    ],
+    "restrictions": [
+      "No acumulable con otras promociones",
+      "No aplica a cartera de clientes que acrediten planes sociales",
+      "No aplica a las operaciones de extracción de dinero en efectivo",
+      "No aplica para los consumos efectuados a través de la plataforma Mercado Pago",
+      "No aplica a los pagos realizados por la plataforma de pagos móviles (POS móvil, botón de pago y billetera electrónica)"
+    ],
+    "paymentMethods": [
+      [
+        "Banco Hipotecario",
+        "MODO",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco Hipotecario",
+        "MODO",
+        "Tarjeta de débito VISA"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": false
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 10000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 25
+    },
+    "validFrom": "2025-04-01",
+    "validUntil": "2025-06-30",
+    "weekdays": [
+      "Martes"
+    ],
+    "restrictions": [
+      "No acumulable con otras promociones",
+      "No aplica a cartera de clientes que acrediten planes sociales",
+      "No aplica a las operaciones de extracción de dinero en efectivo",
+      "No aplica para los consumos efectuados a través de la plataforma Mercado Pago",
+      "No aplica a los pagos realizados por la plataforma de pagos móviles (POS móvil, botón de pago y billetera electrónica)"
+    ],
+    "paymentMethods": [
+      [
+        "Banco Hipotecario - Búho/Plan Sueldo",
+        "MODO",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco Hipotecario - Búho/Plan Sueldo",
+        "MODO",
+        "Tarjeta de débito VISA"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": false
+    },
+    "unknownPaymentMethods": [],
+    "appliesOnlyTo": {
+      "anses": false,
+      "jubilados": true,
+      "programaCiudadaniaPorteña": false
+    },
+    "limits": {
+      "maxDiscount": 30000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 20
+    },
+    "validFrom": "2025-01-01",
+    "validUntil": "2025-06-30",
+    "weekdays": [
+      "Lunes"
+    ],
+    "restrictions": [
+      "Excludes accounts in arrears and/or blocked for administrative reasons.",
+      "It will be an essential requirement, prior to making the purchase, to have the Banco Ciudad account associated with MODO.",
+      "For purchases made by additional cardholders, the additional cardholder must have a Banco Ciudad savings account associated with MODO.",
+      "Accreditation of salaries during the last 90 days of the purchase will be considered for the segmentation of salary plan and retired clients."
+    ],
+    "excludesProducts": "productos de convenio de precios justos, electrodomésticos, carne vacuna",
+    "paymentMethods": [
+      [
+        "MODO",
+        "Banco Ciudad",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "MODO",
+        "Banco Ciudad",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": true,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 20000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 10
+    },
+    "validFrom": "2025-01-01",
+    "validUntil": "2025-06-30",
+    "weekdays": [
+      "Lunes"
+    ],
+    "restrictions": [
+      "Excludes accounts in arrears and/or blocked for administrative reasons.",
+      "It will be an essential requirement, prior to making the purchase, to have the Banco Ciudad account associated with MODO.",
+      "For purchases made by additional cardholders, the additional cardholder must have a Banco Ciudad savings account associated with MODO.",
+      "Accreditation of salaries during the last 90 days of the purchase will be considered for the segmentation of salary plan and retired clients."
+    ],
+    "excludesProducts": "productos de convenio de precios justos, electrodomésticos, carne vacuna",
+    "paymentMethods": [
+      [
+        "MODO",
+        "Banco Ciudad - Plan Sueldo y Jubilados",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "MODO",
+        "Banco Ciudad - Plan Sueldo y Jubilados",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": true,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "appliesOnlyTo": {
+      "anses": false,
+      "jubilados": true,
+      "programaCiudadaniaPorteña": false
+    },
+    "limits": {
+      "maxDiscount": 10000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 15
+    },
+    "validFrom": "2025-06-01",
+    "validUntil": "2025-06-30",
+    "weekdays": [
+      "Martes"
+    ],
+    "restrictions": [
+      "Exclusivo para empleados municipales y provinciales",
+      "Presentar DNI y recibo de sueldo",
+      "Tope de 1 transacción por día",
+      "Solo disponible para compras en 1 pago",
+      "No acumula con otras promociones vigentes"
+    ],
+    "onlyForProducts": "Almacén seco, Lácteos, Bebida sin alcohol, Galletitas y golosinas, Papeles, Tapas empanadas y tartas, Pastas frescas y salchicha, Fiambrería, Quesos, Congelados, Pañales y perfumería del bebé, Farmacia venta libre, Perfumería",
+    "excludesProducts": "Electro, Carnes, Precios Justos",
+    "unknownPaymentMethods": [],
+    "appliesOnlyTo": {
+      "anses": false,
+      "jubilados": false,
+      "programaCiudadaniaPorteña": false
+    },
+    "limits": {
+      "maxDiscount": 1500,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 30
+    },
+    "validFrom": "2025-05-01",
+    "validUntil": "2025-12-31",
+    "weekdays": [
+      "Martes"
+    ],
+    "restrictions": [
+      "Válido Cartera Consumo",
+      "Aplica para compras presenciales los días MARTES, compras a través de la web con pago online realizado un día MARTES",
+      "Es necesario que previo a realizar el pago el usuario tenga asociada a MODO la cuenta y tarjeta del Nuevo Banco Santa Fe S.A. con la que realizará la compra",
+      "No aplica para compras en cuotas",
+      "Los beneficios informados no aplican a otras billeteras o plataformas de pago"
+    ],
+    "paymentMethods": [
+      [
+        "MODO",
+        "Banco Santa Fe",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "MODO",
+        "Banco Santa Fe",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": true,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 16000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 30
+    },
+    "validFrom": "2025-05-01",
+    "validUntil": "2025-12-30",
+    "weekdays": [
+      "Miercoles"
+    ],
+    "restrictions": [
+      "Válido Cartera Consumo",
+      "No aplica para compras en cuotas",
+      "Es necesario que previo a realizar el pago el usuario tenga asociada a MODO la cuenta y tarjeta del Banco de San Juan S.A con la que realizará la compra",
+      "Los beneficios informados no aplican a otras billeteras o plataformas de pago"
+    ],
+    "paymentMethods": [
+      [
+        "Banco San Juan",
+        "MODO",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco San Juan",
+        "MODO",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": true,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 16000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 30
+    },
+    "validFrom": "2025-03-01",
+    "validUntil": "2025-06-30",
+    "weekdays": [
+      "Miercoles"
+    ],
+    "restrictions": [
+      "Válido para clientes/usuarios registrados en MODO",
+      "Válido para compras en un pago con QR",
+      "No aplica para compra en cuotas",
+      "No válido Tarjeta de Crédito Empresa o Agro",
+      "No acumula con otra promoción",
+      "No aplica para pago a traves de Mercado Pago, otro pago electrónico inmediato, Transferencia 3.0"
+    ],
+    "excludesProducts": "Electro, Productos del convenio Precios Cuidados/Esenciales",
+    "paymentMethods": [
+      [
+        "MODO",
+        "Banco Macro - Tarjeta Selecta",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "MODO",
+        "Banco Macro - Tarjeta Selecta",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": false
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 16000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 25
+    },
+    "validFrom": "2025-06-03",
+    "validUntil": "2025-06-24",
+    "weekdays": [
+      "Martes"
+    ],
+    "restrictions": [
+      "No aplica para compra presencial",
+      "Beneficio no válido para compras realizadas con Naranja Visa, Naranja MasterCard, Naranja Amex, ni para transacciones realizadas en agrupadores y billeteras virtuales"
+    ],
+    "paymentMethods": [
+      [
+        "NaranjaX"
+      ]
+    ],
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 10000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 30
+    },
+    "validFrom": "2025-04-01",
+    "validUntil": "2025-12-31",
+    "weekdays": [
+      "Jueves"
+    ],
+    "restrictions": [
+      "Exclusivo para clientes que depositen su sueldo en ICBC con acreditación de haberes dentro los 90 días anteriores a la fecha de compra.",
+      "No válido para compras efectuadas por Mercado Pago, Pago Inmediato o Pago entre Personas.",
+      "No válido para compras mayoristas.",
+      "No válido para tarjetas VISA Business, VISA Distribution, VISA Purchasing, VISA Purchasing Campo, Corporate, Corporate Signature, Recargable Empresa y VISA Cuenta Central.",
+      "Válido para clientes con paquete de productos en ICBC.",
+      "No válido para adicionales de cuenta sin caja de ahorro o cuenta corriente en ICBC.",
+      "Los beneficios no se superponen ni son acumulativos entre sí, ni con otros beneficios, promociones u ofertas que ofrezca Masonline."
+    ],
+    "excludesProducts": "Electronicos, Electrodomesticos, Celulares, Tablets, Consolas, y todos los productos incluidos en el programa Precios Cuidados",
+    "paymentMethods": [
+      [
+        "MODO",
+        "Banco ICBC - Cliente Payroll",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "MODO",
+        "Banco ICBC - Cliente Payroll",
+        "Tarjeta de crédito Mastercard"
+      ],
+      [
+        "MODO",
+        "Banco ICBC - Cliente Payroll",
+        "Tarjeta de débito VISA"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": true,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "appliesOnlyTo": {
+      "anses": false,
+      "jubilados": false,
+      "programaCiudadaniaPorteña": false
+    },
+    "limits": {
+      "maxDiscount": 15000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 20
+    },
+    "validFrom": "2025-04-01",
+    "validUntil": "2025-12-31",
+    "weekdays": [
+      "Jueves"
+    ],
+    "restrictions": [
+      "No válido para compras efectuadas por Mercado Pago, Pago Inmediato o Pago entre Personas.",
+      "No válido para compras mayoristas.",
+      "No válido para tarjetas VISA Business, VISA Distribution, VISA Purchasing, VISA Purchasing Campo, Corporate, Corporate Signature, Recargable Empresa y VISA Cuenta Central.",
+      "Válido para clientes con paquete de productos en ICBC.",
+      "No válido para adicionales de cuenta sin caja de ahorro o cuenta corriente en ICBC.",
+      "Los beneficios no se superponen ni son acumulativos entre sí, ni con otros beneficios, promociones u ofertas que ofrezca Masonline."
+    ],
+    "excludesProducts": "Electronicos, Electrodomesticos, Celulares, Tablets, Consolas, y todos los productos incluidos en el programa Precios Cuidados",
+    "paymentMethods": [
+      [
+        "MODO",
+        "Banco ICBC",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "MODO",
+        "Banco ICBC",
+        "Tarjeta de crédito Mastercard"
+      ],
+      [
+        "MODO",
+        "Banco ICBC",
+        "Tarjeta de débito VISA"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": true,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "appliesOnlyTo": {
+      "anses": false,
+      "jubilados": false,
+      "programaCiudadaniaPorteña": false
+    },
+    "limits": {
+      "maxDiscount": 10000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 25
+    },
+    "validFrom": "2025-03-01",
+    "validUntil": "2025-08-31",
+    "weekdays": [
+      "Jueves"
+    ],
+    "restrictions": [
+      "Promoción no acumulable con otras promociones y/o beneficios vigentes.",
+      "Promoción no aplicable para pagos a través de billeteras virtuales (excepto Ualá y Apple Pay) y/o plataformas de pago online.",
+      "Será requisito necesario para acceder a la promoción: (a) contar con una cuenta de pago abierta y operativa en la aplicación móvil Ualá (la “App”); y (b) tener una caja de ahorros en pesos (la “Caja de Ahorro”) ofrecida por Uilo."
+    ],
+    "paymentMethods": [
+      [
+        "Uala",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 15000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 20
+    },
+    "validFrom": "2025-03-01",
+    "validUntil": "2025-06-30",
+    "weekdays": [
+      "Miercoles"
+    ],
+    "restrictions": [
+      "Válido para compras en un pago con QR",
+      "No aplica para compra en cuotas",
+      "No válido tarjeta de crédito empresa o agro",
+      "No acumula con otra promoción",
+      "No aplica para pago a traves de Mercado Pago, otro pago electrónico inmediato, Transferencia 3.0"
+    ],
+    "excludesProducts": "Electro, Productos del convenio Precios Cuidados/Esenciales",
+    "paymentMethods": [
+      [
+        "Banco Macro",
+        "MODO",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco Macro",
+        "MODO",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": false
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 8000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 30
+    },
+    "validFrom": "2025-05-01",
+    "validUntil": "2025-06-30",
+    "weekdays": [
+      "Miercoles"
+    ],
+    "restrictions": [
+      "Valido unicamente para pagos en una cuota",
+      "No valido para pagos con saldo en cuenta",
+      "Exclusivo cartera de consumo",
+      "Excluye versiones corporativas",
+      "Excluye pagos con otros QR o billeteras virtuales"
+    ],
+    "excludesProducts": "Electro",
+    "paymentMethods": [
+      [
+        "Banco Nación",
+        "MODO",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco Nación",
+        "MODO",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": false
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 12000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 35
+    },
+    "validFrom": "2025-01-08",
+    "validUntil": "2025-12-31",
+    "weekdays": [
+      "Miercoles",
+      "Jueves"
+    ],
+    "restrictions": [
+      "Para que la bonificación impacte correctamente, el cliente debe tener elegida una cuenta favorita del Banco de Corrientes que permita recibir créditos.",
+      "Promoción no acumulable con otras promociones vigentes.",
+      "Promoción solo válida en comercios adheridos a la misma.",
+      "Aplica únicamente para pagos con QR desde Mas Banco o MODO.",
+      "No aplica a pagos a través de billeteras virtuales y/o plataformas de pago online (por ejemplo, Zoco, Todo Pago, Mercado Pago, Ualá, etc.).",
+      "No aplica promoción para ventas realizadas en planes nacionales \"Cuota Simple\"."
+    ],
+    "paymentMethods": [
+      [
+        "BanCo (Banco de Corrientes)",
+        "MODO",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "BanCo (Banco de Corrientes)",
+        "MODO",
+        "Tarjeta de crédito Mastercard"
+      ],
+      [
+        "BanCo (Banco de Corrientes)",
+        "MODO",
+        "Tarjeta de débito VISA"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": false
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 20000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "cuotas sin intereses",
+      "value": 3
+    },
+    "validFrom": "2025-01-08",
+    "validUntil": "2025-12-31",
+    "weekdays": [
+      "Miercoles",
+      "Jueves"
+    ],
+    "restrictions": [
+      "Para que la bonificación impacte correctamente, el cliente debe tener elegida una cuenta favorita del Banco de Corrientes que permita recibir créditos.",
+      "Promoción no acumulable con otras promociones vigentes.",
+      "Promoción solo válida en comercios adheridos a la misma.",
+      "Aplica únicamente para pagos con QR desde Mas Banco o MODO.",
+      "No aplica a pagos a través de billeteras virtuales y/o plataformas de pago online (por ejemplo, Zoco, Todo Pago, Mercado Pago, Ualá, etc.).",
+      "No aplica promoción para ventas realizadas en planes nacionales \"Cuota Simple\"."
+    ],
+    "paymentMethods": [
+      [
+        "BanCo (Banco de Corrientes)",
+        "MODO",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "BanCo (Banco de Corrientes)",
+        "MODO",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": false
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "explicitlyHasNoLimit": true
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 25
+    },
+    "validFrom": "2025-03-01",
+    "validUntil": "2025-06-30",
+    "weekdays": [
+      "Miercoles"
+    ],
+    "restrictions": [
+      "No aplica para compra en cuotas",
+      "No aplica para Tarjeta de Crédito Empresa o Agro",
+      "No acumula con otra promoción",
+      "No aplica para pago a través de Mercado Pago, otro pago electrónico inmediato, Transferencia 3.0"
+    ],
+    "excludesProducts": "Electro, Productos del convenio Precios Cuidados/Esenciales",
+    "paymentMethods": [
+      [
+        "Banco Macro",
+        "MODO",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco Macro",
+        "MODO",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": true,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 14000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 30
+    },
+    "validFrom": "2025-05-01",
+    "validUntil": "2025-12-31",
+    "weekdays": [
+      "Jueves"
+    ],
+    "restrictions": [
+      "Válido Cartera Consumo",
+      "No aplica para pagos en cuotas",
+      "No aplican a otras billeteras o plataformas de pago"
+    ],
+    "paymentMethods": [
+      [
+        "MODO",
+        "Banco Entre Ríos",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "MODO",
+        "Banco Entre Ríos",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": true,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 16000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 20
+    },
+    "validFrom": "2025-04-01",
+    "validUntil": "2025-12-31",
+    "weekdays": [
+      "Jueves"
+    ],
+    "restrictions": [
+      "No válido para compras efectuadas por Mercado Pago, Pago Inmediato o Pago entre personas.",
+      "No válido para compras mayoristas.",
+      "No válido para tarjetas VISA Business, VISA Distribution, VISA Purchasing, VISA Purchasing Campo, Corporate, Corporate Signature, Recargable Empresa y VISA Cuenta Central.",
+      "Válido para clientes con paquete de productos en ICBC.",
+      "No válido para adicionales de cuenta sin caja de ahorro o cuenta corriente en ICBC.",
+      "Los beneficios no se superponen ni son acumulativos entre sí, ni con otros beneficios, promociones u ofertas que ofrezca Masonline."
+    ],
+    "excludesProducts": "Electronicos, Electrodomesticos, Celulares, Tablets, Consolas, y todos los productos incluidos en el programa Precios Cuidados",
+    "paymentMethods": [
+      [
+        "Banco ICBC",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco ICBC",
+        "Tarjeta de crédito Mastercard"
+      ],
+      [
+        "Banco ICBC",
+        "Tarjeta de débito VISA"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": true,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 10000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 30
+    },
+    "validFrom": "2025-04-01",
+    "validUntil": "2025-12-31",
+    "weekdays": [
+      "Jueves"
+    ],
+    "restrictions": [
+      "Exclusivo para clientes que depositen su sueldo en ICBC. Con acreditación de haberes dentro los 90 días anteriores a la fecha de compra.",
+      "No válido para compras efectuadas por Mercado Pago, Pago Inmediato o Pago entre personas.",
+      "No válido para compras mayoristas.",
+      "No válido para tarjetas VISA Business, VISA Distribution, VISA Purchasing, VISA Purchasing Campo, Corporate, Corporate Signature, Recargable Empresa y VISA Cuenta Central.",
+      "Válido para clientes con paquete de productos en ICBC.",
+      "No válido para adicionales de cuenta sin caja de ahorro o cuenta corriente en ICBC.",
+      "Los beneficios no se superponen ni son acumulativos entre sí, ni con otros beneficios, promociones u ofertas que ofrezca Masonline."
+    ],
+    "excludesProducts": "Electronicos, Electrodomesticos, Celulares, Tablets, Consolas, y todos los productos incluidos en el programa Precios Cuidados",
+    "paymentMethods": [
+      [
+        "Banco ICBC - Cliente Payroll",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco ICBC - Cliente Payroll",
+        "Tarjeta de crédito Mastercard"
+      ],
+      [
+        "Banco ICBC - Cliente Payroll",
+        "Tarjeta de débito VISA"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": true,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 15000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 30
+    },
+    "validFrom": "2025-04-01",
+    "validUntil": "2025-06-30",
+    "weekdays": [
+      "Jueves"
+    ],
+    "restrictions": [
+      "Promo válida únicamente para consumos con QR de MODO a través de Credicoop Móvil o MODO seleccionando Tarjetas Cabal Credicoop (excepto Agrocabal, Cabal Mayorista y Cabal Empresa).",
+      "El reintegro se verá reflejado dentro de los 30 días posteriores al consumo en la cuenta del Banco, para lo cual será requisito que sea de título personal y se encuentre adherida a MODO.",
+      "Será condición esencial para participar de la misma que al momento de efectuar el reintegro, la tarjeta se encuentre vigente y en estado de cumplimiento normal.",
+      "No participan los consumos realizados a través del programa Cuota Simple, billeteras virtuales (excepto Modo) y POS móviles.",
+      "Aplicable a la cartera de consumo."
+    ],
+    "paymentMethods": [
+      [
+        "MODO",
+        "Banco Credicoop",
+        "Tarjeta de crédito Cabal"
+      ],
+      [
+        "MODO",
+        "Banco Credicoop",
+        "Tarjeta de débito Cabal"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": false
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 9000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 15
+    },
+    "validFrom": "2025-05-01",
+    "validUntil": "2025-07-31",
+    "weekdays": [
+      "Jueves"
+    ],
+    "restrictions": [
+      "No acumulable con otras promociones",
+      "No válido para tarjetas corporativas",
+      "Cuentas sin mora",
+      "No aplica para pagos y/o consumos abonados con tarjetas de débito y crédito emitidas por Banco Patagonia S.A. a través de billeteras virtuales a excepción de MODO"
+    ],
+    "paymentMethods": [
+      [
+        "Banco Patagonia",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco Patagonia",
+        "Tarjeta de crédito Mastercard"
+      ],
+      [
+        "Banco Patagonia",
+        "MODO"
+      ]
+    ],
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 10000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 30
+    },
+    "validFrom": "2025-05-01",
+    "validUntil": "2025-07-31",
+    "weekdays": [
+      "Jueves"
+    ],
+    "restrictions": [
+      "Clientes asociados a los productos Singular",
+      "No acumulable con otras promociones",
+      "No válido para tarjetas corporativas",
+      "Cuentas sin mora",
+      "No aplica para pagos y/o consumos abonados con tarjetas de débito y crédito emitidas por Banco Patagonia S.A. a través de billeteras virtuales a excepción de MODO"
+    ],
+    "paymentMethods": [
+      [
+        "Banco Patagonia",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco Patagonia",
+        "Tarjeta de crédito Mastercard"
+      ],
+      [
+        "Banco Patagonia",
+        "MODO"
+      ]
+    ],
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 15000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 30
+    },
+    "validFrom": "2025-05-01",
+    "validUntil": "2025-07-31",
+    "weekdays": [
+      "Jueves"
+    ],
+    "restrictions": [
+      "Aplica a clientes asociados a los productos Singular",
+      "No acumulable con otras promociones",
+      "No válido para tarjetas corporativas",
+      "Cuentas no deben registrar mora",
+      "No aplica para pagos y/o consumos abonados con tarjetas de débito y crédito emitidas por Banco Patagonia S.A. a través de billeteras virtuales a excepción de MODO"
+    ],
+    "paymentMethods": [
+      [
+        "Banco Patagonia",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco Patagonia",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 15000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 15
+    },
+    "validFrom": "2025-05-01",
+    "validUntil": "2025-07-31",
+    "weekdays": [
+      "Jueves"
+    ],
+    "restrictions": [
+      "Aplica a clientes asociados a los productos Clásica y Plus",
+      "No acumulable con otras promociones",
+      "No válido para tarjetas corporativas",
+      "Cuentas no deben registrar mora",
+      "No aplica para pagos y/o consumos abonados con tarjetas de débito y crédito emitidas por Banco Patagonia S.A. a través de billeteras virtuales a excepción de MODO"
+    ],
+    "paymentMethods": [
+      [
+        "Banco Patagonia",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco Patagonia",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 10000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 25
+    },
+    "validFrom": "2025-06-14",
+    "validUntil": "2025-06-28",
+    "weekdays": [
+      "Sabado"
+    ],
+    "restrictions": [
+      "El reintegro aplicará únicamente a la primera transacción de cada día promocionado",
+      "Válido exclusivamente para consumos de tipo familiar",
+      "Aplicable a la cartera de consumo"
+    ],
+    "excludesProducts": "Electro, Muebles, Jardinería, Deportes",
+    "paymentMethods": [
+      [
+        "Prex",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 10000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 35
+    },
+    "validFrom": "2025-06-21",
+    "validUntil": "2025-06-28",
+    "weekdays": [
+      "Sabado"
+    ],
+    "restrictions": [
+      "Tope: $14.000 semanal o $18.000 de reintegro y 10% adicional acreditando haberes.",
+      "Promoción válida únicamente en QR de MODO a través de Credicoop Móvil o MODO seleccionando Tarjetas Cabal Credicoop.",
+      "Aplica a consumos de tipo familiar y efectuados en un pago.",
+      "Tope máximos por usuario/a por semana.",
+      "El reintegro se verá reflejado en el primer o segundo resumen de la tarjeta de crédito Cabal o dentro de los 60 días en el caso de consumo con tarjeta de débito Cabal.",
+      "Será condición esencial para participar de la misma que al momento de efectuar el reintegro, la tarjeta se encuentre vigente y en estado de cumplimiento normal en el caso de crédito, y la cuenta abierta en el caso de débito.",
+      "También será requisito tener una cuenta abierta en el Banco, a título personal, adherida a MODO.",
+      "No participan los consumos realizados a través de billeteras virtuales (excepto MODO), POS móviles, plataformas de pago y/o portales de pago online.",
+      "Aplicable a la cartera de consumo."
+    ],
+    "paymentMethods": [
+      [
+        "MODO",
+        "Banco Credicoop",
+        "Tarjeta de crédito Cabal"
+      ],
+      [
+        "MODO",
+        "Banco Credicoop",
+        "Tarjeta de débito Cabal"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": false
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 14000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 20
+    },
+    "validFrom": "2025-06-28",
+    "validUntil": "2025-06-29",
+    "weekdays": [
+      "Sabado",
+      "Domingo"
+    ],
+    "restrictions": [
+      "Solo para clientes que se encuentren al día en sus productos",
+      "No válido para compras efectuadas por Mercado Pago, Pago Inmediato o Pago entre personas",
+      "No válido para adicionales de cuenta sin caja de ahorro o cuenta corriente en ICBC",
+      "Los beneficios no se superponen ni son acumulativos entre sí, ni con otros beneficios, promociones u ofertas que ofrezca Masonline"
+    ],
+    "excludesProducts": "Electronicos, Electrodomesticos, Celulares, Tablets, Consolas, y todos los productos incluidos en el programa Precios Cuidados",
+    "paymentMethods": [
+      [
+        "Yoy",
+        "MODO",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": true,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 15000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 30
+    },
+    "validFrom": "2025-05-01",
+    "validUntil": "2025-12-31",
+    "weekdays": [
+      "Viernes"
+    ],
+    "restrictions": [
+      "Válido Cartera Consumo",
+      "No aplica para compras en cuotas",
+      "Los beneficios informados no aplican a otras billeteras o plataformas de pago"
+    ],
+    "paymentMethods": [
+      [
+        "Banco Santa Cruz",
+        "MODO",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco Santa Cruz",
+        "MODO",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": true,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 16000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 10
+    },
+    "validFrom": "2025-05-01",
+    "validUntil": "2025-07-31",
+    "weekdays": [
+      "Jueves"
+    ],
+    "restrictions": [],
+    "paymentMethods": [
+      [
+        "Banco del Sol",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco del Sol",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 10000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "cuotas sin intereses",
+      "value": 4
+    },
+    "validFrom": "2025-05-01",
+    "validUntil": "2025-07-31",
+    "weekdays": [
+      "Jueves"
+    ],
+    "restrictions": [],
+    "paymentMethods": [
+      [
+        "Banco del Sol",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco del Sol",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 10000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 20
+    },
+    "validFrom": "2025-06-28",
+    "validUntil": "2025-06-29",
+    "weekdays": [
+      "Sabado",
+      "Domingo"
+    ],
+    "restrictions": [
+      "Válido para clientes con paquete de productos en ICBC.",
+      "No válido para adicionales de cuenta sin caja de ahorro o cuenta corriente en ICBC.",
+      "Los beneficios no se superponen ni son acumulativos entre sí, ni con otros beneficios, promociones u ofertas que ofrezca Masonline.",
+      "Solo podrán participar de la promoción aquellos clientes que se encuentren al día en sus productos."
+    ],
+    "excludesProducts": "Electronicos, Electrodomesticos, Celulares, Tablets, Consolas, y todos los productos incluidos en el programa Precios Cuidados",
+    "paymentMethods": [
+      [
+        "Banco ICBC",
+        "MODO",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco ICBC",
+        "MODO",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": true,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 15000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 20
+    },
+    "validFrom": "2025-03-01",
+    "validUntil": "2025-06-30",
+    "weekdays": [
+      "Martes",
+      "Sabado"
+    ],
+    "restrictions": [
+      "Para compras en un pago",
+      "Promoción no acumulable con otros descuentos",
+      "Las bonificaciones se verán reflejadas hasta en los 2 resúmenes siguientes al que refleje la/s transacción/es",
+      "Los beneficios de las promociones se otorgarán siempre que las tarjetas de crédito se encuentren habilitadas, y la cuenta no se encuentre en mora y/o bloqueada por motivos administrativos"
+    ],
+    "paymentMethods": [
+      [
+        "Banco Columbia",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco Columbia",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 10000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 15
+    },
+    "validFrom": "2025-05-01",
+    "validUntil": "2025-06-30",
+    "weekdays": [
+      "Lunes",
+      "Martes"
+    ],
+    "restrictions": [
+      "Promoción exclusiva para socios de masclub.",
+      "No acumulable con otras promociones.",
+      "Exclusivo para consumidores finales.",
+      "Para acceder al beneficio deberás informar en línea de cajas que estás adherido al programa de beneficios MâsClub y brindar tu número de DNI, el descuento se hará efectivo en el momento.",
+      "En las compras realizadas con beneficios del programa, se cobrará $0,01 de costo de servicio."
+    ],
+    "excludesProducts": "Electrodomésticos y Electro, Carne Vacuna, Pollo y Granja, frutas y verduras, Fernet Branca (en MasOnline.com.ar.), la categoría tetra brick y las bodegas selección: Esmeralda (Angelica Zapata, dv Catena, El enemigo), Chandon (Latitud 33, Baron B, Mercier, Terrazas, Altos del plata, Valmont, Clos, Veuve Clicquot, Moet), La rural (Rutini, Trumpeter, San Felipe).",
+    "unknownPaymentMethods": [],
+    "limits": {
+      "explicitlyHasNoLimit": true
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "membership": [
+      "MasClub"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 25
+    },
+    "validFrom": "2025-06-01",
+    "validUntil": "2025-08-31",
+    "weekdays": [
+      "Martes"
+    ],
+    "restrictions": [
+      "Tope de reintegro mensual por cuenta (considerando la suma de los consumos realizados por el cliente, durante el mes, en cualquiera de los supermercados adheridos): $8.000.",
+      "No aplica a pagos realizados a través de billeteras virtuales o 'proveedores de servicios de pago', excepto MODO.",
+      "No acumulable con otros descuentos, excepto los promovidos por el Banco o MODO para pagos con QR."
+    ],
+    "paymentMethods": [
+      [
+        "Banco Supervielle",
+        "MODO",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco Supervielle",
+        "MODO",
+        "Tarjeta de débito VISA"
+      ],
+      [
+        "Banco Supervielle",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco Supervielle",
+        "Tarjeta de débito VISA"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "appliesOnlyTo": {
+      "anses": false,
+      "jubilados": true,
+      "programaCiudadaniaPorteña": false
+    },
+    "limits": {
+      "maxDiscount": 8000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 30
+    },
+    "validFrom": "2025-06-01",
+    "validUntil": "2025-08-31",
+    "weekdays": [
+      "Martes"
+    ],
+    "restrictions": [
+      "Tope de reintegro mensual por cuenta (considerando la suma de los consumos realizados por el cliente, durante el mes, en cualquiera de los supermercados adheridos): $8.000 + $7.000 adicional.",
+      "No aplica a pagos realizados a través de billeteras virtuales o 'proveedores de servicios de pago', excepto MODO.",
+      "No acumulable con otros descuentos, excepto los promovidos por el Banco o MODO para pagos con QR."
+    ],
+    "paymentMethods": [
+      [
+        "Banco Supervielle - Identité y Plan Sueldo",
+        "MODO",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco Supervielle - Identité y Plan Sueldo",
+        "MODO",
+        "Tarjeta de débito VISA"
+      ],
+      [
+        "Banco Supervielle - Identité y Plan Sueldo",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco Supervielle - Identité y Plan Sueldo",
+        "Tarjeta de débito VISA"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "appliesOnlyTo": {
+      "anses": false,
+      "jubilados": true,
+      "programaCiudadaniaPorteña": false
+    },
+    "limits": {
+      "maxDiscount": 15000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 20
+    },
+    "validFrom": "2025-04-01",
+    "validUntil": "2025-12-31",
+    "weekdays": [
+      "Jueves"
+    ],
+    "restrictions": [
+      "Solo para clientes al día en sus productos",
+      "No válido para adicionales de cuenta sin caja de ahorro o cuenta corriente en ICBC",
+      "Los beneficios no se superponen ni son acumulativos entre sí, ni con otros beneficios, promociones u ofertas que ofrezca Masonline"
+    ],
+    "excludesProducts": "Electronicos, Electrodomesticos, Celulares, Tablets, Consolas, Todos los productos incluidos en el programa Precios Cuidados",
+    "paymentMethods": [
+      [
+        "Yoy",
+        "MODO",
+        "Tarjeta de crédito Mastercard"
+      ],
+      [
+        "Yoy",
+        "MODO",
+        "Tarjeta de débito VISA"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": true,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 10000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 25
+    },
+    "validFrom": "2025-05-01",
+    "validUntil": "2025-06-30",
+    "weekdays": [
+      "Miercoles",
+      "Jueves"
+    ],
+    "restrictions": [
+      "Máximo de 1 (una) transacción por usuario y por semana.",
+      "El reintegro será aplicado en la billetera dentro de las 72hs de realizada la operación."
+    ],
+    "paymentMethods": [
+      [
+        "Personal Pay - Nivel 1"
+      ],
+      [
+        "Personal Pay - Nivel 2"
+      ],
+      [
+        "Personal Pay - Nivel 3"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 6000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 25
+    },
+    "validFrom": "2025-05-01",
+    "validUntil": "2025-06-30",
+    "weekdays": [
+      "Miercoles",
+      "Jueves"
+    ],
+    "restrictions": [
+      "Máximo de 1 (una) transacción por usuario y por semana.",
+      "El reintegro será aplicado en la billetera dentro de las 72hs de realizada la operación."
+    ],
+    "paymentMethods": [
+      [
+        "Personal Pay - Nivel 2"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 8000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 25
+    },
+    "validFrom": "2025-05-01",
+    "validUntil": "2025-06-30",
+    "weekdays": [
+      "Miercoles",
+      "Jueves"
+    ],
+    "restrictions": [
+      "Máximo de 1 (una) transacción por usuario y por semana.",
+      "El reintegro será aplicado en la billetera dentro de las 72hs de realizada la operación."
+    ],
+    "paymentMethods": [
+      [
+        "Personal Pay - Nivel 3"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 12000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 15
+    },
+    "validFrom": "2025-06-03",
+    "validUntil": "2025-06-03",
+    "weekdays": [
+      "Martes"
+    ],
+    "restrictions": [
+      "No acumulable con otras promociones vigentes.",
+      "No aplica para tiendas Punto Mayorista."
+    ],
+    "excludesProducts": "Carnes vacunas, Carne de cerdo, Granja, Pollo, Aceite comestible, Frutas, Leche fresca, Manteca, Verduras, Atún, Aceite de girasol, Banana, Leche entera, Azúcar, Aceite de oliva, Fideos, Electro, Productos y servicios de Más Autocenter, Bodegas: Esmeralda (Angelica Zapata, DV Catena, El Enemigo), Chandon (Latitud 33, Baron B, Mercier, Terrazas, Altos del Plata, Valmont, Clos, Veuve Clicquot, Moet), La Rural (Rutini, Trumpeter, San Felipe), Luigi Bosca",
+    "paymentMethods": [
+      [
+        "Mercado Pago"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": false
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "explicitlyHasNoLimit": true
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 20
+    },
+    "validFrom": "2025-06-01",
+    "validUntil": "2025-09-30",
+    "weekdays": [
+      "Viernes"
+    ],
+    "restrictions": [
+      "No aplica para pagos con dinero en cuenta y/o transferencia",
+      "No aplica para compras realizadas con tarjetas de Credito Visa Business, Visa Rural y Tarjetas de Débito emitidas a por Anses para Asignación Universal por hijo ni Progresar",
+      "La promoción no aplica a pagos a través de billeteras virtuales (excepto Modo), mPos y/o plataformas de pago online",
+      "Sólo podrán participar de la promoción aquellos clientes que al momento de comprar se encuentren al día con sus productos",
+      "Dicha promoción no es acumulable con otras promociones vigentes"
+    ],
+    "paymentMethods": [
+      [
+        "Banco Galicia",
+        "MODO",
+        "Tarjeta de crédito Mastercard"
+      ],
+      [
+        "Banco Galicia Más",
+        "MODO",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": true,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 15000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 10
+    },
+    "validFrom": "2025-06-01",
+    "validUntil": "2025-09-30",
+    "weekdays": [
+      "Viernes"
+    ],
+    "restrictions": [
+      "Para clientes Galicia Haberes",
+      "No aplica para pagos con dinero en cuenta y/o transferencia",
+      "No aplica para compras realizadas con tarjetas de Credito Visa Business, Visa Rural y Tarjetas de Débito emitidas a por Anses para Asignación Universal por hijo ni Progresar",
+      "La promoción no aplica a pagos a través de billeteras virtuales (excepto Modo), mPos y/o plataformas de pago online",
+      "Sólo podrán participar de la promoción aquellos clientes que al momento de comprar se encuentren al día con sus productos",
+      "Dicha promoción no es acumulable con otras promociones vigentes",
+      "No aplica para clientes Galicia Mas"
+    ],
+    "paymentMethods": [
+      [
+        "Banco Galicia",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 5000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 25
+    },
+    "validFrom": "2025-06-01",
+    "validUntil": "2025-09-30",
+    "weekdays": [
+      "Viernes"
+    ],
+    "restrictions": [
+      "No aplica para pagos con dinero en cuenta y/o transferencia",
+      "No aplica para compras realizadas con tarjetas de Credito Visa Business, Visa Rural y Tarjetas de Débito emitidas a por Anses para Asignación Universal por hijo ni Progresar",
+      "La promoción no aplica a pagos a través de billeteras virtuales (excepto Modo), mPos y/o plataformas de pago online",
+      "Solo podrán participar de la promoción aquellos clientes que al momento de comprar se encuentren al día con sus productos",
+      "No acumulable con otras promociones vigentes"
+    ],
+    "paymentMethods": [
+      [
+        "Banco Galicia - Eminent",
+        "MODO",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": true,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 20000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 10
+    },
+    "validFrom": "2025-06-01",
+    "validUntil": "2025-09-30",
+    "weekdays": [
+      "Viernes"
+    ],
+    "restrictions": [
+      "No aplica para pagos con dinero en cuenta y/o transferencia",
+      "No aplica para compras realizadas con tarjetas de Credito Visa Business, Visa Rural y Tarjetas de Débito emitidas a por Anses para Asignación Universal por hijo ni Progresar",
+      "La promoción no aplica a pagos a través de billeteras virtuales (excepto Modo), mPos y/o plataformas de pago online",
+      "Solo podrán participar de la promoción aquellos clientes que al momento de comprar se encuentren al día con sus productos",
+      "No acumulable con otras promociones vigentes",
+      "No aplica para clientes Galicia Mas"
+    ],
+    "paymentMethods": [
+      [
+        "Banco Galicia",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 5000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 25
+    },
+    "validFrom": "2025-06-01",
+    "validUntil": "2025-09-30",
+    "weekdays": [
+      "Viernes"
+    ],
+    "restrictions": [
+      "No aplica para pagos con dinero en cuenta y/o transferencia",
+      "No aplica para compras realizadas con tarjetas de Credito Visa Business, Visa Rural y Tarjetas de Débito emitidas a por Anses para Asignación Universal por hijo ni Progresar",
+      "La promoción no aplica a pagos a través de billeteras virtuales (excepto Modo), mPos y/o plataformas de pago online",
+      "Solo podrán participar de la promoción aquellos clientes que al momento de comprar se encuentren al día con sus productos"
+    ],
+    "paymentMethods": [
+      [
+        "Banco Galicia - Eminent",
+        "MODO",
+        "Tarjeta de crédito Mastercard"
+      ],
+      [
+        "Banco Galicia Más",
+        "MODO",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": true,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 20000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 10
+    },
+    "validFrom": "2025-06-01",
+    "validUntil": "2025-09-30",
+    "weekdays": [
+      "Viernes"
+    ],
+    "restrictions": [
+      "No aplica para pagos con dinero en cuenta y/o transferencia",
+      "No aplica para compras realizadas con tarjetas de Credito Visa Business, Visa Rural y Tarjetas de Débito emitidas a por Anses para Asignación Universal por hijo ni Progresar",
+      "La promoción no aplica a pagos a través de billeteras virtuales (excepto Modo), mPos y/o plataformas de pago online",
+      "Solo podrán participar de la promoción aquellos clientes que al momento de comprar se encuentren al día con sus productos",
+      "No aplica para clientes Galicia Mas"
+    ],
+    "paymentMethods": [
+      [
+        "Banco Galicia",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": true,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 5000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 20
+    },
+    "validFrom": "2025-06-01",
+    "validUntil": "2025-09-30",
+    "weekdays": [
+      "Viernes"
+    ],
+    "restrictions": [
+      "No aplica para pagos con dinero en cuenta y/o transferencia",
+      "No aplica para compras realizadas con tarjetas de Credito Visa Business, Visa Rural y Tarjetas de Débito emitidas a por Anses para Asignación Universal por hijo ni Progresar",
+      "La promoción no aplica a pagos a través de billeteras virtuales (excepto Modo), mPos y/o plataformas de pago online",
+      "Solo podrán participar de la promoción aquellos clientes que al momento de comprar se encuentren al día con sus productos",
+      "No acumulable con otras promociones vigentes"
+    ],
+    "paymentMethods": [
+      [
+        "MODO",
+        "Banco Galicia",
+        "Tarjeta de crédito Mastercard"
+      ],
+      [
+        "MODO",
+        "Banco Galicia Más",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 15000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 10
+    },
+    "validFrom": "2025-06-01",
+    "validUntil": "2025-09-30",
+    "weekdays": [
+      "Viernes"
+    ],
+    "restrictions": [
+      "No aplica para pagos con dinero en cuenta y/o transferencia",
+      "No aplica para compras realizadas con tarjetas de Credito Visa Business, Visa Rural y Tarjetas de Débito emitidas a por Anses para Asignación Universal por hijo ni Progresar",
+      "La promoción no aplica a pagos a través de billeteras virtuales (excepto Modo), mPos y/o plataformas de pago online",
+      "Solo podrán participar de la promoción aquellos clientes que al momento de comprar se encuentren al día con sus productos",
+      "No acumulable con otras promociones vigentes",
+      "No aplica para clientes Galicia Mas"
+    ],
+    "paymentMethods": [
+      [
+        "Banco Galicia",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": false,
+      "telefonoContactless": false,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "appliesOnlyTo": {
+      "anses": false,
+      "jubilados": false,
+      "programaCiudadaniaPorteña": false
+    },
+    "limits": {
+      "maxDiscount": 5000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 20
+    },
+    "validFrom": "2025-06-01",
+    "validUntil": "2025-07-31",
+    "weekdays": [
+      "Martes"
+    ],
+    "restrictions": [
+      "Aplica para clientes que sean titulares de servicios de cuenta Comafi Ahorro, Global o Classic, Premium, Platinum, ÚNICO.",
+      "No acumulable con otras promociones ni entre sí.",
+      "Solo válido para aquellos clientes que se encuentren al día en sus productos.",
+      "El descuento no será aplicado en aquellas compras realizadas a través de Mercado Pago y Todo Pago (Sistema MPOS).",
+      "La promoción no aplica a pagos a través de billeteras virtuales (excepto Modo), plataformas de pago y/o portales de pagos online ajenos a la empresa.",
+      "El descuento no será aplicado para aquellas compras realizadas con Ahora 3,6 ,12 y 18.",
+      "La promoción no aplica cuando la compra se efectúe a través de “servicios de delivery”."
+    ],
+    "excludesProducts": "Electro",
+    "paymentMethods": [
+      [
+        "MODO",
+        "Banco Comafi",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "MODO",
+        "Banco Comafi",
+        "Tarjeta de débito VISA"
+      ],
+      [
+        "MODO",
+        "Banco Comafi",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": true
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 12000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 20
+    },
+    "validFrom": "2025-06-01",
+    "validUntil": "2025-08-31",
+    "weekdays": [
+      "Martes"
+    ],
+    "restrictions": [],
+    "paymentMethods": [
+      [
+        "Banco Supervielle - Jubilados",
+        "MODO",
+        "Tarjeta de débito VISA"
+      ],
+      [
+        "Banco Supervielle - Jubilados",
+        "MODO",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco Supervielle - Jubilados",
+        "MODO",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": false
+    },
+    "unknownPaymentMethods": [],
+    "appliesOnlyTo": {
+      "anses": false,
+      "jubilados": true,
+      "programaCiudadaniaPorteña": false
+    },
+    "limits": {
+      "maxDiscount": 8000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 25
+    },
+    "validFrom": "2025-06-01",
+    "validUntil": "2025-08-31",
+    "weekdays": [
+      "Martes"
+    ],
+    "restrictions": [],
+    "paymentMethods": [
+      [
+        "Banco Supervielle - Identité y Plan Sueldo",
+        "MODO",
+        "Tarjeta de débito VISA"
+      ],
+      [
+        "Banco Supervielle - Identité y Plan Sueldo",
+        "MODO",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "Banco Supervielle - Identité y Plan Sueldo",
+        "MODO",
+        "Tarjeta de crédito Mastercard"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": false
+    },
+    "unknownPaymentMethods": [],
+    "appliesOnlyTo": {
+      "anses": false,
+      "jubilados": false,
+      "programaCiudadaniaPorteña": false
+    },
+    "limits": {
+      "maxDiscount": 15000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 30
+    },
+    "validFrom": "2025-06-02",
+    "validUntil": "2025-06-02",
+    "weekdays": [
+      "Lunes"
+    ],
+    "restrictions": [
+      "No aplica a tarjetas de débito vinculadas a cajas de ahorro pesos gratuitas.",
+      "Es necesario que previo a realizarse el reintegro tengas asociada a MODO la cuenta que sea del mismo banco que la tarjeta con la que realizaste la compra."
+    ],
+    "excludesProducts": "Electrodomésticos, Carne vacuna, Productos que esten dentro del programa precios justos",
+    "paymentMethods": [
+      [
+        "MODO",
+        "Banco Santander",
+        "Tarjeta de crédito VISA"
+      ],
+      [
+        "MODO",
+        "Banco Santander",
+        "Tarjeta de débito VISA"
+      ]
+    ],
+    "paymentRails": {
+      "pagoConQR": true,
+      "telefonoContactless": false,
+      "contactless": false
+    },
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 10000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas",
+      "Online"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  },
+  {
+    "discount": {
+      "type": "porcentaje",
+      "value": 20
+    },
+    "validFrom": "2025-06-01",
+    "validUntil": "2025-07-31",
+    "weekdays": [
+      "Miercoles"
+    ],
+    "restrictions": [],
+    "paymentMethods": [
+      [
+        "Tarjeta de Crédito Patagonia 365"
+      ]
+    ],
+    "unknownPaymentMethods": [],
+    "limits": {
+      "maxDiscount": 10000,
+      "explicitlyHasNoLimit": false
+    },
+    "where": [
+      "ChangoMas"
+    ],
+    "url": "https://www.masonline.com.ar/promociones-bancarias?banco=Todas",
+    "source": "changomas"
+  }
+]

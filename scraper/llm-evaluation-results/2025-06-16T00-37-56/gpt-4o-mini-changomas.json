@@ -1,0 +1,10 @@
+{
+  "modelName": "gpt-4o-mini",
+  "source": "changomas",
+  "extractedDiscounts": [],
+  "errors": [
+    "No object generated: response did not match schema."
+  ],
+  "executionTimeMs": 1130,
+  "timestamp": "2025-06-16T00:38:24.159Z"
+}

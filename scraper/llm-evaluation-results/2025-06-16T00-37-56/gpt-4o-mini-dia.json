@@ -1,0 +1,10 @@
+{
+  "modelName": "gpt-4o-mini",
+  "source": "dia",
+  "extractedDiscounts": [],
+  "errors": [
+    "No object generated: response did not match schema."
+  ],
+  "executionTimeMs": 1506,
+  "timestamp": "2025-06-16T00:38:21.737Z"
+}

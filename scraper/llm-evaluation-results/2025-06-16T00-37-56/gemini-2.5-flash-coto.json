@@ -1,0 +1,10 @@
+{
+  "modelName": "gemini-2.5-flash",
+  "source": "coto",
+  "extractedDiscounts": [],
+  "errors": [
+    "promotionsData.map is not a function. (In 'promotionsData.map(async ({ domDescription }) => {\n      const { object } = await generateObject({\n        model,\n        schema: DiscountSchema,\n        temperature: 0,\n        experimental_telemetry: { isEnabled: !0 },\n        system: `${genStartPrompt(\"Coto\")}\n\n${PAYMENT_METHODS_PROMPT}\n\n${RESTRICTIONS_PROMPT}\n\n${PRODUCTS_PROMPT}\n\n${LIMITS_PROMPT}`,\n        messages: [\n          {\n            role: \"user\",\n            content: [\n              {\n                type: \"text\",\n                text: \"Extract the discount from the following pseudo-html: \\\\n\\\\n\" + domDescription\n              }\n            ]\n          }\n        ]\n      });\n      return {\n        ...object,\n        url: \"https://www.coto.com.ar/descuentos\",\n        source: \"coto\"\n      };\n    })', 'promotionsData.map' is undefined)"
+  ],
+  "executionTimeMs": 2,
+  "timestamp": "2025-06-16T00:38:04.903Z"
+}

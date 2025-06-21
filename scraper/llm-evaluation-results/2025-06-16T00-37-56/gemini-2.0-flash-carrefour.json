@@ -1,0 +1,10 @@
+{
+  "modelName": "gemini-2.0-flash",
+  "source": "carrefour",
+  "extractedDiscounts": [],
+  "errors": [
+    "Bad Request"
+  ],
+  "executionTimeMs": 198,
+  "timestamp": "2025-06-16T00:38:16.991Z"
+}

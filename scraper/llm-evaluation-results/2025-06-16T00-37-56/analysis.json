@@ -1,0 +1,747 @@
+{
+  "models": [
+    {
+      "modelName": "gpt",
+      "sources": {
+        "makro": {
+          "source": "makro",
+          "referenceCount": 21,
+          "extractedCount": 0,
+          "fieldAccuracies": [
+            {
+              "field": "discount",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "validFrom",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "validUntil",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "weekdays",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "paymentMethods",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "limits",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "excludesProducts",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "onlyForProducts",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            }
+          ],
+          "overallAccuracy": 0,
+          "executionTimeMs": 1282,
+          "errors": [
+            "No object generated: response did not match schema."
+          ]
+        },
+        "carrefour": {
+          "source": "carrefour",
+          "referenceCount": 37,
+          "extractedCount": 0,
+          "fieldAccuracies": [
+            {
+              "field": "discount",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "validFrom",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "validUntil",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "weekdays",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "paymentMethods",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "limits",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "excludesProducts",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "onlyForProducts",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            }
+          ],
+          "overallAccuracy": 0,
+          "executionTimeMs": 2311,
+          "errors": [
+            "No object generated: response did not match schema."
+          ]
+        },
+        "dia": {
+          "source": "dia",
+          "referenceCount": 25,
+          "extractedCount": 0,
+          "fieldAccuracies": [
+            {
+              "field": "discount",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "validFrom",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "validUntil",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "weekdays",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "paymentMethods",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "limits",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "excludesProducts",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "onlyForProducts",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            }
+          ],
+          "overallAccuracy": 0,
+          "executionTimeMs": 1506,
+          "errors": [
+            "No object generated: response did not match schema."
+          ]
+        },
+        "jumbo": {
+          "source": "jumbo",
+          "referenceCount": 76,
+          "extractedCount": 0,
+          "fieldAccuracies": [
+            {
+              "field": "discount",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "validFrom",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "validUntil",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "weekdays",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "paymentMethods",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "limits",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "excludesProducts",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "onlyForProducts",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            }
+          ],
+          "overallAccuracy": 0,
+          "executionTimeMs": 1290,
+          "errors": [
+            "No object generated: response did not match schema."
+          ]
+        },
+        "changomas": {
+          "source": "changomas",
+          "referenceCount": 55,
+          "extractedCount": 0,
+          "fieldAccuracies": [
+            {
+              "field": "discount",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "validFrom",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "validUntil",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "weekdays",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "paymentMethods",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "limits",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "excludesProducts",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "onlyForProducts",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            }
+          ],
+          "overallAccuracy": 0,
+          "executionTimeMs": 1130,
+          "errors": [
+            "No object generated: response did not match schema."
+          ]
+        },
+        "coto": {
+          "source": "coto",
+          "referenceCount": 21,
+          "extractedCount": 0,
+          "fieldAccuracies": [
+            {
+              "field": "discount",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "validFrom",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "validUntil",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "weekdays",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "paymentMethods",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "limits",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "excludesProducts",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "onlyForProducts",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            }
+          ],
+          "overallAccuracy": 0,
+          "executionTimeMs": 2,
+          "errors": [
+            "promotionsData.map is not a function. (In 'promotionsData.map(async ({ domDescription }) => {\n      const { object } = await generateObject({\n        model,\n        schema: DiscountSchema,\n        temperature: 0,\n        experimental_telemetry: { isEnabled: !0 },\n        system: `${genStartPrompt(\"Coto\")}\n\n${PAYMENT_METHODS_PROMPT}\n\n${RESTRICTIONS_PROMPT}\n\n${PRODUCTS_PROMPT}\n\n${LIMITS_PROMPT}`,\n        messages: [\n          {\n            role: \"user\",\n            content: [\n              {\n                type: \"text\",\n                text: \"Extract the discount from the following pseudo-html: \\\\n\\\\n\" + domDescription\n              }\n            ]\n          }\n        ]\n      });\n      return {\n        ...object,\n        url: \"https://www.coto.com.ar/descuentos\",\n        source: \"coto\"\n      };\n    })', 'promotionsData.map' is undefined)"
+          ]
+        }
+      },
+      "overallAccuracy": 0,
+      "avgExecutionTime": 1253.5,
+      "totalErrors": 6
+    },
+    {
+      "modelName": "gemini",
+      "sources": {
+        "jumbo": {
+          "source": "jumbo",
+          "referenceCount": 76,
+          "extractedCount": 88,
+          "fieldAccuracies": [
+            {
+              "field": "discount",
+              "accuracy": 0.14473684210526316,
+              "totalComparisons": 76,
+              "details": "14.5% accuracy (19/76 matches)"
+            },
+            {
+              "field": "validFrom",
+              "accuracy": 0,
+              "totalComparisons": 76,
+              "details": "0.0% accuracy (0/76 matches)"
+            },
+            {
+              "field": "validUntil",
+              "accuracy": 0.8157894736842105,
+              "totalComparisons": 76,
+              "details": "81.6% accuracy (62/76 matches)"
+            },
+            {
+              "field": "weekdays",
+              "accuracy": 0.4473684210526316,
+              "totalComparisons": 76,
+              "details": "44.7% accuracy (34/76 matches)"
+            },
+            {
+              "field": "paymentMethods",
+              "accuracy": 0.013157894736842105,
+              "totalComparisons": 76,
+              "details": "1.3% accuracy (1/76 matches)"
+            },
+            {
+              "field": "limits",
+              "accuracy": 0.7894736842105263,
+              "totalComparisons": 76,
+              "details": "78.9% accuracy (60/76 matches)"
+            },
+            {
+              "field": "excludesProducts",
+              "accuracy": 0.6842105263157895,
+              "totalComparisons": 76,
+              "details": "68.4% accuracy (52/76 matches)"
+            },
+            {
+              "field": "onlyForProducts",
+              "accuracy": 0.3026315789473684,
+              "totalComparisons": 76,
+              "details": "30.3% accuracy (23/76 matches)"
+            }
+          ],
+          "overallAccuracy": 0.3996710526315789,
+          "executionTimeMs": 5978,
+          "errors": []
+        },
+        "dia": {
+          "source": "dia",
+          "referenceCount": 25,
+          "extractedCount": 0,
+          "fieldAccuracies": [
+            {
+              "field": "discount",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "validFrom",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "validUntil",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "weekdays",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "paymentMethods",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "limits",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "excludesProducts",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "onlyForProducts",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            }
+          ],
+          "overallAccuracy": 0,
+          "executionTimeMs": 197,
+          "errors": [
+            "Bad Request"
+          ]
+        },
+        "changomas": {
+          "source": "changomas",
+          "referenceCount": 55,
+          "extractedCount": 0,
+          "fieldAccuracies": [
+            {
+              "field": "discount",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "validFrom",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "validUntil",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "weekdays",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "paymentMethods",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "limits",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "excludesProducts",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "onlyForProducts",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            }
+          ],
+          "overallAccuracy": 0,
+          "executionTimeMs": 258,
+          "errors": [
+            "Bad Request"
+          ]
+        },
+        "coto": {
+          "source": "coto",
+          "referenceCount": 21,
+          "extractedCount": 0,
+          "fieldAccuracies": [
+            {
+              "field": "discount",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "validFrom",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "validUntil",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "weekdays",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "paymentMethods",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "limits",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "excludesProducts",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            },
+            {
+              "field": "onlyForProducts",
+              "accuracy": 0,
+              "totalComparisons": 0,
+              "details": "0.0% accuracy (0/0 matches)"
+            }
+          ],
+          "overallAccuracy": 0,
+          "executionTimeMs": 2,
+          "errors": [
+            "promotionsData.map is not a function. (In 'promotionsData.map(async ({ domDescription }) => {\n      const { object } = await generateObject({\n        model,\n        schema: DiscountSchema,\n        temperature: 0,\n        experimental_telemetry: { isEnabled: !0 },\n        system: `${genStartPrompt(\"Coto\")}\n\n${PAYMENT_METHODS_PROMPT}\n\n${RESTRICTIONS_PROMPT}\n\n${PRODUCTS_PROMPT}\n\n${LIMITS_PROMPT}`,\n        messages: [\n          {\n            role: \"user\",\n            content: [\n              {\n                type: \"text\",\n                text: \"Extract the discount from the following pseudo-html: \\\\n\\\\n\" + domDescription\n              }\n            ]\n          }\n        ]\n      });\n      return {\n        ...object,\n        url: \"https://www.coto.com.ar/descuentos\",\n        source: \"coto\"\n      };\n    })', 'promotionsData.map' is undefined)"
+          ]
+        },
+        "carrefour": {
+          "source": "carrefour",
+          "referenceCount": 37,
+          "extractedCount": 37,
+          "fieldAccuracies": [
+            {
+              "field": "discount",
+              "accuracy": 1,
+              "totalComparisons": 37,
+              "details": "100.0% accuracy (37/37 matches)"
+            },
+            {
+              "field": "validFrom",
+              "accuracy": 0.9459459459459459,
+              "totalComparisons": 37,
+              "details": "94.6% accuracy (35/37 matches)"
+            },
+            {
+              "field": "validUntil",
+              "accuracy": 1,
+              "totalComparisons": 37,
+              "details": "100.0% accuracy (37/37 matches)"
+            },
+            {
+              "field": "weekdays",
+              "accuracy": 0.918918918918919,
+              "totalComparisons": 37,
+              "details": "91.9% accuracy (34/37 matches)"
+            },
+            {
+              "field": "paymentMethods",
+              "accuracy": 0.9459459459459459,
+              "totalComparisons": 37,
+              "details": "94.6% accuracy (35/37 matches)"
+            },
+            {
+              "field": "limits",
+              "accuracy": 0.972972972972973,
+              "totalComparisons": 37,
+              "details": "97.3% accuracy (36/37 matches)"
+            },
+            {
+              "field": "excludesProducts",
+              "accuracy": 0.4594594594594595,
+              "totalComparisons": 37,
+              "details": "45.9% accuracy (17/37 matches)"
+            },
+            {
+              "field": "onlyForProducts",
+              "accuracy": 0.8918918918918919,
+              "totalComparisons": 37,
+              "details": "89.2% accuracy (33/37 matches)"
+            }
+          ],
+          "overallAccuracy": 0.8918918918918919,
+          "executionTimeMs": 8575,
+          "errors": []
+        },
+        "makro": {
+          "source": "makro",
+          "referenceCount": 21,
+          "extractedCount": 15,
+          "fieldAccuracies": [
+            {
+              "field": "discount",
+              "accuracy": 0.5,
+              "totalComparisons": 15,
+              "details": "50.0% accuracy (15/15 matches)"
+            },
+            {
+              "field": "validFrom",
+              "accuracy": 1,
+              "totalComparisons": 15,
+              "details": "100.0% accuracy (15/15 matches)"
+            },
+            {
+              "field": "validUntil",
+              "accuracy": 1,
+              "totalComparisons": 15,
+              "details": "100.0% accuracy (15/15 matches)"
+            },
+            {
+              "field": "weekdays",
+              "accuracy": 0,
+              "totalComparisons": 15,
+              "details": "0.0% accuracy (0/15 matches)"
+            },
+            {
+              "field": "paymentMethods",
+              "accuracy": 0,
+              "totalComparisons": 15,
+              "details": "0.0% accuracy (0/15 matches)"
+            },
+            {
+              "field": "limits",
+              "accuracy": 0,
+              "totalComparisons": 15,
+              "details": "0.0% accuracy (0/15 matches)"
+            },
+            {
+              "field": "excludesProducts",
+              "accuracy": 0.8,
+              "totalComparisons": 15,
+              "details": "80.0% accuracy (12/15 matches)"
+            },
+            {
+              "field": "onlyForProducts",
+              "accuracy": 1,
+              "totalComparisons": 15,
+              "details": "100.0% accuracy (15/15 matches)"
+            }
+          ],
+          "overallAccuracy": 0.5375,
+          "executionTimeMs": 1676,
+          "errors": []
+        }
+      },
+      "overallAccuracy": 0.30484382408724514,
+      "avgExecutionTime": 1797.5,
+      "totalErrors": 7
+    }
+  ],
+  "bestModel": "gemini",
+  "worstModel": "gpt",
+  "avgAccuracyByField": {
+    "discount": 0.13706140350877194,
+    "validFrom": 0.16216216216216217,
+    "validUntil": 0.23464912280701755,
+    "weekdays": 0.11385727833096254,
+    "paymentMethods": 0.07992532005689901,
+    "limits": 0.14687055476529162,
+    "excludesProducts": 0.1619724988146041,
+    "onlyForProducts": 0.1828769559032717
+  },
+  "summary": "=== LLM EVALUATION ANALYSIS SUMMARY ===\n\nModel Performance:\n=================\ngpt                  0.0% accuracy, 1254ms avg, 6 errors\ngemini               30.5% accuracy, 1798ms avg, 7 errors\n\nBest Model: gemini\nWorst Model: gpt\n\nField Performance (Average across all models):\n===============================================\ndiscount         13.7%\nvalidFrom        16.2%\nvalidUntil       23.5%\nweekdays         11.4%\npaymentMethods   8.0%\nlimits           14.7%\nexcludesProducts 16.2%\nonlyForProducts  18.3%\n\nDetailed Analysis:\n==================\n\ngpt:\n  makro: 0/21 discounts, 0.0% accuracy\n    Errors: No object generated: response did not match schema.\n  carrefour: 0/37 discounts, 0.0% accuracy\n    Errors: No object generated: response did not match schema.\n  dia: 0/25 discounts, 0.0% accuracy\n    Errors: No object generated: response did not match schema.\n  jumbo: 0/76 discounts, 0.0% accuracy\n    Errors: No object generated: response did not match schema.\n  changomas: 0/55 discounts, 0.0% accuracy\n    Errors: No object generated: response did not match schema.\n  coto: 0/21 discounts, 0.0% accuracy\n    Errors: promotionsData.map is not a function. (In 'promotionsData.map(async ({ domDescription }) => {\n      const { object } = await generateObject({\n        model,\n        schema: DiscountSchema,\n        temperature: 0,\n        experimental_telemetry: { isEnabled: !0 },\n        system: `${genStartPrompt(\"Coto\")}\n\n${PAYMENT_METHODS_PROMPT}\n\n${RESTRICTIONS_PROMPT}\n\n${PRODUCTS_PROMPT}\n\n${LIMITS_PROMPT}`,\n        messages: [\n          {\n            role: \"user\",\n            content: [\n              {\n                type: \"text\",\n                text: \"Extract the discount from the following pseudo-html: \\\\n\\\\n\" + domDescription\n              }\n            ]\n          }\n        ]\n      });\n      return {\n        ...object,\n        url: \"https://www.coto.com.ar/descuentos\",\n        source: \"coto\"\n      };\n    })', 'promotionsData.map' is undefined)\n\ngemini:\n  jumbo: 88/76 discounts, 40.0% accuracy\n  dia: 0/25 discounts, 0.0% accuracy\n    Errors: Bad Request\n  changomas: 0/55 discounts, 0.0% accuracy\n    Errors: Bad Request\n  coto: 0/21 discounts, 0.0% accuracy\n    Errors: promotionsData.map is not a function. (In 'promotionsData.map(async ({ domDescription }) => {\n      const { object } = await generateObject({\n        model,\n        schema: DiscountSchema,\n        temperature: 0,\n        experimental_telemetry: { isEnabled: !0 },\n        system: `${genStartPrompt(\"Coto\")}\n\n${PAYMENT_METHODS_PROMPT}\n\n${RESTRICTIONS_PROMPT}\n\n${PRODUCTS_PROMPT}\n\n${LIMITS_PROMPT}`,\n        messages: [\n          {\n            role: \"user\",\n            content: [\n              {\n                type: \"text\",\n                text: \"Extract the discount from the following pseudo-html: \\\\n\\\\n\" + domDescription\n              }\n            ]\n          }\n        ]\n      });\n      return {\n        ...object,\n        url: \"https://www.coto.com.ar/descuentos\",\n        source: \"coto\"\n      };\n    })', 'promotionsData.map' is undefined)\n  carrefour: 37/37 discounts, 89.2% accuracy\n  makro: 15/21 discounts, 53.8% accuracy"
+}
