@@ -1,21 +1,15 @@
 import {
   createFileRoute,
-  useParams,
   Link,
   useNavigate,
   createLink,
 } from "@tanstack/react-router";
-import { useState, useEffect, Ref, forwardRef, HTMLAttributes } from "react";
+import { useState, useEffect, forwardRef, HTMLAttributes } from "react";
 import { motion, AnimatePresence, MotionProps, m } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { PaymentMethod } from "promos-db/schema";
-import {
-  PAYMENT_METHODS,
-  JOIN_GROUPS,
-  BANKS_OR_WALLETS,
-  PAYMENT_RAILS,
-} from "promos-db/schema";
+import { PAYMENT_METHODS, JOIN_GROUPS } from "promos-db/schema";
 import { WALLET_ICONS } from "@/lib/logos";
 import { usePaymentMethodsStore } from "@/lib/state";
 import {
@@ -30,8 +24,8 @@ import {
   Wallet,
 } from "lucide-react";
 import { useIsClient } from "@/lib/utils";
-import { PaymentMethodLogo } from "@/components/discount-card";
 import { usePostHog } from "posthog-js/react";
+import { ALL_MEMBERSHIPS } from "@/lib/memberships";
 
 type WizardStepId =
   | "welcome"
@@ -40,6 +34,7 @@ type WizardStepId =
   | "cards"
   | "digitalWallets"
   | "conditions"
+  | "memberships"
   | "complete";
 
 const WIZARD_STEP_ORDER: WizardStepId[] = [
@@ -49,6 +44,7 @@ const WIZARD_STEP_ORDER: WizardStepId[] = [
   "cards",
   "digitalWallets",
   "conditions",
+  "memberships",
   "complete",
 ];
 
@@ -179,7 +175,17 @@ const chatMessages: Record<
   ],
   conditions: [
     {
-      text: "Última pregunta, ¿aplicas para alguna de estas condiciones especiales?",
+      text: "¿Aplicas para alguna de estas condiciones especiales?",
+      isUser: false,
+    },
+  ],
+  memberships: [
+    {
+      text: "¿Tenés alguna de estas membresías o programas de descuentos?",
+      isUser: false,
+    },
+    {
+      text: "Esto me permite mostrarte descuentos exclusivos para miembros.",
       isUser: false,
     },
   ],
@@ -226,6 +232,10 @@ function WizardStepComponent() {
     removePaymentMethod,
     savedConditions,
     setSavedCondition,
+    savedMemberships,
+    addMembership,
+    removeMembership,
+    setMembershipSetupCompleted,
   } = usePaymentMethodsStore();
 
   const [direction, setDirection] = useState<"right" | "left">("right");
@@ -246,7 +256,11 @@ function WizardStepComponent() {
         replace: true,
       });
     }
-  }, [params.step, step, navigate]);
+    // Mark membership setup as completed when reaching the complete step
+    if (step === "complete") {
+      setMembershipSetupCompleted(true);
+    }
+  }, [params.step, step, navigate, setMembershipSetupCompleted]);
 
   const renderMethodsList = (hierarchicalMethods: HierarchicalMethod[]) => (
     <motion.div
@@ -424,6 +438,42 @@ function WizardStepComponent() {
                 >
                   <span className="flex-grow text-left">{label}</span>
                   {savedConditions[key as keyof typeof savedConditions] && (
+                    <Check className="h-5 w-5" />
+                  )}
+                </Button>
+              </motion.div>
+            ))}
+          </motion.div>
+        );
+      case "memberships":
+        return (
+          <motion.div
+            className="grid grid-cols-1 gap-2 mt-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+          >
+            {ALL_MEMBERSHIPS.map((membership, i) => (
+              <motion.div
+                key={membership}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.05 * (i + 1) }}
+              >
+                <Button
+                  variant={
+                    savedMemberships.has(membership) ? "default" : "outline"
+                  }
+                  className="flex items-center justify-start gap-2 p-3 h-auto w-full"
+                  onClick={() =>
+                    savedMemberships.has(membership)
+                      ? removeMembership(membership)
+                      : addMembership(membership)
+                  }
+                >
+                  <Wallet className="h-5 w-5 flex-shrink-0" />
+                  <span className="flex-grow text-left">{membership}</span>
+                  {savedMemberships.has(membership) && (
                     <Check className="h-5 w-5" />
                   )}
                 </Button>

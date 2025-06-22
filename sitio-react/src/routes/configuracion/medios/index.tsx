@@ -11,6 +11,7 @@ import { Label } from "src/components/ui/label";
 import { cn, useIsClient } from "src/lib/utils";
 import { Switch } from "@/components/ui/switch";
 import { Footer } from "@/routes/__root";
+import { ALL_MEMBERSHIPS } from "@/lib/memberships";
 
 type SubOptionDisplay = {
   id: PaymentMethod;
@@ -90,6 +91,9 @@ function PaymentMethodsConfig() {
     setSavedCondition,
     showingPaymentMethodsInDiscountCard,
     setShowingPaymentMethodsInDiscountCard,
+    savedMemberships,
+    addMembership,
+    removeMembership,
   } = usePaymentMethodsStore();
 
   const isClient = useIsClient();
@@ -177,6 +181,26 @@ function PaymentMethodsConfig() {
                   Recibo beneficios de ANSES
                 </Label>
               </div>
+            </div>
+          </div>
+
+          <div className="mb-6 space-y-4">
+            <h3 className="text-lg font-medium">Membresías y programas</h3>
+            <div className="space-y-3">
+              {ALL_MEMBERSHIPS.map((membership) => (
+                <div key={membership} className="flex items-center space-x-3">
+                  <Checkbox
+                    id={`membership-${membership}`}
+                    checked={savedMemberships.has(membership)}
+                    onCheckedChange={(checked) =>
+                      checked ? addMembership(membership) : removeMembership(membership)
+                    }
+                  />
+                  <Label htmlFor={`membership-${membership}`} className="font-medium">
+                    {membership}
+                  </Label>
+                </div>
+              ))}
             </div>
           </div>
 

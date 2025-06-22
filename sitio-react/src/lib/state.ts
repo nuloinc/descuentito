@@ -10,11 +10,16 @@ interface PaymentMethodsState {
     jubilados: boolean;
     anses: boolean;
   };
+  savedMemberships: Set<string>;
+  membershipSetupCompleted: boolean;
   addPaymentMethod: (method: PaymentMethod) => void;
   removePaymentMethod: (method: PaymentMethod) => void;
   setFilteringByPaymentMethods: (filtering: boolean) => void;
   setShowingPaymentMethodsInDiscountCard: (showing: boolean) => void;
   setSavedCondition: (key: "jubilados" | "anses", value: boolean) => void;
+  addMembership: (membership: string) => void;
+  removeMembership: (membership: string) => void;
+  setMembershipSetupCompleted: (completed: boolean) => void;
 }
 
 // Helper to convert Set to/from JSON for storage
@@ -31,6 +36,8 @@ export const usePaymentMethodsStore = create<PaymentMethodsState>()(
         jubilados: false,
         anses: false,
       },
+      savedMemberships: new Set<string>(),
+      membershipSetupCompleted: false,
       addPaymentMethod: (method) =>
         set((state) => {
           const updatedMethods = new Set(state.savedPaymentMethods);
@@ -54,6 +61,20 @@ export const usePaymentMethodsStore = create<PaymentMethodsState>()(
             [key]: value,
           },
         })),
+      addMembership: (membership) =>
+        set((state) => {
+          const updatedMemberships = new Set(state.savedMemberships);
+          updatedMemberships.add(membership);
+          return { savedMemberships: updatedMemberships };
+        }),
+      removeMembership: (membership) =>
+        set((state) => {
+          const updatedMemberships = new Set(state.savedMemberships);
+          updatedMemberships.delete(membership);
+          return { savedMemberships: updatedMemberships };
+        }),
+      setMembershipSetupCompleted: (completed) =>
+        set({ membershipSetupCompleted: completed }),
     }),
     {
       name: "payment-methods-storage",
@@ -64,12 +85,17 @@ export const usePaymentMethodsStore = create<PaymentMethodsState>()(
         showingPaymentMethodsInDiscountCard:
           state.showingPaymentMethodsInDiscountCard,
         savedConditions: state.savedConditions,
+        savedMemberships: setToArray(state.savedMemberships),
+        membershipSetupCompleted: state.membershipSetupCompleted,
       }),
       onRehydrateStorage: () => (state) => {
         if (state) {
           // Convert the array back to a Set after rehydration
           state.savedPaymentMethods = arrayToSet(
             state.savedPaymentMethods as unknown as PaymentMethod[],
+          );
+          state.savedMemberships = arrayToSet(
+            state.savedMemberships as unknown as string[],
           );
         }
       },

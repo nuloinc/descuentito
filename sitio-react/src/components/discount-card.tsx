@@ -10,6 +10,7 @@ import {
   QrCodeIcon,
   SmartphoneNfcIcon,
   CreditCardIcon,
+  Check,
 } from "lucide-react";
 import {
   Drawer,
@@ -17,8 +18,6 @@ import {
   DrawerContent,
   DrawerFooter,
   DrawerClose,
-  DrawerPortal,
-  DrawerOverlay,
 } from "src/components/ui/drawer";
 import {
   Accordion,
@@ -232,8 +231,11 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
   selectedType,
 }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const { savedPaymentMethods, showingPaymentMethodsInDiscountCard } =
-    usePaymentMethodsStore();
+  const {
+    savedPaymentMethods,
+    showingPaymentMethodsInDiscountCard,
+    savedMemberships,
+  } = usePaymentMethodsStore();
   const shouldFilterByPaymentMethods = useShouldFilterByPaymentMethods();
 
   const shouldShowPaymentMethodsInCard =
@@ -252,6 +254,13 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
       return [];
     });
   }, [discount.appliesOnlyTo]);
+
+  const missingMemberships = useMemo(() => {
+    if (!discount.membership || discount.membership.length === 0) return [];
+    return discount.membership.filter(
+      (membership) => !savedMemberships.has(membership),
+    );
+  }, [discount.membership, savedMemberships]);
 
   const paymentMethodIcons = useMemo(() => {
     return (
@@ -312,7 +321,12 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
       repositionInputs={false}
     >
       <DrawerTrigger asChild>
-        <div className="bg-card text-card-foreground rounded-lg border px-3 py-2">
+        <div
+          className={cn(
+            "bg-card text-card-foreground rounded-lg border px-3 py-2",
+            missingMemberships.length > 0 && "opacity-70",
+          )}
+        >
           <motion.div
             layout
             transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -425,6 +439,43 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                 ))}
             </div>
           </DialogHeader>
+          {discount.membership && discount.membership.length > 0 && (
+            <div
+              className={cn(
+                "mb-4 p-3 border rounded-md",
+                missingMemberships.length > 0
+                  ? "bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800"
+                  : "bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-800",
+              )}
+            >
+              <div className="flex items-start gap-2">
+                {missingMemberships.length > 0 ? (
+                  <MessageCircleWarning className="h-5 w-5 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+                ) : (
+                  <Check className="h-5 w-5 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
+                )}
+                <div
+                  className={cn(
+                    "text-sm",
+                    missingMemberships.length > 0
+                      ? "text-amber-800 dark:text-amber-200"
+                      : "text-green-800 dark:text-green-200",
+                  )}
+                >
+                  <p className="font-medium">
+                    {missingMemberships.length > 0
+                      ? "Requiere membresía"
+                      : "Tienes acceso"}
+                  </p>
+                  <p>
+                    {missingMemberships.length > 0
+                      ? `Para obtener este descuento necesitas tener: ${missingMemberships.join(", ")}`
+                      : `Este descuento está disponible con tu membresía: ${discount.membership.join(", ")}`}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="mx-auto">
             <DrawerClose
               className="bg-muted absolute right-4 top-4 rounded p-2 z-50"
@@ -446,14 +497,6 @@ export const DiscountCard: React.FC<DiscountCardProps> = ({
                   <StarsIcon className="h-4 w-4 text-yellow-500" />
                   <span className="font-bold text-yellow-500">Sin tope</span>
                 </p>
-              )}
-              {discount.membership && discount.membership.length > 0 && (
-                <div>
-                  <h4 className="font-medium mb-1">
-                    Beneficio exclusivo para:
-                  </h4>
-                  <p className="text-sm">{discount.membership.join(", ")}</p>
-                </div>
               )}
               {discount.paymentMethods &&
                 discount.paymentMethods.length > 0 && (

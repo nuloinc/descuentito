@@ -1,6 +1,6 @@
 import { Await, createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useMemo } from "react";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import weekday from "dayjs/plugin/weekday";
@@ -11,22 +11,13 @@ import { Tabs, TabsList, TabsTrigger } from "src/components/ui/tabs";
 import {
   Drawer,
   DrawerContent,
-  DrawerTrigger,
   DrawerHeader,
   DrawerTitle,
-  DrawerDescription,
   DrawerFooter,
   DrawerClose,
 } from "src/components/ui/drawer";
 import { Button } from "src/components/ui/button";
-import {
-  Filter,
-  MessageCircleWarning,
-  Sparkles,
-  Share2,
-  CreditCard,
-  ArrowRight,
-} from "lucide-react";
+import { Filter, Share2, CreditCard } from "lucide-react";
 import { DiscountCard, PaymentMethodLogo } from "src/components/discount-card"; // Import the actual component
 import SupermarketFilter from "src/components/supermarket-filter"; // Import the actual component
 import FilterByPaymentMethodsButton from "src/components/filter-by-payment-methods-button"; // Import the actual component
@@ -37,13 +28,11 @@ import {
 } from "src/lib/state";
 import { Discount, PAYMENT_RAILS } from "promos-db/schema";
 import { getPromotions, PromotionData } from "src/server/promotions";
-import { BRAND_LOGOS_SMALL } from "@/lib/logos";
-import SupermarketLogo from "@/components/supermarket-logo";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FeedbackForm } from "@/components/feedback-form";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { useIsClient } from "@/lib/utils";
-import { Footer } from "./__root";
+import { MembershipSetupPopup } from "@/components/membership-setup-popup";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -377,14 +366,14 @@ function ShareButton({
         const text = `Mira estos descuentos en supermercados para ${formattedWeekDates[currentTabIndex]?.display || "hoy"}:\n${promotionsText}\n\nEncontrá más descuentos en descuentito.ar`;
 
         try {
-        if (navigator.share) {
-          await navigator.share({
-            text,
-          });
-        } else {
-          navigator.clipboard.writeText(text);
-          alert("Link copiado al portapapeles");
-        }
+          if (navigator.share) {
+            await navigator.share({
+              text,
+            });
+          } else {
+            navigator.clipboard.writeText(text);
+            alert("Link copiado al portapapeles");
+          }
         } catch {}
       }}
     >
@@ -454,8 +443,27 @@ function Home() {
     "Todos" | "Descuentos" | "Cuotas"
   >("Todos");
 
-  const { savedPaymentMethods, savedConditions } = usePaymentMethodsStore();
+  const { savedPaymentMethods, savedConditions, membershipSetupCompleted } =
+    usePaymentMethodsStore();
   const shouldFilterByPaymentMethods = useShouldFilterByPaymentMethods();
+
+  // Membership setup popup state
+  const [showMembershipPopup, setShowMembershipPopup] = useState(false);
+
+  // Show membership popup if user has payment methods but hasn't completed membership setup
+  useEffect(() => {
+    const hasPaymentMethods = savedPaymentMethods.size > 0;
+    const shouldShowPopup = hasPaymentMethods && !membershipSetupCompleted;
+
+    if (shouldShowPopup) {
+      // Add a small delay to let the page load before showing popup
+      const timer = setTimeout(() => {
+        setShowMembershipPopup(true);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [savedPaymentMethods.size, membershipSetupCompleted]);
 
   // Reset selectedTabId if it becomes invalid (e.g., due to data changes)
   useEffect(() => {
@@ -793,6 +801,11 @@ function Home() {
           </DrawerContent>
         </Drawer>
       </div>
+
+      <MembershipSetupPopup
+        isOpen={showMembershipPopup}
+        onClose={() => setShowMembershipPopup(false)}
+      />
     </>
   );
 }
