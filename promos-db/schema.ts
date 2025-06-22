@@ -294,6 +294,8 @@ Group payment methods into valid combinations that work together for a discount.
    - Ensure identical combinations don't appear more than once
    - Order groups consistently to help identify duplicates
 
+8. **Type of discounts**: Reintegros or discounts should be marked as "porcentaje". 
+
 Important Notes:
 - Galicia Más = former HSBC accounts
 - Plan Z = Naranja X VISA Crédito

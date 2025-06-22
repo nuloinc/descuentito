@@ -8,10 +8,10 @@ import {
   PAYMENT_METHODS_PROMPT,
   PRODUCTS_PROMPT,
   RESTRICTIONS_PROMPT,
-} from "promos-db/schema";
-import assert from "assert";
-import { createPlaywrightSession } from "../../lib";
-import { cleanDiscounts } from "../../lib/clean";
+} from "promos-db/schema.ts";
+import assert from "node:assert";
+import { createPlaywrightSession, transcribeImage } from "../../lib.ts";
+import { cleanDiscounts } from "../../lib/clean.ts";
 import { openrouter } from "@openrouter/ai-sdk-provider";
 
 const DiscountSchema = BasicDiscountSchema.extend({
@@ -48,20 +48,39 @@ export async function scrapeMakroContent() {
   for (const element of elements) {
     const isVisible = await element.isVisible();
     if (!isVisible) continue;
+    await element.scrollIntoViewIfNeeded(); // lazy load images
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
     const text = (await element.evaluate((el: Element) => el.textContent))
       ?.trim()
       .replaceAll("\t", "");
 
-    scrapedData.push({ text });
+    // Check for promotional images
+    const promoImage = await element.$(".et_pb_main_blurb_image img");
+    let transcribedText = "";
+
+    if (promoImage) {
+      const src = await promoImage.getAttribute("src");
+      if (src) {
+        transcribedText = await transcribeImage(src);
+      }
+    }
+
+    scrapedData.push({
+      text: text || "",
+      transcribedImageText: transcribedText,
+    });
   }
 
   return scrapedData;
 }
 
-export async function extractMakroDiscounts(scrapedData: { text: string }[]) {
+export async function extractMakroDiscounts(
+  scrapedData: { text: string; transcribedImageText?: string }[],
+) {
   let promotions: MakroDiscount[] = [];
 
-  for (const { text } of scrapedData) {
+  for (const { text, transcribedImageText } of scrapedData) {
     const { elementStream } = await streamObject({
       model: openrouter.chat("google/gemini-2.5-flash-preview-05-20"),
       output: "array",
@@ -95,7 +114,10 @@ ${LIMITS_PROMPT}
               type: "text",
               text:
                 "Extract the promotion(s?) from the following html: \n\n" +
-                text,
+                text +
+                (transcribedImageText
+                  ? `\n\nAdditional context from transcribed images: ${transcribedImageText}`
+                  : ""),
             },
           ],
         },
@@ -131,6 +153,7 @@ export async function scrapeMakro() {
   const fixedContentData = contentData.map((item) => ({
     ...item,
     text: item.text || "",
+    transcribedImageText: item.transcribedImageText || undefined,
   }));
   return await extractMakroDiscounts(fixedContentData);
 }

@@ -4,6 +4,8 @@ import { format } from "date-fns";
 import logger from "./trigger/lib/logger.ts";
 import { chromium, Page, Browser, ElementHandle } from "playwright-core";
 import { nanoid } from "nanoid";
+import { generateText } from "ai";
+import { openrouter } from "@openrouter/ai-sdk-provider";
 
 const PROXY_URL = process.env.PROXY_URI
   ? new URL(process.env.PROXY_URI)
@@ -159,4 +161,39 @@ export async function generateElementDescriptionFromElement(
     element.setAttribute("data-id", id);
   }, id);
   return await generateElementDescription(page, `[data-id="${id}"]`);
+}
+
+/**
+ * Transcribes text from an image URL using Gemini 2.5 Flash Lite
+ */
+export async function transcribeImage(imageUrl: string): Promise<string> {
+  try {
+    console.log("Transcribing image:", imageUrl);
+    const response = await fetch(imageUrl);
+    const imageBuffer = await response.arrayBuffer();
+    const { text } = await generateText({
+      model: openrouter.chat("google/gemini-2.5-flash-lite-preview-06-17"),
+      temperature: 0,
+      messages: [
+        {
+          role: "user",
+          content: [
+            {
+              type: "text",
+              text: "transcribe all the text in this image. just output the text.",
+            },
+            {
+              type: "image",
+              image: imageBuffer,
+            },
+          ],
+        },
+      ],
+    });
+
+    return text.trim();
+  } catch (error) {
+    logger.warn("Failed to transcribe image:", { imageUrl, error });
+    return "";
+  }
 }

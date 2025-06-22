@@ -1,4 +1,4 @@
-import { Discount, GenericDiscount } from "promos-db/schema";
+import { GenericDiscount } from "promos-db/schema.ts";
 
 const INVALID_RESTRICTIONS = ["todo el surtido", "todos los productos", "n/a"];
 
