@@ -44,13 +44,36 @@ export const getPromotions = createServerFn({
         }
       }
 
+      // In dev environment, try to read from local descuentito-data directory first
+      if (process.env.NODE_ENV === "development") {
+        try {
+          const fs = await import("fs/promises");
+          const path = await import("path");
+          const localPath = path.join(
+            process.cwd(),
+            "..",
+            "..",
+            "descuentito-data",
+            `${source}.json`,
+          );
+          const localData = await fs.readFile(localPath, "utf-8");
+          return [source, JSON.parse(localData) as Discount[]];
+        } catch (error) {
+          console.warn(`Failed to read local ${source}.json:`, error);
+        }
+      }
+
       // If no KV data found, fetch from GitHub
       if (!kv) {
         const url = `https://raw.githubusercontent.com/nuloinc/descuentito-data/refs/heads/main/${source}.json`;
         try {
           const response = await fetch(url);
           if (!response.ok) {
-            console.warn(`Failed to fetch ${source}: ${response.statusText}`);
+            console.warn(
+              `Failed to fetch ${source}:`,
+              response.status,
+              response.statusText,
+            );
             return [source, []];
           }
           kv = await response.text();
