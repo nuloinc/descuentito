@@ -376,6 +376,7 @@ function ShareButton({
           .join("\n");
         const text = `Mira estos descuentos en supermercados para ${formattedWeekDates[currentTabIndex]?.display || "hoy"}:\n${promotionsText}\n\nEncontrá más descuentos en descuentito.ar`;
 
+        try {
         if (navigator.share) {
           await navigator.share({
             text,
@@ -384,6 +385,7 @@ function ShareButton({
           navigator.clipboard.writeText(text);
           alert("Link copiado al portapapeles");
         }
+        } catch {}
       }}
     >
       <Share2 className="size-5" />
