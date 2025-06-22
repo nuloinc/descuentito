@@ -48,23 +48,20 @@ export async function scrapeMakroContent() {
   for (const element of elements) {
     const isVisible = await element.isVisible();
     if (!isVisible) continue;
-    const screenshot = await element.screenshot();
     const text = (await element.evaluate((el: Element) => el.textContent))
       ?.trim()
       .replaceAll("\t", "");
 
-    scrapedData.push({ screenshot, text });
+    scrapedData.push({ text });
   }
 
   return scrapedData;
 }
 
-export async function extractMakroDiscounts(
-  scrapedData: { screenshot: Buffer; text: string }[],
-) {
+export async function extractMakroDiscounts(scrapedData: { text: string }[]) {
   let promotions: MakroDiscount[] = [];
 
-  for (const { screenshot, text } of scrapedData) {
+  for (const { text } of scrapedData) {
     const { elementStream } = await streamObject({
       model: openrouter.chat("google/gemini-2.5-flash-preview-05-20"),
       output: "array",
@@ -97,10 +94,9 @@ ${LIMITS_PROMPT}
             {
               type: "text",
               text:
-                "Extract the promotion(s?) from the following html and screenshot: \n\n" +
+                "Extract the promotion(s?) from the following html: \n\n" +
                 text,
             },
-            { type: "image", image: screenshot },
           ],
         },
       ],
