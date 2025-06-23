@@ -59,6 +59,7 @@ const command = process.argv[2] as ScraperName | "all" | "compare-cashar";
 const saveFlag = process.argv.includes("--save");
 const skipExtracting = process.argv.includes("--skip-extract");
 const telegramFlag = process.argv.includes("--telegram");
+const prOnlyFlag = process.argv.includes("--pr-only");
 
 async function runSingleScraper(
   scraperName: string,
@@ -68,7 +69,7 @@ async function runSingleScraper(
 
   try {
     await using commit = await (saveFlag
-      ? useCommit(scraperName, { executionStartTime })
+      ? useCommit(scraperName, { executionStartTime, prOnly: prOnlyFlag })
       : Promise.resolve(undefined));
 
     console.log(`[${scraperName}] Scraping content...`);

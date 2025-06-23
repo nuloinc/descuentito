@@ -54,7 +54,7 @@ export async function initGitRepo() {
 
 export async function useCommit(
   source: string,
-  initialMetadata?: { executionStartTime?: number },
+  initialMetadata?: { executionStartTime?: number; prOnly?: boolean },
 ) {
   const repo = await initGitRepo();
   const { dir } = repo;
@@ -65,7 +65,7 @@ export async function useCommit(
   let branchName = "main";
 
   // Store metadata that can be updated later
-  let metadata = { ...initialMetadata, discountsFound: 0 };
+  let metadata = { ...initialMetadata, discountsFound: 0, prOnly: initialMetadata?.prOnly || false };
 
   try {
     await git.checkout({
@@ -166,15 +166,19 @@ export async function useCommit(
         });
         logger.info(`Created PR #${prResponse.data.number} for ${source}`);
 
-        // Automatically merge the pull request
-        await octokit.pulls.merge({
-          owner: GITHUB_OWNER,
-          repo: GITHUB_REPO,
-          pull_number: prResponse.data.number,
-          commit_title: `${`Update ${source} promotions for ${date}`} (#${prResponse.data.number})`,
-          merge_method: "squash",
-        });
-        logger.info(`Merged PR #${prResponse.data.number} for ${source}`);
+        // Only auto-merge if prOnly flag is not set
+        if (!metadata.prOnly) {
+          await octokit.pulls.merge({
+            owner: GITHUB_OWNER,
+            repo: GITHUB_REPO,
+            pull_number: prResponse.data.number,
+            commit_title: `${`Update ${source} promotions for ${date}`} (#${prResponse.data.number})`,
+            merge_method: "squash",
+          });
+          logger.info(`Merged PR #${prResponse.data.number} for ${source}`);
+        } else {
+          logger.info(`PR #${prResponse.data.number} created but not auto-merged due to --pr-only flag`);
+        }
         commitUrl = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/pull/${prResponse.data.number}`;
 
         // Send Telegram notification for non-production
