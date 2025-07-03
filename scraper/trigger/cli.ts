@@ -13,6 +13,10 @@ import {
   scrapeCotoContent,
   extractCotoDiscounts,
 } from "./scrapers";
+import {
+  scrapeDiaContent as scrapeDemoContent,
+  extractDiaDiscounts as extractDemoDiscounts,
+} from "./scrapers/demo-dia";
 import { useCommit } from "../lib/git";
 import { GenericDiscount } from "promos-db/schema.ts";
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -38,6 +42,10 @@ const scrapers: Record<string, ScraperFunctions> = {
   dia: {
     scrapeContent: scrapeDiaContent,
     extractDiscounts: extractDiaDiscounts,
+  },
+  "demo-dia": {
+    scrapeContent: scrapeDemoContent,
+    extractDiscounts: extractDemoDiscounts,
   },
   carrefour: {
     scrapeContent: scrapeCarrefourContent,

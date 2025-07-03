@@ -8,19 +8,25 @@ import { execa } from "execa";
 import { nanoid } from "nanoid";
 import { logger } from "../trigger/lib/logger";
 import { telegramNotifier } from "./telegram.js";
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN!;
-const GITHUB_OWNER = process.env.GITHUB_OWNER!;
-const GITHUB_REPO = process.env.GITHUB_REPO!;
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_OWNER = process.env.GITHUB_OWNER;
+const GITHUB_REPO = process.env.GITHUB_REPO;
 
-if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
-  throw new Error("Missing required GitHub environment variables");
+const hasGitHubCreds = GITHUB_TOKEN && GITHUB_OWNER && GITHUB_REPO;
+
+if (!hasGitHubCreds) {
+  console.log("⚠️  GitHub credentials not found - git operations will be disabled");
 }
 
-const octokit = new Octokit({
+const octokit = hasGitHubCreds ? new Octokit({
   auth: GITHUB_TOKEN,
-});
+}) : null;
 
 export async function initGitRepo() {
+  if (!hasGitHubCreds) {
+    throw new Error("GitHub credentials required for git operations");
+  }
+  
   const REPO_DIR = `./.git-data-${new Date().toISOString()}`;
   if (!fs.existsSync(REPO_DIR)) {
     fs.mkdirSync(REPO_DIR, { recursive: true });
@@ -56,6 +62,26 @@ export async function useCommit(
   source: string,
   initialMetadata?: { executionStartTime?: number },
 ) {
+  // If no GitHub credentials, return a mock commit object
+  if (!hasGitHubCreds) {
+    const mockDir = `/tmp/mock-git-${source}-${Date.now()}`;
+    let discountsFound = 0;
+    
+    console.log(`📁 [NO-CREDS] Mock git initialized for ${source}`);
+    
+    return {
+      dir: mockDir,
+      updateDiscountsCount: (count: number) => {
+        discountsFound = count;
+        console.log(`📊 [NO-CREDS] Updated discount count for ${source}: ${count}`);
+      },
+      [Symbol.asyncDispose]: async () => {
+        console.log(`🔄 [NO-CREDS] Would commit ${discountsFound} discounts for ${source}`);
+        console.log(`📤 [NO-CREDS] Would push to GitHub and create PR`);
+      }
+    };
+  }
+
   const repo = await initGitRepo();
   const { dir } = repo;
 
