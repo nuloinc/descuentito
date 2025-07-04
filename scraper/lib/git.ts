@@ -8,21 +8,36 @@ import { execa } from "execa";
 import { nanoid } from "nanoid";
 import { logger } from "../trigger/lib/logger";
 import { telegramNotifier } from "./telegram.js";
-import { loadPreviousDiscounts, calculateEnhancedDiscountDiff, formatDiscountForDisplay } from "./discount-diff.js";
+import {
+  loadPreviousDiscounts,
+  calculateEnhancedDiscountDiff,
+  formatDiscountForDisplay,
+} from "./discount-diff.js";
 import type { GenericDiscount } from "promos-db/schema.ts";
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN!;
-const GITHUB_OWNER = process.env.GITHUB_OWNER!;
-const GITHUB_REPO = process.env.GITHUB_REPO!;
 
-if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
-  throw new Error("Missing required GitHub environment variables");
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_OWNER = process.env.GITHUB_OWNER;
+const GITHUB_REPO = process.env.GITHUB_REPO;
+
+const hasGitHubCreds = GITHUB_TOKEN && GITHUB_OWNER && GITHUB_REPO;
+
+if (!hasGitHubCreds) {
+  console.log(
+    "⚠️  GitHub credentials not found - git operations will be disabled",
+  );
 }
 
-const octokit = new Octokit({
-  auth: GITHUB_TOKEN,
-});
+const octokit = hasGitHubCreds
+  ? new Octokit({
+      auth: GITHUB_TOKEN,
+    })
+  : null;
 
 export async function initGitRepo() {
+  if (!hasGitHubCreds) {
+    throw new Error("GitHub credentials required for git operations");
+  }
+
   const REPO_DIR = `./.git-data-${new Date().toISOString()}`;
   if (!fs.existsSync(REPO_DIR)) {
     fs.mkdirSync(REPO_DIR, { recursive: true });
@@ -58,6 +73,10 @@ export async function useCommit(
   source: string,
   initialMetadata?: { executionStartTime?: number; prOnly?: boolean },
 ) {
+  if (!hasGitHubCreds) {
+    throw new Error("GitHub credentials are required for git operations");
+  }
+
   const repo = await initGitRepo();
   const { dir } = repo;
 
@@ -67,7 +86,11 @@ export async function useCommit(
   let branchName = "main";
 
   // Store metadata that can be updated later
-  let metadata = { ...initialMetadata, discountsFound: 0, prOnly: initialMetadata?.prOnly || false };
+  let metadata = {
+    ...initialMetadata,
+    discountsFound: 0,
+    prOnly: initialMetadata?.prOnly || false,
+  };
   let currentDiscounts: GenericDiscount[] = [];
   let previousDiscounts: GenericDiscount[] = [];
 
@@ -78,11 +101,13 @@ export async function useCommit(
       ref: "main",
       force: true,
     });
-    
+
     // Load previous discounts immediately after checkout, before any new data is written
     try {
       previousDiscounts = await loadPreviousDiscounts(source, dir);
-      logger.info(`Loaded ${previousDiscounts.length} previous discounts for ${source}`);
+      logger.info(
+        `Loaded ${previousDiscounts.length} previous discounts for ${source}`,
+      );
     } catch (error) {
       logger.warn(`Could not load previous discounts for ${source}:`, error);
       previousDiscounts = [];
@@ -120,12 +145,16 @@ export async function useCommit(
     [Symbol.asyncDispose]: async () => {
       // Calculate discount diff first, regardless of file changes
       let diffResult: any = null;
-      
+
       if (currentDiscounts.length > 0) {
         try {
-          diffResult = calculateEnhancedDiscountDiff(previousDiscounts, currentDiscounts);
-          logger.info(`Discount diff calculated: +${diffResult.added.length} new, -${diffResult.removed.length} removed, ${diffResult.validityChanged.length} period changed (${previousDiscounts.length} → ${currentDiscounts.length})`);
-          
+          diffResult = calculateEnhancedDiscountDiff(
+            previousDiscounts,
+            currentDiscounts,
+          );
+          logger.info(
+            `Discount diff calculated: +${diffResult.added.length} new, -${diffResult.removed.length} removed, ${diffResult.validityChanged.length} period changed (${previousDiscounts.length} → ${currentDiscounts.length})`,
+          );
         } catch (error) {
           logger.error("Failed to calculate discount diff:", error);
         }
@@ -137,21 +166,30 @@ export async function useCommit(
       );
       if (!hasChanges) {
         logger.warn("No changes detected, skipping commit");
-        
+
         // Even if no file changes, send diff notification if there are discount changes
-        if (diffResult && (diffResult.added.length > 0 || diffResult.removed.length > 0 || diffResult.validityChanged.length > 0)) {
+        if (
+          diffResult &&
+          (diffResult.added.length > 0 ||
+            diffResult.removed.length > 0 ||
+            diffResult.validityChanged.length > 0)
+        ) {
           try {
             await telegramNotifier.sendDiscountDiff({
               scraper: source,
               added: diffResult.addedDiscounts.map(formatDiscountForDisplay),
-              removed: diffResult.removedDiscounts.map(formatDiscountForDisplay),
-              validityChanged: diffResult.validityChangedDiscounts.map((change: any) => ({
-                baseKey: formatDiscountForDisplay(change.newDiscount),
-                oldPeriod: `${change.oldDiscount.validFrom} to ${change.oldDiscount.validUntil}`,
-                newPeriod: `${change.newDiscount.validFrom} to ${change.newDiscount.validUntil}`,
-                fullOldKey: '',
-                fullNewKey: ''
-              })),
+              removed: diffResult.removedDiscounts.map(
+                formatDiscountForDisplay,
+              ),
+              validityChanged: diffResult.validityChangedDiscounts.map(
+                (change: any) => ({
+                  baseKey: formatDiscountForDisplay(change.newDiscount),
+                  oldPeriod: `${change.oldDiscount.validFrom} to ${change.oldDiscount.validUntil}`,
+                  newPeriod: `${change.newDiscount.validFrom} to ${change.newDiscount.validUntil}`,
+                  fullOldKey: "",
+                  fullNewKey: "",
+                }),
+              ),
               totalNew: diffResult.totalNew,
               totalOld: diffResult.totalOld,
             });
@@ -160,7 +198,7 @@ export async function useCommit(
             logger.error("Failed to send discount diff notification:", error);
           }
         }
-        
+
         return;
       }
 
@@ -204,19 +242,28 @@ export async function useCommit(
         });
 
         // Send discount diff notification if available
-        if (diffResult && (diffResult.added.length > 0 || diffResult.removed.length > 0 || diffResult.validityChanged.length > 0)) {
+        if (
+          diffResult &&
+          (diffResult.added.length > 0 ||
+            diffResult.removed.length > 0 ||
+            diffResult.validityChanged.length > 0)
+        ) {
           try {
             await telegramNotifier.sendDiscountDiff({
               scraper: source,
               added: diffResult.addedDiscounts.map(formatDiscountForDisplay),
-              removed: diffResult.removedDiscounts.map(formatDiscountForDisplay),
-              validityChanged: diffResult.validityChangedDiscounts.map((change: any) => ({
-                baseKey: formatDiscountForDisplay(change.newDiscount),
-                oldPeriod: `${change.oldDiscount.validFrom} to ${change.oldDiscount.validUntil}`,
-                newPeriod: `${change.newDiscount.validFrom} to ${change.newDiscount.validUntil}`,
-                fullOldKey: '',
-                fullNewKey: ''
-              })),
+              removed: diffResult.removedDiscounts.map(
+                formatDiscountForDisplay,
+              ),
+              validityChanged: diffResult.validityChangedDiscounts.map(
+                (change: any) => ({
+                  baseKey: formatDiscountForDisplay(change.newDiscount),
+                  oldPeriod: `${change.oldDiscount.validFrom} to ${change.oldDiscount.validUntil}`,
+                  newPeriod: `${change.newDiscount.validFrom} to ${change.newDiscount.validUntil}`,
+                  fullOldKey: "",
+                  fullNewKey: "",
+                }),
+              ),
               totalNew: diffResult.totalNew,
               totalOld: diffResult.totalOld,
               commitUrl,
@@ -235,7 +282,7 @@ export async function useCommit(
           cwd: dir,
         });
 
-        const prResponse = await octokit.pulls.create({
+        const prResponse = await octokit!.pulls.create({
           owner: GITHUB_OWNER,
           repo: GITHUB_REPO,
           title: `Update ${source} promotions for ${date}`,
@@ -247,7 +294,7 @@ export async function useCommit(
 
         // Only auto-merge if prOnly flag is not set
         if (!metadata.prOnly) {
-          await octokit.pulls.merge({
+          await octokit!.pulls.merge({
             owner: GITHUB_OWNER,
             repo: GITHUB_REPO,
             pull_number: prResponse.data.number,
@@ -256,7 +303,9 @@ export async function useCommit(
           });
           logger.info(`Merged PR #${prResponse.data.number} for ${source}`);
         } else {
-          logger.info(`PR #${prResponse.data.number} created but not auto-merged due to --pr-only flag`);
+          logger.info(
+            `PR #${prResponse.data.number} created but not auto-merged due to --pr-only flag`,
+          );
         }
         commitUrl = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/pull/${prResponse.data.number}`;
 
@@ -273,19 +322,28 @@ export async function useCommit(
         });
 
         // Send discount diff notification if available
-        if (diffResult && (diffResult.added.length > 0 || diffResult.removed.length > 0 || diffResult.validityChanged.length > 0)) {
+        if (
+          diffResult &&
+          (diffResult.added.length > 0 ||
+            diffResult.removed.length > 0 ||
+            diffResult.validityChanged.length > 0)
+        ) {
           try {
             await telegramNotifier.sendDiscountDiff({
               scraper: source,
               added: diffResult.addedDiscounts.map(formatDiscountForDisplay),
-              removed: diffResult.removedDiscounts.map(formatDiscountForDisplay),
-              validityChanged: diffResult.validityChangedDiscounts.map((change: any) => ({
-                baseKey: formatDiscountForDisplay(change.newDiscount),
-                oldPeriod: `${change.oldDiscount.validFrom} to ${change.oldDiscount.validUntil}`,
-                newPeriod: `${change.newDiscount.validFrom} to ${change.newDiscount.validUntil}`,
-                fullOldKey: '',
-                fullNewKey: ''
-              })),
+              removed: diffResult.removedDiscounts.map(
+                formatDiscountForDisplay,
+              ),
+              validityChanged: diffResult.validityChangedDiscounts.map(
+                (change: any) => ({
+                  baseKey: formatDiscountForDisplay(change.newDiscount),
+                  oldPeriod: `${change.oldDiscount.validFrom} to ${change.oldDiscount.validUntil}`,
+                  newPeriod: `${change.newDiscount.validFrom} to ${change.newDiscount.validUntil}`,
+                  fullOldKey: "",
+                  fullNewKey: "",
+                }),
+              ),
               totalNew: diffResult.totalNew,
               totalOld: diffResult.totalOld,
               commitUrl,
