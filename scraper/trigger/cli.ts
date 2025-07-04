@@ -89,7 +89,7 @@ async function runSingleScraper(
       const results = await scraper.extractDiscounts(scrapedContent);
 
       if (commit) {
-        commit.updateDiscountsCount(results.length);
+        commit.setCurrentDiscounts(results);
         writeFileSync(
           `${commit.dir}/${scraperName}.json`,
           JSON.stringify(results, null, 2),
@@ -161,6 +161,7 @@ async function runCasharComparisonCommand() {
     process.exit(1);
   }
 }
+
 
 async function main() {
   if (!command) {

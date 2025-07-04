@@ -126,16 +126,9 @@ export function generateDiscountKey(discount: Discount, index?: number): string 
   }
   
   // Restriction hash for differentiating discount tiers with same core terms
-  if (discount.restrictions && discount.restrictions.length > 0) {
-    // Only include restrictions hash if there are payment methods (indicating this might be a tier)
-    if (discount.paymentMethods && discount.paymentMethods.length > 0) {
-      const restrictionKey = createHash('md5')
-        .update(discount.restrictions.join('|').toLowerCase())
-        .digest('hex')
-        .slice(0, 3);
-      additionalKeys.push(`rs${restrictionKey}`);
-    }
-  }
+  // Skip restrictions hash as it's too sensitive to minor text changes
+  // This allows the system to identify discounts that are essentially the same
+  // but have minor wording differences in restrictions
   
   // Add additional keys if they help differentiate
   if (additionalKeys.length > 0) {
@@ -264,10 +257,151 @@ export function generateUniqueDiscountKeys(discounts: Discount[]): string[] {
 }
 
 /**
+ * Generates unique keys without dates for an array of discounts
+ */
+export function generateUniqueDiscountKeysWithoutDates(discounts: Discount[]): string[] {
+  const keyToCount = new Map<string, number>();
+  
+  return discounts.map((discount) => {
+    const baseKey = generateDiscountKeyWithoutDates(discount);
+    const currentCount = keyToCount.get(baseKey) || 0;
+    keyToCount.set(baseKey, currentCount + 1);
+    
+    if (currentCount === 0) {
+      return baseKey;
+    } else {
+      return generateDiscountKeyWithoutDates(discount, currentCount);
+    }
+  });
+}
+
+/**
  * Validates that a discount key is properly formatted and not too long
  */
 export function validateDiscountKey(key: string): boolean {
   return /^[a-z0-9\-]+$/.test(key) && key.length <= 85 && key.length >= 10;
+}
+
+/**
+ * Generates a discount key without the date component for comparing discounts
+ * that might have different validity periods but are otherwise identical
+ */
+export function generateDiscountKeyWithoutDates(discount: Discount, index?: number): string {
+  const parts: string[] = [];
+  
+  // 1. Source (always present)
+  parts.push(discount.source);
+  
+  // 2. Discount type and value
+  parts.push(`${discount.discount.type.replace(/\s+/g, '')}-${discount.discount.value}`);
+  
+  // Skip date range (parts[2] in normal key generation)
+  
+  // 3. Weekdays (if specific days are mentioned)
+  if (discount.weekdays && discount.weekdays.length > 0 && discount.weekdays.length < 7) {
+    const weekdayMap: Record<string, string> = {
+      'Lunes': 'lun',
+      'Martes': 'mar', 
+      'Miercoles': 'mie',
+      'Jueves': 'jue',
+      'Viernes': 'vie',
+      'Sabado': 'sab',
+      'Domingo': 'dom'
+    };
+    const weekdayAbbrevs = discount.weekdays
+      .map(day => weekdayMap[day] || day.toLowerCase().slice(0, 3))
+      .sort()
+      .join('');
+    parts.push(weekdayAbbrevs);
+  }
+  
+  // 4. Primary payment method (if specific and not "all methods")
+  if (discount.paymentMethods && discount.paymentMethods.length > 0) {
+    const firstMethod = discount.paymentMethods[0];
+    if (Array.isArray(firstMethod) && firstMethod.length > 0) {
+      const paymentKey = normalizePaymentMethod(firstMethod[0]);
+      if (paymentKey) {
+        parts.push(paymentKey);
+      }
+    }
+  }
+  
+  // 5. Location/where (if specific)
+  if ('where' in discount && discount.where.length > 0) {
+    const locations = [...discount.where].sort();
+    if (locations.length === 1) {
+      parts.push(locations[0].toLowerCase());
+    } else if (locations.length > 1 && locations.length < 3) {
+      parts.push(locations.map(l => l.toLowerCase()).join(''));
+    }
+  }
+  
+  // 6. Additional discriminators for edge cases (same as normal key generation)
+  const additionalKeys: string[] = [];
+  
+  // Membership requirements
+  if (discount.membership && discount.membership.length > 0) {
+    const membershipKey = discount.membership[0]
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, '')
+      .slice(0, 6);
+    additionalKeys.push(membershipKey);
+  }
+  
+  // Special targeting (anses, jubilados, etc.)
+  if (discount.appliesOnlyTo) {
+    const targeting = Object.entries(discount.appliesOnlyTo)
+      .filter(([_, value]) => value)
+      .map(([key, _]) => key.slice(0, 3))
+      .sort()
+      .join('');
+    if (targeting) {
+      additionalKeys.push(targeting);
+    }
+  }
+  
+  // Limits
+  if (discount.limits?.explicitlyHasNoLimit) {
+    additionalKeys.push('notope');
+  }
+  if (discount.limits?.maxDiscount) {
+    additionalKeys.push(`max${discount.limits.maxDiscount}`);
+  }
+  
+  // Product exclusions hash
+  if (discount.excludesProducts) {
+    const exclusionKey = createHash('md5')
+      .update(discount.excludesProducts.toLowerCase())
+      .digest('hex')
+      .slice(0, 4);
+    additionalKeys.push(`ex${exclusionKey}`);
+  }
+  
+  // Skip restriction hash to avoid sensitivity to minor text changes
+  
+  // Add additional keys if they help differentiate
+  if (additionalKeys.length > 0) {
+    parts.push(additionalKeys.join(''));
+  }
+  
+  // Join all parts
+  let key = parts.join('-');
+  
+  // Add index suffix if provided
+  if (index !== undefined && index > 0) {
+    key = `${key}-${index}`;
+  }
+  
+  // If key is too long, hash the end part
+  if (key.length > 85) {
+    const baseKey = parts.slice(0, 2).join('-'); // Keep source and discount type
+    const additionalPart = parts.slice(2).join('-');
+    const indexSuffix = index !== undefined && index > 0 ? `-${index}` : '';
+    const hashSuffix = createHash('md5').update(additionalPart + indexSuffix).digest('hex').slice(0, 8);
+    key = `${baseKey}-${hashSuffix}`;
+  }
+  
+  return key.toLowerCase();
 }
 
 /**
