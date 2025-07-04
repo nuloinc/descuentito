@@ -23,37 +23,7 @@ interface ScrapedDiaPromotion {
   legalesText: string;
 }
 
-const hasOpenRouterKey = !!process.env.OPENROUTER_API_KEY;
 
-// Mock LLM response function for when credentials are missing
-function createMockDiaDiscounts(scrapedPromotions: ScrapedDiaPromotion[]): DiaDiscount[] {
-  console.log(`🤖 [NO-CREDS] Using mock LLM responses for ${scrapedPromotions.length} scraped promotions`);
-  
-  const mockDiscounts: DiaDiscount[] = scrapedPromotions.map((promo, index) => ({
-    source: "dia" as const,
-    url: URL,
-    title: `DIA Mock Promotion ${index + 1}`,
-    description: `This is a demo promotion generated from: ${promo.domDescription.substring(0, 100)}...`,
-    discount: {
-      type: "porcentaje" as const,
-      value: index % 2 === 0 ? 30 : 20
-    },
-    validFrom: "2025-01-01",
-    validUntil: "2025-12-31",
-    weekdays: index % 2 === 0 
-      ? ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"] 
-      : ["Sabado", "Domingo"],
-    restrictions: ["Demo restriction - actual content would be extracted from legal text"],
-    limits: {
-      maxDiscount: index % 2 === 0 ? 10000 : 5000,
-      explicitlyHasNoLimit: false
-    },
-    where: ["Dia", "Online"] as const
-  }));
-
-  console.log(`🎯 [NO-CREDS] Generated ${mockDiscounts.length} mock DIA discounts`);
-  return mockDiscounts;
-}
 
 export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
   await using sessions = await createPlaywrightSession();
@@ -136,12 +106,6 @@ export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
 export async function extractDiaDiscounts(
   scrapedPromotions: ScrapedDiaPromotion[],
 ): Promise<DiaDiscount[]> {
-  
-  if (!hasOpenRouterKey) {
-    console.log("⚠️  OpenRouter API key not found - using mock LLM responses");
-    return createMockDiaDiscounts(scrapedPromotions);
-  }
-
   console.log(`🤖 Using OpenRouter LLM to extract discounts from ${scrapedPromotions.length} promotions`);
   
   let promotions: DiaDiscount[] = [];

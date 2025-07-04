@@ -62,24 +62,8 @@ export async function useCommit(
   source: string,
   initialMetadata?: { executionStartTime?: number },
 ) {
-  // If no GitHub credentials, return a mock commit object
   if (!hasGitHubCreds) {
-    const mockDir = `/tmp/mock-git-${source}-${Date.now()}`;
-    let discountsFound = 0;
-    
-    console.log(`📁 [NO-CREDS] Mock git initialized for ${source}`);
-    
-    return {
-      dir: mockDir,
-      updateDiscountsCount: (count: number) => {
-        discountsFound = count;
-        console.log(`📊 [NO-CREDS] Updated discount count for ${source}: ${count}`);
-      },
-      [Symbol.asyncDispose]: async () => {
-        console.log(`🔄 [NO-CREDS] Would commit ${discountsFound} discounts for ${source}`);
-        console.log(`📤 [NO-CREDS] Would push to GitHub and create PR`);
-      }
-    };
+    throw new Error("GitHub credentials are required for git operations");
   }
 
   const repo = await initGitRepo();
