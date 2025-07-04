@@ -13,6 +13,7 @@ import {
   scrapeCotoContent,
   extractCotoDiscounts,
 } from "./scrapers";
+import { scrapeDiaWithValidation } from "./scrapers/dia";
 import { useCommit } from "../lib/git";
 import { GenericDiscount } from "promos-db/schema.ts";
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -59,6 +60,7 @@ const command = process.argv[2] as ScraperName | "all" | "compare-cashar";
 const saveFlag = process.argv.includes("--save");
 const skipExtracting = process.argv.includes("--skip-extract");
 const telegramFlag = process.argv.includes("--telegram");
+const enableValidation = process.argv.includes("--with-validation");
 
 async function runSingleScraper(
   scraperName: string,
@@ -85,16 +87,68 @@ async function runSingleScraper(
 
     if (!skipExtracting) {
       console.log(`[${scraperName}] Extracting promotions using LLM...`);
-      const results = await scraper.extractDiscounts(scrapedContent);
+      
+      // Use enhanced validation for supported scrapers when flag is provided
+      if (enableValidation && scraperName === "dia") {
+        console.log(`[${scraperName}] Using enhanced validation system...`);
+        const validationResult = await scrapeDiaWithValidation({
+          minConfidence: 70,
+          allowReview: true,
+          enablePostValidation: true,
+          enableExtractionAlerts: true,
+        });
 
-      if (commit) {
-        commit.updateDiscountsCount(results.length);
-        writeFileSync(
-          `${commit.dir}/${scraperName}.json`,
-          JSON.stringify(results, null, 2),
-        );
+        // Log detailed results
+        console.log(`[${scraperName}] Enhanced results:`, {
+          extracted: validationResult.stats.extracted,
+          accepted: validationResult.stats.accepted,
+          needsReview: validationResult.stats.needsReview,
+          rejected: validationResult.stats.rejected,
+          avgConfidence: validationResult.stats.avgConfidence,
+        });
+
+        // Use only accepted discounts for backwards compatibility
+        const results = validationResult.accepted;
+        
+        if (commit) {
+          commit.updateDiscountsCount(results.length);
+          // Save detailed validation results
+          writeFileSync(
+            `${commit.dir}/${scraperName}_validation_full.json`,
+            JSON.stringify(validationResult, null, 2),
+          );
+          // Save accepted results in standard format
+          writeFileSync(
+            `${commit.dir}/${scraperName}.json`,
+            JSON.stringify(results, null, 2),
+          );
+        } else {
+          console.log("=== ACCEPTED DISCOUNTS ===");
+          console.log(JSON.stringify(results, null, 2));
+          
+          if (validationResult.needsReview.length > 0) {
+            console.log("\n=== NEED REVIEW ===");
+            console.log(JSON.stringify(validationResult.needsReview, null, 2));
+          }
+          
+          if (validationResult.rejected.length > 0) {
+            console.log("\n=== REJECTED ===");
+            console.log(JSON.stringify(validationResult.rejected, null, 2));
+          }
+        }
       } else {
-        console.log(JSON.stringify(results, null, 2));
+        // Standard extraction without validation
+        const results = await scraper.extractDiscounts(scrapedContent);
+
+        if (commit) {
+          commit.updateDiscountsCount(results.length);
+          writeFileSync(
+            `${commit.dir}/${scraperName}.json`,
+            JSON.stringify(results, null, 2),
+          );
+        } else {
+          console.log(JSON.stringify(results, null, 2));
+        }
       }
     }
   } catch (error) {
