@@ -14,6 +14,7 @@ import {
 } from "../../lib";
 import assert from "node:assert";
 import { openrouter } from "@openrouter/ai-sdk-provider";
+import { cleanDiscounts } from "../../lib/clean";
 
 const URL =
   "https://diaonline.supermercadosdia.com.ar/medios-de-pago-y-promociones";
@@ -139,7 +140,7 @@ ${LIMITS_PROMPT}
 
   assert(promotions.length > 0, "No promotions found");
 
-  return promotions;
+  return cleanDiscounts(promotions);
 }
 
 // Backward compatibility function

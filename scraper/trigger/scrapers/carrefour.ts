@@ -10,6 +10,7 @@ import {
 import { waitForSelectorOrFail } from "../lib/fetch-page";
 import { openrouter } from "@openrouter/ai-sdk-provider";
 import { createPlaywrightSession, generateElementDescription } from "../../lib";
+import { cleanDiscounts } from "../../lib/clean";
 
 const DiscountSchema = BasicDiscountSchema.extend({
   where: z.array(z.enum(["Carrefour", "Maxi", "Market", "Express", "Online"])),
@@ -58,7 +59,7 @@ export async function extractCarrefourDiscounts(
     promotionsData.map(async (data) => extractDiscount(data)),
   );
 
-  return promotions;
+  return cleanDiscounts(promotions);
 }
 
 async function extractDiscount({ domDescription }: { domDescription: string }) {

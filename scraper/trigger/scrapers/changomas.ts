@@ -12,6 +12,7 @@ import {
 import assert from "assert";
 import { createPlaywrightSession } from "../../lib";
 import { openrouter } from "@openrouter/ai-sdk-provider";
+import { cleanDiscounts } from "../../lib/clean";
 
 const DiscountSchema = BasicDiscountSchema.extend({
   where: z.array(z.enum(["ChangoMas", "Online"])),
@@ -130,7 +131,7 @@ ${LIMITS_PROMPT}
 
   assert(promotions.length > 10, "No promotions found");
 
-  return promotions;
+  return cleanDiscounts(promotions);
 }
 
 // Backward compatibility function
