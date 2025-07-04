@@ -57,7 +57,11 @@ function normalizeArrays<T extends GenericDiscount>(discount: T): T {
     normalized.weekdays = [...normalized.weekdays].sort((a, b) => {
       const indexA = WEEKDAY_ORDER.indexOf(a as any);
       const indexB = WEEKDAY_ORDER.indexOf(b as any);
-      return indexA - indexB;
+      // If both found in order, use that order; otherwise sort alphabetically
+      if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+      if (indexA !== -1) return -1;
+      if (indexB !== -1) return 1;
+      return a.localeCompare(b);
     });
   }
 
