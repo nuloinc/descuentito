@@ -27,9 +27,7 @@ interface ScrapedDiaPromotion {
 
 export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
   await using sessions = await createPlaywrightSession();
-  const { page } = sessions;
-
-  console.log(`🌐 Scraping DIA promotions from: ${URL}`);
+  const { page } = sessions; // Removed browser as it's not used directly here
 
   // desactivar popup de club dia
   await page.context().addCookies([
@@ -56,8 +54,6 @@ export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
     ".diaio-custom-bank-promotions-0-x-list-by-days__item",
   );
 
-  console.log(`🔍 Found ${elements.length} promotion elements to scrape`);
-  
   const scrapedPromotions: ScrapedDiaPromotion[] = [];
 
   const closeModal = async () => {
@@ -75,11 +71,7 @@ export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
     const legalBtn = await element.$(
       ".diaio-custom-bank-promotions-0-x-bank-modal__button",
     );
-    if (!legalBtn) {
-      console.warn(`⚠️  No legal button found for element ${i + 1}`);
-      continue;
-    }
-    
+    if (!legalBtn) throw new Error("No legal button found");
     await legalBtn.click();
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -87,27 +79,19 @@ export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
       (await (
         await page.$(".diaio-custom-bank-promotions-0-x-bank-modal__text")
       )?.textContent()) || "";
-    
-    if (!legalesText) {
-      console.warn(`⚠️  No legal text found for element ${i + 1}`);
-    }
+    if (!legalesText) throw new Error("No legal text found");
 
     await closeModal();
-    
+    /////////////////
     scrapedPromotions.push({ domDescription, legalesText });
-    console.log(`✅ Scraped promotion ${i + 1}/${elements.length}`);
     i++;
   }
-  
-  console.log(`🎉 Successfully scraped ${scrapedPromotions.length} DIA promotions`);
   return scrapedPromotions;
 }
 
 export async function extractDiaDiscounts(
   scrapedPromotions: ScrapedDiaPromotion[],
-): Promise<DiaDiscount[]> {
-  console.log(`🤖 Using OpenRouter LLM to extract discounts from ${scrapedPromotions.length} promotions`);
-  
+) {
   let promotions: DiaDiscount[] = [];
   for (const { domDescription, legalesText } of scrapedPromotions) {
     const { elementStream } = streamObject({
@@ -156,7 +140,6 @@ ${LIMITS_PROMPT}
   }
 
   assert(promotions.length > 0, "No promotions found");
-  console.log(`✅ LLM extracted ${promotions.length} DIA discounts`);
 
   return promotions;
 }
