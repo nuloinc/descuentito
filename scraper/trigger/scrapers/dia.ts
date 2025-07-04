@@ -23,8 +23,6 @@ interface ScrapedDiaPromotion {
   legalesText: string;
 }
 
-
-
 export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
   await using sessions = await createPlaywrightSession();
   const { page } = sessions; // Removed browser as it's not used directly here
