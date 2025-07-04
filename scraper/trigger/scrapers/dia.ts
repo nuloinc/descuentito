@@ -23,9 +23,43 @@ interface ScrapedDiaPromotion {
   legalesText: string;
 }
 
+const hasOpenRouterKey = !!process.env.OPENROUTER_API_KEY;
+
+// Mock LLM response function for when credentials are missing
+function createMockDiaDiscounts(scrapedPromotions: ScrapedDiaPromotion[]): DiaDiscount[] {
+  console.log(`🤖 [NO-CREDS] Using mock LLM responses for ${scrapedPromotions.length} scraped promotions`);
+  
+  const mockDiscounts: DiaDiscount[] = scrapedPromotions.map((promo, index) => ({
+    source: "dia" as const,
+    url: URL,
+    title: `DIA Mock Promotion ${index + 1}`,
+    description: `This is a demo promotion generated from: ${promo.domDescription.substring(0, 100)}...`,
+    discount: {
+      type: "porcentaje" as const,
+      value: index % 2 === 0 ? 30 : 20
+    },
+    validFrom: "2025-01-01",
+    validUntil: "2025-12-31",
+    weekdays: index % 2 === 0 
+      ? ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"] 
+      : ["Sabado", "Domingo"],
+    restrictions: ["Demo restriction - actual content would be extracted from legal text"],
+    limits: {
+      maxDiscount: index % 2 === 0 ? 10000 : 5000,
+      explicitlyHasNoLimit: false
+    },
+    where: ["Dia", "Online"] as const
+  }));
+
+  console.log(`🎯 [NO-CREDS] Generated ${mockDiscounts.length} mock DIA discounts`);
+  return mockDiscounts;
+}
+
 export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
   await using sessions = await createPlaywrightSession();
-  const { page } = sessions; // Removed browser as it's not used directly here
+  const { page } = sessions;
+
+  console.log(`🌐 Scraping DIA promotions from: ${URL}`);
 
   // desactivar popup de club dia
   await page.context().addCookies([
@@ -52,6 +86,8 @@ export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
     ".diaio-custom-bank-promotions-0-x-list-by-days__item",
   );
 
+  console.log(`🔍 Found ${elements.length} promotion elements to scrape`);
+  
   const scrapedPromotions: ScrapedDiaPromotion[] = [];
 
   const closeModal = async () => {
@@ -69,7 +105,11 @@ export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
     const legalBtn = await element.$(
       ".diaio-custom-bank-promotions-0-x-bank-modal__button",
     );
-    if (!legalBtn) throw new Error("No legal button found");
+    if (!legalBtn) {
+      console.warn(`⚠️  No legal button found for element ${i + 1}`);
+      continue;
+    }
+    
     await legalBtn.click();
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -77,19 +117,33 @@ export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
       (await (
         await page.$(".diaio-custom-bank-promotions-0-x-bank-modal__text")
       )?.textContent()) || "";
-    if (!legalesText) throw new Error("No legal text found");
+    
+    if (!legalesText) {
+      console.warn(`⚠️  No legal text found for element ${i + 1}`);
+    }
 
     await closeModal();
-    /////////////////
+    
     scrapedPromotions.push({ domDescription, legalesText });
+    console.log(`✅ Scraped promotion ${i + 1}/${elements.length}`);
     i++;
   }
+  
+  console.log(`🎉 Successfully scraped ${scrapedPromotions.length} DIA promotions`);
   return scrapedPromotions;
 }
 
 export async function extractDiaDiscounts(
   scrapedPromotions: ScrapedDiaPromotion[],
-) {
+): Promise<DiaDiscount[]> {
+  
+  if (!hasOpenRouterKey) {
+    console.log("⚠️  OpenRouter API key not found - using mock LLM responses");
+    return createMockDiaDiscounts(scrapedPromotions);
+  }
+
+  console.log(`🤖 Using OpenRouter LLM to extract discounts from ${scrapedPromotions.length} promotions`);
+  
   let promotions: DiaDiscount[] = [];
   for (const { domDescription, legalesText } of scrapedPromotions) {
     const { elementStream } = streamObject({
@@ -138,6 +192,7 @@ ${LIMITS_PROMPT}
   }
 
   assert(promotions.length > 0, "No promotions found");
+  console.log(`✅ LLM extracted ${promotions.length} DIA discounts`);
 
   return promotions;
 }
