@@ -11,7 +11,11 @@ const PROXY_URL = process.env.PROXY_URI
   ? new URL(process.env.PROXY_URI)
   : undefined;
 
-if (PROXY_URL) console.log(`--> Using proxy at ${PROXY_URL.hostname}`);
+if (PROXY_URL) {
+  console.log(`--> Using proxy at ${PROXY_URL.hostname}`);
+} else {
+  console.log(`--> No proxy configured - using direct connections`);
+}
 
 const BCAT_URL = "wss://api.browsercat.com/connect";
 const LOCAL_BROWSER = process.env.LOCAL_BROWSER

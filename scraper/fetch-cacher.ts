@@ -4,8 +4,8 @@ import { ProxyAgent, fetch, RequestInit, Response } from "undici";
 import JSZip from "jszip";
 import ProxyChain from "proxy-chain";
 interface FetchCacherOptions {
-  s3Client?: S3Client;
-  bucketName: string;
+  s3Client?: S3Client | null;
+  bucketName?: string;
   proxyUri?: string; // Optional HTTP proxy URI
   maxRetries?: number; // Optional max retries for 408 errors
 }
@@ -29,10 +29,10 @@ const DEFAULT_MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 1000;
 
 export class FetchCacher {
-  private s3: S3Client;
+  private s3: S3Client | null;
   private zip: JSZip;
   private responses: CachedResponse[] = [];
-  private bucketName: string;
+  private bucketName: string | null;
   private proxyAgent?: ProxyAgent;
   private maxRetries: number;
   private startTime: Date;
@@ -55,24 +55,13 @@ export class FetchCacher {
     }
 
     this.s3 = options.s3Client || createS3ClientFromEnv();
-    this.bucketName = options.bucketName;
+    this.bucketName = options.bucketName || BUCKET_NAME;
     this.maxRetries = options.maxRetries || DEFAULT_MAX_RETRIES;
     this.zip = new JSZip();
     this.startTime = new Date();
   }
 
   static fromEnv(): FetchCacher {
-    const config: Record<string, string> = {};
-
-    // Check all required env vars
-    for (const key of REQUIRED_ENV_VARS) {
-      const envVar = process.env[`${ENV_PREFIX}${key}`];
-      if (!envVar) {
-        throw new Error(`${ENV_PREFIX}${key} environment variable is required`);
-      }
-      config[key.toLowerCase()] = envVar;
-    }
-
     // Optional proxy URI
     const proxyUri = process.env.PROXY_URI;
     // Optional max retries
@@ -81,7 +70,6 @@ export class FetchCacher {
       : DEFAULT_MAX_RETRIES;
 
     return new FetchCacher({
-      bucketName: config.bucket_name,
       maxRetries,
       ...(proxyUri && { proxyUri }),
     });
@@ -91,11 +79,16 @@ export class FetchCacher {
     params: {
       Bucket: string;
       Key: string;
-      Body: Buffer;
+      Body: any;
       ContentType: string;
     },
     retryCount = 0,
   ): Promise<void> {
+    if (!this.s3) {
+      console.log(`📁 [NO-CREDS] Would upload to S3: ${params.Key}`);
+      return;
+    }
+    
     try {
       await this.s3.send(
         new PutObjectCommand({
@@ -180,12 +173,14 @@ export class FetchCacher {
       const objectKey = `${date}/${timestamp}-responses.zip`;
 
       // Upload zip to S3
-      await this.retryS3Upload({
-        Bucket: this.bucketName,
-        Key: objectKey,
-        Body: zipBuffer,
-        ContentType: "application/zip",
-      });
+      if (this.bucketName) {
+        await this.retryS3Upload({
+          Bucket: this.bucketName,
+          Key: objectKey,
+          Body: zipBuffer,
+          ContentType: "application/zip",
+        });
+      }
 
       // Clear the responses array and create a new zip
       this.responses = [];
@@ -198,14 +193,15 @@ export class FetchCacher {
   }
 }
 
-export function createS3ClientFromEnv(): S3Client {
+export function createS3ClientFromEnv(): S3Client | null {
   const region = process.env[`${ENV_PREFIX}REGION`];
   const accessKeyId = process.env[`${ENV_PREFIX}ACCESS_KEY_ID`];
   const secretAccessKey = process.env[`${ENV_PREFIX}SECRET_ACCESS_KEY`];
   const endpoint = process.env[`${ENV_PREFIX}ENDPOINT`];
 
   if (!region || !accessKeyId || !secretAccessKey) {
-    throw new Error("Missing required S3 environment variables");
+    console.log("⚠️  S3 credentials not found - caching will be disabled");
+    return null;
   }
 
   return new S3Client({
