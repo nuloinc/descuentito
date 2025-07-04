@@ -8,19 +8,36 @@ import { execa } from "execa";
 import { nanoid } from "nanoid";
 import { logger } from "../trigger/lib/logger";
 import { telegramNotifier } from "./telegram.js";
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN!;
-const GITHUB_OWNER = process.env.GITHUB_OWNER!;
-const GITHUB_REPO = process.env.GITHUB_REPO!;
+import {
+  loadPreviousDiscounts,
+  calculateEnhancedDiscountDiff,
+  formatDiscountForDisplay,
+} from "./discount-diff.js";
+import type { GenericDiscount } from "promos-db/schema.ts";
 
-if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
-  throw new Error("Missing required GitHub environment variables");
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_OWNER = process.env.GITHUB_OWNER;
+const GITHUB_REPO = process.env.GITHUB_REPO;
+
+const hasGitHubCreds = GITHUB_TOKEN && GITHUB_OWNER && GITHUB_REPO;
+
+if (!hasGitHubCreds) {
+  console.log(
+    "⚠️  GitHub credentials not found - git operations will be disabled",
+  );
 }
 
-const octokit = new Octokit({
-  auth: GITHUB_TOKEN,
-});
+const octokit = hasGitHubCreds
+  ? new Octokit({
+      auth: GITHUB_TOKEN,
+    })
+  : null;
 
 export async function initGitRepo() {
+  if (!hasGitHubCreds) {
+    throw new Error("GitHub credentials required for git operations");
+  }
+
   const REPO_DIR = `./.git-data-${new Date().toISOString()}`;
   if (!fs.existsSync(REPO_DIR)) {
     fs.mkdirSync(REPO_DIR, { recursive: true });
@@ -54,8 +71,12 @@ export async function initGitRepo() {
 
 export async function useCommit(
   source: string,
-  initialMetadata?: { executionStartTime?: number },
+  initialMetadata?: { executionStartTime?: number; prOnly?: boolean },
 ) {
+  if (!hasGitHubCreds) {
+    throw new Error("GitHub credentials are required for git operations");
+  }
+
   const repo = await initGitRepo();
   const { dir } = repo;
 
@@ -65,7 +86,13 @@ export async function useCommit(
   let branchName = "main";
 
   // Store metadata that can be updated later
-  let metadata = { ...initialMetadata, discountsFound: 0 };
+  let metadata = {
+    ...initialMetadata,
+    discountsFound: 0,
+    prOnly: initialMetadata?.prOnly || false,
+  };
+  let currentDiscounts: GenericDiscount[] = [];
+  let previousDiscounts: GenericDiscount[] = [];
 
   try {
     await git.checkout({
@@ -74,6 +101,17 @@ export async function useCommit(
       ref: "main",
       force: true,
     });
+
+    // Load previous discounts immediately after checkout, before any new data is written
+    try {
+      previousDiscounts = await loadPreviousDiscounts(source, dir);
+      logger.info(
+        `Loaded ${previousDiscounts.length} previous discounts for ${source}`,
+      );
+    } catch (error) {
+      logger.warn(`Could not load previous discounts for ${source}:`, error);
+      previousDiscounts = [];
+    }
   } catch (error) {
     logger.warn("Could not checkout main, creating from current HEAD");
     if (isProd) {
@@ -100,13 +138,67 @@ export async function useCommit(
     updateDiscountsCount: (count: number) => {
       metadata.discountsFound = count;
     },
+    setCurrentDiscounts: (discounts: GenericDiscount[]) => {
+      currentDiscounts = discounts;
+      metadata.discountsFound = discounts.length;
+    },
     [Symbol.asyncDispose]: async () => {
+      // Calculate discount diff first, regardless of file changes
+      let diffResult: any = null;
+
+      if (currentDiscounts.length > 0) {
+        try {
+          diffResult = calculateEnhancedDiscountDiff(
+            previousDiscounts,
+            currentDiscounts,
+          );
+          logger.info(
+            `Discount diff calculated: +${diffResult.added.length} new, -${diffResult.removed.length} removed, ${diffResult.validityChanged.length} period changed (${previousDiscounts.length} → ${currentDiscounts.length})`,
+          );
+        } catch (error) {
+          logger.error("Failed to calculate discount diff:", error);
+        }
+      }
+
       const status = await git.statusMatrix({ fs, dir, filepaths: ["."] });
       const hasChanges = status.some(
         ([_file, _head, workdir, _stage]) => workdir !== 1,
       );
       if (!hasChanges) {
         logger.warn("No changes detected, skipping commit");
+
+        // Even if no file changes, send diff notification if there are discount changes
+        if (
+          diffResult &&
+          (diffResult.added.length > 0 ||
+            diffResult.removed.length > 0 ||
+            diffResult.validityChanged.length > 0)
+        ) {
+          try {
+            await telegramNotifier.sendDiscountDiff({
+              scraper: source,
+              added: diffResult.addedDiscounts.map(formatDiscountForDisplay),
+              removed: diffResult.removedDiscounts.map(
+                formatDiscountForDisplay,
+              ),
+              validityChanged: diffResult.validityChangedDiscounts.map(
+                (change: any) => ({
+                  baseKey: formatDiscountForDisplay(change.newDiscount),
+                  oldPeriod: `${change.oldDiscount.validFrom} to ${change.oldDiscount.validUntil}`,
+                  newPeriod: `${change.newDiscount.validFrom} to ${change.newDiscount.validUntil}`,
+                  fullOldKey: "",
+                  fullNewKey: "",
+                }),
+              ),
+              totalNew: diffResult.totalNew,
+              totalOld: diffResult.totalOld,
+            });
+            logger.info("Discount diff notification sent successfully");
+          } catch (error) {
+            logger.error("Failed to send discount diff notification:", error);
+          }
+        }
+
         return;
       }
 
@@ -148,6 +240,40 @@ export async function useCommit(
           commitUrl,
           commitHash,
         });
+
+        // Send discount diff notification if available
+        if (
+          diffResult &&
+          (diffResult.added.length > 0 ||
+            diffResult.removed.length > 0 ||
+            diffResult.validityChanged.length > 0)
+        ) {
+          try {
+            await telegramNotifier.sendDiscountDiff({
+              scraper: source,
+              added: diffResult.addedDiscounts.map(formatDiscountForDisplay),
+              removed: diffResult.removedDiscounts.map(
+                formatDiscountForDisplay,
+              ),
+              validityChanged: diffResult.validityChangedDiscounts.map(
+                (change: any) => ({
+                  baseKey: formatDiscountForDisplay(change.newDiscount),
+                  oldPeriod: `${change.oldDiscount.validFrom} to ${change.oldDiscount.validUntil}`,
+                  newPeriod: `${change.newDiscount.validFrom} to ${change.newDiscount.validUntil}`,
+                  fullOldKey: "",
+                  fullNewKey: "",
+                }),
+              ),
+              totalNew: diffResult.totalNew,
+              totalOld: diffResult.totalOld,
+              commitUrl,
+              commitHash,
+            });
+            logger.info("Discount diff notification sent successfully");
+          } catch (error) {
+            logger.error("Failed to send discount diff notification:", error);
+          }
+        }
       } else {
         logger.info(
           `Non-prod env detected. Pushing to branch ${branchName} and creating PR.`,
@@ -156,7 +282,7 @@ export async function useCommit(
           cwd: dir,
         });
 
-        const prResponse = await octokit.pulls.create({
+        const prResponse = await octokit!.pulls.create({
           owner: GITHUB_OWNER,
           repo: GITHUB_REPO,
           title: `Update ${source} promotions for ${date}`,
@@ -166,15 +292,21 @@ export async function useCommit(
         });
         logger.info(`Created PR #${prResponse.data.number} for ${source}`);
 
-        // Automatically merge the pull request
-        await octokit.pulls.merge({
-          owner: GITHUB_OWNER,
-          repo: GITHUB_REPO,
-          pull_number: prResponse.data.number,
-          commit_title: `${`Update ${source} promotions for ${date}`} (#${prResponse.data.number})`,
-          merge_method: "squash",
-        });
-        logger.info(`Merged PR #${prResponse.data.number} for ${source}`);
+        // Only auto-merge if prOnly flag is not set
+        if (!metadata.prOnly) {
+          await octokit!.pulls.merge({
+            owner: GITHUB_OWNER,
+            repo: GITHUB_REPO,
+            pull_number: prResponse.data.number,
+            commit_title: `${`Update ${source} promotions for ${date}`} (#${prResponse.data.number})`,
+            merge_method: "squash",
+          });
+          logger.info(`Merged PR #${prResponse.data.number} for ${source}`);
+        } else {
+          logger.info(
+            `PR #${prResponse.data.number} created but not auto-merged due to --pr-only flag`,
+          );
+        }
         commitUrl = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/pull/${prResponse.data.number}`;
 
         // Send Telegram notification for non-production
@@ -188,6 +320,40 @@ export async function useCommit(
           commitUrl,
           commitHash,
         });
+
+        // Send discount diff notification if available
+        if (
+          diffResult &&
+          (diffResult.added.length > 0 ||
+            diffResult.removed.length > 0 ||
+            diffResult.validityChanged.length > 0)
+        ) {
+          try {
+            await telegramNotifier.sendDiscountDiff({
+              scraper: source,
+              added: diffResult.addedDiscounts.map(formatDiscountForDisplay),
+              removed: diffResult.removedDiscounts.map(
+                formatDiscountForDisplay,
+              ),
+              validityChanged: diffResult.validityChangedDiscounts.map(
+                (change: any) => ({
+                  baseKey: formatDiscountForDisplay(change.newDiscount),
+                  oldPeriod: `${change.oldDiscount.validFrom} to ${change.oldDiscount.validUntil}`,
+                  newPeriod: `${change.newDiscount.validFrom} to ${change.newDiscount.validUntil}`,
+                  fullOldKey: "",
+                  fullNewKey: "",
+                }),
+              ),
+              totalNew: diffResult.totalNew,
+              totalOld: diffResult.totalOld,
+              commitUrl,
+              commitHash,
+            });
+            logger.info("Discount diff notification sent successfully");
+          } catch (error) {
+            logger.error("Failed to send discount diff notification:", error);
+          }
+        }
       }
 
       await repo[Symbol.asyncDispose]();

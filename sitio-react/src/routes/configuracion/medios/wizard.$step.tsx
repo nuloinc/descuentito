@@ -110,6 +110,8 @@ const CATEGORY_FILTERS = {
       "Personal Pay - Nivel 1",
       "Personal Pay - Nivel 2",
       "Personal Pay - Nivel 3",
+      "Personal Pay - Nivel 4",
+      "Billetera Buepp",
       ".Reba",
       ".Reba - Black",
       "Prex",

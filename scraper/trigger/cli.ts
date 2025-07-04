@@ -61,6 +61,7 @@ const saveFlag = process.argv.includes("--save");
 const skipExtracting = process.argv.includes("--skip-extract");
 const telegramFlag = process.argv.includes("--telegram");
 const enableValidation = process.argv.includes("--with-validation");
+const prOnlyFlag = process.argv.includes("--pr-only");
 
 async function runSingleScraper(
   scraperName: string,
@@ -70,7 +71,7 @@ async function runSingleScraper(
 
   try {
     await using commit = await (saveFlag
-      ? useCommit(scraperName, { executionStartTime })
+      ? useCommit(scraperName, { executionStartTime, prOnly: prOnlyFlag })
       : Promise.resolve(undefined));
 
     console.log(`[${scraperName}] Scraping content...`);
@@ -87,7 +88,7 @@ async function runSingleScraper(
 
     if (!skipExtracting) {
       console.log(`[${scraperName}] Extracting promotions using LLM...`);
-      
+
       // Use enhanced validation for supported scrapers when flag is provided
       if (enableValidation && scraperName === "dia") {
         console.log(`[${scraperName}] Using enhanced validation system...`);
@@ -109,9 +110,9 @@ async function runSingleScraper(
 
         // Use only accepted discounts for backwards compatibility
         const results = validationResult.accepted;
-        
+
         if (commit) {
-          commit.updateDiscountsCount(results.length);
+          commit.setCurrentDiscounts(results);
           // Save detailed validation results
           writeFileSync(
             `${commit.dir}/${scraperName}_validation_full.json`,
@@ -125,12 +126,12 @@ async function runSingleScraper(
         } else {
           console.log("=== ACCEPTED DISCOUNTS ===");
           console.log(JSON.stringify(results, null, 2));
-          
+
           if (validationResult.needsReview.length > 0) {
             console.log("\n=== NEED REVIEW ===");
             console.log(JSON.stringify(validationResult.needsReview, null, 2));
           }
-          
+
           if (validationResult.rejected.length > 0) {
             console.log("\n=== REJECTED ===");
             console.log(JSON.stringify(validationResult.rejected, null, 2));
@@ -141,7 +142,7 @@ async function runSingleScraper(
         const results = await scraper.extractDiscounts(scrapedContent);
 
         if (commit) {
-          commit.updateDiscountsCount(results.length);
+          commit.setCurrentDiscounts(results);
           writeFileSync(
             `${commit.dir}/${scraperName}.json`,
             JSON.stringify(results, null, 2),
@@ -167,50 +168,53 @@ async function runSingleScraper(
 }
 
 async function runCasharComparisonCommand() {
-  console.log('🔍 Running Cashar.pro comparison...\n');
-  
+  console.log("🔍 Running Cashar.pro comparison...\n");
+
   try {
     const result = await runCasharComparison();
-    
-    console.log('📊 COMPARISON RESULTS:');
+
+    console.log("📊 COMPARISON RESULTS:");
     console.log(`Cashar discounts: ${result.casharTotal}`);
     console.log(`Our discounts: ${result.ourTotal}`);
     console.log(`Missing: ${result.missing}`);
     console.log(`Flexible matches: ${result.flexibleMatches}`);
-    
+
     if (result.missingHighValue.length > 0) {
-      console.log('\n🎯 HIGH-VALUE MISSING (25%+):');
+      console.log("\n🎯 HIGH-VALUE MISSING (25%+):");
       result.missingHighValue.slice(0, 10).forEach((missing, i) => {
-        console.log(`${i + 1}. ${missing.store.toUpperCase()} ${missing.percentage}% on ${missing.weekday}`);
+        console.log(
+          `${i + 1}. ${missing.store.toUpperCase()} ${missing.percentage}% on ${missing.weekday}`,
+        );
         console.log(`   Payment: ${missing.paymentMethod}`);
         console.log(`   Source: "${missing.source}"`);
       });
     }
-    
+
     if (result.topMissing.length > 0) {
-      console.log('\n🔴 TOP MISSING OPPORTUNITIES:');
+      console.log("\n🔴 TOP MISSING OPPORTUNITIES:");
       result.topMissing.slice(0, 10).forEach((missing, i) => {
-        console.log(`${i + 1}. ${missing.store.toUpperCase()} ${missing.percentage}% on ${missing.weekday}`);
+        console.log(
+          `${i + 1}. ${missing.store.toUpperCase()} ${missing.percentage}% on ${missing.weekday}`,
+        );
         console.log(`   Payment: ${missing.paymentMethod}`);
         console.log(`   Source: "${missing.source}"`);
       });
     }
-    
+
     // Send to Telegram if requested
     if (telegramFlag) {
-      console.log('\n📱 Sending results to Telegram...');
+      console.log("\n📱 Sending results to Telegram...");
       try {
         await telegramNotifier.sendCasharComparison(result);
-        console.log('✅ Telegram notification sent successfully');
+        console.log("✅ Telegram notification sent successfully");
       } catch (error) {
-        console.error('❌ Failed to send Telegram notification:', error);
+        console.error("❌ Failed to send Telegram notification:", error);
       }
     }
-    
-    console.log('\n✅ Comparison complete!');
-    
+
+    console.log("\n✅ Comparison complete!");
   } catch (error) {
-    console.error('❌ Error running comparison:', error);
+    console.error("❌ Error running comparison:", error);
     process.exit(1);
   }
 }
@@ -265,10 +269,10 @@ async function main() {
     if (saveFlag) {
       try {
         await telegramNotifier.sendBatchComplete(batchResults);
-        
+
         // Run Cashar comparison after successful batch scraping
-        if (batchResults.some(r => r.success)) {
-          console.log('Running Cashar.pro comparison...');
+        if (batchResults.some((r) => r.success)) {
+          console.log("Running Cashar.pro comparison...");
           try {
             const comparisonResult = await runCasharComparison();
             await telegramNotifier.sendCasharComparison(comparisonResult);
@@ -294,10 +298,10 @@ async function main() {
 
   try {
     await runSingleScraper(command, scraper);
-    
+
     // Run Cashar comparison after successful single scraping (if saving)
     if (saveFlag) {
-      console.log('Running Cashar.pro comparison...');
+      console.log("Running Cashar.pro comparison...");
       try {
         const comparisonResult = await runCasharComparison();
         await telegramNotifier.sendCasharComparison(comparisonResult);

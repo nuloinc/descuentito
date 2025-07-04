@@ -38,6 +38,23 @@ interface CasharComparisonResult {
   }>;
 }
 
+interface DiscountDiff {
+  scraper: string;
+  added: string[];
+  removed: string[];
+  validityChanged: Array<{
+    baseKey: string;
+    oldPeriod: string;
+    newPeriod: string;
+    fullOldKey: string;
+    fullNewKey: string;
+  }>;
+  totalNew: number;
+  totalOld: number;
+  commitUrl?: string;
+  commitHash?: string;
+}
+
 export class TelegramNotifier {
   private config: TelegramConfig | null = null;
 
@@ -99,6 +116,21 @@ export class TelegramNotifier {
         "Failed to send Telegram Cashar comparison notification:",
         error,
       );
+    }
+  }
+
+  async sendDiscountDiff(diff: DiscountDiff): Promise<void> {
+    if (!this.config) {
+      logger.debug("Skipping Telegram notification - not configured");
+      return;
+    }
+
+    try {
+      const message = this.formatDiscountDiffMessage(diff);
+      await this.sendMessage(message);
+      logger.info("Telegram discount diff notification sent successfully");
+    } catch (error) {
+      logger.error("Failed to send Telegram discount diff notification:", error);
     }
   }
 
@@ -228,6 +260,67 @@ export class TelegramNotifier {
       message += `\n🟡 *Good coverage* with minor gaps.`;
     } else {
       message += `\n🟠 *Room for improvement* - consider reviewing missing opportunities.`;
+    }
+
+    return message;
+  }
+
+  private formatDiscountDiffMessage(diff: DiscountDiff): string {
+    let message = `🔄 *Discount Changes for ${this.escapeMarkdown(diff.scraper)}*\n\n`;
+    
+    message += `📊 *Summary:*\n`;
+    message += `• Previous discounts: ${diff.totalOld}\n`;
+    message += `• Current discounts: ${diff.totalNew}\n`;
+    message += `• Net change: ${diff.totalNew - diff.totalOld > 0 ? '+' : ''}${diff.totalNew - diff.totalOld}\n`;
+    message += `• New: ${diff.added.length} | Removed: ${diff.removed.length} | Period changed: ${diff.validityChanged.length}\n\n`;
+
+    if (diff.added.length > 0) {
+      message += `🆕 *New Discounts (${diff.added.length}):*\n`;
+      const addedToShow = Math.min(diff.added.length, 8);
+      for (let i = 0; i < addedToShow; i++) {
+        message += `• ${this.escapeMarkdown(diff.added[i])}\n`;
+      }
+      if (diff.added.length > 8) {
+        message += `  ...and ${diff.added.length - 8} more\n`;
+      }
+      message += `\n`;
+    }
+
+    if (diff.removed.length > 0) {
+      message += `❌ *Removed Discounts (${diff.removed.length}):*\n`;
+      const removedToShow = Math.min(diff.removed.length, 8);
+      for (let i = 0; i < removedToShow; i++) {
+        message += `• ${this.escapeMarkdown(diff.removed[i])}\n`;
+      }
+      if (diff.removed.length > 8) {
+        message += `  ...and ${diff.removed.length - 8} more\n`;
+      }
+      message += `\n`;
+    }
+
+    if (diff.validityChanged.length > 0) {
+      message += `📅 *Validity Period Changes (${diff.validityChanged.length}):*\n`;
+      const changedToShow = Math.min(diff.validityChanged.length, 8);
+      for (let i = 0; i < changedToShow; i++) {
+        const change = diff.validityChanged[i];
+        const formattedBase = this.escapeMarkdown(change.baseKey.toUpperCase().replace(/-/g, ' '));
+        message += `• ${formattedBase}\n  ${this.escapeMarkdown(change.oldPeriod)} → ${this.escapeMarkdown(change.newPeriod)}\n`;
+      }
+      if (diff.validityChanged.length > 8) {
+        message += `  ...and ${diff.validityChanged.length - 8} more\n`;
+      }
+      message += `\n`;
+    }
+
+    if (diff.added.length === 0 && diff.removed.length === 0 && diff.validityChanged.length === 0) {
+      message += `⚪ *No changes detected*\n\n`;
+    }
+
+    if (diff.commitUrl) {
+      message += `🔗 *View Changes:* [GitHub](${diff.commitUrl})\n`;
+    }
+    if (diff.commitHash) {
+      message += `📝 *Commit:* \`${diff.commitHash.substring(0, 8)}\`\n`;
     }
 
     return message;

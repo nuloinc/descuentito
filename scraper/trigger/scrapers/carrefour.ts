@@ -46,9 +46,11 @@ export async function scrapeCarrefourContent() {
     ),
   );
 
-  return promotionsDomDescriptions.map((domDescription) => ({
-    domDescription,
-  }));
+  return promotionsDomDescriptions
+    .sort((a, b) => a.localeCompare(b))
+    .map((domDescription) => ({
+      domDescription,
+    }));
 }
 
 export async function extractCarrefourDiscounts(
