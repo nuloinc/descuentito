@@ -7,7 +7,7 @@ export default defineConfig({
     appDirectory: "src",
   },
   server: {
-    preset: "cloudflare-pages",
+    preset: "cloudflare-module",
     unenv: cloudflare,
   },
   // https://react.dev/learn/react-compiler

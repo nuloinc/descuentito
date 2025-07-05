@@ -1,8 +1,12 @@
 name = "descuentito"
-pages_build_output_dir = "./dist"
+main = "./.output/server/index.mjs"
 compatibility_flags = ["nodejs_compat"]
 compatibility_date = "2025-02-14"
 observability = { enabled = true }
+
+[assets]
+directory = "./.output/public"
+binding = "ASSETS"
 
 # KV Namespace binding from the original wrangler.jsonc
 [[kv_namespaces]]
