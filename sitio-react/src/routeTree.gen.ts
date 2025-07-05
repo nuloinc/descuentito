@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SupermercadosImport } from './routes/supermercados'
+import { Route as SecretTwitterImagesImport } from './routes/secret-twitter-images'
 import { Route as IndexImport } from './routes/index'
 import { Route as ConfiguracionMediosIndexImport } from './routes/configuracion/medios/index'
 import { Route as ConfiguracionMediosWizardStepImport } from './routes/configuracion/medios/wizard.$step'
@@ -21,6 +22,12 @@ import { Route as ConfiguracionMediosWizardStepImport } from './routes/configura
 const SupermercadosRoute = SupermercadosImport.update({
   id: '/supermercados',
   path: '/supermercados',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SecretTwitterImagesRoute = SecretTwitterImagesImport.update({
+  id: '/secret-twitter-images',
+  path: '/secret-twitter-images',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -54,6 +61,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/secret-twitter-images': {
+      id: '/secret-twitter-images'
+      path: '/secret-twitter-images'
+      fullPath: '/secret-twitter-images'
+      preLoaderRoute: typeof SecretTwitterImagesImport
+      parentRoute: typeof rootRoute
+    }
     '/supermercados': {
       id: '/supermercados'
       path: '/supermercados'
@@ -82,6 +96,7 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/secret-twitter-images': typeof SecretTwitterImagesRoute
   '/supermercados': typeof SupermercadosRoute
   '/configuracion/medios': typeof ConfiguracionMediosIndexRoute
   '/configuracion/medios/wizard/$step': typeof ConfiguracionMediosWizardStepRoute
@@ -89,6 +104,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/secret-twitter-images': typeof SecretTwitterImagesRoute
   '/supermercados': typeof SupermercadosRoute
   '/configuracion/medios': typeof ConfiguracionMediosIndexRoute
   '/configuracion/medios/wizard/$step': typeof ConfiguracionMediosWizardStepRoute
@@ -97,6 +113,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/secret-twitter-images': typeof SecretTwitterImagesRoute
   '/supermercados': typeof SupermercadosRoute
   '/configuracion/medios/': typeof ConfiguracionMediosIndexRoute
   '/configuracion/medios/wizard/$step': typeof ConfiguracionMediosWizardStepRoute
@@ -106,18 +123,21 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/secret-twitter-images'
     | '/supermercados'
     | '/configuracion/medios'
     | '/configuracion/medios/wizard/$step'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/secret-twitter-images'
     | '/supermercados'
     | '/configuracion/medios'
     | '/configuracion/medios/wizard/$step'
   id:
     | '__root__'
     | '/'
+    | '/secret-twitter-images'
     | '/supermercados'
     | '/configuracion/medios/'
     | '/configuracion/medios/wizard/$step'
@@ -126,6 +146,7 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SecretTwitterImagesRoute: typeof SecretTwitterImagesRoute
   SupermercadosRoute: typeof SupermercadosRoute
   ConfiguracionMediosIndexRoute: typeof ConfiguracionMediosIndexRoute
   ConfiguracionMediosWizardStepRoute: typeof ConfiguracionMediosWizardStepRoute
@@ -133,6 +154,7 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SecretTwitterImagesRoute: SecretTwitterImagesRoute,
   SupermercadosRoute: SupermercadosRoute,
   ConfiguracionMediosIndexRoute: ConfiguracionMediosIndexRoute,
   ConfiguracionMediosWizardStepRoute: ConfiguracionMediosWizardStepRoute,
@@ -149,6 +171,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/secret-twitter-images",
         "/supermercados",
         "/configuracion/medios/",
         "/configuracion/medios/wizard/$step"
@@ -156,6 +179,9 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/secret-twitter-images": {
+      "filePath": "secret-twitter-images.tsx"
     },
     "/supermercados": {
       "filePath": "supermercados.tsx"
