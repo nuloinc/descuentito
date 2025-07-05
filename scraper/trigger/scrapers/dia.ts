@@ -256,7 +256,7 @@ export async function extractDiaDiscountsWithValidation(
   config: ValidationConfig = {}
 ) {
   const extractionFunction = async function*() {
-    for (const { domDescription, legalesText } of scrapedPromotions) {
+    for (const { apiPromotion } of scrapedPromotions) {
       const { elementStream } = streamObject({
         model: openrouter.chat("google/gemini-2.5-flash-preview-05-20"),
         schema: BasicDiscountSchema.extend({
@@ -289,12 +289,23 @@ ${LIMITS_PROMPT}`),
             content: [
               {
                 type: "text",
-                text:
-                  "Extract the promotions from the following DOM description, and the following legal text: \n\n" +
-                  "DOM Description:\n" +
-                  domDescription +
-                  "\n\nLegal Text:\n" +
-                  legalesText,
+                text: `Extract the promotion from the following JSON data:
+
+Promotion Display Text: ${apiPromotion.promotionFirstText}
+Secondary Text: ${apiPromotion.promotionSecondText}
+Third Text: ${apiPromotion.promotionThirdText}
+Dark Flag: ${apiPromotion.DarkFlag}
+Light Flag: ${apiPromotion.LightFlag}
+Is Bank: ${apiPromotion.isBank}
+
+Legal Text: ${apiPromotion.ModalText}
+
+IMPORTANT: Some promotions offer BOTH percentage discounts AND installment plans (cuotas sin interés). Extract ALL discount types mentioned. For example:
+- "25% descuento + 3 cuotas sin interés" should generate TWO promotions: one for 25% discount and one for 3 installments
+- Look for phrases like "cuotas sin interés", "sin interés", "cuotas", "installments" in the legal text
+- If you find both percentage AND installments, create separate entries for each
+
+Extract complete promotion(s) with all required fields based on this information.`,
               },
             ],
           },
@@ -302,17 +313,20 @@ ${LIMITS_PROMPT}`),
       });
       
       for await (const object of elementStream) {
+        const weekdays = convertDaysToShowToWeekdays(apiPromotion.daysToShow);
+
         yield {
           ...object,
           source: "dia" as const,
           url: URL,
+          weekdays,
         };
       }
     }
   };
 
   const originalContent = scrapedPromotions
-    .map(p => `DOM: ${p.domDescription}\nLegal: ${p.legalesText}`)
+    .map(p => `Promotion: ${p.apiPromotion.promotionFirstText}\nSecondary: ${p.apiPromotion.promotionSecondText}\nThird: ${p.apiPromotion.promotionThirdText}\nLegal: ${p.apiPromotion.ModalText}`)
     .join('\n\n---\n\n');
 
   const result = await withValidation(
