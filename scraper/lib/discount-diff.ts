@@ -163,6 +163,11 @@ export function calculateDiscountDiff(
  * Formats a discount object for human-readable display
  */
 export function formatDiscountForDisplay(discount: GenericDiscount | Discount): string {
+  // Check if discount object is valid
+  if (!discount || !discount.discount) {
+    return 'Invalid discount';
+  }
+  
   // Get source from the discount if it has one, otherwise use "Unknown"
   const source = 'source' in discount ? discount.source : 'Unknown';
   let result = source.toUpperCase();
@@ -196,20 +201,62 @@ export function formatDiscountForDisplay(discount: GenericDiscount | Discount): 
     result += ` at ${discount.where.join(', ')}`;
   }
   
+  // Add key restriction/targeting information to help differentiate similar discounts
+  if (discount.appliesOnlyTo) {
+    const targeting = Object.entries(discount.appliesOnlyTo)
+      .filter(([_, value]) => value)
+      .map(([key, _]) => key);
+    if (targeting.length > 0) {
+      result += ` (${targeting.join(', ')})`;
+    }
+  }
+  
+  // Add membership requirements
+  if (discount.membership && discount.membership.length > 0) {
+    result += ` (${discount.membership[0]})`;
+  }
+  
+  // Add max discount limit if present
+  if (discount.limits?.maxDiscount) {
+    result += ` (max $${discount.limits.maxDiscount})`;
+  }
+  
+  // Add a snippet of restrictions if they might help differentiate similar discounts
+  if (discount.restrictions && discount.restrictions.length > 0) {
+    const firstRestriction = discount.restrictions[0];
+    // Only show if the restriction contains key differentiating words
+    if (firstRestriction && (
+      firstRestriction.includes('ANSES') || 
+      firstRestriction.includes('jubilados') ||
+      firstRestriction.includes('mayores') ||
+      firstRestriction.includes('Plan Sueldo') ||
+      firstRestriction.includes('Singular') ||
+      firstRestriction.includes('programando') ||
+      firstRestriction.length < 50
+    )) {
+      const snippet = firstRestriction.length > 40 
+        ? firstRestriction.slice(0, 40) + '...'
+        : firstRestriction;
+      result += ` [${snippet}]`;
+    }
+  }
+  
   return result;
 }
 
 /**
  * Enhanced diff result that includes the actual discount objects for better formatting
  */
-export interface EnhancedDiscountDiffResult extends DiscountDiffResult {
-  addedDiscounts: GenericDiscount[];
-  removedDiscounts: GenericDiscount[];
-  validityChangedDiscounts: Array<{
+export interface EnhancedDiscountDiffResult {
+  new: GenericDiscount[];
+  removed: GenericDiscount[];
+  validityChanges: Array<{
     baseKey: string;
     oldDiscount: GenericDiscount;
     newDiscount: GenericDiscount;
   }>;
+  totalNew: number;
+  totalOld: number;
 }
 
 /**
@@ -237,7 +284,7 @@ export function calculateEnhancedDiscountDiff(
   });
   
   // Map keys back to discount objects
-  const addedDiscounts = basicDiff.added.map(key => currentKeyToDiscount.get(key)).filter(Boolean) as GenericDiscount[];
+  const newDiscounts = basicDiff.added.map(key => currentKeyToDiscount.get(key)).filter(Boolean) as GenericDiscount[];
   const removedDiscounts = basicDiff.removed.map(key => previousKeyToDiscount.get(key)).filter(Boolean) as GenericDiscount[];
   
   const validityChangedDiscounts = basicDiff.validityChanged.map(change => ({
@@ -247,10 +294,11 @@ export function calculateEnhancedDiscountDiff(
   })).filter(item => item.oldDiscount && item.newDiscount);
   
   return {
-    ...basicDiff,
-    addedDiscounts,
-    removedDiscounts,
-    validityChangedDiscounts
+    new: newDiscounts,
+    removed: removedDiscounts,
+    validityChanges: validityChangedDiscounts,
+    totalNew: basicDiff.totalNew,
+    totalOld: basicDiff.totalOld
   };
 }
 

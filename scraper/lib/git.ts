@@ -153,7 +153,7 @@ export async function useCommit(
             currentDiscounts,
           );
           logger.info(
-            `Discount diff calculated: +${diffResult.added.length} new, -${diffResult.removed.length} removed, ${diffResult.validityChanged.length} period changed (${previousDiscounts.length} → ${currentDiscounts.length})`,
+            `Discount diff calculated: +${diffResult.new.length} new, -${diffResult.removed.length} removed, ${diffResult.validityChanges.length} period changed (${previousDiscounts.length} → ${currentDiscounts.length})`,
           );
         } catch (error) {
           logger.error("Failed to calculate discount diff:", error);
@@ -170,18 +170,18 @@ export async function useCommit(
         // Even if no file changes, send diff notification if there are discount changes
         if (
           diffResult &&
-          (diffResult.added.length > 0 ||
+          (diffResult.new.length > 0 ||
             diffResult.removed.length > 0 ||
-            diffResult.validityChanged.length > 0)
+            diffResult.validityChanges.length > 0)
         ) {
           try {
             await telegramNotifier.sendDiscountDiff({
               scraper: source,
-              added: diffResult.addedDiscounts.map(formatDiscountForDisplay),
-              removed: diffResult.removedDiscounts.map(
+              added: diffResult.new.map(formatDiscountForDisplay),
+              removed: diffResult.removed.map(
                 formatDiscountForDisplay,
               ),
-              validityChanged: diffResult.validityChangedDiscounts.map(
+              validityChanged: diffResult.validityChanges.map(
                 (change: any) => ({
                   baseKey: formatDiscountForDisplay(change.newDiscount),
                   oldPeriod: `${change.oldDiscount.validFrom} to ${change.oldDiscount.validUntil}`,
@@ -244,18 +244,18 @@ export async function useCommit(
         // Send discount diff notification if available
         if (
           diffResult &&
-          (diffResult.added.length > 0 ||
+          (diffResult.new.length > 0 ||
             diffResult.removed.length > 0 ||
-            diffResult.validityChanged.length > 0)
+            diffResult.validityChanges.length > 0)
         ) {
           try {
             await telegramNotifier.sendDiscountDiff({
               scraper: source,
-              added: diffResult.addedDiscounts.map(formatDiscountForDisplay),
-              removed: diffResult.removedDiscounts.map(
+              added: diffResult.new.map(formatDiscountForDisplay),
+              removed: diffResult.removed.map(
                 formatDiscountForDisplay,
               ),
-              validityChanged: diffResult.validityChangedDiscounts.map(
+              validityChanged: diffResult.validityChanges.map(
                 (change: any) => ({
                   baseKey: formatDiscountForDisplay(change.newDiscount),
                   oldPeriod: `${change.oldDiscount.validFrom} to ${change.oldDiscount.validUntil}`,
@@ -324,18 +324,18 @@ export async function useCommit(
         // Send discount diff notification if available
         if (
           diffResult &&
-          (diffResult.added.length > 0 ||
+          (diffResult.new.length > 0 ||
             diffResult.removed.length > 0 ||
-            diffResult.validityChanged.length > 0)
+            diffResult.validityChanges.length > 0)
         ) {
           try {
             await telegramNotifier.sendDiscountDiff({
               scraper: source,
-              added: diffResult.addedDiscounts.map(formatDiscountForDisplay),
-              removed: diffResult.removedDiscounts.map(
+              added: diffResult.new.map(formatDiscountForDisplay),
+              removed: diffResult.removed.map(
                 formatDiscountForDisplay,
               ),
-              validityChanged: diffResult.validityChangedDiscounts.map(
+              validityChanged: diffResult.validityChanges.map(
                 (change: any) => ({
                   baseKey: formatDiscountForDisplay(change.newDiscount),
                   oldPeriod: `${change.oldDiscount.validFrom} to ${change.oldDiscount.validUntil}`,
