@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "dotenv run ./node_modules/.bin/vinxi dev",
     "build": "vinxi build",
-    "start": "wrangler --cwd dist/ pages dev",
+    "start": "wrangler dev",
+    "preview": "wrangler dev --local",
+    "deploy": "wrangler deploy",
     "test": "bun test",
     "format": "prettier --write ."
   },
