@@ -1,12 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useRef, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "src/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "src/components/ui/card";
-import { Badge } from "src/components/ui/badge";
-import { Download, RefreshCw, Eye, EyeOff } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "src/components/ui/card";
+import { RefreshCw } from "lucide-react";
 import { getPromotions, type PromotionData } from "src/server/promotions";
 import { Discount } from "promos-db/schema";
-import { SUPERMARKET_NAMES } from "src/lib/state";
+import { WALLET_ICONS } from "src/lib/logos";
+import SupermarketLogo from "src/components/supermarket-logo";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
@@ -27,15 +32,10 @@ export const Route = createFileRoute("/secret-twitter-images")({
 
 function SecretTwitterImages() {
   const { promotions } = Route.useLoaderData();
-  const [selectedDiscounts, setSelectedDiscounts] = useState<Discount[]>([]);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [showPreview, setShowPreview] = useState(false);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const previewRef = useRef<HTMLCanvasElement>(null);
 
   // Get best discounts of the week
-  useEffect(() => {
-    if (!promotions) return;
+  const selectedDiscounts = useMemo(() => {
+    if (!promotions) return [];
 
     const allPromotions = Object.entries(promotions as PromotionData)
       .flatMap(([source, sourcePromotions]) => {
@@ -52,7 +52,7 @@ function SecretTwitterImages() {
 
     // Get current week's best discounts
     const currentWeek = dayjs().tz(timeZone);
-    const bestDiscounts = allPromotions
+    const validPromotions = allPromotions
       .filter((promotion: Discount) => {
         const validFrom = dayjs(promotion.validFrom);
         const validUntil = dayjs(promotion.validUntil);
@@ -63,139 +63,41 @@ function SecretTwitterImages() {
       })
       .sort((a, b) => {
         // Sort by discount value (higher percentages first)
-        if (a.discount.type === "porcentaje" && b.discount.type === "porcentaje") {
+        if (
+          a.discount.type === "porcentaje" &&
+          b.discount.type === "porcentaje"
+        ) {
           return b.discount.value - a.discount.value;
         }
         if (a.discount.type === "porcentaje") return -1;
         if (b.discount.type === "porcentaje") return 1;
         return b.discount.value - a.discount.value;
-      })
-      .slice(0, 5); // Top 5 discounts
+      });
 
-    setSelectedDiscounts(bestDiscounts);
-  }, [promotions]);
+    // Merge discounts with same value but different payment methods
+    const mergedDiscounts = new Map<string, Discount>();
 
-  const generateImage = async () => {
-    if (!canvasRef.current || selectedDiscounts.length === 0) return;
+    validPromotions.forEach((promotion: Discount) => {
+      const key = `${promotion.source}-${promotion.discount.type}-${promotion.discount.value}-${promotion.onlyForProducts || "all"}`;
 
-    setIsGenerating(true);
-    
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+      if (mergedDiscounts.has(key)) {
+        const existing = mergedDiscounts.get(key)!;
+        // Merge payment methods
+        const existingMethods = existing.paymentMethods || [];
+        const newMethods = promotion.paymentMethods || [];
+        existing.paymentMethods = [...existingMethods, ...newMethods];
 
-    // Set canvas size for Twitter (1200x675 is optimal)
-    canvas.width = 1200;
-    canvas.height = 675;
-
-    // Background gradient
-    const gradient = ctx.createLinearGradient(0, 0, 1200, 675);
-    gradient.addColorStop(0, "#1e40af"); // Blue
-    gradient.addColorStop(1, "#7c3aed"); // Purple
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 1200, 675);
-
-    // Add subtle pattern/noise
-    ctx.fillStyle = "rgba(255, 255, 255, 0.05)";
-    for (let i = 0; i < 1000; i++) {
-      const x = Math.random() * 1200;
-      const y = Math.random() * 675;
-      ctx.fillRect(x, y, 1, 1);
-    }
-
-    // Header
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "bold 48px Inter, -apple-system, system-ui, sans-serif";
-    ctx.textAlign = "center";
-    ctx.fillText("🛒 Mejores Descuentos de la Semana", 600, 80);
-
-    // Subtitle
-    ctx.font = "24px Inter, -apple-system, system-ui, sans-serif";
-    ctx.fillStyle = "#e5e7eb";
-    const weekText = `Semana del ${dayjs().tz(timeZone).format("DD/MM")}`;
-    ctx.fillText(weekText, 600, 120);
-
-    // Discount cards
-    let yPosition = 180;
-    const cardHeight = 80;
-    const cardSpacing = 10;
-
-    selectedDiscounts.forEach((discount, index) => {
-      const cardY = yPosition + index * (cardHeight + cardSpacing);
-      
-      // Card background
-      ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
-      ctx.fillRect(80, cardY, 1040, cardHeight);
-      
-      // Card border
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
-      ctx.lineWidth = 1;
-      ctx.strokeRect(80, cardY, 1040, cardHeight);
-
-      // Discount percentage/value
-      ctx.fillStyle = "#1f2937";
-      ctx.font = "bold 32px Inter, -apple-system, system-ui, sans-serif";
-      ctx.textAlign = "left";
-      const discountText = discount.discount.type === "porcentaje" 
-        ? `${discount.discount.value}%` 
-        : `${discount.discount.value}c/si`;
-      ctx.fillText(discountText, 100, cardY + 40);
-
-      // Supermarket name
-      ctx.fillStyle = "#6b7280";
-      ctx.font = "24px Inter, -apple-system, system-ui, sans-serif";
-      const supermarketName = SUPERMARKET_NAMES[discount.source] || discount.source;
-      ctx.fillText(`en ${supermarketName}`, 220, cardY + 40);
-
-      // Product restriction (if any)
-      if (discount.onlyForProducts) {
-        ctx.fillStyle = "#7c3aed";
-        ctx.font = "18px Inter, -apple-system, system-ui, sans-serif";
-        ctx.fillText(`Solo ${discount.onlyForProducts}`, 220, cardY + 60);
-      }
-
-      // Payment methods hint
-      if (discount.paymentMethods && discount.paymentMethods.length > 0) {
-        ctx.fillStyle = "#059669";
-        ctx.font = "16px Inter, -apple-system, system-ui, sans-serif";
-        ctx.textAlign = "right";
-        ctx.fillText("Con medios seleccionados", 1100, cardY + 50);
+        // Merge weekdays
+        const existingWeekdays = existing.weekdays || [];
+        const newWeekdays = promotion.weekdays || [];
+        existing.weekdays = [...new Set([...existingWeekdays, ...newWeekdays])];
+      } else {
+        mergedDiscounts.set(key, { ...promotion });
       }
     });
 
-    // Footer with branding
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "bold 36px Inter, -apple-system, system-ui, sans-serif";
-    ctx.textAlign = "center";
-    ctx.fillText("descuentito.ar", 600, 620);
-
-    // Footer subtitle
-    ctx.font = "20px Inter, -apple-system, system-ui, sans-serif";
-    ctx.fillStyle = "#e5e7eb";
-    ctx.fillText("Encuentra más descuentos en supermercados", 600, 650);
-
-    // Copy to preview canvas if it exists
-    if (previewRef.current) {
-      const previewCanvas = previewRef.current;
-      const previewCtx = previewCanvas.getContext("2d");
-      if (previewCtx) {
-        previewCanvas.width = 1200;
-        previewCanvas.height = 675;
-        previewCtx.drawImage(canvas, 0, 0);
-      }
-    }
-
-    setIsGenerating(false);
-  };
-
-  const downloadImage = () => {
-    if (!canvasRef.current) return;
-    
-    const link = document.createElement("a");
-    link.download = `descuentos-semana-${dayjs().tz(timeZone).format("YYYY-MM-DD")}.png`;
-    link.href = canvasRef.current.toDataURL();
-    link.click();
-  };
+    return Array.from(mergedDiscounts.values()).slice(0, 8); // Top 6 discounts
+  }, [promotions]);
 
   const refreshDiscounts = () => {
     // Trigger a re-fetch or re-selection of discounts
@@ -203,120 +105,188 @@ function SecretTwitterImages() {
   };
 
   return (
-    <div className="container mx-auto max-w-4xl p-4 space-y-6">
+    <div className="container mx-auto p-4 space-y-6">
       <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold">🤫 Generador de Imágenes para Twitter</h1>
+        <h1 className="text-3xl font-bold">
+          🤫 Generador de Imágenes para Twitter
+        </h1>
         <p className="text-muted-foreground">
-          Genera imágenes hermosas de los mejores descuentos de la semana para compartir en redes sociales
+          Genera imágenes hermosas de los mejores descuentos de la semana para
+          compartir en redes sociales
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Selected Discounts */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center justify-between">
-              Mejores Descuentos Seleccionados
-              <Button variant="outline" size="sm" onClick={refreshDiscounts}>
-                <RefreshCw className="h-4 w-4" />
-              </Button>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {selectedDiscounts.map((discount, index) => (
-                <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <Badge variant="secondary" className="text-lg font-bold">
-                      {discount.discount.type === "porcentaje" 
-                        ? `${discount.discount.value}%` 
-                        : `${discount.discount.value}c/si`}
-                    </Badge>
-                    <div>
-                      <div className="font-medium">
-                        {SUPERMARKET_NAMES[discount.source] || discount.source}
+      {/* Controls */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center justify-between">
+            Controles
+            <Button variant="outline" size="sm" onClick={refreshDiscounts}>
+              <RefreshCw className="h-4 w-4" />
+            </Button>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="text-sm text-muted-foreground">
+            Toma una captura de pantalla del template de abajo para usar en
+            redes sociales
+          </p>
+        </CardContent>
+      </Card>
+
+      {/* Template for screenshots */}
+      <div className="mt-8">
+        <h3 className="text-lg font-semibold mb-4 text-gray-800">
+          Template para Captura de Pantalla
+        </h3>
+        <div
+          data-template
+          className="w-[1200px] h-[675px] bg-gradient-to-br from-blue-700 to-purple-600 p-10 font-sans text-white relative overflow-hidden mx-auto border-none outline-none box-border"
+        >
+          {/* Background pattern */}
+          <div
+            className="absolute inset-0 opacity-[0.05] bg-[length:60px_60px]"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            }}
+          />
+
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-5xl font-bold mb-2 text-white">
+              🛒 Mejores descuentos de la semana
+            </h1>
+            <p className="text-2xl text-gray-200">
+              Semana del {dayjs().tz(timeZone).format("DD/MM/YYYY")}
+            </p>
+          </div>
+
+          {/* Discount cards */}
+          <div className="grid grid-cols-4 grid-rows-3 gap-4">
+            {selectedDiscounts.map((discount, index) => {
+              const allWeekdays = ["L", "M", "M", "J", "V", "S", "D"];
+              const weekdayNames = [
+                "lunes",
+                "martes",
+                "miércoles",
+                "jueves",
+                "viernes",
+                "sábado",
+                "domingo",
+              ];
+              const discountWeekdays =
+                discount.weekdays?.map((day) => day.toLowerCase()) || [];
+
+              return (
+                <div
+                  key={index}
+                  className="bg-white/95 rounded-lg p-3 flex flex-col justify-between min-h-[120px]"
+                >
+                  {/* Payment methods */}
+                  {discount.paymentMethods &&
+                    discount.paymentMethods.length > 0 && (
+                      <div className="flex items-center gap-1 flex-wrap">
+                        {discount.paymentMethods
+                          .flatMap((method: string | string[]) =>
+                            Array.isArray(method) ? method : [method],
+                          )
+                          .filter(
+                            (method) => WALLET_ICONS[method.split(" - ")[0]],
+                          )
+                          .filter(
+                            (v, i, a) =>
+                              a.findIndex(
+                                (v2) =>
+                                  WALLET_ICONS[v2.split(" - ")[0]] ===
+                                  WALLET_ICONS[v.split(" - ")[0]],
+                              ) === i,
+                          )
+                          .slice(0, 6)
+                          .map((method, idx) => {
+                            const iconSrc =
+                              WALLET_ICONS[method.split(" - ")[0]];
+                            return iconSrc ? (
+                              <img
+                                key={idx}
+                                src={iconSrc}
+                                alt={method}
+                                className="w-4 h-4 object-contain rounded-xs"
+                              />
+                            ) : null;
+                          })}
                       </div>
-                      {discount.onlyForProducts && (
-                        <div className="text-sm text-muted-foreground">
-                          Solo {discount.onlyForProducts}
-                        </div>
-                      )}
+                    )}
+                  <div className="flex items-start justify-between my-2">
+                    <div className="text-5xl font-black text-gray-900">
+                      {discount.discount.type === "porcentaje"
+                        ? `${discount.discount.value}%`
+                        : `${discount.discount.value}c/si`}
                     </div>
                   </div>
-                  {discount.paymentMethods && discount.paymentMethods.length > 0 && (
-                    <Badge variant="outline" className="text-xs">
-                      Con medios específicos
-                    </Badge>
-                  )}
+                  <div className="flex gap-1">
+                    {allWeekdays.map((letter, idx) => {
+                      const isActive =
+                        discountWeekdays.includes(weekdayNames[idx]) ||
+                        discountWeekdays.length === 0;
+                      return (
+                        <div
+                          key={idx}
+                          className={`text-xs font-medium px-1.5 py-1 rounded ${
+                            isActive
+                              ? "bg-violet-500 text-white"
+                              : "bg-gray-200 text-gray-400"
+                          }`}
+                        >
+                          {letter}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="flex-1 mt-2">
+                    <div className="flex items-center gap-2 mb-1">
+                      {discount.where
+                        .filter(
+                          (where, index, array) =>
+                            array.indexOf(where) === index,
+                        )
+                        .map((where) => (
+                          <SupermarketLogo
+                            key={where}
+                            source={discount.source}
+                            where={where}
+                            className="h-4 w-auto rounded-xs"
+                          />
+                        ))}
+                    </div>
+                    {discount.onlyForProducts && (
+                      <div className="text-xs text-purple-600 mt-1">
+                        Solo {discount.onlyForProducts}
+                      </div>
+                    )}
+                  </div>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+              );
+            })}
+          </div>
 
-        {/* Controls */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Controles</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <Button 
-              onClick={generateImage} 
-              className="w-full" 
-              disabled={isGenerating || selectedDiscounts.length === 0}
-            >
-              {isGenerating ? "Generando..." : "Generar Imagen"}
-            </Button>
-            
-            <Button 
-              onClick={downloadImage} 
-              variant="outline" 
-              className="w-full"
-              disabled={!canvasRef.current}
-            >
-              <Download className="h-4 w-4 mr-2" />
-              Descargar Imagen
-            </Button>
-
-            <Button 
-              onClick={() => setShowPreview(!showPreview)} 
-              variant="outline" 
-              className="w-full"
-            >
-              {showPreview ? <EyeOff className="h-4 w-4 mr-2" /> : <Eye className="h-4 w-4 mr-2" />}
-              {showPreview ? "Ocultar Vista Previa" : "Mostrar Vista Previa"}
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Canvas and Preview */}
-      <div className="space-y-4">
-        <canvas
-          ref={canvasRef}
-          className="hidden"
-          width={1200}
-          height={675}
-        />
-        
-        {showPreview && (
-          <Card>
-            <CardHeader>
-              <CardTitle>Vista Previa</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="border rounded-lg overflow-hidden">
-                <canvas
-                  ref={previewRef}
-                  className="w-full h-auto max-w-full"
-                  width={1200}
-                  height={675}
-                  style={{ aspectRatio: "1200/675" }}
-                />
+          {/* Footer */}
+          <div className="absolute bottom-8 left-0 right-0 text-center">
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <img
+                src="/descuentin.svg"
+                alt="Descuentito"
+                className="h-12 w-auto"
+              />
+              <div className="text-4xl font-bold text-white">
+                descuentito.ar
               </div>
-            </CardContent>
-          </Card>
-        )}
+            </div>
+            <div className="text-xl text-gray-200">
+              Encuentra más descuentos en supermercados
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

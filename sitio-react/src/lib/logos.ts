@@ -81,6 +81,7 @@ import CarrefourSinTexto from "~/logos/supermercados/carrefour_sin_texto.svg?url
 import CarrefourExpressHorizontal from "~/logos/supermercados/carrefour_express_horizontal.png?url";
 import Jumbo from "~/logos/supermercados/jumbo_cropped.png?url";
 import JumboSmall from "~/logos/supermercados/jumbo.webp?url";
+import JumboComAr from "~/logos/supermercados/jumbo.com.ar.png?url";
 import DiaOnline from "~/logos/supermercados/dia_online.png?url";
 import Dia from "~/logos/supermercados/dia.svg?url";
 import DiaSmall from "~/logos/supermercados/dia_small.svg?url";
@@ -102,7 +103,7 @@ export const BRAND_LOGOS: Record<string, Record<string, string>> = {
   },
   jumbo: {
     Jumbo: Jumbo,
-    Online: Jumbo,
+    Online: JumboComAr,
   },
   dia: {
     Dia: Dia,
