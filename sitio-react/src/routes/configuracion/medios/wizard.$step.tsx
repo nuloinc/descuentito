@@ -98,14 +98,14 @@ const CATEGORY_FILTERS = {
   banks: (m: PaymentMethod) =>
     m.startsWith("Banco") ||
     m === "Sidecreer" ||
-    m === "BanCo (Banco de Corrientes)",
+    m === "BanCo (Banco de Corrientes)" ||
+    m === "Cuenta DNI",
   cards: (m: PaymentMethod) =>
     m.startsWith("Tarjeta") || ["MODO", "Tarjeta American Express"].includes(m),
   digitalWallets: (m: PaymentMethod) =>
     [
       "Mercado Pago",
       "Uala",
-      "Cuenta DNI",
       "Personal Pay",
       "Personal Pay - Nivel 1",
       "Personal Pay - Nivel 2",

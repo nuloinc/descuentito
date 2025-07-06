@@ -7,14 +7,14 @@ const CATEGORY_FILTERS = {
   banks: (m: PaymentMethod) =>
     m.startsWith("Banco") ||
     m === "Sidecreer" ||
-    m === "BanCo (Banco de Corrientes)",
+    m === "BanCo (Banco de Corrientes)" ||
+    m === "Cuenta DNI",
   cards: (m: PaymentMethod) =>
     m.startsWith("Tarjeta") || ["MODO", "Tarjeta American Express"].includes(m),
   digitalWallets: (m: PaymentMethod) =>
     [
       "Mercado Pago",
       "Uala",
-      "Cuenta DNI",
       "Personal Pay",
       "Personal Pay - Nivel 1",
       "Personal Pay - Nivel 2",
@@ -65,7 +65,6 @@ describe("Payment Method Wizard Categories", () => {
     const knownDigitalWallets = [
       "Mercado Pago",
       "Uala",
-      "Cuenta DNI",
       "Personal Pay",
       "Personal Pay - Nivel 1",
       "Personal Pay - Nivel 2",
@@ -99,7 +98,8 @@ describe("Payment Method Wizard Categories", () => {
       (method) =>
         method.startsWith("Banco") ||
         method === "Sidecreer" ||
-        method === "BanCo (Banco de Corrientes)",
+        method === "BanCo (Banco de Corrientes)" ||
+        method === "Cuenta DNI",
     );
 
     bankMethods.forEach((bank) => {
