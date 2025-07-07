@@ -106,6 +106,7 @@ const CATEGORY_FILTERS = {
     [
       "Mercado Pago",
       "Uala",
+      "Cuenta DNI",
       "Personal Pay",
       "Personal Pay - Nivel 1",
       "Personal Pay - Nivel 2",

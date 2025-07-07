@@ -15,6 +15,7 @@ const CATEGORY_FILTERS = {
     [
       "Mercado Pago",
       "Uala",
+      "Cuenta DNI",
       "Personal Pay",
       "Personal Pay - Nivel 1",
       "Personal Pay - Nivel 2",
@@ -65,6 +66,7 @@ describe("Payment Method Wizard Categories", () => {
     const knownDigitalWallets = [
       "Mercado Pago",
       "Uala",
+      "Cuenta DNI",
       "Personal Pay",
       "Personal Pay - Nivel 1",
       "Personal Pay - Nivel 2",
@@ -132,8 +134,16 @@ describe("Payment Method Wizard Categories", () => {
       if (CATEGORY_FILTERS.digitalWallets(method as PaymentMethod))
         categorizedIn.push("digitalWallets");
 
-      // Each payment method should be in exactly one category
-      expect(categorizedIn.length).toBe(1);
+      // Each payment method should be in at least one category
+      // "Cuenta DNI" is allowed to be in both banks and digitalWallets
+      if (method === "Cuenta DNI") {
+        expect(categorizedIn.length).toBeGreaterThanOrEqual(1);
+        expect(categorizedIn).toContain("banks");
+        expect(categorizedIn).toContain("digitalWallets");
+      } else {
+        // All other payment methods should be in exactly one category
+        expect(categorizedIn.length).toBe(1);
+      }
     });
   });
 });
