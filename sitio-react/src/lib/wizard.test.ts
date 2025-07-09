@@ -7,7 +7,8 @@ const CATEGORY_FILTERS = {
   banks: (m: PaymentMethod) =>
     m.startsWith("Banco") ||
     m === "Sidecreer" ||
-    m === "BanCo (Banco de Corrientes)",
+    m === "BanCo (Banco de Corrientes)" ||
+    m === "Cuenta DNI",
   cards: (m: PaymentMethod) =>
     m.startsWith("Tarjeta") || ["MODO", "Tarjeta American Express"].includes(m),
   digitalWallets: (m: PaymentMethod) =>
@@ -99,7 +100,8 @@ describe("Payment Method Wizard Categories", () => {
       (method) =>
         method.startsWith("Banco") ||
         method === "Sidecreer" ||
-        method === "BanCo (Banco de Corrientes)",
+        method === "BanCo (Banco de Corrientes)" ||
+        method === "Cuenta DNI",
     );
 
     bankMethods.forEach((bank) => {
@@ -132,8 +134,16 @@ describe("Payment Method Wizard Categories", () => {
       if (CATEGORY_FILTERS.digitalWallets(method as PaymentMethod))
         categorizedIn.push("digitalWallets");
 
-      // Each payment method should be in exactly one category
-      expect(categorizedIn.length).toBe(1);
+      // Each payment method should be in at least one category
+      // "Cuenta DNI" is allowed to be in both banks and digitalWallets
+      if (method === "Cuenta DNI") {
+        expect(categorizedIn.length).toBeGreaterThanOrEqual(1);
+        expect(categorizedIn).toContain("banks");
+        expect(categorizedIn).toContain("digitalWallets");
+      } else {
+        // All other payment methods should be in exactly one category
+        expect(categorizedIn.length).toBe(1);
+      }
     });
   });
 });
