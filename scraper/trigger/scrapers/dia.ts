@@ -92,7 +92,9 @@ export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
 
     if (runtimeData) {
       // Search for promotions in the runtime data structure
-      const searchForPromotions = (obj: any): any => {
+      const searchForPromotions = (obj: any): any[] => {
+        let allPromotions: any[] = [];
+        
         if (obj && typeof obj === "object") {
           // Check if this is an array of promotions
           if (
@@ -100,21 +102,49 @@ export async function scrapeDiaContent(): Promise<ScrapedDiaPromotion[]> {
             obj.length > 0 &&
             obj[0]?.promotionFirstText
           ) {
-            return obj;
+            allPromotions.push(...obj);
           }
+          
+          // Also check if this object has props.promotions (custom-bank-promotions structure)
+          if (obj.props && Array.isArray(obj.props.promotions)) {
+            const bankPromotions = obj.props.promotions.filter(
+              (promo: any) => promo?.promotionFirstText
+            );
+            if (bankPromotions.length > 0) {
+              allPromotions.push(...bankPromotions);
+            }
+          }
+          
           // Recursively search through object properties
           for (const value of Object.values(obj)) {
             const result = searchForPromotions(value);
-            if (result) return result;
+            if (result.length > 0) {
+              allPromotions.push(...result);
+            }
           }
         }
-        return null;
+        return allPromotions;
       };
 
       const foundPromotions = searchForPromotions(runtimeData);
-      if (foundPromotions) {
-        console.log("Found promotions data in __RUNTIME__ template");
-        apiPromotions = foundPromotions;
+      if (foundPromotions.length > 0) {
+        console.log(`Found ${foundPromotions.length} promotions data in __RUNTIME__ template`);
+        
+        // Remove duplicates by creating a unique key from key fields
+        const uniquePromotions = [];
+        const seen = new Set();
+        
+        for (const promo of foundPromotions) {
+          const key = `${promo.promotionFirstText}|${promo.promotionSecondText}|${promo.promotionThirdText}|${promo.ModalText?.substring(0, 100)}|${JSON.stringify(promo.daysToShow)}|${promo.logo}`;
+          
+          if (!seen.has(key)) {
+            seen.add(key);
+            uniquePromotions.push(promo);
+          }
+        }
+        
+        console.log(`After deduplication: ${uniquePromotions.length} unique promotions`);
+        apiPromotions = uniquePromotions;
       }
     }
   } catch (error) {
