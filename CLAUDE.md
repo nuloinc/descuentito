@@ -102,3 +102,8 @@ The system supports extensive Argentine payment methods defined in `promos-db/sc
 - Payment rails (VISA, Mastercard, MODO, etc.)
 - Complex discount structures with percentage/installment options
 - Location-specific applicability (store types, online vs physical)
+
+## Scraper Data Repository
+
+- Scrapped data by the scraper is stored in the `descuentito-data` repo, which is available in ../descuentito-data
+- Make sure to merge in origin/main as the local copy is often outdated
