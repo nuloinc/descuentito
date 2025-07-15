@@ -1,0 +1,13 @@
+# Scraper Justfile
+
+install:
+    bun install
+
+check:
+    bun run check
+
+test:
+    bun run test
+
+run SCRAPER *ARGS:
+    bun run cli {{SCRAPER}} {{ARGS}}

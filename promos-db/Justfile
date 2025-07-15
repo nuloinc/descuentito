@@ -1,0 +1,7 @@
+# Promos DB Justfile
+
+install:
+    bun install
+
+check:
+    bun run check

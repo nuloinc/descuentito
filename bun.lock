@@ -47,7 +47,7 @@
         "vitest": "^3.1.1",
       },
     },
-    "sitio-react": {
+    "sitio": {
       "name": "tanstack-start-example-basic-react-query",
       "dependencies": {
         "@radix-ui/react-accordion": "^1.2.4",
@@ -2344,7 +2344,7 @@
 
     "tailwindcss-animate": ["tailwindcss-animate@1.0.7", "", { "peerDependencies": { "tailwindcss": ">=3.0.0 || insiders" } }, "sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA=="],
 
-    "tanstack-start-example-basic-react-query": ["tanstack-start-example-basic-react-query@workspace:sitio-react"],
+    "tanstack-start-example-basic-react-query": ["tanstack-start-example-basic-react-query@workspace:sitio"],
 
     "tapable": ["tapable@2.2.1", "", {}, "sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ=="],
 

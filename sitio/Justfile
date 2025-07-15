@@ -1,0 +1,19 @@
+# Sitio Justfile
+
+install:
+    bun install
+
+dev:
+    bun run dev
+
+build:
+    bun run build
+
+start:
+    bun run start
+
+check:
+    bun run check
+
+lint:
+    bun run lint
