@@ -65,7 +65,7 @@ export async function extractCarrefourDiscounts(
 
 async function extractDiscount({ domDescription }: { domDescription: string }) {
   const { object } = await generateObject({
-    model: openrouter.chat("google/gemini-2.5-flash-preview-05-20"),
+    model: openrouter.chat("google/gemini-2.5-flash"),
     schema: DiscountSchema,
     temperature: 0,
     experimental_telemetry: { isEnabled: true },

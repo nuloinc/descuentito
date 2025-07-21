@@ -101,8 +101,8 @@ ${domDescription}
 Legal text for reference (use ONLY to supplement missing details, particularly for excludesProducts): \n\n${legales}
 `;
   const result = await generateObject({
-    model: openrouter.chat("google/gemini-2.5-flash-preview-05-20"),
-    // model: openrouter.chat("google/gemini-2.5-flash-preview-05-20:thinking"),
+    model: openrouter.chat("google/gemini-2.5-flash"),
+    // model: openrouter.chat("google/gemini-2.5-flash:thinking"),
     schema: promotionSchema,
     temperature: 0,
     experimental_telemetry: { isEnabled: true },
