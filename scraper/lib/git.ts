@@ -81,8 +81,9 @@ export async function useCommit(
   const { dir } = repo;
 
   const date = format(new Date(), "yyyy-MM-dd");
-  // Determine production mode
+  // Determine production mode and unattended mode
   const isProd = process.env.NODE_ENV === "production";
+  const isUnattendedMode = process.env.UNATTENDED_MODE === "true";
   let branchName = "main";
 
   // Store metadata that can be updated later
@@ -122,8 +123,8 @@ export async function useCommit(
     );
   }
 
-  // Only create a new branch if not in production
-  if (!isProd) {
+  // Only create a new branch if not in production (will be determined later for unattended mode)
+  if (!isProd && !isUnattendedMode) {
     branchName = `promotions/${date}/${nanoid()}/${source}`;
     await git.branch({
       fs,
@@ -218,10 +219,48 @@ export async function useCommit(
       let commitUrl = "";
       let commitHash = commitResult;
 
-      // Push directly to main if in prod, otherwise push branch and create PR
-      if (isProd) {
+      // Determine commit strategy based on mode and change percentage
+      let shouldCommitToMain = isProd;
+      let shouldCreatePR = !isProd;
+      let shouldAutoMergePR = !metadata.prOnly;
+
+      if (isUnattendedMode && diffResult) {
+        // Calculate change percentage for unattended mode
+        const changePercentage = Math.abs(diffResult.totalNew - diffResult.totalOld) / Math.max(diffResult.totalOld, 1) * 100;
+        logger.info(`Change percentage calculated: ${changePercentage.toFixed(1)}% (${diffResult.totalOld} → ${diffResult.totalNew})`);
+        
+        if (changePercentage > 35) {
+          // High-impact changes: create PR for review
+          shouldCommitToMain = false;
+          shouldCreatePR = true;
+          shouldAutoMergePR = false; // Never auto-merge in unattended mode when creating PR
+          
+          // Create branch now if we haven't already
+          if (branchName === "main") {
+            branchName = `promotions/${date}/${nanoid()}/${source}`;
+            await git.branch({
+              fs,
+              dir: dir,
+              ref: branchName,
+              checkout: true,
+            });
+          }
+          
+          logger.info(`High-impact changes detected (${changePercentage.toFixed(1)}% > 35%). Creating PR for review.`);
+        } else {
+          // Low-impact changes: commit directly
+          shouldCommitToMain = true;
+          shouldCreatePR = false;
+          logger.info(`Low-impact changes detected (${changePercentage.toFixed(1)}% ≤ 35%). Committing directly to main.`);
+        }
+      }
+
+      // Push directly to main if determined above, otherwise push branch and create PR
+      if (shouldCommitToMain) {
         logger.info(
-          `Prod env detected. Pushing changes directly to main branch.`,
+          isUnattendedMode 
+            ? `Low-impact changes. Pushing directly to main branch.`
+            : `Prod env detected. Pushing changes directly to main branch.`,
         );
         await execa("git", ["push", remote, "main"], {
           cwd: dir,
@@ -276,7 +315,9 @@ export async function useCommit(
         }
       } else {
         logger.info(
-          `Non-prod env detected. Pushing to branch ${branchName} and creating PR.`,
+          isUnattendedMode 
+            ? `High-impact changes. Pushing to branch ${branchName} and creating PR.`
+            : `Non-prod env detected. Pushing to branch ${branchName} and creating PR.`,
         );
         await execa("git", ["push", remote, branchName], {
           cwd: dir,
@@ -292,8 +333,8 @@ export async function useCommit(
         });
         logger.info(`Created PR #${prResponse.data.number} for ${source}`);
 
-        // Only auto-merge if prOnly flag is not set
-        if (!metadata.prOnly) {
+        // Only auto-merge if determined above
+        if (shouldAutoMergePR) {
           await octokit!.pulls.merge({
             owner: GITHUB_OWNER,
             repo: GITHUB_REPO,
@@ -304,7 +345,7 @@ export async function useCommit(
           logger.info(`Merged PR #${prResponse.data.number} for ${source}`);
         } else {
           logger.info(
-            `PR #${prResponse.data.number} created but not auto-merged due to --pr-only flag`,
+            `PR #${prResponse.data.number} created but not auto-merged due to ${isUnattendedMode ? "high-impact changes requiring review" : "--pr-only flag"}`,
           );
         }
         commitUrl = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/pull/${prResponse.data.number}`;

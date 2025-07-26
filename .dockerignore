@@ -1,4 +1,66 @@
+# Node modules
 **/node_modules/
+
+# Environment files (security)
 **/.env
 **/.env.*
-**/Dockerfile
+
+# Git files
+.git/
+.gitignore
+
+# Development files
+*.log
+*.logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+coverage/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test files
+test/
+**/test/
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+
+# Documentation
+README.md
+*.md
+docs/
+
+# Cache directories
+.cache/
+.parcel-cache/
+.next/
+
+# Temporary files
+tmp/
+temp/
+
+# Media files (if any)
+*.mp4
+*.gif
+*.png
+*.jpg
+*.jpeg
+
+# Specific to this project - exclude frontend build
+sitio/dist/
+sitio/.output/
