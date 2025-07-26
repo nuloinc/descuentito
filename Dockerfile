@@ -70,39 +70,10 @@ RUN cd scraper && bunx playwright install --with-deps chromium
 # Create logs directory
 RUN mkdir -p /var/log/scraper
 
-# Create scraper wrapper script
-RUN cat > /usr/local/bin/run-scraper.sh << 'EOF'
-#!/bin/bash
-set -e
-
-echo "$(date): Starting scraper execution" >> /var/log/scraper/cron.log
-
-# Set display for headful browser
-export DISPLAY=:99
-export HEADLESS=false
-export LOCAL_BROWSER=true
-
-# Start virtual display for headful browser
-Xvfb :99 -screen 0 1920x1080x16 -nolisten tcp -dpi 96 +extension GLX +render -noreset &
-XVFB_PID=$!
-
-# Wait for display to be ready
-sleep 3
-
-cd /app/scraper
-
-# Run all scrapers with save flag
-echo "$(date): Running scrapers..." >> /var/log/scraper/cron.log
-bun run cli all --save --telegram 2>&1 | tee -a /var/log/scraper/cron.log
-
-# Clean up
-kill $XVFB_PID 2>/dev/null || true
-
-echo "$(date): Scraper execution completed" >> /var/log/scraper/cron.log
-EOF
-
-# Make script executable
-RUN chmod +x /usr/local/bin/run-scraper.sh
+# Copy and set up scripts
+COPY infra/run-scraper.sh /usr/local/bin/run-scraper.sh
+COPY infra/start-container.sh /usr/local/bin/start-container.sh
+RUN chmod +x /usr/local/bin/run-scraper.sh /usr/local/bin/start-container.sh
 
 # Create cron job for Mondays and Fridays at 9:00 AM UTC-3
 RUN echo "0 9 * * 1,5 /usr/local/bin/run-scraper.sh" > /etc/cron.d/scraper-schedule
@@ -113,31 +84,6 @@ RUN chmod 0644 /etc/cron.d/scraper-schedule
 # Apply cron job
 RUN crontab /etc/cron.d/scraper-schedule
 
-# Create a startup script
-RUN cat > /usr/local/bin/start-container.sh << 'EOF'
-#!/bin/bash
-set -e
-
-echo "Starting Descuentito Scraper Container"
-echo "Timezone: $(date)"
-
-# Check if RUN_MODE is set to "once"
-if [ "$RUN_MODE" = "once" ]; then
-    echo "Running scraper once and exiting..."
-    /usr/local/bin/run-scraper.sh
-    exit 0
-fi
-
-# Default: run with cron scheduling
-echo "Next scheduled runs:"
-echo "- Mondays at 9:00 AM"
-echo "- Fridays at 9:00 AM"
-
-# Start cron in foreground
-cron -f
-EOF
-
-RUN chmod +x /usr/local/bin/start-container.sh
 
 # Environment variables (override these when running container)
 ENV HEADLESS=false
