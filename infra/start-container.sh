@@ -11,10 +11,10 @@ if [ "$RUN_MODE" = "once" ]; then
     exit 0
 fi
 
-# Default: run with cron scheduling
+# Default: run with supercronic scheduling
 echo "Next scheduled runs:"
 echo "- Mondays at 9:00 AM"
 echo "- Fridays at 9:00 AM"
 
-# Start cron in foreground
-cron -f
+# Start supercronic with the crontab file
+exec supercronic /app/crontab
