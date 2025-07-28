@@ -11,6 +11,11 @@ import {
 import { createPlaywrightSession } from "../../lib.ts";
 import assert from "node:assert";
 import { openrouter } from "@openrouter/ai-sdk-provider";
+import { 
+  withValidation, 
+  enhancePromptWithAlerts,
+  type ValidationConfig 
+} from "../../lib/validation-adapter";
 
 const URL =
   "https://diaonline.supermercadosdia.com.ar/medios-de-pago-y-promociones";
@@ -273,8 +278,117 @@ Extract complete promotion(s) with all required fields based on this information
   return promotions;
 }
 
+/**
+ * Enhanced version with validation system
+ */
+export async function extractDiaDiscountsWithValidation(
+  scrapedPromotions: ScrapedDiaPromotion[],
+  config: ValidationConfig = {}
+) {
+  const extractionFunction = async function*() {
+    for (const { domDescription, legalesText } of scrapedPromotions) {
+      const { elementStream } = streamObject({
+        model: openrouter.chat("google/gemini-2.5-flash-preview-05-20"),
+        schema: BasicDiscountSchema.extend({
+          where: z.array(z.enum(["Dia", "Online"])),
+          // Add optional alerts field
+          alerts: z.array(z.object({
+            severity: z.enum(["low", "medium", "high"]),
+            category: z.enum(["uncertainty", "inconsistency", "missing_data", "ambiguity", "validation_error"]),
+            message: z.string(),
+            field: z.string().optional(),
+            confidence: z.number().optional(),
+          })).optional(),
+        }),
+        output: "array",
+        experimental_telemetry: { isEnabled: true },
+        system: enhancePromptWithAlerts(`${genStartPrompt("dia")}
+
+${PAYMENT_METHODS_PROMPT}
+
+${RESTRICTIONS_PROMPT}
+
+WHERE
+
+"APLICA TIENDA" means the promotion is valid in physical stores ("Dia"), "APLICA ONLINE" means it's valid in online stores.
+
+${LIMITS_PROMPT}`),
+        messages: [
+          {
+            role: "user",
+            content: [
+              {
+                type: "text",
+                text:
+                  "Extract the promotions from the following DOM description, and the following legal text: \n\n" +
+                  "DOM Description:\n" +
+                  domDescription +
+                  "\n\nLegal Text:\n" +
+                  legalesText,
+              },
+            ],
+          },
+        ],
+      });
+      
+      for await (const object of elementStream) {
+        yield {
+          ...object,
+          source: "dia" as const,
+          url: URL,
+        };
+      }
+    }
+  };
+
+  const originalContent = scrapedPromotions
+    .map(p => `DOM: ${p.domDescription}\nLegal: ${p.legalesText}`)
+    .join('\n\n---\n\n');
+
+  const result = await withValidation(
+    extractionFunction,
+    originalContent,
+    "dia",
+    config
+  );
+
+  assert(result.accepted.length > 0, "No promotions accepted after validation");
+
+  return result;
+}
+
 // Backward compatibility function
 export async function scrapeDia() {
   const contentData = await scrapeDiaContent();
   return await extractDiaDiscounts(contentData);
+}
+
+/**
+ * Enhanced version of scrapeDia with validation system
+ * Returns only accepted discounts by default, but provides full stats
+ */
+export async function scrapeDiaWithValidation(config: ValidationConfig = {}) {
+  const contentData = await scrapeDiaContent();
+  const result = await extractDiaDiscountsWithValidation(contentData, config);
+  
+  // Log summary for monitoring
+  console.log(`[DIA] Validation Results:`, {
+    extracted: result.stats.extracted,
+    accepted: result.stats.accepted,
+    needsReview: result.stats.needsReview,
+    rejected: result.stats.rejected,
+    avgConfidence: result.stats.avgConfidence,
+    totalAlerts: result.stats.totalAlerts,
+  });
+
+  if (result.needsReview.length > 0) {
+    console.log(`[DIA] ${result.needsReview.length} discounts need manual review`);
+  }
+
+  if (result.rejected.length > 0) {
+    console.log(`[DIA] ${result.rejected.length} discounts were rejected`);
+  }
+
+  // Return the full result for flexibility, not just accepted
+  return result;
 }
