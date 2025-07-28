@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "$(date): Starting scraper execution" >> /var/log/scraper/cron.log
+echo "$(date): Starting scraper execution" >> /var/log/scraper/scheduler.log
 
 # Set display for headful browser
 export DISPLAY=:99
@@ -18,10 +18,10 @@ sleep 3
 cd /app/scraper
 
 # Run all scrapers with save flag
-echo "$(date): Running scrapers..." >> /var/log/scraper/cron.log
-bun run cli all --save --telegram 2>&1 | tee -a /var/log/scraper/cron.log
+echo "$(date): Running scrapers..." >> /var/log/scraper/scheduler.log
+bun run cli all --save --telegram 2>&1 | tee -a /var/log/scraper/scheduler.log
 
 # Clean up
 kill $XVFB_PID 2>/dev/null || true
 
-echo "$(date): Scraper execution completed" >> /var/log/scraper/cron.log
+echo "$(date): Scraper execution completed" >> /var/log/scraper/scheduler.log
