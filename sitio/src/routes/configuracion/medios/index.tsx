@@ -12,6 +12,8 @@ import { cn, useIsClient } from "src/lib/utils";
 import { Switch } from "@/components/ui/switch";
 import { Footer } from "@/routes/__root";
 import { ALL_MEMBERSHIPS } from "@/lib/memberships";
+import { ChildMethod, ParentMethod } from "@/components/setup";
+import { motion } from "framer-motion";
 
 type SubOptionDisplay = {
   id: PaymentMethod;
@@ -209,76 +211,23 @@ function PaymentMethodsConfig() {
             </div>
           </div>
 
-          <div className="space-y-6">
-            {displayOptions.map((bank) => {
-              const bankId = `bank-${bank.id}`;
-              const isBankChecked = savedPaymentMethods.has(bank.id);
-
-              return (
-                <div key={bank.id} className="flex items-stretch space-x-3">
-                  <Checkbox
-                    id={bankId}
-                    checked={isBankChecked}
-                    onCheckedChange={(checked) =>
-                      updateStore(bank.id, checked === true)
-                    }
-                    className="mt-1"
-                  />
-                  <div className="grid flex-grow gap-1.5">
-                    <Label
-                      htmlFor={bankId}
-                      className="flex items-center gap-2 font-medium"
-                    >
-                      {bank.id in WALLET_ICONS && (
-                        <img
-                          src={
-                            WALLET_ICONS[bank.id as keyof typeof WALLET_ICONS]
-                          }
-                          alt={bank.name}
-                          className="h-6 w-auto rounded-sm"
-                        />
-                      )}
-                      <span className="flex-grow leading-relaxed">
-                        {bank.name}
-                      </span>
-                    </Label>
-                    {isBankChecked &&
-                      bank.subOptions &&
-                      bank.subOptions.length > 0 && (
-                        <div className="mt-2 space-y-3 pl-6">
-                          {bank.subOptions.map((subOption) => {
-                            const subOptionId = `sub-${subOption.id}`;
-                            const isSubChecked = savedPaymentMethods.has(
-                              subOption.id,
-                            );
-                            return (
-                              <div
-                                key={subOption.id}
-                                className="flex items-center space-x-3"
-                              >
-                                <Checkbox
-                                  id={subOptionId}
-                                  checked={isSubChecked}
-                                  onCheckedChange={(checked) =>
-                                    updateStore(subOption.id, checked === true)
-                                  }
-                                />
-                                <Label
-                                  htmlFor={subOptionId}
-                                  className="text-sm font-normal"
-                                >
-                                  {subOption.question}
-                                </Label>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <motion.div
+            className="flex flex-col gap-2 mt-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            {" "}
+            {displayOptions.map((bank) => (
+              <ParentMethod
+                key={bank.id}
+                method={bank.id}
+                children={
+                  bank.subOptions?.map((subOption) => subOption.id) || []
+                }
+              />
+            ))}
+          </motion.div>
           <div className="flex items-center space-x-3 mt-8 mb-6">
             <Switch
               id="mostrar-en-descuentos"
