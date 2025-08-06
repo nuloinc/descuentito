@@ -240,7 +240,7 @@ function PaymentMethodsConfig() {
                     {isBankChecked &&
                       bank.subOptions &&
                       bank.subOptions.length > 0 && (
-                        <div className="mt-2 space-y-3 pl-6">
+                        <div className="mt-3 space-y-4 pl-2 border-l-2 border-muted-foreground/20">
                           {bank.subOptions.map((subOption) => {
                             const subOptionId = `sub-${subOption.id}`;
                             const isSubChecked = savedPaymentMethods.has(
@@ -249,7 +249,7 @@ function PaymentMethodsConfig() {
                             return (
                               <div
                                 key={subOption.id}
-                                className="flex items-center space-x-3"
+                                className="flex items-start space-x-3 p-3 rounded-lg bg-muted/30 border border-muted-foreground/20"
                               >
                                 <Checkbox
                                   id={subOptionId}
@@ -257,10 +257,11 @@ function PaymentMethodsConfig() {
                                   onCheckedChange={(checked) =>
                                     updateStore(subOption.id, checked === true)
                                   }
+                                  className="mt-0.5"
                                 />
                                 <Label
                                   htmlFor={subOptionId}
-                                  className="text-sm font-normal"
+                                  className="text-sm font-medium leading-relaxed cursor-pointer flex-grow"
                                 >
                                   {subOption.question}
                                 </Label>
