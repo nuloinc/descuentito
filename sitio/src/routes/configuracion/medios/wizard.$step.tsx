@@ -26,6 +26,8 @@ import {
 import { useIsClient } from "@/lib/utils";
 import { usePostHog } from "posthog-js/react";
 import { ALL_MEMBERSHIPS } from "@/lib/memberships";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 type WizardStepId =
   | "welcome"
@@ -354,40 +356,7 @@ function WizardStepComponent() {
                   transition={{ duration: 0.2 }}
                 >
                   {children.map((childMethod) => (
-                    <Button
-                      key={childMethod}
-                      variant={
-                        savedPaymentMethods.has(childMethod)
-                          ? "default"
-                          : "outline"
-                      }
-                      className="flex items-center justify-start gap-2 p-2.5 h-auto w-full border text-sm"
-                      onClick={() =>
-                        savedPaymentMethods.has(childMethod)
-                          ? removePaymentMethod(childMethod)
-                          : addPaymentMethod(childMethod)
-                      }
-                    >
-                      {childMethod in WALLET_ICONS ? (
-                        <img
-                          src={
-                            WALLET_ICONS[
-                              childMethod as keyof typeof WALLET_ICONS
-                            ]
-                          }
-                          alt={childMethod}
-                          className="h-5 w-auto rounded-sm mr-1"
-                        />
-                      ) : (
-                        <CreditCard className="h-4 w-4 mr-1" />
-                      )}
-                      <span className="flex-grow text-left">
-                        {childMethod.replace(method + " - ", "")}
-                      </span>
-                      {savedPaymentMethods.has(childMethod) && (
-                        <Check className="h-5 w-5" />
-                      )}
-                    </Button>
+                    <ChildMethod childMethod={childMethod} method={method} />
                   ))}
                 </motion.div>
               )}
@@ -704,6 +673,45 @@ function WizardStepComponent() {
           </AnimatePresence>
         </motion.div>
       </div>
+    </div>
+  );
+}
+function ChildMethod({
+  childMethod,
+  method,
+}: {
+  childMethod: PaymentMethod;
+  method: string;
+}) {
+  const { addPaymentMethod, removePaymentMethod, savedPaymentMethods } =
+    usePaymentMethodsStore();
+  const childMethodName = childMethod
+    .replace(method + " - ", "")
+    .replace(" y ", " o ")
+    .replace("Jubilados", "Jubilado");
+  const isOrHas = childMethodName.match(/(tarjeta)|(plan)/i) ? "Tenes" : "Sos";
+  return (
+    <div
+      key={childMethod}
+      className="flex items-center gap-2 p-2.5 border rounded-md"
+    >
+      <Checkbox
+        id={childMethod}
+        checked={savedPaymentMethods.has(childMethod)}
+        onCheckedChange={(checked) =>
+          checked
+            ? addPaymentMethod(childMethod)
+            : removePaymentMethod(childMethod)
+        }
+      />
+      <Label
+        htmlFor={childMethod}
+        className="flex items-center gap-2 flex-grow cursor-pointer"
+      >
+        <span className="text-sm">
+          ¿{isOrHas} {childMethodName}?
+        </span>
+      </Label>
     </div>
   );
 }
