@@ -166,7 +166,6 @@ export const JOIN_GROUPS: (typeof PAYMENT_METHODS)[number][][] = [
   ["Banco Credicoop", "Banco Credicoop - Plan Sueldo"],
   ["Banco ICBC", "Banco ICBC - Cliente Payroll"],
   ["Banco Galicia", "Banco Galicia - Eminent"],
-  ["Tarjeta Carrefour Crédito", "Tarjeta Carrefour Prepaga"],
   [".Reba", ".Reba - Black"],
   ["Banco Ciudad", "Banco Ciudad - Plan Sueldo y Jubilados"],
   [
