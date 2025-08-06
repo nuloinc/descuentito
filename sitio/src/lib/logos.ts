@@ -78,6 +78,7 @@ import CarrefourMarket from "~/logos/supermercados/carrefour_market.png?url";
 import CarrefourComAr from "~/logos/supermercados/carrefour_com_ar.png?url";
 import CarrefourMaxi from "~/logos/supermercados/carrefour_maxi.svg?url";
 import CarrefourSinTexto from "~/logos/supermercados/carrefour_sin_texto.svg?url";
+import Carrefour from "~/logos/supermercados/carrefour.png?url";
 import CarrefourExpressHorizontal from "~/logos/supermercados/carrefour_express_horizontal.png?url";
 import Jumbo from "~/logos/supermercados/jumbo_cropped.png?url";
 import JumboSmall from "~/logos/supermercados/jumbo.webp?url";
@@ -97,7 +98,7 @@ export const BRAND_LOGOS: Record<string, Record<string, string>> = {
     Market: CarrefourMarket,
     Online: CarrefourComAr,
     Maxi: CarrefourMaxi,
-    Carrefour: CarrefourSinTexto,
+    Carrefour: Carrefour,
     Express: CarrefourExpressHorizontal,
   },
   jumbo: {
@@ -122,18 +123,11 @@ export const BRAND_LOGOS: Record<string, Record<string, string>> = {
 };
 
 export const BRAND_LOGOS_SMALL: Record<string, Record<string, string>> = {
-  coto: {
-    Coto: CotoStacked,
-  },
-  dia: {
-    Dia: DiaSmall,
-  },
-  jumbo: {
-    Jumbo: JumboSmall,
-  },
-  makro: {
-    Makro: MakroSmall,
-  },
+  coto: { Coto: CotoStacked },
+  dia: { Dia: DiaSmall },
+  jumbo: { Jumbo: JumboSmall },
+  makro: { Makro: MakroSmall },
+  carrefour: { Carrefour: CarrefourSinTexto },
 };
 
 export const LOGOS_NEED_LIGHT_BACKGROUND: readonly string[] = [
