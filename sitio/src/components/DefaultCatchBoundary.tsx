@@ -31,6 +31,7 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
         {isRoot ? (
           <Link
             to="/"
+            search={{ supermarket: undefined }}
             className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded text-white uppercase font-extrabold`}
           >
             Home
@@ -38,6 +39,7 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
         ) : (
           <Link
             to="/"
+            search={{ supermarket: undefined }}
             className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded text-white uppercase font-extrabold`}
             onClick={(e) => {
               e.preventDefault();

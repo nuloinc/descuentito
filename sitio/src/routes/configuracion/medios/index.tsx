@@ -145,7 +145,7 @@ function PaymentMethodsConfig() {
       <div className="min-h-screen bg-background">
         <nav className="sticky top-0 z-10 flex items-center gap-2 border-b p-2 bg-sidebar">
           <div className="flex items-center gap-2 max-w-md w-full mx-auto">
-            <Link to="/">
+            <Link to="/" search={{ supermarket: undefined }}>
               <ArrowLeft className="h-7 w-7" />
             </Link>
             <span className="flex-grow text-left font-medium">
@@ -193,10 +193,15 @@ function PaymentMethodsConfig() {
                     id={`membership-${membership}`}
                     checked={savedMemberships.has(membership)}
                     onCheckedChange={(checked) =>
-                      checked ? addMembership(membership) : removeMembership(membership)
+                      checked
+                        ? addMembership(membership)
+                        : removeMembership(membership)
                     }
                   />
-                  <Label htmlFor={`membership-${membership}`} className="font-medium">
+                  <Label
+                    htmlFor={`membership-${membership}`}
+                    className="font-medium"
+                  >
                     {membership}
                   </Label>
                 </div>
@@ -291,6 +296,7 @@ function PaymentMethodsConfig() {
           <Button variant="default" asChild>
             <Link
               to="/"
+              search={{ supermarket: undefined }}
               replace
               preload="intent"
               className="w-full max-w-sm mx-auto"

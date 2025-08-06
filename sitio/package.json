@@ -10,7 +10,8 @@
     "preview": "wrangler dev --local",
     "deploy": "wrangler deploy",
     "test": "bun test",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "check": "tsc --noEmit"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.4",

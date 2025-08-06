@@ -583,7 +583,7 @@ function WizardStepComponent() {
               <ArrowLeft className="h-6 w-6" />
             </Link>
           ) : (
-            <Link to="/" className="p-1">
+            <Link to="/" search={{ supermarket: undefined }} className="p-1">
               <Home className="h-6 w-6" />
             </Link>
           )}
