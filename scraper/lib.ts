@@ -67,7 +67,7 @@ export async function storeCacheData(
   data: string | Buffer | Uint8Array,
 ) {
   logger.debug("Storing cache data", { key, suffix });
-  await s3.send(
+  await s3?.send(
     new PutObjectCommand({
       Bucket: BUCKET_NAME,
       Key: `${format(

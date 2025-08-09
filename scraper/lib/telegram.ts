@@ -16,28 +16,6 @@ interface ScrapingResult {
   commitHash?: string;
 }
 
-interface CasharComparisonResult {
-  casharTotal: number;
-  ourTotal: number;
-  missing: number;
-  extra: number;
-  flexibleMatches: number;
-  missingHighValue: Array<{
-    store: string;
-    percentage: number;
-    weekday: string;
-    paymentMethod: string;
-    source: string;
-  }>;
-  topMissing: Array<{
-    store: string;
-    percentage: number;
-    weekday: string;
-    paymentMethod: string;
-    source: string;
-  }>;
-}
-
 interface DiscountDiff {
   scraper: string;
   added: string[];
@@ -101,24 +79,6 @@ export class TelegramNotifier {
     }
   }
 
-  async sendCasharComparison(result: CasharComparisonResult): Promise<void> {
-    if (!this.config) {
-      logger.debug("Skipping Telegram notification - not configured");
-      return;
-    }
-
-    try {
-      const message = this.formatCasharComparisonMessage(result);
-      await this.sendMessage(message);
-      logger.info("Telegram Cashar comparison notification sent successfully");
-    } catch (error) {
-      logger.error(
-        "Failed to send Telegram Cashar comparison notification:",
-        error,
-      );
-    }
-  }
-
   async sendDiscountDiff(diff: DiscountDiff): Promise<void> {
     if (!this.config) {
       logger.debug("Skipping Telegram notification - not configured");
@@ -130,7 +90,10 @@ export class TelegramNotifier {
       await this.sendMessage(message);
       logger.info("Telegram discount diff notification sent successfully");
     } catch (error) {
-      logger.error("Failed to send Telegram discount diff notification:", error);
+      logger.error(
+        "Failed to send Telegram discount diff notification:",
+        error,
+      );
     }
   }
 
@@ -218,60 +181,13 @@ export class TelegramNotifier {
     return message;
   }
 
-  private formatCasharComparisonMessage(
-    result: CasharComparisonResult,
-  ): string {
-    let message = `🔍 *cashar.pro/cashback Comparison*\n\n`;
-
-    message += `📊 *Coverage Overview:*\n`;
-    message += `• Cashar discounts: ${result.casharTotal}\n`;
-    message += `• Our discounts: ${result.ourTotal}\n`;
-    message += `• Missing: ${result.missing}\n`;
-    message += `• Flexible matches: ${result.flexibleMatches}\n\n`;
-
-    if (result.missingHighValue.length > 0) {
-      message += `🎯 *High-Value Missing (25%+):*\n`;
-      const highValueCount = Math.min(result.missingHighValue.length, 5);
-      for (let i = 0; i < highValueCount; i++) {
-        const missing = result.missingHighValue[i];
-        message += `• ${missing.store.toUpperCase()} ${missing.percentage}% (${missing.weekday})\n`;
-        message += `  ${this.escapeMarkdown(missing.paymentMethod)}\n`;
-      }
-      if (result.missingHighValue.length > 5) {
-        message += `  ...and ${result.missingHighValue.length - 5} more\n`;
-      }
-      message += `\n`;
-    }
-
-    if (result.topMissing.length > 0) {
-      message += `🔴 *Top Missing Opportunities:*\n`;
-      const topCount = Math.min(result.topMissing.length, 5);
-      for (let i = 0; i < topCount; i++) {
-        const missing = result.topMissing[i];
-        message += `${i + 1}. ${missing.store.toUpperCase()} ${missing.percentage}% on ${missing.weekday}\n`;
-        message += `   ${this.escapeMarkdown(missing.paymentMethod)}\n`;
-      }
-    }
-
-    // Add summary
-    if (result.missing === 0) {
-      message += `\n✅ *Excellent coverage!* No missing opportunities detected.`;
-    } else if (result.missing <= 10) {
-      message += `\n🟡 *Good coverage* with minor gaps.`;
-    } else {
-      message += `\n🟠 *Room for improvement* - consider reviewing missing opportunities.`;
-    }
-
-    return message;
-  }
-
   private formatDiscountDiffMessage(diff: DiscountDiff): string {
     let message = `🔄 *Discount Changes for ${this.escapeMarkdown(diff.scraper)}*\n\n`;
-    
+
     message += `📊 *Summary:*\n`;
     message += `• Previous discounts: ${diff.totalOld}\n`;
     message += `• Current discounts: ${diff.totalNew}\n`;
-    message += `• Net change: ${diff.totalNew - diff.totalOld > 0 ? '+' : ''}${diff.totalNew - diff.totalOld}\n`;
+    message += `• Net change: ${diff.totalNew - diff.totalOld > 0 ? "+" : ""}${diff.totalNew - diff.totalOld}\n`;
     message += `• New: ${diff.added.length} | Removed: ${diff.removed.length} | Period changed: ${diff.validityChanged.length}\n\n`;
 
     if (diff.added.length > 0) {
@@ -303,7 +219,9 @@ export class TelegramNotifier {
       const changedToShow = Math.min(diff.validityChanged.length, 8);
       for (let i = 0; i < changedToShow; i++) {
         const change = diff.validityChanged[i];
-        const formattedBase = this.escapeMarkdown(change.baseKey.toUpperCase().replace(/-/g, ' '));
+        const formattedBase = this.escapeMarkdown(
+          change.baseKey.toUpperCase().replace(/-/g, " "),
+        );
         message += `• ${formattedBase}\n  ${this.escapeMarkdown(change.oldPeriod)} → ${this.escapeMarkdown(change.newPeriod)}\n`;
       }
       if (diff.validityChanged.length > 8) {
@@ -312,7 +230,11 @@ export class TelegramNotifier {
       message += `\n`;
     }
 
-    if (diff.added.length === 0 && diff.removed.length === 0 && diff.validityChanged.length === 0) {
+    if (
+      diff.added.length === 0 &&
+      diff.removed.length === 0 &&
+      diff.validityChanged.length === 0
+    ) {
       message += `⚪ *No changes detected*\n\n`;
     }
 

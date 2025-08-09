@@ -55,7 +55,7 @@ export class FetchCacher {
     }
 
     this.s3 = options.s3Client || createS3ClientFromEnv();
-    this.bucketName = options.bucketName || BUCKET_NAME;
+    this.bucketName = options.bucketName || BUCKET_NAME || null;
     this.maxRetries = options.maxRetries || DEFAULT_MAX_RETRIES;
     this.zip = new JSZip();
     this.startTime = new Date();
@@ -88,7 +88,7 @@ export class FetchCacher {
       console.log(`📁 [NO-CREDS] Would upload to S3: ${params.Key}`);
       return;
     }
-    
+
     try {
       await this.s3.send(
         new PutObjectCommand({
