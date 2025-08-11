@@ -17,4 +17,4 @@ echo "- Mondays at 9:00 AM"
 echo "- Fridays at 9:00 AM"
 
 # Start supercronic with the crontab file
-exec supercronic /app/crontab
+exec supercronic -overlapping /app/crontab
