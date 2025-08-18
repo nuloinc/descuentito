@@ -14,7 +14,7 @@ import assert from "assert";
 import { cleanDiscounts } from "../../lib/clean";
 import { openrouter } from "@openrouter/ai-sdk-provider";
 import { customAlphabet } from "nanoid";
-import { Browser } from "playwright-core";
+import { Browser } from "playwright";
 import { Tracker } from "../lib/tracker";
 
 const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz");

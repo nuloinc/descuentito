@@ -2,7 +2,7 @@ import { s3, BUCKET_NAME } from "./fetch-cacher.ts";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { format } from "date-fns";
 import logger from "./trigger/lib/logger.ts";
-import { chromium, Page, Browser, ElementHandle } from "playwright-core";
+import { chromium, Page, Browser, ElementHandle } from "playwright";
 import { nanoid } from "nanoid";
 import { generateText } from "ai";
 import { openrouter } from "@openrouter/ai-sdk-provider";
