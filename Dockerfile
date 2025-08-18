@@ -1,5 +1,5 @@
 # Descuentito Scraper - Scheduled Docker Container
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 # Set timezone to UTC-3 (Buenos Aires)
 ENV TZ=America/Argentina/Buenos_Aires
@@ -13,7 +13,6 @@ RUN apt-get update && apt-get install -y \
     tzdata \
     ca-certificates \
     fonts-liberation \
-    libasound2 \
     libatk-bridge2.0-0 \
     libatk1.0-0 \
     libatspi2.0-0 \
