@@ -50,7 +50,7 @@ RUN curl -fsSLO "$SUPERCRONIC_URL" \
     && ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic
 
 # Install Node.js (required for bun installation)
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+RUN curl -fsSL https://deb.nodesource.com/setup_23.x | bash - \
     && apt-get install -y nodejs
 
 # Install bun package manager
@@ -74,7 +74,7 @@ RUN bun install
 COPY . .
 
 # Install Playwright browsers (headful mode)
-RUN cd scraper && bunx playwright install --with-deps chromium
+RUN cd scraper && bun playwright install --with-deps chromium
 
 # Create logs directory
 RUN mkdir -p /var/log/scraper
