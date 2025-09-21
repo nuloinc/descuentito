@@ -160,6 +160,13 @@ async function main() {
       } catch (error) {
         console.error("Failed to send batch Telegram notification:", error);
       }
+      const successes = batchResults.reduce(
+        (prev, curr) => prev + (curr.success ? 1 : 0),
+        0,
+      );
+      if (process.env.FINISHED_URL && successes > batchResults.length * 0.7) {
+        await fetch(process.env.FINISHED_URL, { method: "POST" });
+      }
     }
     return;
   }
