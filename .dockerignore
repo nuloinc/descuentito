@@ -64,3 +64,6 @@ temp/
 # Specific to this project - exclude frontend build
 sitio/dist/
 sitio/.output/
+
+Justfile
+mise.toml

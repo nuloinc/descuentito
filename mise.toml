@@ -1,0 +1,4 @@
+[tools]
+bun = "latest"
+just = "latest"
+"ubi:psviderski/unregistry" = { version = "latest", exe = "docker-pussh" }

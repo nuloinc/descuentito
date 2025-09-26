@@ -17,13 +17,6 @@ interface CachedResponse {
   body: string;
 }
 
-const ENV_PREFIX = "FETCH_CACHER_" as const;
-const REQUIRED_ENV_VARS = [
-  "REGION",
-  "ACCESS_KEY_ID",
-  "SECRET_ACCESS_KEY",
-  "BUCKET_NAME",
-] as const;
 
 const DEFAULT_MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 1000;
@@ -194,10 +187,10 @@ export class FetchCacher {
 }
 
 export function createS3ClientFromEnv(): S3Client | null {
-  const region = process.env[`${ENV_PREFIX}REGION`];
-  const accessKeyId = process.env[`${ENV_PREFIX}ACCESS_KEY_ID`];
-  const secretAccessKey = process.env[`${ENV_PREFIX}SECRET_ACCESS_KEY`];
-  const endpoint = process.env[`${ENV_PREFIX}ENDPOINT`];
+  const region = process.env.FETCH_CACHER_REGION;
+  const accessKeyId = process.env.FETCH_CACHER_ACCESS_KEY_ID;
+  const secretAccessKey = process.env.FETCH_CACHER_SECRET_ACCESS_KEY;
+  const endpoint = process.env.FETCH_CACHER_ENDPOINT;
 
   if (!region || !accessKeyId || !secretAccessKey) {
     console.log("⚠️  S3 credentials not found - caching will be disabled");
@@ -218,4 +211,4 @@ export function createS3ClientFromEnv(): S3Client | null {
 }
 
 export const s3 = createS3ClientFromEnv();
-export const BUCKET_NAME = process.env[`${ENV_PREFIX}BUCKET_NAME`];
+export const BUCKET_NAME = process.env.FETCH_CACHER_BUCKET_NAME;

@@ -67,14 +67,11 @@ COPY promos-db/package.json ./promos-db/
 COPY sitio/package.json ./sitio/
 COPY patches/ ./patches/
 
-# Install dependencies
 RUN bun install
+RUN cd scraper && bun playwright install --with-deps chromium
 
 # Copy application code
 COPY . .
-
-# Install Playwright browsers (headful mode)
-RUN cd scraper && bun playwright install --with-deps chromium
 
 # Create logs directory
 RUN mkdir -p /var/log/scraper
@@ -91,9 +88,6 @@ RUN echo "0 9 * * 1,5 /usr/local/bin/run-scraper.sh" > /app/crontab
 ENV HEADLESS=false
 ENV LOCAL_BROWSER=true
 ENV UNATTENDED_MODE=true
-ENV FETCH_CACHER_REGION=us-west-002
-ENV FETCH_CACHER_BUCKET_NAME=your_bucket
-ENV FETCH_CACHER_ENDPOINT=https://s3.us-west-002.backblazeb2.com
 
 # Expose any ports if needed (not required for this scraper)
 # EXPOSE 3000
