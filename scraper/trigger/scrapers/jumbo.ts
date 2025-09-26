@@ -164,9 +164,9 @@ ${LIMITS_PROMPT}
         );
 
         if (existingDiscount) {
-          logger.info("Discount already exists, skipping", {
-            existingDiscount,
-          });
+          // logger.info("Discount already exists, skipping", {
+          //   existingDiscount,
+          // });
           continue;
         }
 
