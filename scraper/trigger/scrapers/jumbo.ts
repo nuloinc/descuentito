@@ -84,28 +84,20 @@ export async function scrapeJumboContent() {
   return scrapedPromotions;
 }
 
-export async function extractJumboDiscounts(
-  scrapedPromotions: ScrapedPromotion[],
+async function processPromotion(
+  text: string,
+  weekdayIndex: number,
+  discountsMap: Map<number, JumboDiscount[]>,
 ) {
-  logger.info(
-    `Processing ${scrapedPromotions.length} scraped promotions with LLM`,
-  );
-
-  // Step 2: Process with LLM in parallel
-  const discountsMap = new Map<number, JumboDiscount[]>();
-  await Promise.all(
-    scrapedPromotions.map(async (promotion) => {
-      const { text, weekdayIndex } = promotion;
-
-      const { elementStream } = streamObject({
-        model: openrouter.chat("google/gemini-2.5-flash"),
-        output: "array",
-        schema: BasicDiscountSchema.extend({
-          where: z.array(z.enum(["Jumbo", "Online"])),
-          membership: z.array(z.enum(["Clarin 365"])).optional(),
-        }),
-        experimental_telemetry: { isEnabled: true },
-        system: `${genStartPrompt("Jumbo")} Jumbo is part of the Cencosud group.
+  const { elementStream } = streamObject({
+    model: openrouter.chat("google/gemini-2.5-flash"),
+    output: "array",
+    schema: BasicDiscountSchema.extend({
+      where: z.array(z.enum(["Jumbo", "Online"])),
+      membership: z.array(z.enum(["Clarin 365"])).optional(),
+    }),
+    experimental_telemetry: { isEnabled: true },
+    system: `${genStartPrompt("Jumbo")} Jumbo is part of the Cencosud group.
 
 ${PAYMENT_METHODS_PROMPT}
 
@@ -119,66 +111,114 @@ ${PRODUCTS_PROMPT}
 
 ${LIMITS_PROMPT}
 `,
-        messages: [
+    messages: [
+      {
+        role: "user",
+        content: [
           {
-            role: "user",
-            content: [
-              {
-                type: "text",
-                text:
-                  "Extract the discounts from the following text: \n\n" + text,
-              },
-            ],
+            type: "text",
+            text: "Extract the discounts from the following text: \n\n" + text,
           },
         ],
-      });
+      },
+    ],
+  });
 
-      // Create array for this weekday if it doesn't exist
-      if (!discountsMap.has(weekdayIndex)) {
-        discountsMap.set(weekdayIndex, []);
-      }
+  // Create array for this weekday if it doesn't exist
+  if (!discountsMap.has(weekdayIndex)) {
+    discountsMap.set(weekdayIndex, []);
+  }
 
-      for await (const generatedDiscount of elementStream) {
-        const previousDaysDiscounts = Array.from(discountsMap.values())
-          .slice(0, weekdayIndex)
-          .flat();
+  for await (const generatedDiscount of elementStream) {
+    const previousDaysDiscounts = Array.from(discountsMap.values())
+      .slice(0, weekdayIndex)
+      .flat();
 
-        // hack porque iteramos por cada dia de semana, entonces los descuentos que estan en varios dias de semana se repiten
-        // lo hacemos sobre un array de los descuentos de los dias anteriores para no tener falsos positivos sobre descuentos del mismo banco pero de distinto tipo
-        const existingDiscount = previousDaysDiscounts.find(
-          (p) =>
-            (p.weekdays
-              ? p.weekdays.every((day) =>
-                  generatedDiscount.weekdays?.includes(day),
-                )
-              : !generatedDiscount.weekdays) &&
-            p.where?.every((where) =>
-              generatedDiscount.where?.includes(where),
-            ) &&
-            p.limits?.maxDiscount === generatedDiscount.limits?.maxDiscount &&
-            p.discount.value === generatedDiscount.discount.value &&
-            p.paymentMethods &&
-            generatedDiscount.paymentMethods &&
-            getBankOrWallet(p.paymentMethods) ===
-              getBankOrWallet(generatedDiscount.paymentMethods),
+    // hack porque iteramos por cada dia de semana, entonces los descuentos que estan en varios dias de semana se repiten
+    // lo hacemos sobre un array de los descuentos de los dias anteriores para no tener falsos positivos sobre descuentos del mismo banco pero de distinto tipo
+    const existingDiscount = previousDaysDiscounts.find(
+      (p) =>
+        (p.weekdays
+          ? p.weekdays.every((day) => generatedDiscount.weekdays?.includes(day))
+          : !generatedDiscount.weekdays) &&
+        p.where?.every((where) => generatedDiscount.where?.includes(where)) &&
+        p.limits?.maxDiscount === generatedDiscount.limits?.maxDiscount &&
+        p.discount.value === generatedDiscount.discount.value &&
+        p.paymentMethods &&
+        generatedDiscount.paymentMethods &&
+        getBankOrWallet(p.paymentMethods) ===
+          getBankOrWallet(generatedDiscount.paymentMethods),
+    );
+
+    if (existingDiscount) {
+      // logger.info("Discount already exists, skipping", {
+      //   existingDiscount,
+      // });
+      continue;
+    }
+
+    const newDiscount: JumboDiscount = {
+      ...generatedDiscount,
+      source: "jumbo" as const,
+      url: URL,
+    };
+
+    discountsMap.get(weekdayIndex)?.push(newDiscount);
+  }
+}
+
+export async function extractJumboDiscounts(
+  scrapedPromotions: ScrapedPromotion[],
+) {
+  logger.info(
+    `Processing ${scrapedPromotions.length} scraped promotions with LLM`,
+  );
+
+  // Step 2: Process with LLM in parallel with timeout and error handling
+  const discountsMap = new Map<number, JumboDiscount[]>();
+  let processedCount = 0;
+  let failedCount = 0;
+
+  await Promise.all(
+    scrapedPromotions.map(async (promotion, index) => {
+      const { text, weekdayIndex } = promotion;
+
+      try {
+        // Add timeout wrapper for LLM call (60 seconds per promotion)
+        await Promise.race([
+          (async () => {
+            await processPromotion(text, weekdayIndex, discountsMap);
+            processedCount++;
+            if (processedCount % 10 === 0) {
+              logger.info(
+                `Processed ${processedCount}/${scrapedPromotions.length} promotions`,
+              );
+            }
+          })(),
+          new Promise((_, reject) =>
+            setTimeout(
+              () =>
+                reject(
+                  new Error(
+                    `LLM processing timed out for promotion ${index + 1}`,
+                  ),
+                ),
+              60000,
+            ),
+          ),
+        ]);
+      } catch (error) {
+        failedCount++;
+        logger.error(
+          `Failed to process promotion ${index + 1}/${scrapedPromotions.length}: ${error instanceof Error ? error.message : String(error)}`,
         );
-
-        if (existingDiscount) {
-          // logger.info("Discount already exists, skipping", {
-          //   existingDiscount,
-          // });
-          continue;
-        }
-
-        const newDiscount: JumboDiscount = {
-          ...generatedDiscount,
-          source: "jumbo" as const,
-          url: URL,
-        };
-
-        discountsMap.get(weekdayIndex)?.push(newDiscount);
+        // Continue processing other promotions
       }
     }),
+  );
+
+  logger.info(
+    `Completed: ${processedCount} successful, ${failedCount} failed out of ${scrapedPromotions.length} total promotions`,
   );
 
   // Combine all discounts from all weekdays
