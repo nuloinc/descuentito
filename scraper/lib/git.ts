@@ -179,9 +179,7 @@ export async function useCommit(
             await telegramNotifier.sendDiscountDiff({
               scraper: source,
               added: diffResult.new.map(formatDiscountForDisplay),
-              removed: diffResult.removed.map(
-                formatDiscountForDisplay,
-              ),
+              removed: diffResult.removed.map(formatDiscountForDisplay),
               validityChanged: diffResult.validityChanges.map(
                 (change: any) => ({
                   baseKey: formatDiscountForDisplay(change.newDiscount),
@@ -225,16 +223,22 @@ export async function useCommit(
       let shouldAutoMergePR = !metadata.prOnly;
 
       if (isUnattendedMode && diffResult) {
+        const requireReviewForHighImpactChanges = false;
         // Calculate change percentage for unattended mode
-        const changePercentage = Math.abs(diffResult.totalNew - diffResult.totalOld) / Math.max(diffResult.totalOld, 1) * 100;
-        logger.info(`Change percentage calculated: ${changePercentage.toFixed(1)}% (${diffResult.totalOld} → ${diffResult.totalNew})`);
-        
-        if (changePercentage > 35) {
+        const changePercentage =
+          (Math.abs(diffResult.totalNew - diffResult.totalOld) /
+            Math.max(diffResult.totalOld, 1)) *
+          100;
+        logger.info(
+          `Change percentage calculated: ${changePercentage.toFixed(1)}% (${diffResult.totalOld} → ${diffResult.totalNew})`,
+        );
+
+        if (requireReviewForHighImpactChanges && changePercentage > 35) {
           // High-impact changes: create PR for review
           shouldCommitToMain = false;
           shouldCreatePR = true;
           shouldAutoMergePR = false; // Never auto-merge in unattended mode when creating PR
-          
+
           // Create branch now if we haven't already
           if (branchName === "main") {
             branchName = `promotions/${date}/${nanoid()}/${source}`;
@@ -245,21 +249,25 @@ export async function useCommit(
               checkout: true,
             });
           }
-          
-          logger.info(`High-impact changes detected (${changePercentage.toFixed(1)}% > 35%). Creating PR for review.`);
+
+          logger.info(
+            `High-impact changes detected (${changePercentage.toFixed(1)}% > 35%). Creating PR for review.`,
+          );
         } else {
-          // Low-impact changes: commit directly
+          // Commit directly when review gating is disabled or changes are low-impact.
           shouldCommitToMain = true;
           shouldCreatePR = false;
-          logger.info(`Low-impact changes detected (${changePercentage.toFixed(1)}% ≤ 35%). Committing directly to main.`);
+          logger.info(
+            `Committing directly to main for ${changePercentage.toFixed(1)}% changes.`,
+          );
         }
       }
 
       // Push directly to main if determined above, otherwise push branch and create PR
       if (shouldCommitToMain) {
         logger.info(
-          isUnattendedMode 
-            ? `Low-impact changes. Pushing directly to main branch.`
+          isUnattendedMode
+            ? `Unattended mode. Pushing directly to main branch.`
             : `Prod env detected. Pushing changes directly to main branch.`,
         );
         await execa("git", ["push", remote, "main"], {
@@ -291,9 +299,7 @@ export async function useCommit(
             await telegramNotifier.sendDiscountDiff({
               scraper: source,
               added: diffResult.new.map(formatDiscountForDisplay),
-              removed: diffResult.removed.map(
-                formatDiscountForDisplay,
-              ),
+              removed: diffResult.removed.map(formatDiscountForDisplay),
               validityChanged: diffResult.validityChanges.map(
                 (change: any) => ({
                   baseKey: formatDiscountForDisplay(change.newDiscount),
@@ -315,7 +321,7 @@ export async function useCommit(
         }
       } else {
         logger.info(
-          isUnattendedMode 
+          isUnattendedMode
             ? `High-impact changes. Pushing to branch ${branchName} and creating PR.`
             : `Non-prod env detected. Pushing to branch ${branchName} and creating PR.`,
         );
@@ -373,9 +379,7 @@ export async function useCommit(
             await telegramNotifier.sendDiscountDiff({
               scraper: source,
               added: diffResult.new.map(formatDiscountForDisplay),
-              removed: diffResult.removed.map(
-                formatDiscountForDisplay,
-              ),
+              removed: diffResult.removed.map(formatDiscountForDisplay),
               validityChanged: diffResult.validityChanges.map(
                 (change: any) => ({
                   baseKey: formatDiscountForDisplay(change.newDiscount),
