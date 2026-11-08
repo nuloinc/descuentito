@@ -13,3 +13,5 @@ galicia-promotions.json
 .DS_Store
 
 *.mp4
+# Uncloud deploy secrets
+.uncloud/

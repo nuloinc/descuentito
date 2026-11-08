@@ -1,0 +1,17 @@
+# Uncloud deployment for the descuentito scraper (cron inside the container).
+#
+#   DEPLOY_SSH=user@host just deploy   # build on the server, then uc deploy
+#   just run-once   # run the scraper now
+#
+# Runtime env goes in .uncloud/descuentito.env (gitignored); same variables as
+# the old .env.production.
+
+services:
+  descuentito-scraper:
+    build:
+      context: .
+      platforms: [linux/amd64]
+    # Built on the server by `just deploy`; never pulled from a registry.
+    image: descuentito/scraper:latest
+    pull_policy: never
+    env_file: .uncloud/descuentito.env

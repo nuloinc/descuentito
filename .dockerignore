@@ -67,3 +67,4 @@ sitio/.output/
 
 Justfile
 mise.toml
+.uncloud/
